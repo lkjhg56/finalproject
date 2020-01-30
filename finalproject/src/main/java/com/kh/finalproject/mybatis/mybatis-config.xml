@@ -8,7 +8,9 @@
 		<setting name="cacheEnabled" value="true"></setting>
 		<setting name="defaultStatementTimeout" value="10000"/>	
 	</settings>
+
 <!-- 	<typeAliases> -->
 <!-- 		<typeAlias type="com.kh.sts28.entity.PayDto" alias="payDto"/> -->
 <!-- 	</typeAliases> -->
+
 </configuration>
