@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data@NoArgsConstructor@AllArgsConstructor@Builder
-public class QuestionDto {
+public class UploadQuestionDto {
 	private int question_no; 
 	private int user_custom_question_no; 
 	private String question_title; 

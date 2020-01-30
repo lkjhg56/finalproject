@@ -9,6 +9,6 @@
 		<setting name="defaultStatementTimeout" value="10000"/>	
 	</settings>
 	<typeAliases>
-		<typeAlias type="com.kh.finalproject.entity.QuestionDto" alias="questionDto"/>
+		<typeAlias type="com.kh.finalproject.entity.UploadQuestionDto" alias="uploadQuestionDto"/>
 	</typeAliases>
 </configuration>

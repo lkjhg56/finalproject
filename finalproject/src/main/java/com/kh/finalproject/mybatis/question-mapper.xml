@@ -4,7 +4,11 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
  
  <mapper namespace="question">
- 	<insert id="upload" parameterType="questionDto">
+ 	<!-- 
+ 	문제 업로드
+ 	* 관리자만 question_premium 변경 가능하도록 해야함.
+ 	 -->
+ 	<insert id="upload" parameterType="uploadQuestionDto">
  		insert into question values(
  			question_seq.nextval,
  			#{user_custom_question_no},
@@ -12,7 +16,27 @@
  			#{question_content},
  			#{question_answer},
  			#{question_solution},
- 			#{question_premium}
+ 			0
  			)
  	</insert>
+ 	<!-- 
+ 	문제 수정
+ 	* 관리자만 question_premium 변경 가능하도록 해야함.
+ 	 -->
+ 	<update id="update" parameterType="uploadQuestionDto">
+ 		update question set 
+ 			question_title=#{question_title},
+ 			question_content=#{question_content},
+ 			question_answer=#{question_answer},
+ 			question_solution=#{question_solution},
+ 			question_premium=#{question_premium} 
+ 		where question_no=#{question_no}			
+ 	</update>
+ 	<!-- 
+ 	문제 조회
+ 	* 전체 조회
+ 	 --> 	
+ 	 <select id="getList" resultType="uploadQuestionDto">
+ 	 	select * from question order by asc
+ 	 </select>
  </mapper>
