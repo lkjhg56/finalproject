@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 
+		이 설정파일은 요청과는 관계없는 "공용 설정"을 위한 파일
+		- 이곳에 작성한 설정들은 servlet-context.xml에서 사용 가능
+		- 상위 설정 파일
+		- Database나 스케쥴러, 트랜잭션 등과 관련된 설정을 구현
+	 -->
+
+	<!-- 
+		DBCP용 연결 도구 설정
+		- common-dbcp2가 필요함 
+		- properties 파일을 불러오도록 설정
+	-->
+	<context:property-placeholder location="classpath:/properties/*.properties"/>
+	
+	<bean id="dbcpSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>		
+		<property name="maxTotal" value="${database.dbcp.max-total}"></property>
+		<property name="maxIdle" value="${database.dbcp.max-idle}"></property>
+		<property name="maxWaitMillis" value="${database.dbcp.max-wait}"></property>
+	</bean>
+
+	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<property name="dataSource" ref="dbcpSource"></property>
+	 	<property name="configLocation" value="${path.mybatis.config-location}"></property>
+	 	<property name="mapperLocations" value="${path.mybatis.mapper-location}"></property>
+	 </bean>
+	 
+	 <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	 	<constructor-arg index="0" ref="sqlSession"></constructor-arg>
+	 </bean>
+	 
+	<context:component-scan base-package="com.kh.finalproject" use-default-filters="false">
+		<context:include-filter type="regex" expression="com.kh.finalproject.*"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- 이메일 전송 객체 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="username" value="${email.user.id}"></property>
+		<property name="password" value="${email.user.password}"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 스프링 스케쥴링 활성화 -->
+	<task:annotation-driven/>
+	
+	<!-- bcrypt password encoder 등록 -->
+	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	
+	</bean>
+	
+</beans>
