@@ -7,8 +7,11 @@
 	<settings>
 		<setting name="cacheEnabled" value="true"></setting>
 		<setting name="defaultStatementTimeout" value="10000"/>	
-	</settings>
+	</settings>	
 	<typeAliases>
 		<typeAlias type="com.kh.finalproject.entity.UploadQuestionDto" alias="uploadQuestionDto"/>
+		<typeAlias type="com.kh.finalproject.entity.TestDto" alias = "testDto"/>
+		<typeAlias type = "com.kh.finalproject.entity.CategoryDto" alias = "categoryDto"/>
+		<typeAlias type = "com.kh.finalproject.entity.TestQuestionDto" alias = "testQuestionDto"/>
 	</typeAliases>
 </configuration>
