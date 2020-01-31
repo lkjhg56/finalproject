@@ -13,11 +13,3 @@
 	<input type="submit" value="등록하기">
 	<input type="reset" value="초기화">
 </form>
-
-					.question_no(uploadQuestionDto.getQuestion_no())
-					.question_title(uploadQuestionDto.getQuestion_title())
-					.question_content(uploadQuestionDto.getQuestion_content())
-					.question_answer(uploadQuestionDto.getQuestion_answer())
-					.question_solution(uploadQuestionDto.getQuestion_solution())
-					.question_premium(uploadQuestionDto.getQuestion_premium())
-					.build();

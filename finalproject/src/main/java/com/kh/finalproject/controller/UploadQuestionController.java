@@ -11,21 +11,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.UploadQuestionService;
 
 @Controller
 @RequestMapping("/question")
 public class UploadQuestionController {
+	@Autowired
+	private UploadQuestionDao uploadQuestionDao;
+	
 	@GetMapping("/upload")
 	public String upload() {
 		return "question/upload";
 	}
-	@Autowired
-	private UploadQuestionService uploadQuestionService; 
 	@PostMapping("/upload")
-	public String upload2(@ModelAttribute UploadQuestionDto uploadQuestionDto, HttpSession session) {
-		
-		uploadQuestionService.upload(uploadQuestionDto);
+	public String upload2(@ModelAttribute UploadQuestionDto uploadQuestionDto) {
+		uploadQuestionDao.upload(uploadQuestionDto);
 		return "question/questions";
 	}
 	
@@ -36,8 +37,14 @@ public class UploadQuestionController {
 	@PostMapping("/update")
 	public String update2(@ModelAttribute UploadQuestionDto uploadQuestionDto, HttpSession session, Model model) {
 		String admin = (String) session.getAttribute("grade");
-		uploadQuestionService.update(uploadQuestionDto, admin);
+		uploadQuestionDao.update(uploadQuestionDto, admin);
 		model.addAttribute("dto", uploadQuestionDto);
 		return "question/questions";
 	}
+	@GetMapping("/list")
+	public String list(Model model) {
+		model.addAttribute("list", uploadQuestionDao.getList());
+		return "question/list";
+	}
+	
 }

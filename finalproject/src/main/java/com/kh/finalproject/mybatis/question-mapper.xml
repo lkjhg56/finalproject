@@ -7,7 +7,9 @@
  	<!-- 
  	문제 업로드
  	* 관리자만 question_premium 변경 가능하도록 해야함.
+ 	* user_custom_question 테이블도 같이 변해야 함.
  	 -->
+ 
  	<insert id="upload" parameterType="uploadQuestionDto">
  		insert into question values(
  			question_seq.nextval,
@@ -16,8 +18,20 @@
  			#{question_content},
  			#{question_answer},
  			#{question_solution},
- 			0
+ 			0,
+ 			#{answer1},
+ 			#{answer2},
+ 			#{answer3},
+ 			#{answer4},
+ 			#{answer5}
  			)
+ 	</insert>
+ 	<insert id="upload_sub" parameterType="uploadQuestionDto">
+ 		insert into user_custom_question values(
+ 			user_custom_question_seq.nextval,
+ 			#{user_no},
+ 			#{category_name}
+ 		)
  	</insert>
  	<!-- 
  	문제 수정
@@ -37,6 +51,6 @@
  	* 전체 조회
  	 --> 	
  	 <select id="getList" resultType="uploadQuestionDto">
- 	 	select * from question order by asc
+ 	 	select * from question order by question_no asc
  	 </select>
  </mapper>
