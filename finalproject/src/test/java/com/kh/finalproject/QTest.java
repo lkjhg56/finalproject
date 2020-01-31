@@ -23,21 +23,6 @@ public class QTest {
 	
 	@Test
 	public void upload() {
-		UploadQuestionDto dto = UploadQuestionDto.builder()
-				.question_title("문제 제목")
-				.user_custom_question_no(4)
-				.question_content("문제")
-				.question_answer("정답")
-				.question_solution("해설지")
-				.user_no(24)
-				.category_name("test")
-				.answer1("선택지1")
-				.answer2("선택지2")
-				.answer3("선택지3")
-				.answer4("선택지4")
-				.answer5("선택지5")
-				.build();
-		sqlSession.insert("question.upload_sub", dto);
-		sqlSession.insert("question.upload", dto);
+
 	}
 }
