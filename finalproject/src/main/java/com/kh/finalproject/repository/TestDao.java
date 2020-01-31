@@ -7,7 +7,7 @@ import com.kh.finalproject.entity.TestDto;
 
 public interface TestDao {
 	List<TestDto> getList();
-
 	List<CategoryDto> getDetailList(int tno);
+	List<CategoryDto> getQuestionList(String categoryname);
 
 }

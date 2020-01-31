@@ -14,5 +14,9 @@
 		select * from category where test_no = #{tno} order by category_no desc
 	</select>
 	
+	<select id = "questionList" parameterType = "string" resultType = "testQuestionDto">
+		select * from test_question where csname= #{categoryname} order by no asc
+	</select>
+	
 	
 </mapper>
