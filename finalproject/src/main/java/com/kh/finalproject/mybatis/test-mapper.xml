@@ -18,5 +18,8 @@
 		select * from test_question where csname= #{categoryname} order by no asc
 	</select>
 	
+	<insert id = "correct" parameterType = "rcorrectDto" >
+		insert into rcorrect(rqno, result_no, test_no, correct) values(rcorrect_seq.nextval, 2, #{test_no}, #{correct})
+	</insert>
 	
 </mapper>
