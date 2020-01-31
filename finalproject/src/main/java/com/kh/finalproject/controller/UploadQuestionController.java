@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.UploadQuestionService;
+import com.kh.finalproject.vo.UpdateQuestionVO;
 
 @Controller
 @RequestMapping("/question")
@@ -20,13 +21,16 @@ public class UploadQuestionController {
 	@Autowired
 	private UploadQuestionDao uploadQuestionDao;
 	
+	@Autowired
+	private UploadQuestionService uploadQuestionService;
+	
 	@GetMapping("/upload")
 	public String upload() {
 		return "question/upload";
 	}
 	@PostMapping("/upload")
-	public String upload2(@ModelAttribute UploadQuestionDto uploadQuestionDto) {
-		uploadQuestionDao.upload(uploadQuestionDto);
+	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO) throws Exception {
+		uploadQuestionService.questionUpload(updateQuestionVO);
 		return "question/questions";
 	}
 	

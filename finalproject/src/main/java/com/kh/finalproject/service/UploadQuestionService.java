@@ -1,9 +1,7 @@
 package com.kh.finalproject.service;
 
-import java.util.List;
-
-import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.vo.UpdateQuestionVO;
 
 public interface UploadQuestionService {
-
+	void questionUpload(UpdateQuestionVO updateQuestionVO) throws Exception;
 }
