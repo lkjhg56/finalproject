@@ -7,30 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.entity.UploadQuestionFileDto;
 
 @Repository
 public class UploadQuestionDaoImple implements UploadQuestionDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
+//	문제 출제 시퀀스 번호
+	public int questionSequece() {
+		return sqlSession.selectOne("question.sequence"); 
+	}
+	
 //	문제 등록
 	public void upload(UploadQuestionDto uploadQuestionDto) {
-		UploadQuestionDto dto = UploadQuestionDto.builder()
-				.question_title(uploadQuestionDto.getQuestion_title())
-				.user_custom_question_no(uploadQuestionDto.getUser_custom_question_no())
-				.question_content(uploadQuestionDto.getQuestion_content())
-				.question_answer(uploadQuestionDto.getQuestion_answer())
-				.question_solution(uploadQuestionDto.getQuestion_solution())
-				.user_no(uploadQuestionDto.getUser_no())
-				.category_name(uploadQuestionDto.getCategory_name())
-				.answer1(uploadQuestionDto.getAnswer1())
-				.answer2(uploadQuestionDto.getAnswer2())
-				.answer3(uploadQuestionDto.getAnswer3())
-				.answer4(uploadQuestionDto.getAnswer4())
-				.answer5(uploadQuestionDto.getAnswer5())
-				.build();
-		sqlSession.insert("question.upload_sub", dto);
-		sqlSession.insert("question.upload", dto);
+		sqlSession.insert("question.upload_sub", uploadQuestionDto);
+		sqlSession.insert("question.upload", uploadQuestionDto);
+	}
+
+	@Override
+	public void fileUpload(UploadQuestionFileDto uploadQuestionFileDto) {
+		//실제 파일 저장
+		sqlSession.insert("question.upload_file", uploadQuestionFileDto);
+		
 	}
 //	문제 수정
 //	관리자일 경우 유료문제 유무 변경 가능
@@ -72,5 +71,6 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");
 	}
+
 
 }
