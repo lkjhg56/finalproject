@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="test">
+
+	<select id = "list" resultType = "testDto">
+		select * from test order by tno desc
+	</select>
+
+	<select id = "categoryList" parameterType= "int" resultType = "categoryDto">
+		select * from category where test_no = #{tno} order by category_no desc
+	</select>
+	
+	
+</mapper>
