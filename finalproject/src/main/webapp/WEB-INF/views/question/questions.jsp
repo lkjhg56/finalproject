@@ -7,7 +7,10 @@
  <c:forEach var = "test" items="${list}">
  	<div>
  	<form action = "${pageContext.request.contextPath }/question/questype">
- 		${test.test_category}
+
+	<input type = "hidden" name ="tno" value= "${test.tno}">
+	<h1>${test.test_category}, ${test.tno}</h1>
+	<input type = "submit" value = "선택">	
  	</form>
  	 </div>
  </c:forEach>

@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.kh.finalproject.entity.CategoryDto;
 import com.kh.finalproject.entity.TestDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TestDaoImpl implements TestDao{
 
 	@Autowired
@@ -20,7 +23,12 @@ public class TestDaoImpl implements TestDao{
 
 	@Override
 	public List<CategoryDto> getDetailList(int tno) {
-		return sqlSession.selectList("tes");
+		return sqlSession.selectList("test.categoryList", tno);
+	}
+
+	@Override
+	public List<CategoryDto> getQuestionList(String categoryname) {
+		return sqlSession.selectList("test.questionList", categoryname);
 	}
 
 }

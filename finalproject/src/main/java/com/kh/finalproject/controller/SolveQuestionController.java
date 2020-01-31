@@ -32,8 +32,11 @@ public class SolveQuestionController {
 		return "question/typechoice";
 	}
 	
-	@GetMapping("question/plural")
-	public String plural(@ModelAttribute TestDto testDto){
+	@GetMapping("question/questcategory")
+	public String category(@RequestParam String categoryname, Model model) {
+		model.addAttribute("clist", testDao.getQuestionList(categoryname));
 		return "question/plural";
+		
 	}
+	
 }
