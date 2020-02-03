@@ -14,12 +14,12 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-//	¹®Á¦ ÃâÁ¦ ½ÃÄö½º ¹øÈ£
+
 	public int questionSequece() {
 		return sqlSession.selectOne("question.sequence"); 
 	}
 	
-//	¹®Á¦ µî·Ï
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	public void upload(UploadQuestionDto uploadQuestionDto) {
 		sqlSession.insert("question.upload_sub", uploadQuestionDto);
 		sqlSession.insert("question.upload", uploadQuestionDto);
@@ -27,15 +27,15 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 
 	@Override
 	public void fileUpload(UploadQuestionFileDto uploadQuestionFileDto) {
-		//½ÇÁ¦ ÆÄÀÏ ÀúÀå
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		sqlSession.insert("question.upload_file", uploadQuestionFileDto);
 		
 	}
-//	¹®Á¦ ¼öÁ¤
-//	°ü¸®ÀÚÀÏ °æ¿ì À¯·á¹®Á¦ À¯¹« º¯°æ °¡´É
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½á¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void update(UploadQuestionDto uploadQuestionDto, String admin) {
 
-		boolean isAdmin = admin.equals("°ü¸®ÀÚ");
+		boolean isAdmin = admin.equals("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		UploadQuestionDto dto = new UploadQuestionDto();
 		if (isAdmin) {
 			dto = UploadQuestionDto.builder()
@@ -60,13 +60,13 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	
 	
-//	´ÜÀÏ Á¶È¸
+
 	@Override
 	public UploadQuestionDto getOne() {
 		
 		return null;
 	}
-//	ÀüÃ¼ Á¶È¸
+
 	@Override
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");
