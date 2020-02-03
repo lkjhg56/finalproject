@@ -19,8 +19,12 @@
 	</select>
 	
 	<insert id = "correct" parameterType = "rcorrectDto" >
-		insert into rcorrect(rqno, result_no, test_no, correct) values(rcorrect_seq.nextval, 2, #{test_no}, #{correct})
+		insert into rcorrect(rqno, result_no, test_no, correct, iscorrect) values(rcorrect_seq.nextval, 2, #{test_no}, #{correct}, #{iscorrect})
 	</insert>
+	
+	<delete id = "deleteAns" parameterType = "rcorrectDto" >
+		delete from rcorrect where result_no=2 and test_no =#{test_no}
+	</delete>
 
 	<select id="questionList2" parameterType="String" resultType="testQuestionDto">
 	SELECT ROWNUM
