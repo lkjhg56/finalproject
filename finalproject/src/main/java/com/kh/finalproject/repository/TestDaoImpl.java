@@ -31,4 +31,10 @@ public class TestDaoImpl implements TestDao{
 		return sqlSession.selectList("test.questionList", categoryname);
 	}
 
+	@Override
+	public List<CategoryDto> getQuestionList2(String categoryname) {
+		
+		return sqlSession.selectList("test.questionList2", categoryname);
+	}
+
 }

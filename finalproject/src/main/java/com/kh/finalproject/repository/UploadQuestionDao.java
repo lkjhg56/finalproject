@@ -3,10 +3,13 @@ package com.kh.finalproject.repository;
 import java.util.List;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.entity.UploadQuestionFileDto;
 
 public interface UploadQuestionDao {
-	void upload(UploadQuestionDto uploadQuestionDto);
 	void update(UploadQuestionDto uploadQuestionDto, String admin);
-	UploadQuestionDto getOne();
+	void upload(UploadQuestionDto uploadQuestionDto);
+	int questionSequece();
 	List<UploadQuestionDto> getList();
+	UploadQuestionDto getOne();
+	void fileUpload(UploadQuestionFileDto uploadQuestionFileDto);
 }

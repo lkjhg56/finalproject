@@ -6,7 +6,7 @@
    <c:forEach var = "list" items="${list}">
    
    <div>
- 	<form action = "${pageContext.request.contextPath }/question/questcategory">
+ 	<form action = "${pageContext.request.contextPath }/question/questcategory2">
 
 	<input type = "hidden" name ="categoryname" value= "${list.csname}">
  	<div>${list.csname}</div>

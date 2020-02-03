@@ -21,5 +21,12 @@
 	<insert id = "correct" parameterType = "rcorrectDto" >
 		insert into rcorrect(rqno, result_no, test_no, correct) values(rcorrect_seq.nextval, 2, #{test_no}, #{correct})
 	</insert>
+
+	<select id="questionList2" parameterType="String" resultType="testQuestionDto">
+	SELECT ROWNUM
+     , X.*
+  FROM ( select A.* from test_question A  order by no asc
+       ) X where  csname= #{categoryname} and ROWNUM=1
+	</select>
 	
 </mapper>

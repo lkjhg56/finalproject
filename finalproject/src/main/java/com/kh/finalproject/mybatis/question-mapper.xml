@@ -4,15 +4,17 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
  
  <mapper namespace="question">
+ 	<select id="sequence" resultType="int">
+ 		select question_seq.nextval from dual
+ 	</select>
  	<!-- 
  	문제 업로드
  	* 관리자만 question_premium 변경 가능하도록 해야함.
  	* user_custom_question 테이블도 같이 변해야 함.
  	 -->
- 
  	<insert id="upload" parameterType="uploadQuestionDto">
  		insert into question values(
- 			question_seq.nextval,
+ 			#{question_no},
  			#{user_custom_question_no},
  			#{question_title},
  			#{question_content},
@@ -31,6 +33,16 @@
  			user_custom_question_seq.nextval,
  			#{user_no},
  			#{category_name}
+ 		)
+ 	</insert>
+ 	<insert id="upload_file" parameterType="uploadQuestionDto">
+ 		insert into question_file values(
+ 		question_file_seq.nextval,
+		#{file_upload_name},
+		#{file_save_name},
+		#{file_type},
+		#{file_size},
+		#{question_no}
  		)
  	</insert>
  	<!-- 
