@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class RcorrectDto {
 	
-	private int rqno, result_no, test_no, cus_ques;
+	private int rqno, result_no, test_no, cus_ques, iscorrect;
 	private int correct;
 
 }
