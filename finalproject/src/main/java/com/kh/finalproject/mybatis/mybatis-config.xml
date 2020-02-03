@@ -13,7 +13,9 @@
 		<typeAlias type="com.kh.finalproject.entity.TestDto" alias = "testDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.CategoryDto" alias = "categoryDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.TestQuestionDto" alias = "testQuestionDto"/>
-		<typeAlias type="com.kh.finalproject.entity.BoardDto" alias="boardDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.RcorrectDto" alias = "rcorrectDto"/> 
+		<typeAlias type="com.kh.finalproject.entity.BoardDto" alias="boardDto"/>
+		<typeAlias type="com.kh.finalproject.entity.UsersDto" alias="users"/>
+		
 	</typeAliases>
 </configuration>
