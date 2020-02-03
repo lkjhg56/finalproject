@@ -30,6 +30,7 @@ function previewImage(target){
     }
 }
 </script>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>문제 업로드</h1>
 <form action="upload" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="user_no" value="${user_no}">

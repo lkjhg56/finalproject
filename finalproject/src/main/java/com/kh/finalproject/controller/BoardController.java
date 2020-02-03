@@ -15,7 +15,7 @@ import com.kh.finalproject.repository.BoardDao;
 
 
 @Controller
-@RequestMapping("board")
+@RequestMapping("/board")
 public class BoardController {
 	
 	@Autowired

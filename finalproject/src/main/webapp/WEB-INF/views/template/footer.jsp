@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-</header>
+</section>
+<footer>
+<hr>
+	<h3>© 2020 All Rights Reserved. 문제 마스터</h3>
+	
+</footer>
 </main>
-
-<h1>footer</h1>
 </body>
 </html>
+id = ${id}, grade = ${grade}

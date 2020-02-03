@@ -111,7 +111,7 @@
 	});
 	
 </script>
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>회원가입</h1>
 <form action="join" method="post">
 
