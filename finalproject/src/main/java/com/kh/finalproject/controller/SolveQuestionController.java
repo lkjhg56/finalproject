@@ -35,6 +35,7 @@ public class SolveQuestionController {
 	@GetMapping("question/questype")
 	public String category(@RequestParam int tno, Model model) {
 		model.addAttribute("list", testDao.getDetailList(tno));
+		model.addAttribute("tno", tno);
 		return "question/typechoice";
 	}
 	
@@ -48,8 +49,10 @@ public class SolveQuestionController {
 	
 	
 	@GetMapping("question/questcategory")
-	public String category(@RequestParam String categoryname, Model model) {
+	public String category(@RequestParam String categoryname, String session, Model model) {
 		model.addAttribute("clist", testDao.getQuestionList(categoryname));
+		model.addAttribute("session", session);
+		log.info("session={}", session);
 		return "question/plural";
 		
 	}
