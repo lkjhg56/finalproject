@@ -20,15 +20,29 @@ public class RestController {
 	private TestDao testDao;
 	
 	@PostMapping("insert")
-	public String insert(@RequestParam int test_no, int correct, int result_no) {
+	public String insert(@RequestParam int test_no, int correct, int result_no, int iscorrect) {
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
 																	.test_no(test_no)
 																	.correct(correct)
 																	.result_no(result_no)
+																	.iscorrect(iscorrect)
 																	.build();
 		sqlSession.insert("correct", rcorrectDto);
 		
 		return null;
 	}
+	
+	@PostMapping("delete")
+	public String delete(@RequestParam int test_no, int result_no) {
+		RcorrectDto rcorrectDto = RcorrectDto.builder()
+																	.test_no(test_no)
+																	.result_no(result_no)
+																	.build();
+		sqlSession.delete("deleteAns", rcorrectDto);
+		
+		return null;
+	}
+	
+	
 	
 }
