@@ -64,4 +64,9 @@ public class SolveQuestionController {
 		
 	}
 	
+	@GetMapping("question/numberchoice")
+	public String number(@RequestParam String categoryname, Model model) {
+		model.addAttribute("clist", testDao.getQuestionList(categoryname));
+		return "question/numberchoice";
+	}
 }

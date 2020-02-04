@@ -12,7 +12,7 @@
 
 
        if (checked.checked==true){
-           console.log("채크됨")
+           console.log("체크됨")
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();

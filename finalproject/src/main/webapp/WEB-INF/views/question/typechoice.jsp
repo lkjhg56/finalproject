@@ -3,10 +3,10 @@
 
   <%@taglib	prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
   
-   <c:forEach var = "list" items="${list}">
+   <c:forEach var = "list" items=" ${list}">
    
    <div>
- 	<form action = "${pageContext.request.contextPath }/question/questcategory">
+ 	<form action = "${pageContext.request.contextPath }/question/numberchoice">
 
 	<input type = "hidden" name ="categoryname" value= "${list.csname}">
  	<div>${list.csname}</div>
