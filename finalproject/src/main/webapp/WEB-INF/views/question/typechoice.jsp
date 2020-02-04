@@ -53,13 +53,14 @@
  			<option> 방법 선택하세요</option>
  			<option>한문제씩풀기</option>
  			<option>한번에풀기</option>
- 		
  		</select>
  	    <select class="session" name = session>
         <option>회차를 선택하세요</option>
     	</select>
 	<input type = "submit" value = "선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')" >	
  	</form>
+ 
+  	
  	
  	 </div>
    
