@@ -18,24 +18,28 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public int questionSequece() {
 		return sqlSession.selectOne("question.sequence"); 
 	}
+	public int userSequence() {
+		return sqlSession.selectOne("question.userSequence");
+	}
 	
-//	���� ���
+	
+//	DB
 	public void upload(UploadQuestionDto uploadQuestionDto) {
-		sqlSession.insert("question.upload_sub", uploadQuestionDto);
-		sqlSession.insert("question.upload", uploadQuestionDto);
+		sqlSession.insert("question.upload_sub", uploadQuestionDto);//user_costom_question 등록
+		sqlSession.insert("question.upload", uploadQuestionDto);// question 등록
 	}
 
 	@Override
 	public void fileUpload(UploadQuestionFileDto uploadQuestionFileDto) {
-		//���� ���� ����
+		//파일 업로드
 		sqlSession.insert("question.upload_file", uploadQuestionFileDto);
 		
 	}
-//	���� ����
-//	�������� ��� ���Ṯ�� ���� ���� ����
+//	
+//	
 	public void update(UploadQuestionDto uploadQuestionDto, String admin) {
 
-		boolean isAdmin = admin.equals("������");
+		boolean isAdmin = admin.equals("관리자");
 		UploadQuestionDto dto = new UploadQuestionDto();
 		if (isAdmin) {
 			dto = UploadQuestionDto.builder()

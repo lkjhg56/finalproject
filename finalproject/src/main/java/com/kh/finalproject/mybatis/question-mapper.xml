@@ -7,6 +7,9 @@
  	<select id="sequence" resultType="int">
  		select question_seq.nextval from dual
  	</select>
+ 	 <select id="userSequence" resultType="int">
+ 		select user_custom_question_seq.nextval from dual
+ 	</select>
  	<!-- 
  	문제 업로드
  	* 관리자만 question_premium 변경 가능하도록 해야함.
@@ -30,7 +33,7 @@
  	</insert>
  	<insert id="upload_sub" parameterType="uploadQuestionDto">
  		insert into user_custom_question values(
- 			user_custom_question_seq.nextval,
+ 			#{user_custom_question_no},
  			#{user_no},
  			#{category_name}
  		)
@@ -64,5 +67,10 @@
  	 --> 	
  	 <select id="getList" resultType="uploadQuestionDto">
  	 	select * from question order by question_no asc
+ 	 </select>
+ 	 
+ 	 <!-- 세션 id를 이용하여 user_no를 가져옴 -->
+ 	 <select id="getNo" parameterType="String" resultType="int">
+ 	 	select user_no from users where id=#{id}
  	 </select>
  </mapper>
