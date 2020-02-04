@@ -2,16 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
  
- <%
-	session.setAttribute("id", "test");
-%>
  
-<h2>게시글 보기</h2>
 
 <div align="center">	
+<h2>게시글 보기</h2>
 		<table border="1" width="70%">
 			<tr>
-				<td>${boardDto.board_title }</td>
+				<td><input type="button" value="${boardDto.board_category}">  
+						${boardDto.board_title }      
+						${boardDto.board_wdate }</td>
 			</tr>	
 			<tr>
 				<td>
@@ -74,7 +73,7 @@
 					
 						<input type="hidden" name="board_origin_content_no" value="${boardDto.board_no}"> <!-- board의 no를 board_origin_content_no이라는 이름으로 전송 -->
 					
-						<textarea name="reply_content" rows="4" cols="100" required></textarea>
+						<textarea name="reply_content" rows="4" cols="155" required></textarea>
 						
 						<input type="submit" value="등록">
 						
@@ -87,11 +86,11 @@
 				<td align="right">
 					<a href="regist"><input type="button" value="글쓰기"></a>
 										
-					<c:if test="${isMine or isAdmin}">								
+<%-- 					<c:if test="${isMine or isAdmin}">								 --%>
 					<!-- 수정/삭제 버튼은 관리자이거나 본인글에만 표시 -->
-					<a href="edit?no=${boardDto.board_no}"><input type="button" value="수정"></a>
-					<a href="delete?no=${boardDto.board_no}"><input type="button" value="삭제"></a>
-					</c:if>
+					<a href="edit?board_no=${boardDto.board_no}"><input type="button" value="수정"></a>
+					<a href="delete?board_no=${boardDto.board_no}"><input type="button" value="삭제"></a>
+<%-- 					</c:if> --%>
 					
 					<a href="list"><input type="button" value="목록"></a>					
 				</td>
