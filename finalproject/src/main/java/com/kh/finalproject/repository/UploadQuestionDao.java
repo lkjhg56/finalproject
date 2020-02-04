@@ -9,6 +9,7 @@ public interface UploadQuestionDao {
 	void update(UploadQuestionDto uploadQuestionDto, String admin);
 	void upload(UploadQuestionDto uploadQuestionDto);
 	int questionSequece();
+	int userSequence();
 	List<UploadQuestionDto> getList();
 	UploadQuestionDto getOne();
 	void fileUpload(UploadQuestionFileDto uploadQuestionFileDto);
