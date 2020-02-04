@@ -13,6 +13,7 @@ public interface TestDao {
 	List<CategoryDto> getQuestionList2(String categoryname);
 
 	int getScore(int rno);
+	
 	TestQuestionDto getDto(String categoryname);
 
 	int getScore(int rno, String category_no, String csname);
