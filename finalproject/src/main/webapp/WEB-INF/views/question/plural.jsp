@@ -57,6 +57,8 @@
    	
 
    		<h2>${qlist.question}</h2>
+
+ 
    		<h4><input type="checkbox" name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}');">${qlist.dis1}</h4>
    		<h4><input type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}');">${qlist.dis2}</h4>
    		<h4><input type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}');">${qlist.dis3}</h4>
@@ -65,7 +67,13 @@
 
    </div>
    </c:forEach>
-   
+   ${session}
+   ${csname}
+   ${rno}
    <form action = "${pageContext.request.contextPath}/question/result"> 
+   
+   			<input type = "hidden" name = "category_no" value = "${session}">
+  	 		<input type = "hidden" name = "csname" value = "${csname}">
+  	 
    	<input type = "submit" value = "제출">
    </form>

@@ -70,9 +70,11 @@ public class SolveQuestionController {
 				dto.setDis4(qlist.getDis4());
 				dto.setDis5(qlist.getDis5());
 				dto.setQuestion(qlist.getQuestion());
+				dto.setCsname(qlist.getCsname());
 				question.add(dto);
 			}
 		}
+		model.addAttribute("csname", categoryname);
 		model.addAttribute("clist", question);
 		model.addAttribute("session", session);
 		log.info("session={}", session);
@@ -91,10 +93,10 @@ public class SolveQuestionController {
 	}
 	
 	@GetMapping("question/result")
-	public String result(HttpSession session, Model model) {
+	public String result(@RequestParam String category_no, String csname, HttpSession session, Model model) {
 		int rno = (int) session.getAttribute("rno");
 		
-		model.addAttribute("score",  testDao.getScore(rno));
+		model.addAttribute("score",  testDao.getScore(rno, category_no, csname));
 		
 		
 		session.removeAttribute("rno");
