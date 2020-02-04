@@ -18,9 +18,44 @@
 		select * from test_question where csname= #{categoryname} order by no asc
 	</select>
 	
-	<insert id = "correct" parameterType = "rcorrectDto" >
-		insert into rcorrect(rqno, result_no, test_no, correct) values(rcorrect_seq.nextval, 2, #{test_no}, #{correct})
+	<!-- result 베이스 작성 -->
+	<select id = "resultno" resultType = "int">
+		select result_seq.nextval from dual
+	</select>
+	<insert id = "resultinn" parameterType = "resultDto">
+		insert into result (rno, user_id, test_no, sumscore, test_date, cs_no) values(#{rno}, #{user_id}, #{test_no}, 0, sysdate, #{cs_no})
 	</insert>
+	
+	<!--  카테고리 리스트 -->
+	
+	<select id = "callcategory" parameterType = "String" resultType = "String">
+		select distinct category_no from test_question where csname = '정보처리기사'
+	</select>	
+	
+	<!-- 유저 문제 정답 입력 및 정답 여부 -->
+	
+	<insert id = "correct" parameterType = "rcorrectDto" >
+		insert into rcorrect(rqno, result_no, test_no, correct, iscorrect) values(rcorrect_seq.nextval, #{result_no}, #{test_no}, #{correct}, #{iscorrect})
+	</insert>
+	<!-- 유저 답 수정시 기존 입력 정답 삭제 -->
+	<delete id = "deleteAns" parameterType = "rcorrectDto" >
+		delete from rcorrect where result_no=#{result_no} and test_no =#{test_no}
+	</delete>
+
+	<!--  csname & category_no 로 문제 부르기 -->
+	<select id = "getQuesNum" parameterType = "testQuestionDto" resultType = "testQuestionDto">
+			select * from test_question where csname=#{csname} and category_no=#{category_no}
+	</select>
+	
+	
+	<select id = "getCorrectNum" parameterType = "int" resultType = "int">
+			select count(*) from rcorrect where result_no=#{rno} and iscorrect=1
+	</select>
+
+	<update id = "sumScore" parameterType = "scoreVO">
+		update result set sumscore =#{score} where rno=#{rno}
+	</update>
+
 
 	<select id="questionList2" parameterType="String" resultType="testQuestionDto">
 	SELECT ROWNUM
@@ -28,5 +63,7 @@
   FROM ( select A.* from test_question A  order by no asc
        ) X where  csname= #{categoryname} and ROWNUM=1
 	</select>
+	
+
 	
 </mapper>

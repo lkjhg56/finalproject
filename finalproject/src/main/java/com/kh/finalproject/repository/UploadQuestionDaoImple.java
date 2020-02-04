@@ -14,28 +14,32 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-//	¹®Á¦ ÃâÁ¦ ½ÃÄö½º ¹øÈ£
+
 	public int questionSequece() {
 		return sqlSession.selectOne("question.sequence"); 
 	}
+	public int userSequence() {
+		return sqlSession.selectOne("question.userSequence");
+	}
 	
-//	¹®Á¦ µî·Ï
+	
+//	DB
 	public void upload(UploadQuestionDto uploadQuestionDto) {
-		sqlSession.insert("question.upload_sub", uploadQuestionDto);
-		sqlSession.insert("question.upload", uploadQuestionDto);
+		sqlSession.insert("question.upload_sub", uploadQuestionDto);//user_costom_question ë“±ë¡
+		sqlSession.insert("question.upload", uploadQuestionDto);// question ë“±ë¡
 	}
 
 	@Override
 	public void fileUpload(UploadQuestionFileDto uploadQuestionFileDto) {
-		//½ÇÁ¦ ÆÄÀÏ ÀúÀå
+		//íŒŒì¼ ì—…ë¡œë“œ
 		sqlSession.insert("question.upload_file", uploadQuestionFileDto);
 		
 	}
-//	¹®Á¦ ¼öÁ¤
-//	°ü¸®ÀÚÀÏ °æ¿ì À¯·á¹®Á¦ À¯¹« º¯°æ °¡´É
+//	
+//	
 	public void update(UploadQuestionDto uploadQuestionDto, String admin) {
 
-		boolean isAdmin = admin.equals("°ü¸®ÀÚ");
+		boolean isAdmin = admin.equals("ê´€ë¦¬ì");
 		UploadQuestionDto dto = new UploadQuestionDto();
 		if (isAdmin) {
 			dto = UploadQuestionDto.builder()
@@ -60,13 +64,13 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	
 	
-//	´ÜÀÏ Á¶È¸
+
 	@Override
 	public UploadQuestionDto getOne() {
 		
 		return null;
 	}
-//	ÀüÃ¼ Á¶È¸
+
 	@Override
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");

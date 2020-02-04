@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data@NoArgsConstructor@AllArgsConstructor@Builder
 public class UploadQuestionDto {
-	//¹®Á¦ ¾÷·Îµå
-	private int question_no;//ÇÏ±â 2 Å×ÀÌºí¿¡ ¿Ü·¡Å°·Î ¹­¿© ÀÖÀ½.
+	//ë¬¸ì œ ì—…ë¡œë“œ
+	private int question_no;
 	private int user_custom_question_no; 
 	private String question_title; 
 	private String question_content; 
@@ -22,7 +22,7 @@ public class UploadQuestionDto {
 	private String answer5;
 /*************************************************/
 	//user_costom_question
-	private int user_no;//À¯Àú ³Ñ¹ö
+	private int user_no;//ìœ ì € ë„˜ë²„
 	private String category_name;
 /*************************************************/
 

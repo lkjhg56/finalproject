@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.kh.finalproject.entity.CategoryDto;
 import com.kh.finalproject.entity.TestDto;
+import com.kh.finalproject.entity.TestQuestionDto;
 
 public interface TestDao {
 	List<TestDto> getList();
 	List<CategoryDto> getDetailList(int tno);
-	List<CategoryDto> getQuestionList(String categoryname);
+	List<TestQuestionDto> getQuestionList(String categoryname);
 	List<CategoryDto> getQuestionList2(String categoryname);
+	int getScore(int rno, String category_no, String csname);
 }

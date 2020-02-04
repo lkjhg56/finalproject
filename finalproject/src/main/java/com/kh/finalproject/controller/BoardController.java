@@ -20,7 +20,7 @@ import com.kh.finalproject.service.BoardFileService;
 
 
 @Controller
-@RequestMapping("board")
+@RequestMapping("/board")
 public class BoardController {
 	
 	@Autowired

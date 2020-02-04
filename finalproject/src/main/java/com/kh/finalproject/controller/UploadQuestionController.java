@@ -2,6 +2,7 @@ package com.kh.finalproject.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,8 @@ import com.kh.finalproject.vo.UpdateQuestionVO;
 public class UploadQuestionController {
 	@Autowired
 	private UploadQuestionDao uploadQuestionDao;
-	
+	@Autowired
+	private SqlSession sqlSession;
 	@Autowired
 	private UploadQuestionService uploadQuestionService;
 	
@@ -29,7 +31,10 @@ public class UploadQuestionController {
 		return "question/upload";
 	}
 	@PostMapping("/upload")
-	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO) throws Exception {
+	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO, HttpSession session) throws Exception {
+		String id = (String)session.getAttribute("id");
+		int sq = sqlSession.selectOne("question.getNo", id);
+		updateQuestionVO.setUser_no(sq);
 		uploadQuestionService.questionUpload(updateQuestionVO);
 		return "question/questions";
 	}
