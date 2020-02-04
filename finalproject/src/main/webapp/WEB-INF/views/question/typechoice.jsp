@@ -7,7 +7,7 @@
   <script>
   
    function callCategory(csname){
-	  
+	  var option = document.getElementsByName(csname)
 	  
    $.ajax ({
        url:"${pageContext.request.contextPath}/question2/callcategory",
@@ -15,9 +15,9 @@
        data : {csname:csname},
        datatype: "list",
        success:function(quesList){
-			$(".session").empty();
+			$(option).empty();
 			$(quesList).each(function(){
-				$("<option>").text(this).appendTo(".session")
+				$("<option>").text(this).appendTo(option)
 			})
 			
 
@@ -49,12 +49,12 @@
 
 	<input type = "hidden" name ="categoryname" value= "${list.csname}" >
  	<div>${list.csname}</div>
- 		<select class = "method" onclick="callCategory('${list.csname}')">
+ 		<select class = "method" onchange="callCategory('${list.csname}')">
  			<option> 방법 선택하세요</option>
  			<option>한문제씩풀기</option>
  			<option>한번에풀기</option>
  		</select>
- 	    <select class="session" name = session>
+ 	    <select class="session" name = '${list.csname}'>
         <option>회차를 선택하세요</option>
     	</select>
 	<input type = "submit" value = "선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')" >	
