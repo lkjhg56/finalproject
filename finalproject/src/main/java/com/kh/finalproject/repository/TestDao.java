@@ -12,4 +12,5 @@ public interface TestDao {
 	List<TestQuestionDto> getQuestionList(String categoryname);
 	List<CategoryDto> getQuestionList2(String categoryname);
 	int getScore(int rno);
+	TestQuestionDto getDto(String categoryname);
 }

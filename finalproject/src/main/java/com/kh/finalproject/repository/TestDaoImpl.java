@@ -53,4 +53,14 @@ public class TestDaoImpl implements TestDao{
 		
 	}
 
+	@Override
+	public TestQuestionDto getDto(String categoryname) {
+	TestQuestionDto dto= new TestQuestionDto();
+	int count=1;
+dto.setNo(count);
+dto.setCsname(categoryname);
+	
+		return sqlSession.selectOne("test.questionDto", dto);
+	}
+
 }
