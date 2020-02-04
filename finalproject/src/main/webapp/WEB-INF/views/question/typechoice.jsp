@@ -7,7 +7,7 @@
   <script>
   
    function callCategory(csname){
-	  var option = document.getElementsByName(csname)
+	  var option = document.getElementById(csname)
 	  
    $.ajax ({
        url:"${pageContext.request.contextPath}/question2/callcategory",
@@ -54,7 +54,7 @@
  			<option>한문제씩풀기</option>
  			<option>한번에풀기</option>
  		</select>
- 	    <select class="session" name = '${list.csname}'>
+ 	    <select name="session" id = '${list.csname}'>
         <option>회차를 선택하세요</option>
     	</select>
 	<input type = "submit" value = "선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')" >	

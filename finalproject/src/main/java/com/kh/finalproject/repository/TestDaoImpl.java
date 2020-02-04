@@ -6,9 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kh.finalproject.entity.CategoryDto;
-import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestDto;
 import com.kh.finalproject.entity.TestQuestionDto;
+import com.kh.finalproject.vo.SetScoreVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,11 +40,28 @@ public class TestDaoImpl implements TestDao{
 	}
 
 	@Override
-	public int getScore(int rno) {
+	public int getScore(int rno, String category_no, String csname) {
 		log.info("rno={}", rno);
-		int questionCount = sqlSession.selectOne("test.getQuesNum", rno);
+		
+		
+		TestQuestionDto testDto =TestQuestionDto.builder()
+												.csname(csname)
+												.category_no(category_no)
+												.build();
+		
+		List<TestQuestionDto> questionList = sqlSession.selectList("test.getQuesNum", testDto);
+		
+		int questionCount = questionList.size();
 		int correctCount = sqlSession.selectOne("test.getCorrectNum", rno);
 		int score = 100/questionCount*correctCount;
+		
+		SetScoreVO scoreVO = SetScoreVO.builder()
+															.score(score)
+															.rno(rno)
+															.build();
+																
+		
+		sqlSession.update("sumScore", scoreVO);
 		
 		log.info("questioncount={}", questionCount);
 		log.info("correct ={}", correctCount);
