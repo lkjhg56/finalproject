@@ -49,7 +49,7 @@
 
 	<input type = "hidden" name ="categoryname" value= "${list.csname}" >
  	<div>${list.csname}</div>
- 		<select class = "method" onchange="callCategory('${list.csname}')">
+ 		<select class = "method" onclick="callCategory('${list.csname}')">
  			<option> 방법 선택하세요</option>
  			<option>한문제씩풀기</option>
  			<option>한번에풀기</option>

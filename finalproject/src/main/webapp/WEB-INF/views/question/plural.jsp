@@ -6,7 +6,7 @@
    <script>
    function save(quesno, disno, answer){
        var test = quesno+disno
-
+		console.log(test+"확인")
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
 
@@ -27,7 +27,7 @@
            $.ajax({
               url:"${pageContext.request.contextPath}/question2/insert",
               type:"post",
-              data:{test_no:quesno, correct:disno, result_no:"1", iscorrect:iscorrect},
+              data:{test_no:quesno, correct:disno, iscorrect:iscorrect},
           
             })
         }else{
@@ -40,7 +40,7 @@
            	 	$.ajax({
                  	url:"${pageContext.request.contextPath}/question2/delete",
                 	 type:"post",
-                	 data:{test_no:quesno, result_no:"1"},
+                	 data:{test_no:quesno},
             	   })
            		
        }  
@@ -57,7 +57,7 @@
    	
 
    		<h2>${qlist.question}</h2>
-  
+  	${qlist.no}
    		<h4><input type="checkbox" name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}');">${qlist.dis1}</h4>
    		<h4><input type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}');">${qlist.dis2}</h4>
    		<h4><input type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}');">${qlist.dis3}</h4>
@@ -66,3 +66,7 @@
 
    </div>
    </c:forEach>
+   
+   <form action = "${pageContext.request.contextPath}/question/result"> 
+   	<input type = "submit" value = "제출">
+   </form>

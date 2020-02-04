@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kh.finalproject.entity.CategoryDto;
+import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestDto;
 import com.kh.finalproject.entity.TestQuestionDto;
 
@@ -36,6 +37,20 @@ public class TestDaoImpl implements TestDao{
 	public List<CategoryDto> getQuestionList2(String categoryname) {
 		
 		return sqlSession.selectList("test.questionList2", categoryname);
+	}
+
+	@Override
+	public int getScore(int rno) {
+		log.info("rno={}", rno);
+		int questionCount = sqlSession.selectOne("test.getQuesNum", rno);
+		int correctCount = sqlSession.selectOne("test.getCorrectNum", rno);
+		int score = 100/questionCount*correctCount;
+		
+		log.info("questioncount={}", questionCount);
+		log.info("correct ={}", correctCount);
+		log.info("score={}", score);
+		return score;
+		
 	}
 
 }
