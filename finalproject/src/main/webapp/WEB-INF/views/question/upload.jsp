@@ -33,11 +33,11 @@ function previewImage(target){
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>문제 업로드</h1>
 <form action="upload" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="user_no" value="${user_no}">
+	<input type="hidden" name="user_id" value="${id}"><br><br>
 	<input type="text" name="question_title" placeholder="제목" required><br><br>
 	<input type="text" name="category_name" placeholder="카테고리명" required><br><br>
 	<textarea name="question_content" placeholder="문제명" rows="10" cols="50"></textarea><br><br>
-	<img id="preview" src="http://placehold.it/200x200" width="120" height="120"><br>
+	<img id="preview" src="http://placehold.it/200x200" width="120" height="120"><br>	
 	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>
 	<input type="text" name="answer1" placeholder="선택지 1 입력" required><br><br>
 	<input type="text" name="answer2" placeholder="선택지 2 입력" required><br><br>
@@ -49,3 +49,4 @@ function previewImage(target){
 	<input type="submit" value="등록하기">
 	<input type="reset" value="초기화">
 </form>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

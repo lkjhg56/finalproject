@@ -22,18 +22,19 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	
 	@Override
 	public void questionUpload(UpdateQuestionVO updateQuestionVO) throws Exception{
-		//½ÃÄö½º¸¦ ¹Ì¸® »Ì¾Æ¼­ ³ÖÀ½.
+		//1. DBì— ë“±ë¡
 		int seq= uploadQuestionDao.questionSequece();
+		int userSeq=uploadQuestionDao.userSequence();
 		
 		UploadQuestionDto uploadQuestionDto = UploadQuestionDto.builder()
+				.user_custom_question_no(userSeq)
+				.user_no(updateQuestionVO.getUser_no())
+				.category_name(updateQuestionVO.getCategory_name())
 				.question_no(seq)
 				.question_title(updateQuestionVO.getQuestion_title())
-				.user_custom_question_no(updateQuestionVO.getUser_custom_question_no())
 				.question_content(updateQuestionVO.getQuestion_content())
 				.question_answer(updateQuestionVO.getQuestion_answer())
 				.question_solution(updateQuestionVO.getQuestion_solution())
-				.user_no(updateQuestionVO.getUser_no())
-				.category_name(updateQuestionVO.getCategory_name())
 				.answer1(updateQuestionVO.getAnswer1())
 				.answer2(updateQuestionVO.getAnswer2())
 				.answer3(updateQuestionVO.getAnswer3())
@@ -43,41 +44,31 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 
 		uploadQuestionDao.upload(uploadQuestionDto);
 		
-		//2. ÆÄÀÏ ¾÷·Îµå
+		//2. íŒŒì¼ ì—…ë¡œë“œ(ë¬¸ì œ ì‚¬ì§„)
 		/**********************************************************************/
-		//(1) ½ÇÁ¦ ÆÄÀÏ ÀúÀå		
-		//VO¿¡¼­ ¹ŞÀº ÆÄÀÏ Á¤º¸¸¦ list¿¡ ÀÓ½Ã ÀúÀå
+		//(1)DBì— ë“±ë¡
+		//VOì—ì„œ ë°›ì•„ì˜¨ ë‚´ìš©ì„ DTOì— ì˜®ê¸´ë‹¤.
 		List<UploadQuestionFileDto> list = new ArrayList<>();
 		for(MultipartFile mf : updateQuestionVO.getFile()) {
 			list.add(UploadQuestionFileDto.builder()
 				.file_save_name(UUID.randomUUID().toString())
 				.file_upload_name(mf.getOriginalFilename())
 				.file_type(mf.getContentType())
-				.file_size(mf.getSize())				
-				.build());			
-		}
-		
-		//ÀúÀåÇÒ °æ·Î »ı¼º
+				.file_size(mf.getSize())
+				.question_no(seq)
+				.build());
+		}		
+		//ìƒˆ ë””ë ‰í† ë¦¬ ìƒì„±
 		File dir = new File("D:/upload/question_image");
 		dir.mkdir();
 		
+		System.out.println(seq);
 		for(int i=0;i<list.size();i++) {
-			MultipartFile mf = updateQuestionVO.getFile().get(i);//½ÇÁ¦ ÆÄÀÏ ÀúÀåÇÏ±â
+			MultipartFile mf = updateQuestionVO.getFile().get(i);
 			UploadQuestionFileDto dto = list.get(i);
+			uploadQuestionDao.fileUpload(dto);
 			File target = new File(dir, dto.getFile_save_name());
 			mf.transferTo(target);
-			uploadQuestionDao.fileUpload(dto);
 		}
-		/**********************************************************************/
-		//(2) DB¿¡ ÀÔ·Â
-		UploadQuestionFileDto uploadQuestionFileDto = UploadQuestionFileDto.builder()
-				.question_no(seq)//¹Ì¸® »ÌÀº ½ÃÄö½º ³Ö±â
-				.file_upload_name(updateQuestionVO.getFile_upload_name())
-				.file_save_name(updateQuestionVO.getFile_save_name())
-				.file_type(updateQuestionVO.getFile_type())
-				.file_size(updateQuestionVO.getFile_size())
-				.build();
-		uploadQuestionDao.fileUpload(uploadQuestionFileDto);
-
 	}
 }

@@ -51,12 +51,19 @@ where a.rownumber=#{no}
 		delete from rcorrect where result_no=#{result_no} and test_no =#{test_no}
 	</delete>
 
-	<select id = "getQuesNum" parameterType = "int" resultType = "int">
-			select count(*) from rcorrect where result_no=#{rno}
+	<!--  csname & category_no 로 문제 부르기 -->
+	<select id = "getQuesNum" parameterType = "testQuestionDto" resultType = "testQuestionDto">
+			select * from test_question where csname=#{csname} and category_no=#{category_no}
 	</select>
+	
+	
 	<select id = "getCorrectNum" parameterType = "int" resultType = "int">
 			select count(*) from rcorrect where result_no=#{rno} and iscorrect=1
 	</select>
+
+	<update id = "sumScore" parameterType = "scoreVO">
+		update result set sumscore =#{score} where rno=#{rno}
+	</update>
 
 
 	<select id="questionList2" parameterType="String" resultType="testQuestionDto">

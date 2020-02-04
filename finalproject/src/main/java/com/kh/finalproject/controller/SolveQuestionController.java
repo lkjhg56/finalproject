@@ -54,6 +54,7 @@ public class SolveQuestionController {
 	
 	
 	@GetMapping("question/questcategory")
+
 	public String category(@RequestParam String categoryname, String session, Model model,String method) {
 		
 		if(method.equals("한번에풀기")) {
@@ -74,6 +75,8 @@ public class SolveQuestionController {
 					dto.setQuestion(qlist.getQuestion());
 					question.add(dto);
 				}
+
+
 			}
 			model.addAttribute("clist", question);
 			model.addAttribute("session", session);
@@ -82,6 +85,7 @@ public class SolveQuestionController {
 			
 			return "question/plural";
 		}
+
 		else {
 			TestQuestionDto tdto= testDao.getDto(categoryname);
 			
@@ -107,7 +111,7 @@ public class SolveQuestionController {
 			
 		
 		}
-		
+
 	}
 
 
@@ -121,10 +125,10 @@ public class SolveQuestionController {
 	}
 	
 	@GetMapping("question/result")
-	public String result(HttpSession session, Model model) {
+	public String result(@RequestParam String category_no, String csname, HttpSession session, Model model) {
 		int rno = (int) session.getAttribute("rno");
 		
-		model.addAttribute("score",  testDao.getScore(rno));
+		model.addAttribute("score",  testDao.getScore(rno, category_no, csname));
 		
 		
 		session.removeAttribute("rno");
