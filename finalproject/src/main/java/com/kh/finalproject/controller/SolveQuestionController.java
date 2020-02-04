@@ -3,6 +3,8 @@ package com.kh.finalproject.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,6 +60,8 @@ public class SolveQuestionController {
 		for(TestQuestionDto qlist : questionDto) {
 			if(qlist.getCategory_no().equals(session)) {
 				TestQuestionDto dto = new TestQuestionDto();
+				dto.setNo(qlist.getNo());
+				log.info("testno 확인 {}=", qlist.getNo());
 				dto.setAnswer(qlist.getAnswer());
 				dto.setCategory_no(qlist.getCategory_no());
 				dto.setDis1(qlist.getDis1());
@@ -84,6 +88,17 @@ public class SolveQuestionController {
 		model.addAttribute("clist2", testDao.getQuestionList2(categoryname));
 		return "question/one";
 		
+	}
+	
+	@GetMapping("question/result")
+	public String result(HttpSession session, Model model) {
+		int rno = (int) session.getAttribute("rno");
+		
+		model.addAttribute("score",  testDao.getScore(rno));
+		
+		
+		session.removeAttribute("rno");
+		return "question/result";
 	}
 	
 }

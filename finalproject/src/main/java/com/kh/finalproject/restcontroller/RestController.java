@@ -2,6 +2,8 @@ package com.kh.finalproject.restcontroller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +15,11 @@ import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.repository.TestDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/question2")
+@Slf4j
 public class RestController {
 	
 	@Autowired
@@ -24,7 +29,9 @@ public class RestController {
 	private TestDao testDao;
 	
 	@PostMapping("insert")
-	public String insert(@RequestParam int test_no, int correct, int result_no, int iscorrect) {
+	public String insert(@RequestParam int test_no, int correct, int iscorrect, HttpSession session) {
+		int result_no = (int) session.getAttribute("rno");
+		log.info("testcheck ={}", test_no);
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
 																	.test_no(test_no)
 																	.correct(correct)
@@ -33,22 +40,24 @@ public class RestController {
 																	.build();
 		sqlSession.insert("correct", rcorrectDto);
 		
+		
 		return null;
 	}
 	
 	@PostMapping("delete")
-	public String delete(@RequestParam int test_no, int result_no) {
+	public String delete(@RequestParam int test_no, HttpSession session) {
+		int result_no = (int) session.getAttribute("rno");
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
 																	.test_no(test_no)
 																	.result_no(result_no)
 																	.build();
 		sqlSession.delete("deleteAns", rcorrectDto);
-		
+		session.removeAttribute("rno");
 		return null;
 	}
 	
 	@PostMapping("resultin")
-	public int resultin(@RequestParam String csname, int tno, String id) {
+	public int resultin(@RequestParam String csname, int tno, String id, HttpSession session) {
 		
 		int rno = sqlSession.selectOne("resultno");
 		
@@ -59,7 +68,7 @@ public class RestController {
 											.rno(rno)
 											.build();
 		sqlSession.insert("resultinn", resultDto);
-		
+		session.setAttribute("rno", rno);
 		return rno;
 	}
 	
