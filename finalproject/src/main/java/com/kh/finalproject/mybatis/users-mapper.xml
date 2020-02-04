@@ -52,7 +52,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete users where id=#{id}
 	</delete>
 	
-
+	<!-- 회원 정보 수정 -->
+	<update id="change" parameterType="users">
+		update users set 
+		phone=#{phone},postcode=#{postcode},address=#{address},
+		detailAddress=#{detailAddress},extraAddress=#{extraAddress}
+		where id=#{id}
+	</update>
+	
+	<!-- 비밀번호 수정 -->
+	<update id="change_pw" parameterType="users">
+		update users set pw=#{pw} where id=#{id}
+	</update>
+	
 </mapper>
 
 

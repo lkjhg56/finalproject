@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalproject.entity.UsersDto;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 public class UsersController {
 	
+//	@Autowired
+//	private UsersDao usersDao;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -26,11 +30,11 @@ public class UsersController {
 	private SqlSession sqlSession;
 	
 	//회원 가입
-	@GetMapping("/users/join")
+	@GetMapping("users/join")
 	public String join() {
 		return "users/join";
 	}
-	@PostMapping("/users/join")
+	@PostMapping("users/join")
 	public String join(@ModelAttribute UsersDto usersDto) {
 		usersDto.setPw(encoder.encode(usersDto.getPw()));
 //		usersDao.join(usersDto);
@@ -39,11 +43,11 @@ public class UsersController {
 	}
 	
 	//로그인&로그아웃
-	@GetMapping("/users/login")
+	@GetMapping("users/login")
 	public String login(){
 		return "users/login";
 	}
-	@PostMapping("/users/login")
+	@PostMapping("users/login")
 	public String login(@ModelAttribute UsersDto usersDto,HttpSession session){
 		
 		UsersDto find = sqlSession.selectOne("users.login", usersDto);
@@ -66,7 +70,7 @@ public class UsersController {
 		}
 	}
 	
-	@GetMapping("/users/logout")
+	@GetMapping("users/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("id");
 		session.removeAttribute("grade");
@@ -74,7 +78,7 @@ public class UsersController {
 	}
 	
 	// 아이디 중복 검사
-	@GetMapping("/users/id_check")
+	@GetMapping("users/id_check")
 	@ResponseBody
 	public String id_check(@RequestParam String id) {
 		//검사를 수행
@@ -84,7 +88,7 @@ public class UsersController {
 	}
 
 	// 회원 정보
-	@GetMapping("/users/info")
+	@GetMapping("users/info")
 	public String info(HttpSession session, Model model) {
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("users", sqlSession.selectOne("users.info", id));
@@ -92,7 +96,7 @@ public class UsersController {
 	}
 	
 	// 회원 탈퇴
-	@GetMapping("/users/bye")
+	@GetMapping("users/bye")
 	public String bye(HttpSession session) {
 		String id = (String) session.getAttribute("id");
 		sqlSession.delete("users.bye", id);
@@ -100,4 +104,19 @@ public class UsersController {
 		session.removeAttribute("grade");
 		return "redirect:/";
 	}
+	
+//	 //회원 정보 수정
+	 @GetMapping("users/change")
+	 public String change(HttpSession session, Model model) {
+		 String id = (String) session.getAttribute("id");
+		 model.addAttribute("users", sqlSession.selectOne("users.info", id));
+		return "users/change";
+	 }
+	 @PostMapping("users/change")
+	 public String change(HttpSession session, @ModelAttribute UsersDto usersDto) {
+		 String id = (String) session.getAttribute("id");
+		 usersDto.setId(id);
+		 sqlSession.update("users.change", usersDto );
+		 return "redirect:info";
+	 }
 }
