@@ -39,5 +39,12 @@
 		</interceptor>
 	</interceptors>
 	
+	<!-- 파일 업로드를 위해 스프링이 사용할 도구를 등록 : CommonsMultipartResolver -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"></beans:property>
+		<beans:property name="maxUploadSize" value="10000000"></beans:property>
+		<beans:property name="maxUploadSizePerFile" value="1000000"></beans:property>
+	</beans:bean>
+	
 	
 </beans:beans>
