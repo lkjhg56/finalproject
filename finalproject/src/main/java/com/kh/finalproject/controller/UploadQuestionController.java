@@ -85,13 +85,7 @@ public class UploadQuestionController {
 	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int question_no,@RequestParam int user_custom_question_no) {
-		sqlSession.delete("question.deleteFile",question_no);
-		sqlSession.delete("question.deleteUser",user_custom_question_no);
-		sqlSession.delete("question.deleteQuestion",question_no);
-		UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(question_no);
-		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
-		File file = new File(filepath);
-		file.delete();
+		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
 		return "question/list";
 	}
 	

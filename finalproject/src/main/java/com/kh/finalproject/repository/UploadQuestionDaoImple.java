@@ -67,8 +67,13 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	//파일 삭제를 위한 검색
 	@Override
 	public UploadQuestionFileDto fileDelete(int question_no) {
-		return sqlSession.selectOne("question.getFile",question_no);
-		
+		return sqlSession.selectOne("question.getFile",question_no);		
+	}
+	//파일 삭제
+	public void fileDelete2(int question_no,int user_custom_question_no) {
+		sqlSession.delete("question.deleteFile",question_no);
+		sqlSession.delete("question.deleteUser",user_custom_question_no);
+		sqlSession.delete("question.deleteQuestion",question_no);		
 	}
 
 

@@ -123,6 +123,14 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 					uploadQuestionDao.updateFile(dto);
 					File target = new File(dir, dto.getFile_save_name());
 					mf.transferTo(target);					
-			}	
+			}
+			
+	}
+	public void questionDelete(int question_no, int user_custom_question_no) {	
+		uploadQuestionDao.fileDelete2(question_no,user_custom_question_no);
+		UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(question_no);
+		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
+		File file = new File(filepath);
+		file.delete();
 	}
 }
