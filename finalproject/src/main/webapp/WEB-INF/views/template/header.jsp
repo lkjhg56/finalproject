@@ -19,13 +19,15 @@
 <!-- 메인페이지 -->
 <main>
 관리자 ID : admin pw : admin
+<h4>해당 로고는 ${pageContext.request.contextPath}/res/image/logo(1~9).png 로 변경 및 설정 가능</h4>
+로고가 확정 될 경우 크기 조정하여 넣을 예정임.
 <!-- 운영자 페이지 넣어야 함. -->
 
 
 <!-- 헤더  -->
 <header>
 	<div>
-		<a href="${pageContext.request.contextPath}"><img src="http://placehold.it/200x100?text=Hompage_Logo"></a>
+		<a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/res/image/logo7.png"></a>
 	</div>
 	<div>
 <!-- 네이게이션 -->	
