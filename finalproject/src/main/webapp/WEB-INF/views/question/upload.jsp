@@ -33,7 +33,7 @@ function previewImage(target){
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>문제 업로드</h1>
 <form action="upload" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="user_id" value="${id}"><br><br>
+	<input type="hidden" name="user_id" value="${id}">
 	<input type="text" name="question_title" placeholder="제목" required><br><br>
 	<input type="text" name="category_name" placeholder="카테고리명" required><br><br>
 	<textarea name="question_content" placeholder="문제명" rows="10" cols="50"></textarea><br><br>
