@@ -71,4 +71,33 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			mf.transferTo(target);
 		}
 	}
+	
+	@Override
+	public void questionUpdate(UpdateQuestionVO updateQuestionVO) {
+		//question 테이블 변경
+		UploadQuestionDto uploadQuestionDto = UploadQuestionDto.builder()
+				.category_name(updateQuestionVO.getCategory_name())//user_custom_question 테이블
+				.question_title(updateQuestionVO.getQuestion_title())
+				.question_content(updateQuestionVO.getQuestion_content())
+				.answer1(updateQuestionVO.getAnswer1())
+				.answer2(updateQuestionVO.getAnswer2())
+				.answer3(updateQuestionVO.getAnswer3())
+				.answer4(updateQuestionVO.getAnswer4())
+				.answer5(updateQuestionVO.getAnswer5())				
+				.question_answer(updateQuestionVO.getQuestion_answer())
+				.question_solution(updateQuestionVO.getQuestion_solution())
+				.question_premium(updateQuestionVO.getQuestion_premium())
+				.build();
+		uploadQuestionDao.updateQustion(uploadQuestionDto);
+		
+		//question_file 테이블 변경
+		
+		UploadQuestionFileDto uploadQuestionFileDto = UploadQuestionFileDto.builder()
+				.file_save_name(updateQuestionVO.getFile_save_name())
+				.file_upload_name(updateQuestionVO.getFile_upload_name())
+				.file_type(updateQuestionVO.getFile_type())
+				.file_size(updateQuestionVO.getFile_size())
+				.build();
+		uploadQuestionDao.updateFile(uploadQuestionFileDto);
+	}
 }

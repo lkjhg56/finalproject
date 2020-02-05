@@ -52,14 +52,32 @@
  	문제 수정
  	* 관리자만 question_premium 변경 가능하도록 해야함.
  	 -->
- 	<update id="update" parameterType="uploadQuestionDto">
+ 	<update id="updateQuestion" parameterType="uploadQuestionDto">
  		update question set 
  			question_title=#{question_title},
  			question_content=#{question_content},
  			question_answer=#{question_answer},
+ 			answer1=#{answer1},
+ 			answer2=#{answer2},
+ 			answer3=#{answer3},
+ 			answer4=#{answer4},
+ 			answer5=#{answer5},
  			question_solution=#{question_solution},
  			question_premium=#{question_premium} 
  		where question_no=#{question_no}			
+ 	</update>
+ 	<update id="updateFile" parameterType="uploadQuestionFileDto">
+ 		update question_file set 
+			file_upload_name=#{file_upload_name},
+			file_save_name=#{file_save_name},
+			file_type=#{file_type},
+			file_size=#{file_size}
+ 		where question_no=#{question_no}			
+ 	</update>
+ 	<update id="updateCustom" parameterType="uploadQuestionDto">
+ 		update user_custom_question set 
+			category_name=#{category_name}
+ 		where user_custom_question_no=#{user_custom_question_no}			
  	</update>
  	<!-- 
  	문제 조회
@@ -67,10 +85,25 @@
  	 --> 	
  	 <select id="getList" resultType="uploadQuestionDto">
  	 	select * from question order by question_no asc
- 	 </select>
- 	 
+ 	 </select> 	 
  	 <!-- 세션 id를 이용하여 user_no를 가져옴 -->
  	 <select id="getNo" parameterType="String" resultType="int">
  	 	select user_no from users where id=#{id}
+ 	 </select>
+ 	 <!-- user + user_custom_question + question 테이블 조인 -->
+ 	 <select id="getTotal" parameterType="int" resultType="uploadQuestionDto">
+ 	 	select * from 
+			question q
+			left outer join 
+    		(select * from users u
+         		left outer join user_custom_question ucq
+        		on u.user_no = ucq.user_no
+        	)e
+		on q.user_custom_question_no = e.user_custom_question_no
+		where question_no=#{question_no}	
+ 	 </select>
+ 	 <!-- 파일 불러오기 -->
+ 	 <select id="getFile" parameterType="int" resultType="uploadQuestionFileDto">
+ 	 	select * from question_file where question_no=#{question_no}
  	 </select>
  </mapper>
