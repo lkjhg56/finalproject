@@ -30,6 +30,7 @@ function previewImage(target){
     }
 }
 </script>
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>문제 업로드</h1>
 <form action="update" method="post" enctype="multipart/form-data">
@@ -37,8 +38,8 @@ function previewImage(target){
 	<input type="hidden" name="user_custom_question_no" value="${questionDto.user_custom_question_no}">
 	<input type="text" name="question_title" value="${questionDto.question_title}" required><br><br>
 	<input type="text" name="category_name" value="${questionDto.category_name}" required><br><br>
-	<textarea name="question_content" rows="10" cols="50"></textarea><br><br>
-	<img id="preview" src="image?question_no=${questionDto.question_no}" width="120" height="120"><br>	
+	<textarea name="question_content" rows="10" cols="50">${questionDto.question_content}</textarea><br><br>
+	<img id="preview" src="image?question_no=${questionDto.question_no}" width="120" height="120"><br><br>
 	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>
 	<input type="text" name="answer1" value="${questionDto.answer1}" required><br><br>
 	<input type="text" name="answer2" value="${questionDto.answer2}" required><br><br>

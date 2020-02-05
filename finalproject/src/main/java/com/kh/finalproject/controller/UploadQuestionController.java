@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,17 +73,28 @@ public class UploadQuestionController {
 	@GetMapping("/update")
 	public String update(@RequestParam int question_no, Model model) {
 		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
-		UploadQuestionFileDto uploadQuestionFileDto = sqlSession.selectOne("question.getFile",question_no);
 		model.addAttribute("questionDto",uploadQuestionDto);
-		model.addAttribute("fileDto",uploadQuestionFileDto);
 		return "question/update";
 	}
 	@PostMapping("/update")
-	public String update2(@ModelAttribute UpdateQuestionVO updateQuestionVO) {
-		System.out.println(updateQuestionVO.getFile_upload_name());
+	public String update2(@ModelAttribute UpdateQuestionVO updateQuestionVO, Model model) throws Exception {		
 		uploadQuestionService.questionUpdate(updateQuestionVO);
+		model.addAttribute("questionDto",updateQuestionVO);
 		return "question/content";
 	}
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam int question_no,@RequestParam int user_custom_question_no) {
+		sqlSession.delete("question.deleteFile",question_no);
+		sqlSession.delete("question.deleteUser",user_custom_question_no);
+		sqlSession.delete("question.deleteQuestion",question_no);
+		UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(question_no);
+		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
+		File file = new File(filepath);
+		file.delete();
+		return "question/list";
+	}
+	
 	@GetMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("list", uploadQuestionDao.getList());

@@ -15,5 +15,5 @@ public interface UploadQuestionDao {
 	String makeDispositionString(UploadQuestionFileDto uploadQuestionFileDto) throws Exception;
 	void updateQustion(UploadQuestionDto uploadQuestionDto);
 	void updateFile(UploadQuestionFileDto uploadQuestionFileDto);
-
+	UploadQuestionFileDto fileDelete(int question_no);
 }
