@@ -106,7 +106,7 @@ public class SolveQuestionController {
 			if(dtocount<=sessioncount) {
 				httpSession.removeAttribute("no");
 				
-				return "redirect:question/result";
+				return "redirect:result";
 			}
 			
 			
