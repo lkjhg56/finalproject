@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.repository.TestDao;
 
@@ -22,6 +24,9 @@ public class SolveQuestionController {
 	
 	@Autowired
 	private TestDao testDao;
+	
+	@Autowired
+	SqlSession sqlSession;
 	
 	@GetMapping("question/choose")
 	public String choose(Model model) {
@@ -96,10 +101,21 @@ public class SolveQuestionController {
 	public String result(@RequestParam String category_no, String csname, HttpSession session, Model model) {
 		int rno = (int) session.getAttribute("rno");
 		
+	
+		TestQuestionDto testQuestionDto = TestQuestionDto.builder()
+																						.csname(csname)
+																						.category_no(category_no)
+																						.build();
+				
+				
+		List<TestQuestionDto> answerList = sqlSession.selectList("getQuesNum", testQuestionDto);
+		List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
+		log.info("정답리스트={}", answerList.size());
+		log.info("확인={}", rCorrectDto.size());
+		model.addAttribute("rCorrectDto", rCorrectDto);
+		model.addAttribute("answerList", answerList);
 		model.addAttribute("score",  testDao.getScore(rno, category_no, csname));
 		
-		
-		session.removeAttribute("rno");
 		return "question/result";
 	}
 	
