@@ -25,5 +25,5 @@ public class UploadQuestionDto {
 	private int user_no;//유저 넘버
 	private String category_name;
 /*************************************************/
-
+	private String id;
 }

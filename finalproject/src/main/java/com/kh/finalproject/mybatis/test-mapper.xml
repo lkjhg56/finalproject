@@ -72,7 +72,11 @@ where a.rownumber=#{no}
   FROM ( select A.* from test_question A  order by no asc
        ) X where  csname= #{categoryname} and ROWNUM=1
 	</select>
-	
+		
+		<!--  유저답 리스트 -->
+		<select id = "getCorrectList" parameterType = "int" resultType = "rcorrectDto">
+			select * from rcorrect where result_no = #{rno}
+		</select>
 
 	
 </mapper>

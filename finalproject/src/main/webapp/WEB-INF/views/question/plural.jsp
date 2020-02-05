@@ -67,9 +67,7 @@
 
    </div>
    </c:forEach>
-   ${session}
-   ${csname}
-   ${rno}
+  
    <form action = "${pageContext.request.contextPath}/question/result"> 
    
    			<input type = "hidden" name = "category_no" value = "${session}">
