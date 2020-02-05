@@ -1,12 +1,19 @@
 package com.kh.finalproject.repository;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
+import com.kh.finalproject.entity.BoardFileDto;
 
 @Repository
 public class BoardDaoImpl implements BoardDao{
@@ -16,8 +23,7 @@ public class BoardDaoImpl implements BoardDao{
 	
 	@Override
 	public void regist(BoardDto boardDto) {
-		sqlSession.insert("board.regist", boardDto);
-		
+		sqlSession.insert("board.regist", boardDto);		
 	}
 
 	@Override
@@ -35,5 +41,17 @@ public class BoardDaoImpl implements BoardDao{
 		//board_category를 주고 선택한 카테고리에 해당하는 게시판목록 조회한다.
 		return sqlSession.selectList("board.getCategoryList", board_category); 
 	}
+
+	@Override
+	public int getsequence() {
+		return sqlSession.selectOne("board.getSequence");
+	}
+
+	@Override
+	public void edit(BoardDto boardDto) {
+		sqlSession.update("board.edit", boardDto);
+		
+	}
+
 
 }

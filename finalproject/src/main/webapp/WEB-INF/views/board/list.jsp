@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h1>list</h1>
+
 <form action="list" method="post">
+	<input type="submit" name="board_category" value="전체">
 	<input type="submit" name="board_category" value="공지">
 	<input type="submit" name="board_category" value="자유">
 	<input type="submit" name="board_category" value="질문">
@@ -19,3 +21,5 @@
 	${list.board_wdate }
 	<br>
 </c:forEach>
+
+<a href=${pageContext.request.contextPath}/board/regist>글쓰기</a>

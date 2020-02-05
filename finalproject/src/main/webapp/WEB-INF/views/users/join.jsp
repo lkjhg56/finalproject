@@ -61,7 +61,6 @@
 		$(".id_check_btn").click(function(){
 			var id = $("input[name=id]").val();
 // 			console.log(id);
-
 			if(id == ""){
 				$(".id_check_btn").next(".id").text("아이디를 입력해주세요.");
 				
@@ -110,10 +109,77 @@
 		});
 	});
 	
+	//이메일 인증
+	$(function(){
+//		.validate-form은 처음에 숨기고 이메일 전송시만 표시
+	$(".validate").hide();
+	$(".join-form").hide();
+	$(".go_join").hide();
+	
+//		.email-form이 전송되면 send 주소로 비동기 신호를 전송(ajax)
+	$(".email").submit(function(e){
+		e.preventDefault();
+		
+		$(this).find("input[type=submit]").prop("disabled", true);
+		$(this).find("input[type=submit]").val("인증번호 발송중...");
+
+		//var url = $(this).attr("action"); 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/users/send",
+			type:"get",
+			data:data,
+			success:function(resp){
+				//console.log(resp);
+				if(resp == "success"){
+					$(".email-form").find("input[type=submit]").val("인증번호 발송완료");
+					$(".validate").show();
+				}
+			}
+		});
+	});
+//		validate-form이 전송되면 /validate로 비동기 요청을 전송
+	$(".validate").submit(function(e){
+		e.preventDefault();
+		//var url = $(this).attr("action"); 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/users/validate",
+			type:"get",
+			data:data,
+			success:function(resp){
+				if(resp == "success"){
+					$("input[type=submit]").next(".finish_cert").text("인증이 완료되었습니다.");
+					$(".join-form").show();
+				}
+				else{
+					alert("인증 실패");
+				}
+			}
+		});
+	});
+});
+	
 </script>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <h1>회원가입</h1>
-<form action="join" method="post">
+<h2>본인 확인을 위한 이메일인증을 해주세요.</h2>
+<form class="email" action="send" method="post">
+	<input type="text" name="email" placeholder="이메일 입력">
+	<input type="submit" value="인증번호 보내기">
+</form>
+
+<form class="validate" action="validate" method="post">
+	<input type="text" name="cert" placeholder="인증번호 입력">
+	<input type="submit" value="인증하기">
+	<div class="finish_cert"></div>
+</form>
+
+<form class="join-form" action="join" method="post">
 
 	이름 : <input type="text" name="name" required><br><br>
 	아이디 : <input type="text" name="id" required>
@@ -126,6 +192,7 @@
 	<br>
 	이메일 : <input type="text" name="email" required><br><br>
 	전화번호 : <input type="text" name="phone" required><br><br>
+	주소 : <br><br>
 	<input type="text" id="postcode" name="postcode" placeholder="우편번호" required> 
 	<input type="button" onclick="DaumPostcode()"value="우편번호 찾기"><br> 
 	<input type="text" id="address" name="address" placeholder="주소" required><br> 

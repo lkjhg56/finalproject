@@ -18,6 +18,15 @@
 		select * from test_question where csname= #{categoryname} order by no asc
 	</select>
 	
+	<!-- 한 문제씩 -->
+	<select id="questionDto" parameterType="testQuestionDto" resultType="testQuestionDto">
+	select * from
+(select rownum as rownumber, b.* from test_question b where csname= #{csname}) a
+where a.rownumber=#{no}
+	</select>
+	
+	
+
 	<!-- result 베이스 작성 -->
 	<select id = "resultno" resultType = "int">
 		select result_seq.nextval from dual
@@ -42,12 +51,19 @@
 		delete from rcorrect where result_no=#{result_no} and test_no =#{test_no}
 	</delete>
 
-	<select id = "getQuesNum" parameterType = "int" resultType = "int">
-			select count(*) from rcorrect where result_no=#{rno}
+	<!--  csname & category_no 로 문제 부르기 -->
+	<select id = "getQuesNum" parameterType = "testQuestionDto" resultType = "testQuestionDto">
+			select * from test_question where csname=#{csname} and category_no=#{category_no}
 	</select>
+	
+	
 	<select id = "getCorrectNum" parameterType = "int" resultType = "int">
 			select count(*) from rcorrect where result_no=#{rno} and iscorrect=1
 	</select>
+
+	<update id = "sumScore" parameterType = "scoreVO">
+		update result set sumscore =#{score} where rno=#{rno}
+	</update>
 
 
 	<select id="questionList2" parameterType="String" resultType="testQuestionDto">
@@ -56,7 +72,11 @@
   FROM ( select A.* from test_question A  order by no asc
        ) X where  csname= #{categoryname} and ROWNUM=1
 	</select>
-	
+		
+		<!--  유저답 리스트 -->
+		<select id = "getCorrectList" parameterType = "int" resultType = "rcorrectDto">
+			select * from rcorrect where result_no = #{rno}
+		</select>
 
 	
 </mapper>

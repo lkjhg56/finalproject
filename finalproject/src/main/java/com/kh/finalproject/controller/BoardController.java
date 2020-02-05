@@ -1,5 +1,8 @@
 package com.kh.finalproject.controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
 import com.kh.finalproject.repository.BoardDao;
+import com.kh.finalproject.service.BoardFileService;
+
 
 
 @Controller
@@ -24,6 +29,9 @@ public class BoardController {
 	@Autowired
 	private BoardDao boardDao;
 	
+	@Autowired
+	private BoardFileService boardfileService;
+	
 	//글 작성
 	@GetMapping("/regist")
 	public String regist() {
@@ -32,15 +40,25 @@ public class BoardController {
 	
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute BoardDto boardDto,
-									@RequestParam MultipartFile board_file) {
-		boardDao.regist(boardDto);
+									@RequestParam List<MultipartFile> board_file) throws IllegalStateException, IOException {
+		
+		boardfileService.regist(boardDto, board_file);
+		
 		return "redirect:list";
 	}
 	
-	@PostMapping("/edit")
-	public String edit() {
-		
+	@GetMapping("/edit")
+	public String edit(@RequestParam int board_no,
+									Model model) {
+		boardDao.get(board_no);
+		model.addAttribute("boardDto", boardDao.get(board_no));		
 		return "board/edit";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute BoardDto boardDto) {
+		boardDao.edit(boardDto);
+		return "board/content";		
 	}
 	
 	
@@ -64,9 +82,16 @@ public class BoardController {
 		@PostMapping("/list")
 		public String list(@RequestParam String board_category,
 									Model model) {
-			boardDao.getCategoryList(board_category);
-			model.addAttribute("list", boardDao.getCategoryList(board_category));
-			return "board/list";
+			if(board_category.equals("전체")) {
+				model.addAttribute("list", boardDao.getList());
+				return "board/list";
+			}
+			else {
+				boardDao.getCategoryList(board_category);
+				model.addAttribute("list", boardDao.getCategoryList(board_category));
+				return "board/list";				
+				
+			}
 		}
 	
 
