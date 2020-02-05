@@ -29,7 +29,7 @@ public class RestController {
 	private TestDao testDao;
 	
 	@PostMapping("insert")
-	public String insert(@RequestParam int test_no, int correct, int iscorrect, HttpSession session) {
+	public String insert(@RequestParam int test_no, int correct, int answer, int iscorrect, HttpSession session) {
 		int result_no = (int) session.getAttribute("rno");
 		log.info("testcheck ={}", test_no);
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
@@ -37,6 +37,7 @@ public class RestController {
 																	.correct(correct)
 																	.result_no(result_no)
 																	.iscorrect(iscorrect)
+																	.answer(answer)
 																	.build();
 		sqlSession.insert("correct", rcorrectDto);
 		
