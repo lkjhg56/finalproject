@@ -30,8 +30,13 @@ function previewImage(target){
 	<input type="text" name="answer4" placeholder="선택지 4 입력" required><br><br>
 	<input type="text" name="answer5" placeholder="선택지 5 입력" required><br><br>
 	<!-- 정답 칸은 숫자로 입력할 수 있도록 script에서 처리해야함. -->
-	<input type="text" name="question_answer" placeholder="정답 입력(숫자, 1~5)" required><br><br>
-	<input type="text" name="question_solution" placeholder="해설입력" required><br><br>
+	정답 설정<br>
+	<input type="radio" name="question_answer" value="1" required>①
+	<input type="radio" name="question_answer" value="2" required>②
+	<input type="radio" name="question_answer" value="3" required>③
+	<input type="radio" name="question_answer" value="4" required>④
+	<input type="radio" name="question_answer" value="5" required>⑤<br><br>
+	<textarea name="question_solution" placeholder="해설입력" rows="10" cols="50"></textarea><br><br>
 	<input type="submit" value="등록하기">
 	<input type="reset" value="초기화">
 </form>

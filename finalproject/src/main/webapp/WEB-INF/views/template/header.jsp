@@ -38,9 +38,9 @@
 			</c:when>
 			<c:otherwise>				
 					<a href="${pageContext.request.contextPath}/users/info">회원정보</a>
-					<a href="${pageContext.request.contextPath}/question/upload">문제 등록</a>
-					<a href="${pageContext.request.contextPath}/question/choose">문제 목록</a>
-					<a href="${pageContext.request.contextPath}/question/solve">문제 풀기</a>
+					<a href="${pageContext.request.contextPath}/question/upload">유저문제 등록</a>
+					<a href="${pageContext.request.contextPath}/question/list">유저문제 목록</a>
+					<a href="${pageContext.request.contextPath}/question/choose">일반문제 목록</a>
 					<a href="${pageContext.request.contextPath}/board/list">게시판</a>
 					<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>				
 			</c:otherwise>

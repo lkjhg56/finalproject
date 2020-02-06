@@ -24,11 +24,11 @@ function previewImage(target){
 <img id="preview" src="image?question_no=${questionDto.question_no}" width="120" height="120"><br><br>
 <form action="solve" method="post">
 <input type="hidden" name="question_no" value="${questionDto.question_no}">
-<input type="radio" name="question_answer" value="1">${questionDto.answer1}
-<input type="radio" name="question_answer" value="2">${questionDto.answer2}
-<input type="radio" name="question_answer" value="3">${questionDto.answer3}
-<input type="radio" name="question_answer" value="4">${questionDto.answer4}
-<input type="radio" name="question_answer" value="5">${questionDto.answer5}<br>
+<input type="radio" name="question_answer" value="1">1. ${questionDto.answer1}
+<input type="radio" name="question_answer" value="2">2. ${questionDto.answer2}
+<input type="radio" name="question_answer" value="3">3. ${questionDto.answer3}
+<input type="radio" name="question_answer" value="4">4. ${questionDto.answer4}
+<input type="radio" name="question_answer" value="5">5. ${questionDto.answer5}<br>
 <input type="submit" value="제출하기">
 </form>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

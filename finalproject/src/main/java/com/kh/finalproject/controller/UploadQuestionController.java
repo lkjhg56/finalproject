@@ -2,6 +2,7 @@ package com.kh.finalproject.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,13 +40,13 @@ public class UploadQuestionController {
 	//문제 풀기
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", question_no);
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
 		model.addAttribute("questionDto",uploadQuestionDto);
 		return "question/solve";
 	}
 	@PostMapping("/solve")
 	public String solve2(@RequestParam int question_answer, @RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", question_no);
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
 		boolean result=question_answer==uploadQuestionDto.getQuestion_answer();
 		if(result) {
 			model.addAttribute("result", "정답입니다.");
@@ -109,7 +110,8 @@ public class UploadQuestionController {
 	
 	@GetMapping("/list")
 	public String list(Model model) {
-		model.addAttribute("list", uploadQuestionDao.getList());
+		List<UploadQuestionDto> list = sqlSession.selectList("question.getTotal2");
+		model.addAttribute("list",list);
 		return "question/list";
 	}
 	@GetMapping("/content")

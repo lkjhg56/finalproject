@@ -12,6 +12,7 @@
 		<th>정답비율</th>
 		<th>문제 확인</th>
 		<th>문제 풀기</th>
+		<th>출제자</th>
 	</tr>
 <c:forEach var="question" items="${list}">
 	<tr>
@@ -22,6 +23,7 @@
 		<td>${question.question_no}</td>
 		<td><a href="content?question_no=${question.question_no}">확인</a></td>
 		<td><a href="solve?question_no=${question.question_no}">풀기</a></td>
+		<td>${question.id}</td>
 	</tr>
 </c:forEach>
 </table>
