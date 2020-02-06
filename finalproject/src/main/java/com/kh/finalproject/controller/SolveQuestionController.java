@@ -23,10 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 public class SolveQuestionController {
 	
 	@Autowired
-	private TestDao testDao;
+	SqlSession sqlSession;
 	
 	@Autowired
-	SqlSession sqlSession;
+	private TestDao testDao;
 	
 	@GetMapping("question/choose")
 	public String choose(Model model) {
@@ -60,7 +60,9 @@ public class SolveQuestionController {
 	
 	@GetMapping("question/questcategory")
 
-	public String category(@RequestParam String categoryname, String session, Model model,String method) {
+
+	public String category(@RequestParam HttpSession httpSession, String categoryname, String session, String hour, String min, String method, Model model) {
+
 		
 		if(method.equals("한번에풀기")) {
 			List<TestQuestionDto> questionDto = testDao.getQuestionList(categoryname);
@@ -83,16 +85,38 @@ public class SolveQuestionController {
 
 
 			}
+		
 			model.addAttribute("clist", question);
 			model.addAttribute("session", session);
-			model.addAttribute("method",method);
+
+			model.addAttribute("method", method);
+			model.addAttribute("csname", categoryname);
+			model.addAttribute("hour", hour);
+			model.addAttribute("min", min);
+
 			log.info("session={}", session);
 			
 			return "question/plural";
 		}
 
 		else {
-			TestQuestionDto tdto= testDao.getDto(categoryname);
+			
+			if(httpSession.getAttribute("no")==null ) {
+				httpSession.setAttribute("no", 0);
+			}
+		
+			int sessioncount=(int)httpSession.getAttribute("no");
+			int dtocount=testDao.getDtocount(categoryname, session);
+			
+			if(dtocount<=sessioncount) {
+				httpSession.removeAttribute("no");
+				
+				return "redirect:result";
+			}
+			
+			
+			TestQuestionDto tdto= testDao.getDto(categoryname,httpSession);
+			
 			
 			TestQuestionDto dto=new TestQuestionDto();
 			
@@ -111,6 +135,8 @@ public class SolveQuestionController {
 			model.addAttribute("clist", dto);
 			model.addAttribute("session", session);
 			model.addAttribute("method", method);
+			model.addAttribute("csname", categoryname);
+	
 			return "question/one";
 			
 			
@@ -121,34 +147,43 @@ public class SolveQuestionController {
 
 
 	
-	
-	@GetMapping("question/questcategory2")
-	public String category2(@RequestParam String categoryname, Model model) {
-		model.addAttribute("clist2", testDao.getQuestionList2(categoryname));
-		return "question/one";
-		
-	}
-	
+
 	@GetMapping("question/result")
 	public String result(@RequestParam String category_no, String csname, HttpSession session, Model model) {
 		int rno = (int) session.getAttribute("rno");
-		
-	
 		TestQuestionDto testQuestionDto = TestQuestionDto.builder()
-																						.csname(csname)
-																						.category_no(category_no)
-																						.build();
-				
-				
+				.csname(csname)
+				.category_no(category_no)
+				.build();
+
+
 		List<TestQuestionDto> answerList = sqlSession.selectList("getQuesNum", testQuestionDto);
 		List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
-		log.info("정답리스트={}", answerList.size());
-		log.info("확인={}", rCorrectDto.size());
+
 		model.addAttribute("rCorrectDto", rCorrectDto);
 		model.addAttribute("answerList", answerList);
 		model.addAttribute("score",  testDao.getScore(rno, category_no, csname));
-		
+		model.addAttribute("csname", csname);
 		return "question/result";
+	}
+	
+	@GetMapping("question/oneresult")
+	public String result2(@RequestParam String category_no, String csname, String method,HttpSession session, Model model) {
+		int rno = (int) session.getAttribute("rno");
+	
+		TestQuestionDto testQuestionDto = TestQuestionDto.builder()
+				.csname(csname)
+				.category_no(category_no)
+				.build();
+
+
+						
+	
+		
+		model.addAttribute("category_no", category_no);
+		model.addAttribute("csname", csname);
+		model.addAttribute("method", method);
+		return "question/oneresult";
 	}
 	
 }
