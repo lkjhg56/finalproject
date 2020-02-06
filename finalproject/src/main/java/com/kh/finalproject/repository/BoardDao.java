@@ -2,6 +2,7 @@ package com.kh.finalproject.repository;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,12 @@ public interface BoardDao {
 		
 	//6. 게시글 수정
 		void edit(BoardDto boardDto);
+
+	//7.게시글 삭제
+		void delete(int board_no);
+
+	//8.게시글 검색
+		List<BoardDto> search(Map<String, String> param);
 		
 		
 }

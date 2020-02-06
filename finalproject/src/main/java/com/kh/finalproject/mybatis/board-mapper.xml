@@ -23,9 +23,7 @@
 
  <mapper namespace="board">
  	
-	<!--  	
-		게시글 등록 구문		
-	-->
+	<!-- 게시글 등록 구문	-->
  	<insert id="regist" parameterType="boardDto">
  		insert into board values(
  			#{board_no},
@@ -34,13 +32,11 @@
  			0,
  			sysdate,
  			#{board_content},
- 			'test' 			
+ 			#{board_writer}
  		)
  	</insert>
  	
- 	<!-- 
-		파일 저장구문
-	 -->
+ 	<!-- 파일 저장구문 -->
 	 <insert id="fileUpload" parameterType="list">
 	 	insert into board_file values(
 	 	board_file_seq.nextval,
@@ -52,16 +48,12 @@
 	 	)
 	 </insert>
 	 
-	 <!-- 
-	 	파일 불러오는 구문
-	  -->
+	 <!-- 파일 불러오는 구문 -->
 	  <select id="getFile" parameterType="int">
 	  	select * from board_file where board_file_no = #{board_file_no}
 	  </select>
  	
- 	<!-- 
- 		게시글 수정 구문
- 	 -->
+ 	<!-- 게시글 수정 구문 -->
  	 <update id="edit" parameterType="boardDto">
  	 	update board set 
 	 	 	board_category =#{board_category}, 
@@ -70,38 +62,40 @@
  	 	where 
  	 		board_no = #{board_no}
  	 </update>
+ 	 
+ 	<!-- 게시글 삭제 구문 -->
+ 	<delete id="delete" parameterType="int">
+ 		delete board where board_no = #{board_no}
+ 	</delete>
  	
- 	<!--  	
-		게시글 전체 조회 구문		
-	-->
+ 	<!-- 게시글 전체 조회 구문	-->
  	<select id="list" resultType="boardDto">
 		select * from board order by board_no desc
 	</select>
  	
- 	<!--  	
-		게시글 단일(상세) 조회 구문		
-	-->
+ 	<!-- 게시글 단일(상세) 조회 구문 -->
  	<select id="get" parameterType="int" resultType="boardDto">
 		select * from board where board_no = #{board_no}
 	</select>
 	
-	<!--  	
-		게시판 카테고리별 조회 구문		
-	-->
+	<!-- 게시판 카테고리별 조회 구문 -->
  	<select id="getCategoryList" parameterType="string" resultType="boardDto">
 		select * from board where board_category = #{board_category} order by board_no desc
 	</select>
 	
-	<!-- 
-		게시판 시퀀스 자동발급 구문
-	 -->
+	<!-- 게시글 검색 구문 -->
+	<select id="search" parameterType="hashmap" resultType="boardDto">		
+		select * from board 
+		where ${search_type} like '%'||#{search_keyword}||'%'
+		order by board_no desc		
+	</select>
+	
+	<!-- 게시판 시퀀스 자동발급 구문 -->
 	<select id="getSequence" resultType="int">
 		select board_seq.nextval from dual
 	</select>
 	
-	<!-- 
-		게시판파일 시퀀스 자동발급 구문
-	 -->
+	<!-- 게시판파일 시퀀스 자동발급 구문 -->
 	<select id="filegetSequence" resultType="int">
 		select board_file_seq.nextval from dual
 	</select>
