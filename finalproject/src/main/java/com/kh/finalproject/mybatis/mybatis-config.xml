@@ -22,5 +22,6 @@
 		<typeAlias type = "com.kh.finalproject.vo.SetScoreVO" alias = "scoreVO"/>
 		<typeAlias type="com.kh.finalproject.entity.CertDto" alias="cert"/>
 		<typeAlias type="com.kh.finalproject.payentity.CashListDto" alias="cashList"/>
+		<typeAlias type="com.kh.finalproject.entity.BoardReplyDto" alias="boardReplyDto"/>
 	</typeAliases>
 </configuration>
