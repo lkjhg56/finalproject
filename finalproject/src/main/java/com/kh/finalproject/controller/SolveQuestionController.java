@@ -61,7 +61,7 @@ public class SolveQuestionController {
 	@GetMapping("question/questcategory")
 
 
-	public String category(@RequestParam HttpSession httpSession, String categoryname, String session, String hour, String min, String method, Model model) {
+	public String category(HttpSession httpSession, @RequestParam String categoryname, String session, String hour, String min, String method, Model model) {
 
 		
 		if(method.equals("한번에풀기")) {
@@ -122,6 +122,7 @@ public class SolveQuestionController {
 			
 			
 				if(tdto.getCategory_no().equals(session)) {
+					dto.setNo(tdto.getNo());
 					dto.setAnswer(tdto.getAnswer());
 					dto.setCategory_no(tdto.getCategory_no());
 					dto.setDis1(tdto.getDis1());

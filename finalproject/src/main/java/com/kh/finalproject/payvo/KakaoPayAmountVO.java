@@ -1,4 +1,4 @@
-package com.kh.finalproject.payentity;
+package com.kh.finalproject.payvo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class CashListDto {
-	private int cash_no;
-	private int price, token;
-	private String product, tax_free_amount;
+public class KakaoPayAmountVO {
+	private int total, tax_free, vat, point, discount;
 }

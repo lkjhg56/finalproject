@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/pay")
 public class PayController {
-	
 	@Autowired
 	SqlSession sqlSession;
 	
@@ -19,5 +18,4 @@ public class PayController {
 		model.addAttribute("list", sqlSession.selectList("getCashList"));
 		return "pay/pointpayment";
 	}
-
 }
