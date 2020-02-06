@@ -16,4 +16,5 @@
 <h3>등급 : ${users.grade}</h3> 
 <h3>주소 : ${users.postcode} ${users.address} ${users.detailAddress} ${users.extraAddress}</h3>
 <a href="${context}/users/change">정보 수정하기</a>
+<a href="${context}/users/test_result">내가 본 시험 내역</a>
 <a href="${context}/users/bye">탈퇴하기</a>
