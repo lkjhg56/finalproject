@@ -63,7 +63,7 @@ public class GmailService implements EmailService{
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 		
 		helper.setTo(email);
-		helper.setSubject("[KH정보교육원] 비밀번호 변경 메일");
+		helper.setSubject("[Q master] 비밀번호 변경 메일입니다.");
 		
 		//주소 생성
 //		String url = "http://localhost:8080/sts21/pw/change?cert="+cert+"&email="+email;

@@ -27,12 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class EmailPasswordController {
 
 	@Autowired
-	private RandomService randomService;
-	
-	@Autowired
-	private JavaMailSender sender;
-	
-	@Autowired
 	private CertDao certDao;
 	
 	@Autowired

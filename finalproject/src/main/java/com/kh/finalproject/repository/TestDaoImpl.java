@@ -2,6 +2,8 @@ package com.kh.finalproject.repository;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,7 +44,7 @@ public class TestDaoImpl implements TestDao{
 	@Override
 	public int getScore(int rno, String category_no, String csname) {
 		log.info("rno={}", rno);
-		
+		log.info("csname ={}", csname);
 		
 		TestQuestionDto testDto =TestQuestionDto.builder()
 												.csname(csname)
@@ -53,8 +55,9 @@ public class TestDaoImpl implements TestDao{
 		
 		int questionCount = questionList.size();
 		int correctCount = sqlSession.selectOne("test.getCorrectNum", rno);
-		int score = 100/questionCount*correctCount;
-		
+		log.info("questioncount={}", questionCount);
+		log.info("correctCount={}", questionCount);
+				int score = 100/questionCount*correctCount;
 		SetScoreVO scoreVO = SetScoreVO.builder()
 															.score(score)
 															.rno(rno)
@@ -63,7 +66,7 @@ public class TestDaoImpl implements TestDao{
 		
 		sqlSession.update("sumScore", scoreVO);
 		
-		log.info("questioncount={}", questionCount);
+
 		log.info("correct ={}", correctCount);
 		log.info("score={}", score);
 		return score;
@@ -71,9 +74,17 @@ public class TestDaoImpl implements TestDao{
 	}
 
 	@Override
-	public TestQuestionDto getDto(String categoryname) {
+	public TestQuestionDto getDto(String categoryname,HttpSession session) {
+	
+		
+		int no= (int)session.getAttribute("no");
+
 	TestQuestionDto dto= new TestQuestionDto();
-	int count=1;
+	int count=no+1;
+	
+	session.setAttribute("no", count);
+	
+	
 dto.setNo(count);
 dto.setCsname(categoryname);
 	
@@ -84,6 +95,16 @@ dto.setCsname(categoryname);
 	public int getScore(int rno) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int getDtocount(String csname, String category_no) {
+	TestQuestionDto dto= TestQuestionDto.builder()
+			.csname(csname)
+			.category_no(category_no)
+			.build();
+		
+		return sqlSession.selectOne("test.quescountDto", dto);
 	}
 
 }
