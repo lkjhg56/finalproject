@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.RcorrectDto;
-import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.repository.TestDao;
 
@@ -62,7 +61,7 @@ public class SolveQuestionController {
 	@GetMapping("question/questcategory")
 
 
-	public String category(@RequestParam String categoryname, String session, String hour, String min, String method, Model model) {
+	public String category(@RequestParam HttpSession httpSession, String categoryname, String session, String hour, String min, String method, Model model) {
 
 		
 		if(method.equals("한번에풀기")) {
