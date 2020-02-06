@@ -8,7 +8,8 @@
 		$("select[name=board_category]").val("${boardDto.board_category}"); 
 	});
 </script>
-    
+
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div align="center">    
 <h1>게시글 수정</h1>
 
@@ -54,3 +55,4 @@
 		</table>	
 </form>
 </div>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

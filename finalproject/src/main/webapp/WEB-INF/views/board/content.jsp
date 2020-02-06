@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
  
  
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div align="center">	
 <h2>게시글 보기</h2>
 		<table border="1" width="70%">
@@ -85,16 +85,20 @@
 			<tr>
 				<td align="right">
 					<a href="regist"><input type="button" value="글쓰기"></a>
-										
-<%-- 					<c:if test="${isMine or isAdmin}">								 --%>
+					
+					<!-- 	본인글인지 여부와 관리자인지 여부 확인 -->
+					<c:set var="isMine" value="${id == boardDto.board_writer}"></c:set>
+					<c:set var="isAdmin" value="${grade == '관리자'}"></c:set>
+					
+					<c:if test="${isMine or isAdmin}">								
 					<!-- 수정/삭제 버튼은 관리자이거나 본인글에만 표시 -->
 					<a href="edit?board_no=${boardDto.board_no}"><input type="button" value="수정"></a>
 					<a href="delete?board_no=${boardDto.board_no}"><input type="button" value="삭제"></a>
-<%-- 					</c:if> --%>
+					</c:if>
 					
 					<a href="list"><input type="button" value="목록"></a>					
 				</td>
 			</tr>	
 		</table>
 	</div>
-
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
