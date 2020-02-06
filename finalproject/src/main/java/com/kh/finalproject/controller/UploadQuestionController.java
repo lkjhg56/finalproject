@@ -1,7 +1,8 @@
 package com.kh.finalproject.controller;
 
 import java.io.File;
-import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.UploadQuestionService;
 import com.kh.finalproject.vo.UpdateQuestionVO;
@@ -45,17 +46,35 @@ public class UploadQuestionController {
 		return "question/solve";
 	}
 	@PostMapping("/solve")
-	public String solve2(@RequestParam int question_answer, @RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
-		boolean result=question_answer==uploadQuestionDto.getQuestion_answer();
+	public String solve2(@ModelAttribute UpdateQuestionVO updateQuestionVO, Model model) {
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", updateQuestionVO.getQuestion_no());
+		String time=uploadQuestionDao.timeCheck();
+		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
+							 +updateQuestionVO.getSec()+":"+updateQuestionVO.getMilisec();
+		int question_result_no=uploadQuestionDao.questionResultSequece();
+		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
+				.hour(updateQuestionVO.getHour())
+				.min(updateQuestionVO.getMin())
+				.sec(updateQuestionVO.getSec())
+				.milisec(updateQuestionVO.getMilisec())
+				.question_answer(uploadQuestionDto.getQuestion_answer())
+				.result_no(question_result_no)
+				.user_conclusion(updateQuestionVO.getQuestion_answer())
+				.result_time(result_time)
+				.tried_user(updateQuestionVO.getId())
+				.solveDate(time)
+				.question_no(updateQuestionVO.getQuestion_no())
+				.build();
+		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
 		if(result) {
-			model.addAttribute("result", "정답입니다.");
+			userQuestionResultDto.setResult(1);
 		}else {
-			model.addAttribute("result", "오답입니다.");
+			userQuestionResultDto.setResult(0);
 		}
+		sqlSession.insert("question.insert_result",userQuestionResultDto);
+		model.addAttribute("result", userQuestionResultDto);
 		return "question/solve_result";
 	}
-	
 	@GetMapping("/upload")
 	public String upload() {
 		return "question/upload";

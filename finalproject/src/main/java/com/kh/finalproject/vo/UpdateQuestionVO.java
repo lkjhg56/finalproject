@@ -35,4 +35,12 @@ public class UpdateQuestionVO {
 	private List<MultipartFile> file;
 /*************************************************/
 	private String id;
+/*************************************************/
+	//출력용
+	private int hour;
+	private int min;
+	private int sec;
+	private int milisec;
+	private int user_conclusion;
+
 }

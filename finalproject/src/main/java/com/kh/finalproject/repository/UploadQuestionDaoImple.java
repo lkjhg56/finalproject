@@ -1,6 +1,8 @@
 package com.kh.finalproject.repository;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,8 +22,12 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	public int userSequence() {
 		return sqlSession.selectOne("question.userSequence");
+		
 	}	
-	
+	@Override
+	public int questionResultSequece() {
+		return sqlSession.selectOne("question.questionSequence");
+	}
 	
 	//DB에 업로드
 	public void upload(UploadQuestionDto uploadQuestionDto) {
@@ -75,7 +81,11 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		sqlSession.delete("question.deleteUser",user_custom_question_no);
 		sqlSession.delete("question.deleteQuestion",question_no);		
 	}
-
-
-
+	
+	public String timeCheck() {
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm");
+		Date time = new Date();		
+		String time1 = format.format(time);
+		return time1;
+	}
 }

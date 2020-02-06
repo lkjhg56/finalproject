@@ -10,6 +10,9 @@
  	 <select id="userSequence" resultType="int">
  		select user_custom_question_seq.nextval from dual
  	</select>
+ 	 	 <select id="questionSequence" resultType="int">
+ 		select question_result_seq.nextval from dual
+ 	</select>
  	<!-- 
  	문제 업로드
  	* 관리자만 question_premium 변경 가능하도록 해야함.
@@ -46,6 +49,17 @@
 		#{file_type},
 		#{file_size},
 		#{question_no}
+ 		)
+ 	</insert>
+ 	<insert id="insert_result" parameterType="userQuestionResultDto">
+ 		insert into question_result values(
+ 			#{result_no},
+			#{result},
+ 			#{result_time},
+			sysdate,
+			#{user_conclusion},
+			#{tried_user},
+			#{question_no}
  		)
  	</insert>
  	<!-- 

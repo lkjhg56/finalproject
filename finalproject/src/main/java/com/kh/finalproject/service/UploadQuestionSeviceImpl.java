@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
