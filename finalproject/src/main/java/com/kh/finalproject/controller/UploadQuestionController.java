@@ -36,6 +36,20 @@ public class UploadQuestionController {
 	private SqlSession sqlSession;
 	@Autowired
 	private UploadQuestionService uploadQuestionService;
+	//문제 풀기
+	@GetMapping("/solve")
+	public String solve(@RequestParam int question_no, Model model) {
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
+		model.addAttribute("questionDto",uploadQuestionDto);
+		return "question/solve";
+	}
+	@PostMapping("/solve")
+	public String solve2(@RequestParam String question_answer, @RequestParam int question_no) {
+		
+		int answer = Integer.parseInt(question_answer);
+		System.out.println(answer);
+		return "question/solve_result";
+	}
 	
 	@GetMapping("/upload")
 	public String upload() {
@@ -82,7 +96,7 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto",updateQuestionVO);
 		return "question/content";
 	}
-	
+	//아직 덜됨.
 	@GetMapping("/delete")
 	public String delete(@RequestParam int question_no,@RequestParam int user_custom_question_no) {
 		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
