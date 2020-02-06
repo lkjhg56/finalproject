@@ -1,5 +1,6 @@
 package com.kh.finalproject.repository;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,68 +14,63 @@ import com.kh.finalproject.entity.UploadQuestionFileDto;
 public class UploadQuestionDaoImple implements UploadQuestionDao{
 	@Autowired
 	private SqlSession sqlSession;
-	
-
+//	시퀀스 미리뽑기
 	public int questionSequece() {
 		return sqlSession.selectOne("question.sequence"); 
 	}
 	public int userSequence() {
 		return sqlSession.selectOne("question.userSequence");
-	}
+	}	
 	
 	
-//	DB
+	//DB에 업로드
 	public void upload(UploadQuestionDto uploadQuestionDto) {
 		sqlSession.insert("question.upload_sub", uploadQuestionDto);//user_costom_question 등록
 		sqlSession.insert("question.upload", uploadQuestionDto);// question 등록
 	}
-
+	//파일 업로드
 	@Override
 	public void fileUpload(UploadQuestionFileDto uploadQuestionFileDto) {
-		//파일 업로드
-		sqlSession.insert("question.upload_file", uploadQuestionFileDto);
-		
-	}
-//	
-//	
-	public void update(UploadQuestionDto uploadQuestionDto, String admin) {
-
-		boolean isAdmin = admin.equals("관리자");
-		UploadQuestionDto dto = new UploadQuestionDto();
-		if (isAdmin) {
-			dto = UploadQuestionDto.builder()
-					.question_no(uploadQuestionDto.getQuestion_no())
-					.question_title(uploadQuestionDto.getQuestion_title())
-					.question_content(uploadQuestionDto.getQuestion_content())
-					.question_answer(uploadQuestionDto.getQuestion_answer())
-					.question_solution(uploadQuestionDto.getQuestion_solution())
-					.question_premium(uploadQuestionDto.getQuestion_premium())
-					.build();
-
-		} else {
-			dto = UploadQuestionDto.builder()
-					.question_no(uploadQuestionDto.getQuestion_no())
-					.question_title(uploadQuestionDto.getQuestion_title())
-					.question_content(uploadQuestionDto.getQuestion_content())
-					.question_answer(uploadQuestionDto.getQuestion_answer())
-					.question_solution(uploadQuestionDto.getQuestion_solution())
-					.build();
-		}
-		sqlSession.update("question.update", dto);
+		sqlSession.insert("question.upload_file", uploadQuestionFileDto);	
 	}
 	
-	
-
+	//ResponseEntity 헤더에 추가할 내용
 	@Override
-	public UploadQuestionDto getOne() {
-		
+	public String makeDispositionString(UploadQuestionFileDto uploadQuestionFileDto) throws Exception {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("attachment;");
+		buffer.append("filename=");
+		buffer.append("\"");
+		buffer.append(URLEncoder.encode(uploadQuestionFileDto.getFile_upload_name(), "UTF-8"));
+		buffer.append("\"");
+		return buffer.toString();
+	}
+	//문제 수정
+	@Override
+	public void updateQustion(UploadQuestionDto uploadQuestionDto) {
+		sqlSession.update("question.updateCustom",uploadQuestionDto);
+		sqlSession.update("question.updateQuestion",uploadQuestionDto);
+	}
+	public void updateFile(UploadQuestionFileDto uploadQuestionFileDto) {		
+		sqlSession.update("question.updateFile",uploadQuestionFileDto);
+	}
+	
+	@Override
+	public UploadQuestionDto getOne() {		
 		return null;
 	}
-
+	//리스트 조회를 위한 것
 	@Override
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");
 	}
+	//파일 삭제를 위한 검색
+	@Override
+	public UploadQuestionFileDto fileDelete(int question_no) {
+		return sqlSession.selectOne("question.getFile",question_no);
+		
+	}
+
 
 
 }

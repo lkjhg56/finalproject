@@ -25,6 +25,11 @@
 where a.rownumber=#{no}
 	</select>
 	
+	<!-- 한문제씩 dto 개수 구하기 -->
+	<select id="quescountDto" parameterType="testQuestionDto" resultType="int">
+	select count(*) from test_question where csname=#{csname} and category_no=#{category_no}
+	</select>
+	
 	
 
 	<!-- result 베이스 작성 -->
@@ -46,6 +51,7 @@ where a.rownumber=#{no}
 	<insert id = "correct" parameterType = "rcorrectDto" >
 		insert into rcorrect(rqno, result_no, test_no, correct, iscorrect, answer) values(rcorrect_seq.nextval, #{result_no}, #{test_no}, #{correct}, #{iscorrect}, #{answer})
 	</insert>
+	
 	<!-- 유저 답 수정시 기존 입력 정답 삭제 -->
 	<delete id = "deleteAns" parameterType = "rcorrectDto" >
 		delete from rcorrect where result_no=#{result_no} and test_no =#{test_no}

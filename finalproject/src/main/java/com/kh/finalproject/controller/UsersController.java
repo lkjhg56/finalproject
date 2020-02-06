@@ -1,5 +1,8 @@
 package com.kh.finalproject.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.ResultDao;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -28,6 +32,9 @@ public class UsersController {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private ResultDao resultDao;
 	
 	//회원 가입
 	@GetMapping("users/join")
@@ -119,4 +126,23 @@ public class UsersController {
 		 sqlSession.update("users.change", usersDto );
 		 return "redirect:info";
 	 }
+	 
+	 //내가 본 시험 내역 조회
+	 @GetMapping("users/test_result")
+	 public String test_result(Model model,HttpSession session) {
+		String users_id = (String) session.getAttribute("id");
+		model.addAttribute("test_result", resultDao.getList(users_id));
+		return "users/test_result";
+	 }
+	 // - 검색 조회
+	 @PostMapping("users/test_result")
+	 public String test_result(@RequestParam String keyword,HttpSession session,Model model){
+		Map<String, String> ready = new HashMap<>();
+		String user_id = (String) session.getAttribute("id");
+		ready.put("user_id", user_id);
+		ready.put("keyword", keyword);
+		model.addAttribute("search_result", resultDao.searchList(ready));
+		 
+		return "users/test_result";
+	 } 
 }

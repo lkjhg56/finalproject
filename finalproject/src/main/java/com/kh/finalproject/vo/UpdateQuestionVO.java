@@ -33,4 +33,6 @@ public class UpdateQuestionVO {
 	private String file_type;
 	private long file_size;
 	private List<MultipartFile> file;
+/*************************************************/
+	private String id;
 }
