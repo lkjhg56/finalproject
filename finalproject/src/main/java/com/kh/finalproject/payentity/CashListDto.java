@@ -1,4 +1,4 @@
-package com.kh.finalproject.entity;
+package com.kh.finalproject.payentity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class RcorrectDto {
-	
-	private int rqno, result_no, test_no, cus_ques, iscorrect;
-	private int correct, answer;
-
+public class CashListDto {
+	private int cash_no;
+	private int price, token;
+	private String product;
 }

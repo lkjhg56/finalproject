@@ -46,10 +46,11 @@
    
    <div>
  	<form action = "${pageContext.request.contextPath }/question/questcategory">
-
+	<input type = "hidden" name = "hour" value = "${list.lim_hour}">
+	<input type = "hidden" name = "min" value = "${list.lim_min}">
 	<input type = "hidden" name ="categoryname" value= "${list.csname}" >
  	<div>${list.csname}</div>
-
+	${list.lim_min}
  		<select class = "method" name="method" onclick="callCategory('${list.csname}')">
 
  			<option> 방법 선택하세요</option>
