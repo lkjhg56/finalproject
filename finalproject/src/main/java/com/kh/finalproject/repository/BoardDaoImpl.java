@@ -1,21 +1,16 @@
 package com.kh.finalproject.repository;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
-import com.kh.finalproject.entity.BoardFileDto;
 
 @Repository
+
 public class BoardDaoImpl implements BoardDao{
 
 	@Autowired
@@ -52,6 +47,21 @@ public class BoardDaoImpl implements BoardDao{
 		sqlSession.update("board.edit", boardDto);
 		
 	}
+
+	@Override
+	public void delete(int board_no) {
+		sqlSession.delete("board.delete", board_no);
+		
+	}
+
+	@Override
+	public List<BoardDto> search(Map<String, String> param) {		
+		return sqlSession.selectList("board.search", param);
+	}
+
+
+
+
 
 
 }
