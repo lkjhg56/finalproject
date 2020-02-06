@@ -17,7 +17,7 @@
 	<tr>
 		<td>${question.question_no}</td>
 		<td>${question.question_title}</td>
-		<td>${question.question_content}</td>
+		<td>${question.question_no}</td>
 		<td>${question.question_no}</td>
 		<td>${question.question_no}</td>
 		<td><a href="content?question_no=${question.question_no}">확인</a></td>

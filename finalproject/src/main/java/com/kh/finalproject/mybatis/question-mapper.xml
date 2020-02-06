@@ -86,7 +86,9 @@
  	 <select id="getList" resultType="uploadQuestionDto">
  	 	select * from question order by question_no asc
  	 </select>
- 	  	 
+ 	 <select id="getOne" resultType="uploadQuestionDto">
+ 		 select * from question where question_no=#{question_no}
+ 	 </select> 	 
  	 <!-- 세션 id를 이용하여 user_no를 가져옴 -->
  	 <select id="getNo" parameterType="String" resultType="int">
  	 	select user_no from users where id=#{id}

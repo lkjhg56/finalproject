@@ -17,39 +17,37 @@
 <!-- 메인페이지 -->
 <main>
 관리자 ID : admin pw : admin
-<h4>해당 로고는 ${pageContext.request.contextPath}/res/image/logo(1~9).png 로 변경 및 설정 가능</h4>
-로고가 확정 될 경우 크기 조정하여 넣을 예정임.
 <!-- 운영자 페이지 넣어야 함. -->
 
 
 <!-- 헤더  -->
 <header>
-	<div>
-		<a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/res/image/logo7.png"></a>
-	</div>
-	<div>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/res/image/logo3.png"></a>
+		</div>
+		<div class="col">
 <!-- 네이게이션 -->	
 		<c:choose>
-			<c:when test="${id == null}">
-				<div>
+			<c:when test="${id == null}">				
 					<a href="${pageContext.request.contextPath}/users/join">회원 가입</a>
 					<a href="${pageContext.request.contextPath}/users/login">로그인</a>			
 					<a href="${pageContext.request.contextPath}/question/choose">문제 목록</a>
-					<a href="${pageContext.request.contextPath}/board/list">게시판</a>
-				</div>
+					<a href="${pageContext.request.contextPath}/board/list">게시판</a>				
 			</c:when>
-			<c:otherwise>
-				<div>
+			<c:otherwise>				
 					<a href="${pageContext.request.contextPath}/users/info">회원정보</a>
 					<a href="${pageContext.request.contextPath}/question/upload">문제 등록</a>
 					<a href="${pageContext.request.contextPath}/question/choose">문제 목록</a>
 					<a href="${pageContext.request.contextPath}/question/solve">문제 풀기</a>
 					<a href="${pageContext.request.contextPath}/board/list">게시판</a>
-					<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
-				</div>
+					<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>				
 			</c:otherwise>
 		</c:choose>
+		</div>
 	</div>
+</div>
 	<hr>
 </header>
 <section>

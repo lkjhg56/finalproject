@@ -15,7 +15,7 @@ public class UpdateQuestionVO {
 	private int user_custom_question_no; 
 	private String question_title; 
 	private String question_content; 
-	private String question_answer; 
+	private int question_answer; 
 	private String question_solution;
 	private int question_premium; 
 	private String answer1;

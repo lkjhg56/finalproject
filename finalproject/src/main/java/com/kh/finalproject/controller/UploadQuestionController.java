@@ -39,15 +39,19 @@ public class UploadQuestionController {
 	//문제 풀기
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", question_no);
 		model.addAttribute("questionDto",uploadQuestionDto);
 		return "question/solve";
 	}
 	@PostMapping("/solve")
-	public String solve2(@RequestParam String question_answer, @RequestParam int question_no) {
-		
-		int answer = Integer.parseInt(question_answer);
-		System.out.println(answer);
+	public String solve2(@RequestParam int question_answer, @RequestParam int question_no, Model model) {
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", question_no);
+		boolean result=question_answer==uploadQuestionDto.getQuestion_answer();
+		if(result) {
+			model.addAttribute("result", "정답입니다.");
+		}else {
+			model.addAttribute("result", "오답입니다.");
+		}
 		return "question/solve_result";
 	}
 	
