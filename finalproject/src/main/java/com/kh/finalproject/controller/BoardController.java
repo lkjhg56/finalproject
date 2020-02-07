@@ -72,7 +72,8 @@ public class BoardController {
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto) {
 		boardDao.edit(boardDto);
-		return "board/content";		
+		int no = boardDto.getBoard_no();
+		return "redirect:content?board_no="+no;		
 	}
 	
 	//글 삭제(본인글, 관리자만)
@@ -135,22 +136,7 @@ public class BoardController {
 			model.addAttribute("search", boardDao.search(param));
 			return "board/search";
 		}
-		
-		
-//////////////////////////////////////////////////////////////////////
-		//댓글 수정
-		@PostMapping("/content")
-		@ResponseBody
-		public String replyEdit(@ModelAttribute BoardReplyDto boardReplyDto,
-												HttpSession session) {
-			System.out.println(boardReplyDto.getBoard_reply_no());
-			boardDao.replyEdit(boardReplyDto);			
-			
-			String board_reply_writer = (String) session.getAttribute("id");
-			boardReplyDto.setBoard_reply_writer(board_reply_writer);
-			boardDao.replyRegist(boardReplyDto);
-			return "redirect:content";
-		}
+				
 		
 }
 

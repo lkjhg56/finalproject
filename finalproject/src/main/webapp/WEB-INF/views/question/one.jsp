@@ -59,6 +59,7 @@
    
    
    $(document).keydown(function (e) {
+
 	     
 	     if (e.which === 116) {
 	    	 alert("새로고침을 할 수 없습니다.");
@@ -91,7 +92,7 @@
 	            return false;
 	        } else if (event.ctrlKey
 	                && (event.keyCode == 78 || event.keyCode == 82)) {
-	            return false;
+	            return false;ㄴ
 	        }
 	    }
 
@@ -104,7 +105,7 @@
 
 
 
-	
+
    </script>
   
    
