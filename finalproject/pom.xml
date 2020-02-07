@@ -223,7 +223,8 @@
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.10.1</version>
-		</dependency>		 
+		</dependency>	
+			 
 	</dependencies>
 	
 	<!-- 
