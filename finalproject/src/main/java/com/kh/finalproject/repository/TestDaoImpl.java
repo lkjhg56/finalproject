@@ -74,10 +74,10 @@ public class TestDaoImpl implements TestDao{
 	}
 
 	@Override
-	public TestQuestionDto getDto(String categoryname,HttpSession session) {
+	public TestQuestionDto getDto(String categoryname,int no,HttpSession session ) {
 	
 		
-		int no= (int)session.getAttribute("no");
+		
 
 	TestQuestionDto dto= new TestQuestionDto();
 	int count=no+1;
