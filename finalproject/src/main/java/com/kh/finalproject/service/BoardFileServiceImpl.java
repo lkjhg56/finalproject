@@ -30,7 +30,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 
 
 	@Override
-	public void regist(BoardDto boardDto, List<MultipartFile> board_file) throws IllegalStateException, IOException {
+	public void registWithFile(BoardDto boardDto, List<MultipartFile> board_file) throws IllegalStateException, IOException {
 		//게시글등록
 		int board_no = boardDao.getsequence();
 		
@@ -43,20 +43,21 @@ public class BoardFileServiceImpl implements BoardFileService{
 		
 		for(MultipartFile mf : board_file) { //올린 파일 개수만큼 반복
 //			int board_file_no = boardDao.getsequence();
-			list.add(BoardFileDto.builder()
-//												.board_file_no(board_file_no)
-												.board_file_upload_name(mf.getOriginalFilename())
-												.board_file_size(mf.getSize())
-												.board_origin_content_no(board_no)
-												.board_file_save_name(UUID.randomUUID().toString())
-												.board_file_type(mf.getContentType())
-												.build());
-			
-			System.out.println("비어있나요? = " + mf.isEmpty()); 							//비어있냐
-			System.out.println("parameter_name = " + mf.getName());		//파라미터 이름
-			System.out.println("origin = " + mf.getOriginalFilename());		//파일명
-			System.out.println("size = " + mf.getSize());								//파일 사이즈
-			System.out.println("type = " + mf.getContentType()); 			//파일유형
+			if(board_file.isEmpty()) {
+				list.add(BoardFileDto.builder()
+	//												.board_file_no(board_file_no)
+													.board_file_upload_name(mf.getOriginalFilename())
+													.board_file_size(mf.getSize())
+													.board_origin_content_no(board_no)
+													.board_file_save_name(UUID.randomUUID().toString())
+													.board_file_type(mf.getContentType())
+													.build());
+			}
+//			System.out.println("비어있나요? = " + mf.isEmpty()); 							//비어있냐
+//			System.out.println("parameter_name = " + mf.getName());		//파라미터 이름
+//			System.out.println("origin = " + mf.getOriginalFilename());		//파일명
+//			System.out.println("size = " + mf.getSize());								//파일 사이즈
+//			System.out.println("type = " + mf.getContentType()); 			//파일유형
 		}
 		
 		//파일 저장(물리)			
@@ -84,6 +85,17 @@ public class BoardFileServiceImpl implements BoardFileService{
 //				File target = new File(dir, dto.getBoard_file_save_name());
 //				board_file.get(i).transferTo(target);
 //			}
+	}
+
+
+	@Override
+	public void regist(BoardDto boardDto) {
+		//게시글등록
+			int board_no = boardDao.getsequence();
+			
+			boardDto.setBoard_no(board_no);
+			boardDao.regist(boardDto);
+		
 	}
 }
 		

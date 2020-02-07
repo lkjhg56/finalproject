@@ -53,7 +53,7 @@ public class RestController {
 																	.result_no(result_no)
 																	.build();
 		sqlSession.delete("deleteAns", rcorrectDto);
-		session.removeAttribute("rno");
+//		session.removeAttribute("rno");
 		return null;
 	}
 	

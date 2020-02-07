@@ -1,21 +1,17 @@
 package com.kh.finalproject.repository;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
-import com.kh.finalproject.entity.BoardFileDto;
+import com.kh.finalproject.entity.BoardReplyDto;
 
 @Repository
+
 public class BoardDaoImpl implements BoardDao{
 
 	@Autowired
@@ -52,6 +48,44 @@ public class BoardDaoImpl implements BoardDao{
 		sqlSession.update("board.edit", boardDto);
 		
 	}
+
+	@Override
+	public void delete(int board_no) {
+		sqlSession.delete("board.delete", board_no);
+		
+	}
+
+	@Override
+	public List<BoardDto> search(Map<String, String> param) {		
+		return sqlSession.selectList("board.search", param);
+	}
+
+	@Override
+	public List<BoardReplyDto> getReplyList(int board_reply_origin) {		
+		return sqlSession.selectList("board.ReplyList", board_reply_origin);
+	}
+
+	@Override
+	public void replyDelete(int board_reply_no) {
+		sqlSession.delete("board.deleteReply", board_reply_no);
+		
+	}
+
+	@Override
+	public void replyEdit(BoardReplyDto boardReplyDto) {
+		sqlSession.update("board.editReply", boardReplyDto);
+		
+	}
+
+	@Override
+	public void replyRegist(BoardReplyDto boardReplyDto) {
+		sqlSession.insert("board.registReply", boardReplyDto);
+		
+	}
+
+	
+
+
 
 
 }
