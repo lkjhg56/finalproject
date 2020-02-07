@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
+import com.kh.finalproject.entity.BoardReplyDto;
 import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.service.BoardFileService;
 
@@ -87,6 +89,8 @@ public class BoardController {
 										Model model) {
 		boardDao.get(board_no);
 		model.addAttribute("boardDto", boardDao.get(board_no));
+		boardDao.getReplyList(board_no);
+		model.addAttribute("boardReplyDto", boardDao.getReplyList(board_no));
 		return "board/content";
 	}
 
@@ -127,9 +131,26 @@ public class BoardController {
 			Map<String, String> param = new HashMap<>();
 			param.put("search_type", search_type);
 			param.put("search_keyword", search_keyword);
-			System.out.println("Map<String, String> param"+param);
+//			System.out.println("Map<String, String> param"+param);
 			model.addAttribute("search", boardDao.search(param));
 			return "board/search";
 		}
+		
+		
+//////////////////////////////////////////////////////////////////////
+		//댓글 수정
+		@PostMapping("/content")
+		@ResponseBody
+		public String replyEdit(@ModelAttribute BoardReplyDto boardReplyDto,
+												HttpSession session) {
+			System.out.println(boardReplyDto.getBoard_reply_no());
+			boardDao.replyEdit(boardReplyDto);			
+			
+			String board_reply_writer = (String) session.getAttribute("id");
+			boardReplyDto.setBoard_reply_writer(board_reply_writer);
+			boardDao.replyRegist(boardReplyDto);
+			return "redirect:content";
+		}
+		
 }
 
