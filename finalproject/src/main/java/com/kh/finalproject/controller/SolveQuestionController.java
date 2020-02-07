@@ -63,8 +63,6 @@ public class SolveQuestionController {
 
 public String category2(@RequestParam String categoryname, String session, String hour, String min, String method, HttpSession httpSession,Model model) {
 
-
-		
 		if(method.equals("한번에풀기")) {
 			List<TestQuestionDto> questionDto = testDao.getQuestionList(categoryname);
 			List<TestQuestionDto> question = new ArrayList<>();		

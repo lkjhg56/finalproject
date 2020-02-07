@@ -59,7 +59,7 @@
    	
 
    		<h2>${clist.question}</h2>
-  	
+  	${clist.no}
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}');">${clist.dis1}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}2" onclick="save('${clist.no}', '2', '${clist.answer}');">${clist.dis2}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}3" onclick="save('${clist.no}', '3', '${clist.answer}');">${clist.dis3}</h4>

@@ -9,4 +9,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from cash_list
 	</select>
 	
-</mapper>
+	<select id = "orderNum" resultType = "int">
+		select paylist_seq.nextval from dual
+	</select>
+	
+	<insert id = "ready" parameterType = "payDto">
+	insert into paylist(
+				num, tid, cid, created_at, partner_order_id, partner_user_id, item_name, quantity,
+				total_amount, status
+				)
+			 values(
+			 	paylist_no_seq.nextval,
+				#{tid},
+				#{cid},
+				to_date(#{created_at}, 'YYYY-MM-DD"T"HH24:MI:SS'),
+				#{partner_order_id},
+				#{partner_user_id},
+				#{item_name},
+				#{quantity},
+				#{total_amount},
+				'준비'
+			)
+	
+	</insert>
+	<insert id = "success" parameterType ="payDto">
+			insert into paylist(
+				num, tid, cid, created_at, partner_order_id, partner_user_id, item_name, quantity,
+				total_amount, status, aid
+				)
+			 values(
+			 	paylist_no_seq.nextval,
+				#{tid},
+				#{cid},
+				to_date(#{created_at}, 'YYYY-MM-DD"T"HH24:MI:SS'),
+				#{partner_order_id},
+				#{partner_user_id},
+				#{item_name},
+				#{quantity},
+				#{total_amount},
+				'완료',
+				#{aid}
+			)
+	
+	</insert>
+	<select id = "getPoint" parameterType = "String" resultType = "int">
+	select point from users where id = #{id}
+	</select>
+	
+	<update id="updatePoint" parameterType ="com.kh.finalproject.payvo.TempVO">
+			update users set point = #{point} where id = #{id}
+	</update>
+	
+	</mapper>
