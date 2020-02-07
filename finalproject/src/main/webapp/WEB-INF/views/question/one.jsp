@@ -6,6 +6,7 @@
    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
    <script>
    function save(quesno, disno, answer){
+	
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
@@ -28,7 +29,7 @@
            $.ajax({
               url:"${pageContext.request.contextPath}/question2/insert",
               type:"post",
-              data:{test_no:quesno, correct:disno, iscorrect:iscorrect},
+              data:{test_no:quesno, correct:disno, iscorrect:iscorrect,answer:answer},
           
             })
         }else{
@@ -58,7 +59,7 @@
    	
 
    		<h2>${clist.question}</h2>
-  	
+  	${clist.no}
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}');">${clist.dis1}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}2" onclick="save('${clist.no}', '2', '${clist.answer}');">${clist.dis2}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}3" onclick="save('${clist.no}', '3', '${clist.answer}');">${clist.dis3}</h4>
