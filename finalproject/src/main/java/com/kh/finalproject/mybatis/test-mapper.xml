@@ -46,11 +46,13 @@ where a.rownumber=#{no}
 		select distinct category_no from test_question where csname = '정보처리기사'
 	</select>	
 	
+	
 	<!-- 유저 문제 정답 입력 및 정답 여부 -->
 	
 	<insert id = "correct" parameterType = "rcorrectDto" >
 		insert into rcorrect(rqno, result_no, test_no, correct, iscorrect, answer) values(rcorrect_seq.nextval, #{result_no}, #{test_no}, #{correct}, #{iscorrect}, #{answer})
 	</insert>
+	
 	
 	<!-- 유저 답 수정시 기존 입력 정답 삭제 -->
 	<delete id = "deleteAns" parameterType = "rcorrectDto" >

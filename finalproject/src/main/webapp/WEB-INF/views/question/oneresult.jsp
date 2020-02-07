@@ -27,7 +27,7 @@
            $.ajax({
               url:"${pageContext.request.contextPath}/question2/insert",
               type:"post",
-              data:{test_no:quesno, correct:disno, iscorrect:iscorrect},
+              data:{test_no:quesno, correct:disno, iscorrect:iscorrect,answer:answer},
           
             })
         }else{

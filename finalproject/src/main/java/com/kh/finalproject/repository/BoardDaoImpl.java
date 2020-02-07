@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.BoardDto;
+import com.kh.finalproject.entity.BoardReplyDto;
 
 @Repository
 
@@ -59,7 +60,30 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectList("board.search", param);
 	}
 
+	@Override
+	public List<BoardReplyDto> getReplyList(int board_reply_origin) {		
+		return sqlSession.selectList("board.ReplyList", board_reply_origin);
+	}
 
+	@Override
+	public void replyDelete(int board_reply_no) {
+		sqlSession.delete("board.deleteReply", board_reply_no);
+		
+	}
+
+	@Override
+	public void replyEdit(BoardReplyDto boardReplyDto) {
+		sqlSession.update("board.editReply", boardReplyDto);
+		
+	}
+
+	@Override
+	public void replyRegist(BoardReplyDto boardReplyDto) {
+		sqlSession.insert("board.registReply", boardReplyDto);
+		
+	}
+
+	
 
 
 

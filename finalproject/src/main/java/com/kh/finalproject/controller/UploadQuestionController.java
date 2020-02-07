@@ -1,7 +1,9 @@
 package com.kh.finalproject.controller;
 
 import java.io.File;
-import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.UploadQuestionService;
 import com.kh.finalproject.vo.UpdateQuestionVO;
@@ -36,7 +38,43 @@ public class UploadQuestionController {
 	private SqlSession sqlSession;
 	@Autowired
 	private UploadQuestionService uploadQuestionService;
-	
+	//문제 풀기
+	@GetMapping("/solve")
+	public String solve(@RequestParam int question_no, Model model) {
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
+		model.addAttribute("questionDto",uploadQuestionDto);
+		return "question/solve";
+	}
+	@PostMapping("/solve")
+	public String solve2(@ModelAttribute UpdateQuestionVO updateQuestionVO, Model model) {
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", updateQuestionVO.getQuestion_no());
+		String time=uploadQuestionDao.timeCheck();
+		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
+							 +updateQuestionVO.getSec()+":"+updateQuestionVO.getMilisec();
+		int question_result_no=uploadQuestionDao.questionResultSequece();
+		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
+				.hour(updateQuestionVO.getHour())
+				.min(updateQuestionVO.getMin())
+				.sec(updateQuestionVO.getSec())
+				.milisec(updateQuestionVO.getMilisec())
+				.question_answer(uploadQuestionDto.getQuestion_answer())
+				.result_no(question_result_no)
+				.user_conclusion(updateQuestionVO.getQuestion_answer())
+				.result_time(result_time)
+				.tried_user(updateQuestionVO.getId())
+				.solveDate(time)
+				.question_no(updateQuestionVO.getQuestion_no())
+				.build();
+		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
+		if(result) {
+			userQuestionResultDto.setResult(1);
+		}else {
+			userQuestionResultDto.setResult(0);
+		}
+		sqlSession.insert("question.insert_result",userQuestionResultDto);
+		model.addAttribute("result", userQuestionResultDto);
+		return "question/solve_result";
+	}
 	@GetMapping("/upload")
 	public String upload() {
 		return "question/upload";
@@ -82,22 +120,17 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto",updateQuestionVO);
 		return "question/content";
 	}
-	
+	//아직 덜됨.
 	@GetMapping("/delete")
 	public String delete(@RequestParam int question_no,@RequestParam int user_custom_question_no) {
-		sqlSession.delete("question.deleteFile",question_no);
-		sqlSession.delete("question.deleteUser",user_custom_question_no);
-		sqlSession.delete("question.deleteQuestion",question_no);
-		UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(question_no);
-		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
-		File file = new File(filepath);
-		file.delete();
+		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
 		return "question/list";
 	}
 	
 	@GetMapping("/list")
 	public String list(Model model) {
-		model.addAttribute("list", uploadQuestionDao.getList());
+		List<UploadQuestionDto> list = sqlSession.selectList("question.getTotal2");
+		model.addAttribute("list",list);
 		return "question/list";
 	}
 	@GetMapping("/content")
