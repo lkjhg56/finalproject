@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionResultDto;
 
 @Repository
 public class UploadQuestionDaoImple implements UploadQuestionDao{
@@ -87,5 +88,30 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		Date time = new Date();		
 		String time1 = format.format(time);
 		return time1;
+	}
+	@Override
+	public int question_true() {		
+		return sqlSession.selectOne("question.userResultTrue");
+	}
+	@Override
+	public int question_false() {		
+		return sqlSession.selectOne("question.userResultFalse");
+	}
+	@Override
+	public UploadQuestionDto question_all(int question_no) {		
+		return sqlSession.selectOne("question.getTotal", question_no);
+	}
+	@Override
+	public void insert_result(UserQuestionResultDto userQuestionResultDto) {
+		sqlSession.insert("question.insert_result",userQuestionResultDto);
+		
+	}
+	@Override
+	public int userPriority(int question_no, int result_no) {
+		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
+				.question_no(question_no)
+				.result_no(result_no)
+				.build();
+		return sqlSession.selectOne("question.userPriority", userQuestionResultDto);
 	}
 }

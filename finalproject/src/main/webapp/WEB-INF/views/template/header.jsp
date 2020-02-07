@@ -16,7 +16,6 @@
 <body>
 <!-- 메인페이지 -->
 <main>
-관리자 ID : admin pw : admin
 <!-- 운영자 페이지 넣어야 함. -->
 
 
@@ -33,7 +32,6 @@
 			<c:when test="${id == null}">				
 					<a href="${pageContext.request.contextPath}/users/join">회원 가입</a>
 					<a href="${pageContext.request.contextPath}/users/login">로그인</a>			
-					<a href="${pageContext.request.contextPath}/question/choose">문제 목록</a>
 					<a href="${pageContext.request.contextPath}/board/list">게시판</a>				
 			</c:when>
 			<c:otherwise>				

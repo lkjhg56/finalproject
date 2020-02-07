@@ -41,37 +41,13 @@ public class UploadQuestionController {
 	//문제 풀기
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
+		UploadQuestionDto uploadQuestionDto = uploadQuestionDao.question_all(question_no);
 		model.addAttribute("questionDto",uploadQuestionDto);
 		return "question/solve";
 	}
 	@PostMapping("/solve")
 	public String solve2(@ModelAttribute UpdateQuestionVO updateQuestionVO, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", updateQuestionVO.getQuestion_no());
-		String time=uploadQuestionDao.timeCheck();
-		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
-							 +updateQuestionVO.getSec()+":"+updateQuestionVO.getMilisec();
-		int question_result_no=uploadQuestionDao.questionResultSequece();
-		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
-				.hour(updateQuestionVO.getHour())
-				.min(updateQuestionVO.getMin())
-				.sec(updateQuestionVO.getSec())
-				.milisec(updateQuestionVO.getMilisec())
-				.question_answer(uploadQuestionDto.getQuestion_answer())
-				.result_no(question_result_no)
-				.user_conclusion(updateQuestionVO.getQuestion_answer())
-				.result_time(result_time)
-				.tried_user(updateQuestionVO.getId())
-				.solveDate(time)
-				.question_no(updateQuestionVO.getQuestion_no())
-				.build();
-		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
-		if(result) {
-			userQuestionResultDto.setResult(1);
-		}else {
-			userQuestionResultDto.setResult(0);
-		}
-		sqlSession.insert("question.insert_result",userQuestionResultDto);
+		UserQuestionResultDto userQuestionResultDto = uploadQuestionService.questionSolve(updateQuestionVO);
 		model.addAttribute("result", userQuestionResultDto);
 		return "question/solve_result";
 	}

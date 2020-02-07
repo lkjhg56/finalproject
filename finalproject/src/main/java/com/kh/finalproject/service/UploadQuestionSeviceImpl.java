@@ -4,11 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
@@ -93,7 +91,6 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.build();
 		uploadQuestionDao.updateQustion(uploadQuestionDto);
 
-				
 			//question_file 테이블 변경	
 			List<UploadQuestionFileDto> list = new ArrayList<>();
 			for(MultipartFile mf : updateQuestionVO.getFile()) {
@@ -111,9 +108,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			String Path="D:/upload/question_image";
 			File dir = new File(Path);
 			dir.mkdir();
-			
-			
-			
+
 			for(int i=0;i<list.size();i++) {				
 					MultipartFile mf = updateQuestionVO.getFile().get(i);
 					if(!mf.isEmpty()) {
@@ -137,5 +132,38 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
 		File file = new File(filepath);
 		file.delete();
+	}
+	@Override
+	public UserQuestionResultDto questionSolve(UpdateQuestionVO updateQuestionVO) {
+		UploadQuestionDto uploadQuestionDto = uploadQuestionDao.question_all(updateQuestionVO.getQuestion_no());
+		String time=uploadQuestionDao.timeCheck();
+		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
+							 +updateQuestionVO.getSec()+":"+updateQuestionVO.getMilisec();
+		int question_result_no=uploadQuestionDao.questionResultSequece();
+		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
+				.hour(updateQuestionVO.getHour())
+				.min(updateQuestionVO.getMin())
+				.sec(updateQuestionVO.getSec())
+				.milisec(updateQuestionVO.getMilisec())
+				.question_answer(uploadQuestionDto.getQuestion_answer())
+				.result_no(question_result_no)
+				.user_conclusion(updateQuestionVO.getQuestion_answer())
+				.result_time(result_time)
+				.tried_user(updateQuestionVO.getId())
+				.solveDate(time)
+				.question_no(updateQuestionVO.getQuestion_no())
+				.question_true(uploadQuestionDao.question_true())
+				.question_false(uploadQuestionDao.question_false())
+				.build();
+		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
+		if(result) {
+			userQuestionResultDto.setResult(1);
+		}else {
+			userQuestionResultDto.setResult(0);
+		}
+		uploadQuestionDao.insert_result(userQuestionResultDto);
+		userQuestionResultDto.setUser_priority(uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no));
+		return userQuestionResultDto;
+		
 	}
 }

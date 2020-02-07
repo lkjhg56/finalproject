@@ -7,12 +7,16 @@ import lombok.NoArgsConstructor;
 
 @Data@NoArgsConstructor@AllArgsConstructor@Builder
 public class UserQuestionResultDto {
+	/*****************************************************/	
 	//출력용
 	private int hour;
 	private int min;
 	private int sec;
 	private int milisec;
 	private int question_answer;
+	private int question_true;
+	private int question_false;
+	private int user_priority;
 	/*****************************************************/
 	//DB저장용
 	private int result_no;//0,1 맞았는지 틀렸는지
