@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UsersDto;
 import com.kh.finalproject.repository.ResultDao;
+import com.kh.finalproject.service.GradePointService;
 
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
+
 @Controller
 public class UsersController {
 	
@@ -35,6 +36,9 @@ public class UsersController {
 	
 	@Autowired
 	private ResultDao resultDao;
+	
+	@Autowired
+	private GradePointService pointService;
 	
 	//회원 가입
 	@GetMapping("users/join")
@@ -145,4 +149,22 @@ public class UsersController {
 		 
 		return "users/test_result";
 	 } 
+	 
+	 // 포인트 랭킹 조회
+	 @GetMapping("users/grade_point_rank")
+	 public String point_rank(Model model) {
+		 model.addAttribute("grade_point_rank", sqlSession.selectList("users.grade_point_rank"));
+		 return "users/grade_point_rank";
+	 }
+	 
+	 // 포인트 주는 기능 
+	 @GetMapping("users/test_point")
+	 public String givePoint() {
+		 return "users/test_point";
+	 }
+	 @PostMapping("users/test_point")
+	 public String givePoint(@ModelAttribute UsersDto usersDto,@ModelAttribute GradePointDto pointDto) {
+		 pointService.givePoint(pointDto,usersDto);
+		 return "redirect:/";
+	 }
 }

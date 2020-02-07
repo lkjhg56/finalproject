@@ -65,6 +65,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update users set pw=#{pw} where id=#{id}
 	</update>
 	
+	<!-- 포인트 랭킹 조회 -->
+	<select id="grade_point_rank" resultType="users">
+		select rownum, E.* from (
+    	select name, grade_point from users where grade='일반회원' order by grade_point desc
+		) E
+	</select>
+	
+	<!-- 포인트 업데이트 -->
+	<update id="change_point" parameterType="users">
+		update users set grade_point=grade_point+50 where user_no=(select user_no from users where id=#{id})
+	</update>
+	
+	<!-- users_no 뽑아 오기 -->
+	<select id="get_users_no" parameterType="users" resultType="integer">
+		select user_no from users where id=#{id}
+	</select>
+	
 </mapper>
 
 
