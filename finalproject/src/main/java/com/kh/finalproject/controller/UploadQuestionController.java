@@ -1,18 +1,14 @@
 package com.kh.finalproject.controller;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
-import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.UploadQuestionService;
@@ -38,7 +33,7 @@ public class UploadQuestionController {
 	private SqlSession sqlSession;
 	@Autowired
 	private UploadQuestionService uploadQuestionService;
-	//문제 풀기
+	//문제 풀기(한문제)
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
 		UploadQuestionDto uploadQuestionDto = uploadQuestionDao.question_all(question_no);
@@ -51,6 +46,21 @@ public class UploadQuestionController {
 		model.addAttribute("result", userQuestionResultDto);
 		return "question/solve_result";
 	}
+	//문제 풀기(여러문제 최대 4문제)
+	@GetMapping("/multi")
+	public String multi(Model model) {
+		int wantQuestion=6;
+		List<UploadQuestionDto> choice_list=uploadQuestionService.multiQuestion(wantQuestion);
+		model.addAttribute("count",wantQuestion);
+		model.addAttribute("list", choice_list);
+		return "question/multi";
+	}
+	@PostMapping("/multi")
+	public String multi2(Model model) {
+		
+		return "question/list";
+	}
+	
 	@GetMapping("/upload")
 	public String upload() {
 		return "question/upload";
@@ -61,28 +71,13 @@ public class UploadQuestionController {
 		int sq = sqlSession.selectOne("question.getNo", id);
 		updateQuestionVO.setUser_no(sq);
 		uploadQuestionService.questionUpload(updateQuestionVO);
-		return "question/questions";
+		return "question/list";
 	}
 	//파일 다운로드(미리보기)
 	@GetMapping("/image")
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_no) throws Exception{
-		UploadQuestionFileDto uploadQuestionFileDto = sqlSession.selectOne("question.getFile",question_no);	
-		File directory = new File("D:/upload/question_image");
-		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
+		return uploadQuestionService.downloadImg(question_no);
 		
-		File file = new File(directory, String.valueOf(uploadQuestionFileDto.getFile_save_name()));
-		byte[] data = FileUtils.readFileToByteArray(file);
-
-		ByteArrayResource resource = new ByteArrayResource(data);
-		
-		return ResponseEntity.ok()
-				//.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
-				.contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.contentLength(uploadQuestionFileDto.getFile_size())
-				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-				.header(HttpHeaders.CONTENT_DISPOSITION, 
-						uploadQuestionDao.makeDispositionString(uploadQuestionFileDto))
-				.body(resource);
 	}
 	@GetMapping("/update")
 	public String update(@RequestParam int question_no, Model model) {

@@ -2,8 +2,10 @@ package com.kh.finalproject.repository;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +75,7 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	//파일 삭제를 위한 검색
 	@Override
-	public UploadQuestionFileDto fileDelete(int question_no) {
+	public UploadQuestionFileDto getFile(int question_no) {
 		return sqlSession.selectOne("question.getFile",question_no);		
 	}
 	//파일 삭제

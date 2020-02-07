@@ -38,6 +38,7 @@
 					<a href="${pageContext.request.contextPath}/users/info">회원정보</a>
 					<a href="${pageContext.request.contextPath}/question/upload">유저문제 등록</a>
 					<a href="${pageContext.request.contextPath}/question/list">유저문제 목록</a>
+					<a href="${pageContext.request.contextPath}/question/multi">유저문제 여러문제(임시)</a>
 					<a href="${pageContext.request.contextPath}/question/choose">일반문제 목록</a>
 					<a href="${pageContext.request.contextPath}/board/list">게시판</a>
 					<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>				

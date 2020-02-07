@@ -3,8 +3,15 @@ package com.kh.finalproject.service;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.kh.finalproject.entity.UploadQuestionDto;
@@ -113,7 +120,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 					MultipartFile mf = updateQuestionVO.getFile().get(i);
 					if(!mf.isEmpty()) {
 					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
-					UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(updateQuestionVO.getQuestion_no());
+					UploadQuestionFileDto delete = uploadQuestionDao.getFile(updateQuestionVO.getQuestion_no());
 					String filepath = "D:/upload/question_image/"+delete.getFile_save_name();		
 					File file = new File(filepath);
 					file.delete();
@@ -128,7 +135,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	}
 	public void questionDelete(int question_no, int user_custom_question_no) {	
 		uploadQuestionDao.fileDelete2(question_no,user_custom_question_no);
-		UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(question_no);
+		UploadQuestionFileDto delete = uploadQuestionDao.getFile(question_no);
 		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
 		File file = new File(filepath);
 		file.delete();
@@ -165,5 +172,40 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		userQuestionResultDto.setUser_priority(uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no));
 		return userQuestionResultDto;
 		
+	}
+	@Override
+	public ResponseEntity<ByteArrayResource> downloadImg(int question_no) throws Exception {
+		UploadQuestionFileDto uploadQuestionFileDto = uploadQuestionDao.getFile(question_no);
+		File directory = new File("D:/upload/question_image");
+		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
+		
+		File file = new File(directory, String.valueOf(uploadQuestionFileDto.getFile_save_name()));
+		byte[] data = FileUtils.readFileToByteArray(file);
+
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		return ResponseEntity.ok()
+				//.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.contentLength(uploadQuestionFileDto.getFile_size())
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_DISPOSITION, 
+						uploadQuestionDao.makeDispositionString(uploadQuestionFileDto))
+				.body(resource);
+	}
+	@Override
+	public List<UploadQuestionDto> multiQuestion(int wantQuestion) {
+		Random r = new Random();
+		List<UploadQuestionDto> list = uploadQuestionDao.getList();
+		List<UploadQuestionDto> choice_list = new ArrayList<>();
+		while(choice_list.size()<wantQuestion) {
+			UploadQuestionDto uploadQuestionDto = list.get(r.nextInt(list.size()));
+			if (!choice_list.contains(uploadQuestionDto)) {
+				choice_list.add(uploadQuestionDto);
+			}else {
+				uploadQuestionDto =list.get(r.nextInt(list.size()));
+			}
+		}
+		return choice_list;
 	}
 }
