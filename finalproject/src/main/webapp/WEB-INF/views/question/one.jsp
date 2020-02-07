@@ -6,6 +6,7 @@
    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
    <script>
    function save(quesno, disno, answer){
+	
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
@@ -28,7 +29,7 @@
            $.ajax({
               url:"${pageContext.request.contextPath}/question2/insert",
               type:"post",
-              data:{test_no:quesno, correct:disno, iscorrect:iscorrect},
+              data:{test_no:quesno, correct:disno, iscorrect:iscorrect,answer:answer},
           
             })
         }else{

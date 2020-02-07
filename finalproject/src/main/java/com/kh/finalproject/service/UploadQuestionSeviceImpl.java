@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
@@ -111,18 +112,30 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			File dir = new File(Path);
 			dir.mkdir();
 			
-			//기존 파일 삭제해야 함. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
-			UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(updateQuestionVO.getQuestion_no());
-			String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
-			File file = new File(filepath);
-			file.delete();
+			
 			
 			for(int i=0;i<list.size();i++) {				
 					MultipartFile mf = updateQuestionVO.getFile().get(i);
+					if(!mf.isEmpty()) {
+					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
+					UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(updateQuestionVO.getQuestion_no());
+					String filepath = "D:/upload/question_image/"+delete.getFile_save_name();		
+					File file = new File(filepath);
+					file.delete();
+					/*******************************************************/
 					UploadQuestionFileDto dto = list.get(i);
 					uploadQuestionDao.updateFile(dto);
 					File target = new File(dir, dto.getFile_save_name());
-					mf.transferTo(target);					
-			}	
+					mf.transferTo(target);
+					}
+			}
+			
+	}
+	public void questionDelete(int question_no, int user_custom_question_no) {	
+		uploadQuestionDao.fileDelete2(question_no,user_custom_question_no);
+		UploadQuestionFileDto delete = uploadQuestionDao.fileDelete(question_no);
+		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
+		File file = new File(filepath);
+		file.delete();
 	}
 }

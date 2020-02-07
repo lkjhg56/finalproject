@@ -1,12 +1,10 @@
 package com.kh.finalproject.repository;
 
-import java.io.IOException;
 import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
+import java.util.Map;
 
 import com.kh.finalproject.entity.BoardDto;
-import com.kh.finalproject.entity.BoardFileDto;
+import com.kh.finalproject.entity.BoardReplyDto;
 
 public interface BoardDao {
 	//1. 등록기능
@@ -26,6 +24,24 @@ public interface BoardDao {
 		
 	//6. 게시글 수정
 		void edit(BoardDto boardDto);
+
+	//7.게시글 삭제
+		void delete(int board_no);
+
+	//8.게시글 검색
+		List<BoardDto> search(Map<String, String> param);
+		
+	//9.댓글 조회
+		List<BoardReplyDto> getReplyList(int board_reply_origin);
+		
+	//10.댓글 삭제
+		void replyDelete(int board_reply_no);
+		
+	//11.댓글 수정
+		void replyEdit(BoardReplyDto boardReplyDto);
+		
+	//12.댓글 등록
+		void replyRegist(BoardReplyDto boardReplyDto);
 		
 		
 }
