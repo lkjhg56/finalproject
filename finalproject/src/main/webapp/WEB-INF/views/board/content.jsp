@@ -52,7 +52,7 @@
     
     
  // 댓글 등록   
-    $(".regist-btn").submit(function(e) {
+    $("#regist-btn").submit(function(e) {
     	e.preventDefault();
     	
         var data = $(this).serialize();
@@ -62,6 +62,7 @@
             type: "post",
             data: data,
             success: function(resp) {
+            	location.reload();
             	
             }
     	});        
@@ -78,8 +79,10 @@
         	url: "${pageContext.request.contextPath}/board/content",
             type: "delete",
             data: data,
-            success: function(resp) {          	  
+            success: function(resp) {   
+            	location.reload();
             }
+        	
         });
     	
     });
@@ -122,7 +125,7 @@
 			<!-- 댓글 목록을 보여주는 칸 -->				
 			<tbody>
 				<tr>
-					<td>				
+					<td id = "comment">				
 						<table  width = "100%">
 						
 							<tbody>
@@ -169,11 +172,11 @@
 			<!-- 	댓글 등록창 -->
 			<tr>
 				<td align="right">				
-					<form action="${pageContext.request.contextPath}/board/content?board_no=${boardDto.board_no}" method="post">					
+					<form id="regist-btn" action="${pageContext.request.contextPath}/board/content?board_no=${boardDto.board_no}" method="post">					
 						<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
 						<input type="hidden" name="board_reply_writer" value="${id}">					
 						<textarea class="user-input" name="board_reply_content" rows="4" cols="155" required></textarea>						
-						<input id="regist-btn" type="submit" value="등록">						
+						<input type="submit" value="등록">						
 					</form>					
 				</td>
 			</tr>		

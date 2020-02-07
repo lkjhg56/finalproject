@@ -46,7 +46,7 @@ public class ReplyRestController {
 		sqlSession.insert("board.registReply", boardReplyDto);
 		
 		int no = boardDto.getBoard_no();
-		return "redirect:content?board_no="+no;		
+		return null;	
 	}
 	
 	
