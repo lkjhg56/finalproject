@@ -98,6 +98,23 @@
             },1000);
            
         })
+        
+ $(document).keydown(function (e) {
+     
+     if (e.which === 116) {
+         if (typeof event == "object") {
+             event.keyCode = 0;
+        }
+       		  return false;
+    } else if (e.which === 82 && e.ctrlKey) {
+    	  return false;
+  	 }
+}); 
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+    };
+        
     </script>
    
    
