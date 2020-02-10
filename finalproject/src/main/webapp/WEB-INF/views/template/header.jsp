@@ -36,34 +36,44 @@
 
 <!-- 운영자 페이지 넣어야 함. -->
 
+<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="${pageContext.request.contextPath}"><img class= "logo" src="${pageContext.request.contextPath}/res/image/logo3.png"></a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="post.html">Sample Post</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
 <!-- 헤더  -->
-<header>
-<div class="container">
-	<div class="row">
-		<div class="col">
-			<a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/res/image/logo3.png"></a>
-		</div>
-		<div class="col">
-<!-- 네이게이션 -->	
-		<c:choose>
-			<c:when test="${id == null}">				
-					<a href="${pageContext.request.contextPath}/users/join">회원 가입</a>
-					<a href="${pageContext.request.contextPath}/users/login">로그인</a>			
-					<a href="${pageContext.request.contextPath}/board/list">게시판</a>				
-			</c:when>
-			<c:otherwise>				
-					<a href="${pageContext.request.contextPath}/users/info">회원정보</a>
-					<a href="${pageContext.request.contextPath}/question/upload">유저문제 등록</a>
-					<a href="${pageContext.request.contextPath}/question/list">유저문제 목록</a>
-					<a href="${pageContext.request.contextPath}/question/multi">유저문제 여러문제(임시)</a>
-					<a href="${pageContext.request.contextPath}/question/choose">일반문제 목록</a>
-					<a href="${pageContext.request.contextPath}/board/list">게시판</a>
-					<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>				
-			</c:otherwise>
-		</c:choose>
-		</div>
-	</div>
-</div>
-	<hr>
-</header>
+  <header class="normheader" style="background-image: url('img/contact-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 <section>
