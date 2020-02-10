@@ -4,13 +4,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
-$(function() {
+	$(function() {
 		
 // 댓글 수정		
 	    // edit 클래스를 숨긴다
 	    $(".edit").hide();
-	    
-	    getCommentList();
 	    
 	 	// 수정을 누르면 표시되도록 처리
         $(".view").find(".su").click(function() {
@@ -22,22 +20,24 @@ $(function() {
             .next(".edit")
             .show();
         });	
-	 	
-	 	
 	
-    $("#replyEdit").submit(function(e) {
-    	e.preventDefault();
+    $(".edit")
+      .find("form")
+      .submit(function(e) {
+        //this == form
+        e.preventDefault(); //기본이벤트 방지하는 코드, form전송을 막는방법임
        
         //비동기통신을 이용하여 작성한 댓글을 수정페이지로 전달
+        var method = $(this).attr("method");
         var data = $(this).serialize(); //form에만 있는 기능 (전송할 정보)
-     
+
+        console.log(url, method, data);
         $.ajax({
-          url: "${pageContext.request.contextPath}/board2/edit2",
-          type: "post",
+          url: "${pageContext.request.contextPath}/board/content",
+          type: method,
           data: data,
-          success: function(resp) {
-          	location.reload();          	
-          }          
+          success: function(resp) {        	  
+          }
         });
 
         $(this)
@@ -46,10 +46,8 @@ $(function() {
         $(this)
           .parents(".edit")
           .prev(".view")
-          .show(); //나를 숨기고 내 앞줄을 보여줌
+          .show(); //나를 숨기고 내 앞줄을 보여주세요
       });
-    
-    
     
     
     
@@ -60,17 +58,16 @@ $(function() {
         var data = $(this).serialize();
     	
     	$.ajax({
-    		url: "${pageContext.request.contextPath}/board2/insert",
+    		url: "${pageContext.request.contextPath}/board/content",
             type: "post",
             data: data,
-            success: function(result) {
-            	location.reload();            	
+            success: function(resp) {
+            	location.reload();
+            	
             }
     	});        
     });
     
- 
- 
     
 // 댓글 삭제
     $(".sak").click(function(e){
@@ -79,43 +76,27 @@ $(function() {
         var data = $(this).serialize();
         	
         $.ajax({
-        	url: "${pageContext.request.contextPath}/board2/delete",
-            type: "post",
+        	url: "${pageContext.request.contextPath}/board/content",
+            type: "delete",
             data: data,
             success: function(resp) {   
             	location.reload();
-            }        	
-        });    	
+            }
+        	
+        });
+    	
     });
     
     
-    /**
-     * 댓글 불러오기(Ajax)
-     */
-
-});
-
-function getCommentList(){
     
-    $.ajax({
-        type:'GET',
-        url : "${pageContext.request.contextPath}/board2/replyList",
-        dataType : "list",
-        success : function(){
-            console.log("성공")
-     
-        },
-        error:function(){ 
-        	console.log("실패");
-       }            
-    });
-
-
-
-};
+ });
+    
+    
+   
 </script>
  
- <div align="center">	
+
+<div align="center">	
 <h2>게시글 보기</h2>
 		<table border="1" width="70%">
 			<thead>
@@ -144,38 +125,7 @@ function getCommentList(){
 			<!-- 댓글 목록을 보여주는 칸 -->				
 			<tbody>
 				<tr>
-					<td id = "comment">			
-<!-- 						<div class="container"> -->
-<!-- 						    <form id="commentForm" name="commentForm" method="post"> -->
-<!-- 						    <br><br> -->
-<!-- 						        <div> -->
-<!-- 						            <div> -->
-<!-- 						                <span><strong>Comments</strong></span> <span id="cCnt"></span> -->
-<!-- 						            </div> -->
-<!-- 						            <div> -->
-<!-- 						                <table class="table">                     -->
-<!-- 						                    <tr> -->
-<!-- 						                        <td> -->
-<!-- 						                            <textarea style="width: 1100px" rows="3" cols="30" id="board_reply_content" name="board_reply_content" placeholder="댓글을 입력하세요"></textarea> -->
-<!-- 						                            <br> -->
-<!-- 						                            <div> -->
-<%-- 						                                <a href='#' onClick="fn_comment('${result.code }')" class="btn pull-right btn-success">등록</a> --%>
-<!-- 						                            </div> -->
-<!-- 						                        </td> -->
-<!-- 						                    </tr> -->
-<!-- 						                </table> -->
-<!-- 						            </div> -->
-<!-- 						        </div> -->
-<%-- 						        <input type="hidden" id="board_reply_origin" name="board_reply_origin" value="${result.code }" />         --%>
-<!-- 						    </form> -->
-<!-- 						</div> -->
-						
-<!-- 						<div class="container"> -->
-<!-- 						    <form id="commentListForm" name="commentListForm" method="post"> -->
-<!-- 						        <div id="commentList"> -->
-<!-- 						        </div> -->
-<!-- 						    </form> -->
-<!-- 						</div>	 -->
+					<td id = "comment">				
 						<table  width = "100%">
 						
 							<tbody>
@@ -197,10 +147,10 @@ function getCommentList(){
 										</td>
 									</tr>	
 									
-									댓글을 수정하는 칸
+									<!-- 댓글을 수정하는 칸 -->
 									<tr class="edit">
 							            <td>
-								              <form id="replyEdit" action="content" method="post">
+								              <form action="content" method="put">
 								                <input type="hidden" name="board_reply_no" value="${boardReplyDto.board_reply_no}" />
 								                <textarea name="board_reply_content" rows="3" cols="161" >${boardReplyDto.board_reply_content}</textarea>
 								                <td align="center" width="160">
