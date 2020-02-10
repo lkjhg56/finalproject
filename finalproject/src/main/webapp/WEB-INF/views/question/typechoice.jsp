@@ -60,6 +60,8 @@
 	
 	$(function(){
 		$("form[name=form1]").submit(function(e){
+			
+			
 			e.preventDefault();//기본전송 방지
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
 			console.log(data);
@@ -67,6 +69,10 @@
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=500, height=500");
 		});
 	});
+	
+/* 	function appendResult() {
+		var data=
+	} */
 </script>
 
 
@@ -80,6 +86,7 @@
 			<div>${list.csname}</div>
 			${list.lim_min} <select class="method" name="method"
 				onclick="callCategory('${list.csname}')">
+				
 
 				<option>방법 선택하세요</option>
 				<option>한문제씩풀기</option>
@@ -87,7 +94,7 @@
 			</select> <select name="session" id='${list.csname}'>
 				<option>회차를 선택하세요</option>
 			</select> 
-			<input type="submit" value="선택">
+			<input type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
 		</form>
 
 

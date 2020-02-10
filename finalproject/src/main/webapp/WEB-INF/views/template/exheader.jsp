@@ -14,27 +14,16 @@
 <title>문제 마스터 홈페이지</title>
 
 
-<link href="${pageContext.request.contextPath}/res/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom fonts for this template -->
-  <link href="${pageContext.request.contextPath}/res/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
-  <!-- Custom styles for this template -->
-  <link href="${pageContext.request.contextPath}/res/static/css/clean-blog.min.css" rel="stylesheet">
-
-<style>
-	.logo{
-		width : 100;
-		height: 30
-	}
-</style>
 </head>
 <body>
+<!-- 메인페이지 -->
 <main>
-
+관리자 ID : admin pw : admin
 <!-- 운영자 페이지 넣어야 함. -->
+
+
+
+
 
 <!-- 헤더  -->
 <header>
@@ -49,13 +38,13 @@
 			<c:when test="${id == null}">				
 					<a href="${pageContext.request.contextPath}/users/join">회원 가입</a>
 					<a href="${pageContext.request.contextPath}/users/login">로그인</a>			
+					<a href="${pageContext.request.contextPath}/question/choose">문제 목록</a>
 					<a href="${pageContext.request.contextPath}/board/list">게시판</a>				
 			</c:when>
 			<c:otherwise>				
 					<a href="${pageContext.request.contextPath}/users/info">회원정보</a>
 					<a href="${pageContext.request.contextPath}/question/upload">유저문제 등록</a>
 					<a href="${pageContext.request.contextPath}/question/list">유저문제 목록</a>
-					<a href="${pageContext.request.contextPath}/question/multi">유저문제 여러문제(임시)</a>
 					<a href="${pageContext.request.contextPath}/question/choose">일반문제 목록</a>
 					<a href="${pageContext.request.contextPath}/board/list">게시판</a>
 					<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>				
