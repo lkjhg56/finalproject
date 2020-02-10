@@ -14,16 +14,25 @@
 			data : {
 				csname : csname
 			},
-			datatype : "list",
+			datatype : "json",
 			success : function(quesList) {
+	
+				for(i=0; i<quesList.length; i++){
+					console.log(quesList[i]);
+				}
+
+		
 				$(option).empty();
 				$(quesList).each(function() {
 					$("<option>").text(this).appendTo(option)
+					
 				})
 
 			}
 		});
 	};
+	
+	
 
 	function resultSave(csname, tno, userid) {
 
@@ -66,7 +75,7 @@
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
 			console.log(data);
 			var win = window.open(
-					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=500, height=500");
+					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
 		});
 	});
 	
@@ -94,14 +103,15 @@
 				type="hidden" name="min" value="${list.lim_min}"> <input
 				type="hidden" name="categoryname" value="${list.csname}">
 			<div>${list.csname}</div>
-			${list.lim_min} <select class="method" name="method"
+			<select class="method" name="method"
 				onclick="callCategory('${list.csname}')">
 				
 
 				<option>방법 선택하세요</option>
 				<option>한문제씩풀기</option>
 				<option>한번에풀기</option>
-			</select> <select name="session" id='${list.csname}'>
+			</select>
+			 <select name="session" id='${list.csname}' on>
 				<option>회차를 선택하세요</option>
 			</select> 
 			<input type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
