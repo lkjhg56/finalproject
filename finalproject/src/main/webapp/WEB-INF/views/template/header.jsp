@@ -33,6 +33,9 @@
 </head>
 <body>
 <main>
+
+<!-- 운영자 페이지 넣어야 함. -->
+
 <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -62,10 +65,11 @@
       </div>
     </div>
   </nav>
-  
+
   <br>
   <br>
   <br>
+
 
 <!-- 헤더  -->
   <header class="normheader" style="background-image: url('img/contact-bg.jpg')">
@@ -78,6 +82,8 @@
         </div>
       </div>
     </div>
+
   </header>
   	<div class= "forfooter">
+
 <section>
