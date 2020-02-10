@@ -76,6 +76,16 @@
 </script>
 
 
+
+ <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+
+
+
+   <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
 <c:forEach var="list" items="${list}">
 
 	<div>
@@ -104,3 +114,14 @@
 
 
 </c:forEach>
+
+
+      </div>
+    </div>
+  </div>
+ 
+ 
+
+  </body>
+ 
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
