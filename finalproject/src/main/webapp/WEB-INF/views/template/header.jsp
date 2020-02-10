@@ -59,7 +59,7 @@
             <a class="nav-link" href="${pageContext.request.contextPath}/users/login">Login</a>
           </li>
             <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/users/Join">Regist</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/join">Regist</a>
           </li>
         </ul>
       </div>

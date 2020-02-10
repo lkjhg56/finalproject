@@ -3,6 +3,8 @@
 
    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
    <script>
    
    
@@ -146,34 +148,111 @@
     } 
  
 
+
+main{
+            display:flex;
+            flex-wrap: wrap;
+        }
+        header{
+            width:100%;
+        }
+
+        aside{
+            width:300px;
+        }
+        section{
+            flex-grow:1;
+            min-height: 600px;
+        }
+
+
+	*{
+            box-sizing:border-box;
+        }
+      
+
+.plural-wrap::after{
+	 content:"";
+    display:block;
+    clear:both;
+}
+.plural-question{
+	 float:left;
+    width:40%;
+}
+.plural-pic{
+	 float:left;
+    width:60%;
+}
+
+
 </style>
-  
-  <div class="timer-wrap">
 
-        <i class = "time">${hour}:${min}:0</i>
-        <div class = "timer">
-            <span>0</span> : <span>0</span> : <span>0</span>
+
+<main>
+    <header>
+        <div class = "conatiner-fluid">
+            <div class = "jumbotron">
+                <h1>${csname}</h1>
+
+                <h3>${session}</h3>
+ 						<div class="timer-wrap">
+
+       							 <i class = "time">${hour}:${min}:0</i>
+      							  <div class = "timer">
+           						 <span>0</span> : <span>0</span> : <span>0</span>
+        				</div>
+  					</div>   
+            </div>
+
         </div>
-  </div>   
-  
-  
-   <c:forEach var="qlist" items ="${clist}">
+    </header>
 
 
-   <div>
+<aside>
+    <textarea>
+
+    </textarea>
+</aside>
+  
+ 
+  
+<section>
+   
+  
+ 
+  		
+   			<c:forEach var="qlist" items ="${clist}">
+ 				<div class = "plural-wrap">
+				
+   					<div class = "plural-question">
    	
 
-   		<h2>${qlist.question}</h2>
+   							<h2>${qlist.question}</h2>
 
  
-   		<h4><input class = "ans" type="checkbox"  name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}');">${qlist.dis1}</h4>
-   		<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}');">${qlist.dis2}</h4>
-   		<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}');">${qlist.dis3}</h4>
-   		<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}');">${qlist.dis4}</h4>
-   		<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}');">${qlist.dis5}</h4>
+   							<h4><input class = "ans" type="checkbox"  name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}');">${qlist.dis1}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}');">${qlist.dis2}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}');">${qlist.dis3}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}');">${qlist.dis4}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}');">${qlist.dis5}</h4>
+								<br>
+   								<br>
+   								<br>
+   					</div>
+   					 <div class = "plural-pic">
+   										<img src="http://placehold.it/200x100"/>
+   					</div>
+   
+  
+   				
+   
+ 							  
+      </div>
+   			</c:forEach>
+  
 
-   </div>
-   </c:forEach>
+  
   
    <form action = "${pageContext.request.contextPath}/question/result"> 
    
@@ -182,3 +261,10 @@
   	 
    	<input type = "submit" value = "제출">
    </form>
+ 
+
+</section>
+   </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
