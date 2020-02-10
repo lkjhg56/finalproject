@@ -2,8 +2,10 @@ package com.kh.finalproject.repository;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionResultDto;
 
 @Repository
 public class UploadQuestionDaoImple implements UploadQuestionDao{
@@ -75,7 +78,7 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	//파일 삭제를 위한 검색
 	@Override
-	public UploadQuestionFileDto fileDelete(int question_no) {
+	public UploadQuestionFileDto getFile(int question_no) {
 		return sqlSession.selectOne("question.getFile",question_no);		
 	}
 	//파일 삭제
@@ -90,5 +93,30 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		Date time = new Date();		
 		String time1 = format.format(time);
 		return time1;
+	}
+	@Override
+	public int question_true() {		
+		return sqlSession.selectOne("question.userResultTrue");
+	}
+	@Override
+	public int question_false() {		
+		return sqlSession.selectOne("question.userResultFalse");
+	}
+	@Override
+	public UploadQuestionDto question_all(int question_no) {		
+		return sqlSession.selectOne("question.getTotal", question_no);
+	}
+	@Override
+	public void insert_result(UserQuestionResultDto userQuestionResultDto) {
+		sqlSession.insert("question.insert_result",userQuestionResultDto);
+		
+	}
+	@Override
+	public int userPriority(int question_no, int result_no) {
+		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
+				.question_no(question_no)
+				.result_no(result_no)
+				.build();
+		return sqlSession.selectOne("question.userPriority", userQuestionResultDto);
 	}
 }

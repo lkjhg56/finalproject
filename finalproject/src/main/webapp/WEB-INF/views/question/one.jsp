@@ -5,8 +5,14 @@
    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
    <script>
+   
+   
+
+   
    function save(quesno, disno, answer){
+
 	   opener.location.reload();
+
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
@@ -53,6 +59,7 @@
    
    
    $(document).keydown(function (e) {
+<<<<<<< HEAD
        
        if (e.which === 116) {
            if (typeof event == "object") {
@@ -80,6 +87,55 @@
 
     
 	  
+
+
+	     
+	     if (e.which === 116) {
+	    	 alert("새로고침을 할 수 없습니다.");
+	         if (typeof event == "object") {
+	             event.keyCode = 0;
+	        }
+	       		  return false;
+	    } else if (e.which === 82 && e.ctrlKey) {
+	    	  return false;
+	  	 }
+	}); 
+	        history.pushState(null, null, location.href);
+	        window.onpopstate = function () {
+	            history.go(1);
+	    };
+	   
+	 
+
+
+	    $(window).on("beforeunload", function () {
+            window.opener.appendResult();
+        });
+	  
+
+
+	 /*    function noEvent() { // 새로 고침 방지
+	        if (event.keyCode == 116) {
+	            alert("새로고침을 할 수 없습니다.");
+	            event.keyCode = 2;
+	            return false;
+	        } else if (event.ctrlKey
+	                && (event.keyCode == 78 || event.keyCode == 82)) {
+	            return false;ㄴ
+	        }
+	    }
+
+
+	    document.onkeydown = noEvent; */
+
+	    
+	    
+	    
+
+
+
+
+
    </script>
   
    
@@ -99,7 +155,7 @@
    </div>
  
    
-   <form action = "${pageContext.request.contextPath}/question/oneresult" > 
+   <form action = "${pageContext.request.contextPath}/question/oneresult"  > 
    	<input type = "hidden" name = "category_no" value = "${session}">
    	<input type="hidden" name="method" value="${method}">
   	 		<input type = "hidden" name = "csname" value = "${csname}">

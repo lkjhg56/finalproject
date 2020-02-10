@@ -199,4 +199,16 @@
  	 <delete id="deleteFile">
  	 	delete from question_file where question_no=#{question_no}
  	 </delete>
+ 	 <select id="userResultTrue" resultType="int">
+ 	 	select count(tried_user) from question_result where result=1
+ 	 </select>
+ 	 <select id="userResultFalse" resultType="int">
+ 	 	select count(tried_user) from question_result where result=0
+ 	 </select>
+ 	 <select id="userPriority" parameterType="userQuestionResultDto" resultType="int">
+		select * from(
+			select rownum,e.* from(
+				select * from question_result)e
+		)where question_no=#{question_no} and result_no=#{result_no}
+	 </select>
  </mapper>

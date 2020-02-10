@@ -44,9 +44,10 @@ public class SolveQuestionController {
 	}
 	
 	@GetMapping("question/questype")
-	public String category(@RequestParam int tno, Model model) {
-		model.addAttribute("list", testDao.getDetailList(tno));
+	public String category(@RequestParam int tno, Model model,HttpSession session) {
 		model.addAttribute("tno", tno);
+		model.addAttribute("list", testDao.getDetailList(tno));
+//		session.removeAttribute("no");
 		return "question/typechoice";
 	}
 	
@@ -60,7 +61,6 @@ public class SolveQuestionController {
 	
 	
 	@GetMapping("question/questcategory")
-
 public String category2(@RequestParam String categoryname, String session, String hour, String min, String method, HttpSession httpSession,Model model) {
 
 		if(method.equals("한번에풀기")) {
@@ -135,8 +135,8 @@ public String category2(@RequestParam String categoryname, String session, Strin
 				return "question/result";
 			}
 			
-			
-			TestQuestionDto tdto= testDao.getDto(categoryname,httpSession);
+			int no= (int)httpSession.getAttribute("no");
+			TestQuestionDto tdto= testDao.getDto(categoryname,no,httpSession);
 			
 			
 			TestQuestionDto dto=new TestQuestionDto();
@@ -244,8 +244,8 @@ public String category2(@RequestParam String categoryname, String session, Strin
 				return "question/result";
 			}
 			
-			
-			TestQuestionDto tdto= testDao.getDto(categoryname,httpSession);
+			int no= (int)httpSession.getAttribute("no");
+			TestQuestionDto tdto= testDao.getDto(categoryname,no,httpSession);
 			
 			
 			TestQuestionDto dto=new TestQuestionDto();
@@ -308,8 +308,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 				.build();
 
 
-						
-	
+					
 		
 		model.addAttribute("category_no", category_no);
 		model.addAttribute("csname", csname);

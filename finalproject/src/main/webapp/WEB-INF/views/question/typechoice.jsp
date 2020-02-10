@@ -60,7 +60,9 @@
 	
 	$(function(){
 		$("form[name=form1]").submit(function(e){
+
 		/* 	e.preventDefault();//기본전송 방지 */
+
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
 			console.log(data);
 			var win = window.open(
@@ -68,6 +70,7 @@
 		});
 	});
 	
+
 	
 	
 	/* function appendResult() {
@@ -93,8 +96,23 @@
  
 
 	}   */
+=======
+/* 	function appendResult() {
+		var data=
+	} */
+>>>>>>> refs/remotes/origin/master
 </script>
 
+
+
+ <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+
+
+
+   <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
 
 <c:forEach var="list" items="${list}">
 
@@ -107,6 +125,7 @@
 			<div>${list.csname}</div>
 			${list.lim_min} <select class="method" name="method"
 				onclick="callCategory('${list.csname}')">
+				
 
 				<option>방법 선택하세요</option>
 				<option>한문제씩풀기</option>
@@ -124,3 +143,14 @@
 
 
 </c:forEach>
+
+
+      </div>
+    </div>
+  </div>
+ 
+ 
+
+  </body>
+ 
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

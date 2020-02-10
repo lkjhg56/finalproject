@@ -17,7 +17,7 @@ public interface TestDao {
 
 	int getScore(int rno);
 	
-	TestQuestionDto getDto(String categoryname,HttpSession session);
+	TestQuestionDto getDto(String categoryname,int no,HttpSession session);
 
 	int getScore(int rno, String category_no, String csname);
 	

@@ -53,6 +53,25 @@
        
    
    }
+   
+   $(document).keydown(function (e) {
+	     
+	     if (e.which === 116) {
+	    	 alert("새로고침을 할 수 없습니다.");
+	         if (typeof event == "object") {
+	             event.keyCode = 0;
+	        }
+	       		  return false;
+	    } else if (e.which === 82 && e.ctrlKey) {
+	    	  return false;
+	  	 }
+	}); 
+	        history.pushState(null, null, location.href);
+	        window.onpopstate = function () {
+	            history.go(1);
+	    };
+	        
+   
    </script>
    
    <script>
