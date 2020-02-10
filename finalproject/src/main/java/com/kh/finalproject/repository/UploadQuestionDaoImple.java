@@ -34,6 +34,9 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		sqlSession.insert("question.upload_sub", uploadQuestionDto);//user_costom_question 등록
 		sqlSession.insert("question.upload", uploadQuestionDto);// question 등록
 	}
+	
+	
+	
 	//파일 업로드
 	@Override
 	public void fileUpload(UploadQuestionFileDto uploadQuestionFileDto) {
