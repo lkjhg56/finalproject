@@ -105,11 +105,7 @@
  
 
 	}   */
-=======
-/* 	function appendResult() {
-		var data=
-	} */
->>>>>>> refs/remotes/origin/master
+
 </script>
 
 

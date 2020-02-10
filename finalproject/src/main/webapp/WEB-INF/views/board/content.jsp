@@ -6,6 +6,10 @@
 <script>
 	$(function() {
 		
+		
+		
+		
+		
 // 댓글 수정		
 	    // edit 클래스를 숨긴다
 	    $(".edit").hide();
@@ -90,7 +94,47 @@
     
     
  });
-    
+		$(function() {   
+	
+		    	
+		    	$.ajax({
+		    		
+		    		url : "${pageContext.request.contextPath}/board2/list",
+		    		type : "post",
+		    		datatype : "json",
+		    		success: function(ans){
+		    			var html = "";
+		    			
+		    			if(ans.length >0){
+		    				for(i=0; i<ans.length; i++){
+		    					 html += "<div>";
+		    	                 html += "<div><table class='table'><h6><strong>"+ans[i].board_reply_wdate+"</strong></h6>";
+		    	                 html += ans[i].board_reply_content + "<tr><td></td></tr>";
+		    	                 html += "</table></div>";
+		    	                 html += "</div>";
+		    					
+		    				}
+		    			}else {
+		    	                
+		    	                html += "<div>";
+		    	                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
+		    	                html += "</table></div>";
+		    	                html += "</div>";
+		    	                
+		    	            }
+		    				$("#commentList").html(html);
+		    			
+		    			
+		    			console.log("성공")
+		    		},
+		    		error:function(){
+		    			console.log("실패")
+		    		}
+		    		
+		    		
+		    	})
+		
+		});
     
    
 </script>
@@ -174,7 +218,7 @@
 				<td align="right">				
 					<form id="regist-btn" action="${pageContext.request.contextPath}/board/content?board_no=${boardDto.board_no}" method="post">					
 						<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
-						<input type="hidden" name="board_reply_writer" value="${id}">					
+						<input type="hidden" name="board_reply_writer" value="${id}">				
 						<textarea class="user-input" name="board_reply_content" rows="4" cols="155" required></textarea>						
 						<input type="submit" value="등록">						
 					</form>					
@@ -200,4 +244,26 @@
 			</tr>	
 		</table>
 	</div>
+	
+	
+	
+
+	
+	
+	
+	<div class="container">
+    <form id="commentListForm" name="commentListForm" method="post">
+        <div id="commentList">
+        </div>
+    </form>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
