@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
@@ -201,3 +201,4 @@
 	<input type="submit" class="join" value="회원가입하기"> 
 	
 </form>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
