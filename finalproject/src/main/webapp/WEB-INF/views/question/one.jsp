@@ -6,7 +6,7 @@
    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
    <script>
    function save(quesno, disno, answer){
-	
+	   opener.location.reload();
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
@@ -68,6 +68,18 @@
               history.go(1);
       };
           
+      
+    /*   
+      $(window).bind("beforeunload", function (e){
+
+    	  window.opener.appendResult();
+
+    	}); */
+
+
+
+    
+	  
    </script>
   
    

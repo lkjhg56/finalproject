@@ -79,4 +79,20 @@ public class RestController {
 		return quesList;
 	}
 	
+	
+	@PostMapping("newwindow")
+	public String newwindow(HttpSession session) {
+
+			session.setAttribute("no", 0);
+
+ 
+
+		
+
+		return null;
+
+	}
+
+	
+	
 }
