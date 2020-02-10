@@ -69,9 +69,9 @@
 	
 	$(function(){
 		$("form[name=form1]").submit(function(e){
-			
-			
-			e.preventDefault();//기본전송 방지
+
+		/* 	e.preventDefault();//기본전송 방지 */
+
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
 			console.log(data);
 			var win = window.open(
@@ -79,9 +79,37 @@
 		});
 	});
 	
+
+	
+	
+	/* function appendResult() {
+
+		 
+
+		$.ajax({
+
+			url : "${pageContext.request.contextPath}/question2/newwindow",
+
+			type : "post",
+
+			data : {
+
+				
+
+			}
+
+ 
+
+		})
+
+ 
+
+	}   */
+=======
 /* 	function appendResult() {
 		var data=
 	} */
+>>>>>>> refs/remotes/origin/master
 </script>
 
 
@@ -98,7 +126,8 @@
 <c:forEach var="list" items="${list}">
 
 	<div>
-		<form method="post" name="form1">
+		<form method="post" name="form1"  action="${pageContext.request.contextPath}/question/solving">
+		<input type="hidden" name="tno" value="${tno}">
 			<input type="hidden" name="hour" value="${list.lim_hour}"> <input
 				type="hidden" name="min" value="${list.lim_min}"> <input
 				type="hidden" name="categoryname" value="${list.csname}">

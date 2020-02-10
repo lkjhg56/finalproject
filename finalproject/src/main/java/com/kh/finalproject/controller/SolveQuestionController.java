@@ -300,7 +300,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 	
 	@GetMapping("question/oneresult")
 	public String result2(@RequestParam String category_no, String csname, String method,HttpSession session, Model model) {
-		int rno = (int) session.getAttribute("rno");
+	
 	
 		TestQuestionDto testQuestionDto = TestQuestionDto.builder()
 				.csname(csname)
@@ -314,6 +314,13 @@ public String category2(@RequestParam String categoryname, String session, Strin
 		model.addAttribute("csname", csname);
 		model.addAttribute("method", method);
 		return "question/oneresult";
+	}
+	
+	
+	@PostMapping("question/solving")
+	public String solving(@RequestParam int tno,Model model) {
+		model.addAttribute("tno", tno);
+		return "question/solving";
 	}
 	
 }

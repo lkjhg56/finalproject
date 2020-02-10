@@ -10,9 +10,9 @@
 
    
    function save(quesno, disno, answer){
-   
-   opener.location.reload();
-	
+
+	   opener.location.reload();
+
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
@@ -59,6 +59,35 @@
    
    
    $(document).keydown(function (e) {
+<<<<<<< HEAD
+       
+       if (e.which === 116) {
+           if (typeof event == "object") {
+               event.keyCode = 0;
+          }
+         		  return false;
+      } else if (e.which === 82 && e.ctrlKey) {
+      	  return false;
+    	 }
+  }); 
+          history.pushState(null, null, location.href);
+          window.onpopstate = function () {
+              history.go(1);
+      };
+          
+      
+    /*   
+      $(window).bind("beforeunload", function (e){
+
+    	  window.opener.appendResult();
+
+    	}); */
+
+
+
+    
+	  
+
 
 	     
 	     if (e.which === 116) {
@@ -102,6 +131,7 @@
 	    
 	    
 	    
+
 
 
 
