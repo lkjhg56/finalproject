@@ -28,7 +28,7 @@ public class GradePointServiceImpl implements GradePointService{
 		int users_no = sqlSession.selectOne("users.get_users_no", id);
 		pointDto.setUsers_no(users_no);
 		
-		sqlSession.insert("point.givePoint", pointDto);
+		sqlSession.insert("grade_point.givePoint", pointDto);
 		sqlSession.update("users.change_point", usersDto);
 	}
 }
