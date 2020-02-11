@@ -86,5 +86,16 @@ where a.rownumber=#{no}
 			select * from rcorrect where result_no = #{rno}
 		</select>
 
+		<select id = "totalNum" parameterType = "int" resultType = "int">
+			select count (*) from rcorrect where test_no=#{test_no}
+		</select>
+		
+		<select id = "correctNum" parameterType = "int" resultType = "int">
+			select count(*) from rCorrect where test_no=#{test_no} and iscorrect=1
+		</select>
+		
+		<update id = "rate" parameterType = "com.kh.finalproject.payvo.RateVO">
+			update test_question set rate=#{sum} where no=#{test_no}
+		</update>
 	
 </mapper>
