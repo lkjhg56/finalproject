@@ -17,10 +17,7 @@
 			datatype : "json",
 			success : function(quesList) {
 	
-				for(i=0; i<quesList.length; i++){
-					console.log(quesList[i]);
-				}
-
+			
 		
 				$(option).empty();
 				$(quesList).each(function() {
@@ -56,7 +53,7 @@
 		var data = check.serialize();
 		var win = window.open(
 				"${pageContext.request.contextPath}/question/questcategory?"
-						+ data, "win", "width=500, height=500");
+						+ data, "win", "width=450, height=500");
 
 		// 		window.open("", 'POP');
 
@@ -105,6 +102,13 @@
  
 
 	}   */
+	
+	
+	
+	function callInfo(session){
+
+		console.log(session);
+	}
 
 </script>
 
@@ -118,6 +122,10 @@
    <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
+		<h6><a href = "${pageContext.request.contextPath}">home</a> > <a href = "${pageContext.request.contextPath }/question/choose">문제 종류 고르기</a>
+      				><a href = "#">문제 고르기</a>
+      	</h6>
+		<h1>시험 목록</h1>
 
 <c:forEach var="list" items="${list}">
 
@@ -129,14 +137,14 @@
 				type="hidden" name="categoryname" value="${list.csname}">
 			<div>${list.csname}</div>
 			<select class="method" name="method"
-				onclick="callCategory('${list.csname}')">
+				onchange="callCategory('${list.csname}')">
 				
 
 				<option>방법 선택하세요</option>
 				<option>한문제씩풀기</option>
 				<option>한번에풀기</option>
 			</select>
-			 <select name="session" id='${list.csname}' on>
+			 <select name="session" id='${list.csname}' onclick="callInfo(${list.csname})">
 				<option>회차를 선택하세요</option>
 			</select> 
 			<input type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">

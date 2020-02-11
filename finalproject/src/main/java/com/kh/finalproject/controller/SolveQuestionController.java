@@ -79,6 +79,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 					dto.setDis4(qlist.getDis4());
 					dto.setDis5(qlist.getDis5());
 					dto.setQuestion(qlist.getQuestion());
+					dto.setRate(qlist.getRate());
 					question.add(dto);
 				}
 
