@@ -18,6 +18,6 @@ public class TestQuestionDto {
 	private int correct, incorrect;
 	private String dis1, dis2, dis3, dis4, dis5;
 	private int rate;
-	
+
 	
 }

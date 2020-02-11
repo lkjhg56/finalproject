@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestQuestionDto;
+import com.kh.finalproject.payvo.RateVO;
 import com.kh.finalproject.repository.TestDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,20 @@ public class RestController {
 																	.answer(answer)
 																	.build();
 		sqlSession.insert("correct", rcorrectDto);
+		
+		int totalNum = sqlSession.selectOne("totalNum", test_no); 
+		int correctNum = sqlSession.selectOne("correctNum", test_no);
+		int sum = correctNum*100/totalNum;
+		log.info("total={}", totalNum);
+		log.info("correctsum={}", correctNum);
+		log.info("sumsum={}", sum);
+		
+		RateVO vo = RateVO.builder()
+										.sum(sum)
+										.test_no(test_no)
+										.build();
+		
+		sqlSession.update("rate", vo);
 		
 		
 		return null;

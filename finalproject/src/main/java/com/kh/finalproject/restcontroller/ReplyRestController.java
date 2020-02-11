@@ -1,24 +1,29 @@
 package com.kh.finalproject.restcontroller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalproject.entity.BoardDto;
 import com.kh.finalproject.entity.BoardReplyDto;
 import com.kh.finalproject.repository.BoardDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/board2")
+@Slf4j
 public class ReplyRestController {
 	
 	@Autowired
@@ -69,6 +74,20 @@ public class ReplyRestController {
 //				int no = boardDto.getBoard_no();
 //				return "redirect:content?board_no="+no;
 				return null;
+			}
+			
+			@PostMapping("/list")
+			public List<BoardReplyDto> getList() {
+				log.info("iscome?");
+				BoardReplyDto replyDto =BoardReplyDto.builder()
+																							.board_reply_origin(33)
+																							.board_reply_no(4)
+																							.build();
+						
+						
+				List<BoardReplyDto> ReplyDto=sqlSession.selectList("board.ReplyList", replyDto);
+						
+						return ReplyDto;
 			}
 
 }
