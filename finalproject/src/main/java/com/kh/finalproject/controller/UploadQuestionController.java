@@ -49,7 +49,7 @@ public class UploadQuestionController {
 	//문제 풀기(여러문제 최대 4문제)
 	@GetMapping("/multi")
 	public String multi(Model model) {
-		int wantQuestion=6;
+		int wantQuestion=11;
 		List<UploadQuestionDto> choice_list=uploadQuestionService.multiQuestion(wantQuestion);
 		model.addAttribute("count",wantQuestion);
 		model.addAttribute("list", choice_list);
