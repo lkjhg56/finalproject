@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class CategoryDto {
-	
+
 	private int category_no;
 	private String csname;
 	private int test_no;

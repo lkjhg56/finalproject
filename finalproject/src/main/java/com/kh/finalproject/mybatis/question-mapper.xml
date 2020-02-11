@@ -13,6 +13,24 @@
  	 	 <select id="questionSequence" resultType="int">
  		select question_result_seq.nextval from dual
  	</select>
+ 	
+ 	<!-- 일반문제 시퀀스 뽑기 -->
+ 	<select id="testquestionSequence" resultType="int">
+ 	select test_question_seq.nextval from dual
+ 	</select>
+ 	
+ 	<select id="categorySequence" resultType="int">
+ 	select category_seq.nextval from dual
+ 	</select>
+ 	
+ 	<select id="testSequence" resultType="int">
+ 	select test_seq.nextval from dual
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
  	<!-- 
  	문제 업로드
  	* 관리자만 question_premium 변경 가능하도록 해야함.
@@ -73,43 +91,64 @@
  	
  	
  	<insert id="uploadtestquestion" parameterType="testQuestionDto">
- 	
  		insert into test_question values(
- 			test_question_seq.nextval,
+ 			#{no},
  			#{csname},
  			#{category_no},
- 			#{QUESTION},
- 			#{ISPREMIUM},
- 			#{ANSWER},
- 			#{CORRECT},
- 			#{INCORRECT},
- 				#{DIS1},
- 			#{DIS2},
- 			#{DIS3},
- 			#{DIS4},
- 			#{DIS5}
+ 			#{question},
+ 			#{ispremium},
+ 			#{answer},
+ 			#{correct},
+ 			#{incorrect},
+ 				#{dis1},
+ 			#{dis2},
+ 			#{dis3},
+ 			#{dis4},
+ 			#{dis5},
+ 			#{rate}
  			)
  	</insert>
  	
  	<insert id="uploadcategory" parameterType="categoryDto">
  	insert into category values(
- 	category_seq.nextval,
- 	#{CSNAME},
- 	#{TEST_NO},
- 	 	#{LIM_HOUR},
- 	#{LIM_MIN}
+ 	#{category_no},
+ 	#{csname},
+ 	#{test_no},
+ 	 	#{lim_hour},
+ 	#{lim_min}
  	
  	)
  	</insert>
  	
  	<insert id="uploadtest" parameterType="testDto">
- 		insert into category values(
- 	test_seq.nextval,
- 	#{test_category},
+ 		insert into test values(
+ #{tno},
+ 	#{test_category}
  
  	
  	
  	)
+ 	</insert>
+ 	
+ 	<insert id="normalupload_file" parameterType="uploadTestQuestionFileDto">
+ 			insert into test_question_file values(
+ 		test_question_file_seq.nextval,
+		#{file_upload_name},
+		#{file_save_name},
+		#{file_type},
+		#{file_size},
+		#{test_question_no}
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="uploadsolution" parameterType="solutionDto">
+ 	insert into solution values(
+ 	solution_seq.nextval,
+ 	#{solution},
+ 	#{question_no},
+ 	#{user_no}
+ 	)
+ 	
  	</insert>
  	<!-- 
  	문제 수정
@@ -152,6 +191,7 @@
  	 <select id="getOne" resultType="uploadQuestionDto">
  		 select * from question where question_no=#{question_no}
  	 </select> 	 
+ 	 
  	 <!-- 세션 id를 이용하여 user_no를 가져옴 -->
  	 <select id="getNo" parameterType="String" resultType="int">
  	 	select user_no from users where id=#{id}
