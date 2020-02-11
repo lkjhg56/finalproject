@@ -24,15 +24,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="resultDto">
 
 	<!-- 시험 내역 조회 -->
-	<select id="test_result" resultType="resultDto">
-		select cs_no,sumscore,test_date from result where user_id=#{users_id}
+	<select id="test_result" resultType="resultDto" parameterType="map">
+	select * from (
+    	select rownum rn, A.* from (
+        	select * from result where user_id=#{users_id} order by test_date desc
+    	)A
+	) where rn between #{start} and #{finish}
 	</select>
 	
 	<!-- 검색 조회 -->
 	<select id="search_result" resultType="resultDto" parameterType="map">
-		select cs_no,sumscore,test_date from result
+	select * from (
+    	select rownum rn, A.* from (
+        	select * from result where user_id=#{users_id}
+			and cs_no like '%'||#{keyword}||'%'
+			order by test_date desc
+    	)A
+	) where rn between #{start} and #{finish}
+	</select>
+	
+	<!-- 기본 개수 조회 -->
+	<select id="getCount" resultType="int">
+		select count(*) from result where user_id=#{users_id}
+	</select>
+	
+	<!-- 검색 개수 조회 -->
+	<select id="search_getCount" resultType="resultDto" parameterType="map">
+		select count(*) from result
 		where cs_no like '%'||#{keyword}||'%' and user_id=#{user_id}
-		
 	</select>
 	
 </mapper>

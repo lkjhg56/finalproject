@@ -120,7 +120,9 @@ function pageChange(index, totalPage){
 }
 
 </script>
+<script>
 
+</script>
 <h1>여러문제 풀기</h1>
 <!-- 리스트로 받아온다. 리스트 내에는 Question_no을 포함한 문제의 DTO를 가진다. -->
 <form action="multi" method="post">
@@ -130,7 +132,7 @@ function pageChange(index, totalPage){
 	<input type="hidden" id="minResult" name="min">
 	<input type="hidden" id="secResult" name="sec">
 	<input type="hidden" id="milisecResult" name="milisec">
-	<input type="hidden" name = "countData" id="countData" value="${count}">
+<%-- 	<input type="hidden" name = "countData" id="countData" value="${count}"> --%>
 <div id="paging">
 <c:forEach var="questionDto" items="${list}" begin="0" end="${count}">
 <div class="inputDiv">
@@ -138,11 +140,11 @@ function pageChange(index, totalPage){
 <img class="preview" src="image?question_no=${questionDto.question_no}" width="120" height="120"><br><br>
 <span>문제 내용 : ${questionDto.question_content}</span>
 	<input type="hidden" name="question_no" value="${questionDto.question_no}"><br><br>
-		<input type="radio" name="question_answer" value="1">1. ${questionDto.answer1}<br>
-		<input type="radio" name="question_answer" value="2">2. ${questionDto.answer2}<br>
-		<input type="radio" name="question_answer" value="3">3. ${questionDto.answer3}<br>
-		<input type="radio" name="question_answer" value="4">4. ${questionDto.answer4}<br>
-		<input type="radio" name="question_answer" value="5">5. ${questionDto.answer5}<br><br>
+		<input type="radio" name="question_answer[0]+${questionDto.question_no}" value="1">1. ${questionDto.answer1}<br>
+		<input type="radio" name="question_answer[1]+${questionDto.question_no}" value="2">2. ${questionDto.answer2}<br>
+		<input type="radio" name="question_answer[2]+${questionDto.question_no}" value="3">3. ${questionDto.answer3}<br>
+		<input type="radio" name="question_answer[3]+${questionDto.question_no}" value="4">4. ${questionDto.answer4}<br>
+		<input type="radio" name="question_answer[4]+${questionDto.question_no}" value="5">5. ${questionDto.answer5}<br><br>
 		<c:set var="no" value="${no+1}"/>
 </div>		
 </c:forEach>

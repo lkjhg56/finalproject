@@ -43,7 +43,7 @@ where a.rownumber=#{no}
 	<!--  카테고리 리스트 -->
 	
 	<select id = "callcategory" parameterType = "String" resultType = "String">
-		select distinct category_no from test_question where csname = '정보처리기사'
+		select distinct category_no from test_question where csname = #{csname}
 	</select>	
 	
 	

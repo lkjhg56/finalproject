@@ -4,10 +4,38 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-clean-blog/blob/master/LICENSE)
  */
 
+html {
+
+    position: relative;
+
+    min-height: 100vh;
+
+    margin: 0;
+
+
+}
+
+
+*{
+            box-sizing:border-box;
+        }
+        .forfooter::after{
+            content:"";
+            display:block;
+            clear:both;
+        }
+        .forfooter{
+        min-height:70vh;
+        }
+
+
+
+
 body {
   font-size: 20px;
   color: #212529;
   font-family: 'Lora', 'Times New Roman', serif;
+
 }
 
 p {
@@ -121,14 +149,14 @@ img::-moz-selection {
   }
   #mainNav .navbar-brand {
     padding: 10px 20px;
-    color: #fff;
+    color: black;
   }
   #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
     color: rgba(255, 255, 255, 0.8);
   }
   #mainNav .navbar-nav > li.nav-item > a {
     padding: 10px 20px;
-    color: #fff;
+    color: black;
   }
   #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover {
     color: rgba(255, 255, 255, 0.8);
@@ -409,3 +437,5 @@ footer .copyright {
   font-size: 16px;
   padding: 25px 35px;
 }
+
+

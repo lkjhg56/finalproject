@@ -41,6 +41,7 @@
  			#{category_name}
  		)
  	</insert>
+
  	<insert id="upload_file" parameterType="uploadQuestionFileDto">
  		insert into question_file values(
  		question_file_seq.nextval,
@@ -61,6 +62,53 @@
 			#{tried_user},
 			#{question_no}
  		)
+ 	</insert>
+ 	
+ 	
+ 	
+ 	
+ 	<!-- test_question 업로드 -->
+ 	
+ 	
+ 	
+ 	<insert id="uploadtestquestion" parameterType="testQuestionDto">
+ 	
+ 		insert into test_question values(
+ 			test_question_seq.nextval,
+ 			#{csname},
+ 			#{category_no},
+ 			#{QUESTION},
+ 			#{ISPREMIUM},
+ 			#{ANSWER},
+ 			#{CORRECT},
+ 			#{INCORRECT},
+ 				#{DIS1},
+ 			#{DIS2},
+ 			#{DIS3},
+ 			#{DIS4},
+ 			#{DIS5}
+ 			)
+ 	</insert>
+ 	
+ 	<insert id="uploadcategory" parameterType="categoryDto">
+ 	insert into category values(
+ 	category_seq.nextval,
+ 	#{CSNAME},
+ 	#{TEST_NO},
+ 	 	#{LIM_HOUR},
+ 	#{LIM_MIN}
+ 	
+ 	)
+ 	</insert>
+ 	
+ 	<insert id="uploadtest" parameterType="testDto">
+ 		insert into category values(
+ 	test_seq.nextval,
+ 	#{test_category},
+ 
+ 	
+ 	
+ 	)
  	</insert>
  	<!-- 
  	문제 수정

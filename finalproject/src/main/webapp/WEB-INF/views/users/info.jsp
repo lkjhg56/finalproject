@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
 <h1>회원 정보</h1>
 
@@ -20,3 +21,4 @@
 <a href="${context}/users/grade_point_rank">등급 포인트 랭킹</a><br>
 <a href="${context}/users/test_point">포인트 줘보기 test</a><br>
 <a href="${context}/users/bye">탈퇴하기</a><br>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

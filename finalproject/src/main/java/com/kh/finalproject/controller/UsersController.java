@@ -3,6 +3,8 @@ package com.kh.finalproject.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -133,28 +135,108 @@ public class UsersController {
 	 
 	 //내가 본 시험 내역 조회
 	 @GetMapping("users/test_result")
-	 public String test_result(Model model,HttpSession session) {
+	 public String test_result(HttpServletRequest req,Model model,HttpSession session) {
+		
+		int pagesize = 10;
+		int navsize = 10;
+		
+		int pno;
+		try{
+			pno = Integer.parseInt(req.getParameter("pno"));
+			if(pno <= 0) throw new Exception();
+		}
+		catch(Exception e){
+			pno = 1;
+		}
+		
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+		
 		String users_id = (String) session.getAttribute("id");
-		model.addAttribute("test_result", resultDao.getList(users_id));
+		
+		int count = sqlSession.selectOne("resultDto.getCount", users_id);
+		
+		Map<String, String> total = new HashMap<>();
+		total.put("users_id", users_id);
+		total.put("start", String.valueOf(start));
+		total.put("finish", String.valueOf(finish));
+		
+		model.addAttribute("test_result", resultDao.getList(total));
+		
+		//뷰에서 필요한 데이터를 첨부(4개)
+		req.setAttribute("pno", pno);
+		req.setAttribute("count", count);
+		req.setAttribute("pagesize", pagesize);
+		req.setAttribute("navsize", navsize);
+		
 		return "users/test_result";
 	 }
 	 // - 검색 조회
 	 @PostMapping("users/test_result")
-	 public String test_result(@RequestParam String keyword,HttpSession session,Model model){
-		Map<String, String> ready = new HashMap<>();
-		String user_id = (String) session.getAttribute("id");
-		ready.put("user_id", user_id);
-		ready.put("keyword", keyword);
-		model.addAttribute("search_result", resultDao.searchList(ready));
+	 public String test_result(@RequestParam String keyword,HttpServletRequest req,HttpSession session,Model model){
+		
+		int pagesize = 10;
+		int navsize = 10;
+		int pno;
+		try{
+			pno = Integer.parseInt(req.getParameter("pno"));
+			if(pno <= 0) throw new Exception();
+		}
+		catch(Exception e){
+			pno = 1;
+		}
+		
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+		
+		String users_id = (String) session.getAttribute("id");
+		int count = sqlSession.selectOne("resultDto.getCount", users_id);
 		 
+		Map<String, String> total = new HashMap<>();
+		total.put("users_id", users_id);
+		total.put("keyword", keyword);
+		total.put("start", String.valueOf(start));
+		total.put("finish", String.valueOf(finish));
+		
+		model.addAttribute("search_result", resultDao.searchList(total));
+		 
+		//뷰에서 필요한 데이터를 첨부(4개)
+		req.setAttribute("pno", pno);
+		req.setAttribute("count", count);
+		req.setAttribute("pagesize", pagesize);
+		req.setAttribute("navsize", navsize);
+		
 		return "users/test_result";
 	 } 
 	 
 	 // 포인트 랭킹 조회
 	 @GetMapping("users/grade_point_rank")
-	 public String point_rank(Model model) {
-		 model.addAttribute("grade_point_rank", sqlSession.selectList("users.grade_point_rank"));
-		 return "users/grade_point_rank";
+	 public String point_rank(Model model, HttpServletRequest req) {
+		int pagesize = 8;
+		int navsize = 8;
+		int pno;
+		try{
+			pno = Integer.parseInt(req.getParameter("pno"));
+			if(pno <= 0) throw new Exception();
+		}
+		catch(Exception e){
+			pno = 1;
+		}
+		
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+		
+		int count = sqlSession.selectOne("users.getCount");
+		 
+		model.addAttribute("grade_point_rank", sqlSession.selectList("users.grade_point_rank"));
+		 
+		//뷰에서 필요한 데이터를 첨부(4개)
+		req.setAttribute("pno", pno);
+		req.setAttribute("count", count);
+		req.setAttribute("pagesize", pagesize);
+		req.setAttribute("navsize", navsize);
+		
+		return "users/grade_point_rank";
 	 }
 	 
 	 // 포인트 주는 기능 

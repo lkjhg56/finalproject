@@ -13,8 +13,8 @@
 <meta charset="UTF-8">
 <title>문제 마스터 홈페이지</title>
 
-
 <link href="${pageContext.request.contextPath}/res/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+>>>>>>> refs/remotes/origin/master
 
   <!-- Custom fonts for this template -->
   <link href="${pageContext.request.contextPath}/res/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +22,7 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="${pageContext.request.contextPath}/res/static/css/clean-blog.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/res/static/css/clean-blog.css" rel="stylesheet">
 
 <style>
 	.logo{
@@ -39,29 +39,36 @@
 <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="${pageContext.request.contextPath}"><img class= "logo" src="${pageContext.request.contextPath}/res/image/logo3-removebg-preview.png"></a>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}"><img class= "logo" src="${pageContext.request.contextPath}/res/image/logo3.png"></a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+           <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/board/list">Board</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="post.html">Sample Post</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/question/choose">Quiz</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/login">Login</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/join">Regist</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <br>
+  <br>
+  <br>
 
 
 <!-- 헤더  -->
@@ -75,5 +82,8 @@
         </div>
       </div>
     </div>
+
   </header>
+  	<div class= "forfooter">
+
 <section>

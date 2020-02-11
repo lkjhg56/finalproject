@@ -21,10 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		- $ 는 SQL Injection 이라는 해킹공격에 매우 취약하므로 사용에 주의 
  -->
 
-<mapper namespace="point">
+<mapper namespace="grade_point">
 	
 	<!-- 포인트를 주는 기능 -->
-	<select id="givePoint" parameterType="point">
+	<select id="givePoint" parameterType="grade_pointDto">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
 		values(point_no_seq.nextval,#{users_no}, 50, '문제 업로드')
 	</select>
