@@ -25,4 +25,5 @@ public interface UploadQuestionDao {
 	UploadQuestionDto question_all(int question_no);
 	void insert_result(UserQuestionResultDto userQuestionResultDto);
 	int userPriority(int question_no, int result_no);
+	
 }

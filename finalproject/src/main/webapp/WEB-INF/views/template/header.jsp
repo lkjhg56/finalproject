@@ -13,7 +13,6 @@
 <meta charset="UTF-8">
 <title>문제 마스터 홈페이지</title>
 
-
 <link href="${pageContext.request.contextPath}/res/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->

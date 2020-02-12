@@ -27,15 +27,31 @@ public class ResultDaoImpl implements ResultDao{
 	@Autowired
 	private HttpServletRequest req;
 	
+	//시험 내역 조회
 	@Override
-	public List<ResultDto> getList(String users_id) {
-		return sqlSession.selectList("resultDto.test_result", users_id);	
+	public List<ResultDto> getList(Map<String, String> total) {
+		return sqlSession.selectList("resultDto.test_result",total);	
 	}
 
+	//시험 내역 검색 조회
 	@Override
-	public List<ResultDto> searchList(Map<String, String> ready) {
-		return sqlSession.selectList("resultDto.search_result", ready);
+	public List<ResultDto> searchList(Map<String, String> total) {
+		return sqlSession.selectList("resultDto.search_result", total);
 	}
+	
+	//시험 내역 조회 개수
+//	@Override
+//	public int getCount(String users_id) {
+//		int count = sqlSession.selectOne("resultDto.getCount", users_id);
+//		return count;
+//	}
+	
+	//시험 내역 검색 개수
+//	@Override
+//	public int search_getCount(Map<String, String> ready) {
+//		int count = sqlSession.selectOne("resultDto.search_getCount", ready);
+//		return count;
+//	}
 
 
 }
