@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
+import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
+import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.service.UploadQuestionService;
 import com.kh.finalproject.vo.ExamResultVO;
+import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
 @Controller
@@ -33,6 +36,12 @@ public class UploadQuestionController {
 	private SqlSession sqlSession;
 	@Autowired
 	private UploadQuestionService uploadQuestionService;
+	
+	@Autowired
+	private NormalUploadQuestionService normalUploadQuestionService;
+	
+	@Autowired
+	private NormalUploadQuestionDao normalUploadQuestionDao;
 	//문제 풀기(한문제)
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
@@ -129,6 +138,25 @@ public class UploadQuestionController {
 		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
 		model.addAttribute("questionDto",uploadQuestionDto);
 		return "question/content";
+	}
+	
+	
+	
+	//일반문제만들기
+	@GetMapping("/normalupload")
+	public String normalupload() {
+		return "question/normalupload";
+	}
+	
+	
+	@PostMapping("/normalupload")
+	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session) throws Exception {
+		
+//		uploadQuestionService.questionUpload(updateQuestionVO);
+		
+		normalUploadQuestionService.normalquestionUpload(normalUpdateQuestionVO);
+		
+		return "question/list";
 	}
 	
 }
