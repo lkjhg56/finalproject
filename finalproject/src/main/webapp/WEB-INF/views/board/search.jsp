@@ -27,6 +27,18 @@
 	
 	<a href=${pageContext.request.contextPath}/board/regist>글쓰기</a>
 	
+	
+	<div class="row">
+    		<!-- 네비게이터(navigator) -->    		
+    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
+    			<jsp:param name="pno" value="${pno}" />
+    			<jsp:param name="count" value="${count}" />
+    			<jsp:param name="navsize" value="${navsize}" />
+    			<jsp:param name="pagesize" value="${pagesize}" />
+    		</jsp:include>
+    	</div>
+	
+	
 	<br><br>
 	
 	<div class="row">
