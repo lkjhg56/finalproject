@@ -71,6 +71,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 				SolutionDto solutionDto =SolutionDto.builder()
 					.solution(normalUpdateQuestionVO.getSolution())
 					.question_no(no)
+					.user_no(62)
 						.build();
 				NormalUploadQuestionDao.upload(testQuestionDto,categoryDto,testDto,solutionDto);
 //				

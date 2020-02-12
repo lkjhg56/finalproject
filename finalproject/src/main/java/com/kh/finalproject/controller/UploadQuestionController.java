@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
@@ -130,13 +131,33 @@ public class UploadQuestionController {
 	
 	
 	@PostMapping("/normalupload")
-	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session) throws Exception {
+	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session,Model model) throws Exception {
 		
 //		uploadQuestionService.questionUpload(updateQuestionVO);
 		
 		normalUploadQuestionService.normalquestionUpload(normalUpdateQuestionVO);
+		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal");
+		model.addAttribute("list",list2);
 		
-		return "question/list";
+		return "question/normallist";
 	}
+	//일반문제 목록
+	@GetMapping("/normallist")
+	public String normallist(Model model) {
+
+		
+		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal");
+		model.addAttribute("list",list2);
+		
+		return "question/normallist";
+	}
+	
+	@GetMapping("/normalcontent")
+	public String normalcontent(@RequestParam int question_no, Model model) {
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
+		model.addAttribute("questionDto",uploadQuestionDto);
+		return "question/normalcontent";
+	}
+	
 	
 }

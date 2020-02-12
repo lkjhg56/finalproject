@@ -102,12 +102,7 @@
  
 
 	}   */
-<<<<<<< HEAD
 
-/* 	function appendResult() {
-		var data=
-	} */
-=======
 	
 	
 	
@@ -115,7 +110,7 @@
 
 		console.log(session);
 	}
->>>>>>> refs/remotes/origin/master
+
 
 </script>
 

@@ -150,6 +150,14 @@
  	)
  	
  	</insert>
+ 	
+ 	<!-- 일반문제 목록 -->
+ 	<select id="getNormal" resultType="testQuestionDto">
+ 	
+ 	
+ 	   select * from test_question
+ 	</select>
+ 	
  	<!-- 
  	문제 수정
  	* 관리자만 question_premium 변경 가능하도록 해야함.
@@ -219,6 +227,9 @@
         	)e
 		on q.user_custom_question_no = e.user_custom_question_no
  	 </select>
+ 	 
+ 	 
+ 	 
  	 
  	 <!-- 파일 불러오기 -->
  	 <select id="getFile" parameterType="int" resultType="uploadQuestionFileDto">
