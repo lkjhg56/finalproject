@@ -21,7 +21,7 @@
 		<td>${question.category_no}</td>
 		<td>${question.question}</td>
 		<td>${question.rate}</td>
-		<td><a href="content?question_no=${question.no}">확인</a></td>
+		<td><a href="normalcontent?no=${question.no}">확인</a></td>
 	
 		
 	</tr>

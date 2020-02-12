@@ -165,7 +165,7 @@ public class UploadQuestionController {
 //		uploadQuestionService.questionUpload(updateQuestionVO);
 		
 		normalUploadQuestionService.normalquestionUpload(normalUpdateQuestionVO);
-		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal");
+		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal",normalUpdateQuestionVO);
 		model.addAttribute("list",list2);
 		
 		return "question/normallist";
@@ -181,10 +181,13 @@ public class UploadQuestionController {
 		return "question/normallist";
 	}
 	
+	//일반문제 상세보기
 	@GetMapping("/normalcontent")
-	public String normalcontent(@RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
-		model.addAttribute("questionDto",uploadQuestionDto);
+	public String normalcontent(@RequestParam int no, Model model) {
+	
+		
+		TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent",no);
+		model.addAttribute("questionDto",testQuestionDto);
 		return "question/normalcontent";
 	}
 	
