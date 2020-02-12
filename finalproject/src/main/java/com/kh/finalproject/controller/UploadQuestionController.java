@@ -101,6 +101,7 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto",updateQuestionVO);
 		return "question/content";
 	}
+	
 	//아직 덜됨.
 	@GetMapping("/delete")
 	public String delete(@RequestParam int question_no,@RequestParam int user_custom_question_no) {
@@ -114,6 +115,7 @@ public class UploadQuestionController {
 		model.addAttribute("list",list);
 		return "question/list";
 	}
+	
 	@GetMapping("/content")
 	public String content(@RequestParam int question_no, Model model) {
 		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
