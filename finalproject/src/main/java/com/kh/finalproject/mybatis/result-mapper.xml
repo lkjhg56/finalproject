@@ -49,9 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 검색 개수 조회 -->
-	<select id="search_getCount" resultType="resultDto" parameterType="map">
+	<select id="search_getCount" resultType="int" parameterType="map">
 		select count(*) from result
-		where cs_no like '%'||#{keyword}||'%' and user_id=#{user_id}
+		where cs_no like '%'||#{keyword}||'%' and user_id=#{users_id}
 	</select>
 	
 </mapper>

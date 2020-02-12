@@ -17,4 +17,5 @@ public class ResultDto {
 	private String used_time;
 	private int  cus_ques_no;
 	private String cs_no;
+	private int rn;
 }
