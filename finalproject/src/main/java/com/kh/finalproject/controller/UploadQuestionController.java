@@ -36,11 +36,9 @@ public class UploadQuestionController {
 	@Autowired
 	private SqlSession sqlSession;
 	@Autowired
-	private UploadQuestionService uploadQuestionService;
-	
+	private UploadQuestionService uploadQuestionService;	
 	@Autowired
 	private NormalUploadQuestionService normalUploadQuestionService;
-	
 	@Autowired
 	private NormalUploadQuestionDao normalUploadQuestionDao;
 	//문제 풀기(한문제)
@@ -67,8 +65,7 @@ public class UploadQuestionController {
 	}
 	@PostMapping("/multi")
 	public String multi2(@ModelAttribute ExamResultVO examResultVO,
-			@ModelAttribute UserQuestionResultDto dto, Model model) {
-		
+			@ModelAttribute UserQuestionResultDto dto, Model model) {	
 		List<UserQuestionResultDto> list = new ArrayList<>();
 		for(ExamResultVO vo : examResultVO.getQuestion()) {
 			list.add(UserQuestionResultDto.builder()
@@ -78,16 +75,26 @@ public class UploadQuestionController {
 					.build());				
 		}
 
+
+		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
+		for(int i = 0;i<list.size();i++ ) {
+			UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", list.get(i).getQuestion_no());
+			//유저가 선택한 정답
+			int userAnswer = list.get(i).getQuestion_answer();
+			//정답여부 판별
+			boolean result = uploadQuestionDto.getQuestion_answer() == userAnswer;
+			if(userAnswer==0) {
+				list.get(i).setResult(0);
+			}else if(result){
+				list.get(i).setResult(1);
+			}else if(!result) {
+				list.get(i).setResult(0);
+			}
+		}
 		//문제를 푼 시간
 		model.addAttribute("time",dto);
 		//각 문제에 대한 번호, 결과값
 		model.addAttribute("list",list);
-		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", list.get(0).getQuestion_no());
-		uploadQuestionDto.getQuestion_answer();
-		boolean result;
-		list.get(0).getQuestion_no();
-		list.get(0).getQuestion_answer();
 		return "question/multi_result";
 	}
 	
