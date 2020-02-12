@@ -14,7 +14,6 @@
 <title>문제 마스터 홈페이지</title>
 
 <link href="${pageContext.request.contextPath}/res/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
->>>>>>> refs/remotes/origin/master
 
   <!-- Custom fonts for this template -->
   <link href="${pageContext.request.contextPath}/res/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

@@ -2,7 +2,6 @@ package com.kh.finalproject.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +21,7 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.UploadQuestionService;
+import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
 @Controller
@@ -56,9 +56,18 @@ public class UploadQuestionController {
 		return "question/multi";
 	}
 	@PostMapping("/multi")
-	public String multi2(Model model) {
+	public String multi2(@ModelAttribute ExamResultVO examResultVO,Model model) {
 		
-		return "question/list";
+//		List<ExamResultVO> answer_list = new ArrayList<>();
+//		index가 0인 값부터 받아오므로 처음 값이 null이 나옴.
+//		for(List<ExamResultVO> answer_list : examResultVO) {
+//			if(answer==null) {
+//				answer=0;
+//			}
+//			System.out.println(answer);
+//			answer_list.add(answer);
+//		}
+		return "question/multi_result";
 	}
 	
 	@GetMapping("/upload")
