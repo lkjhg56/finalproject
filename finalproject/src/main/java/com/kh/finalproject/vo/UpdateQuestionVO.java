@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.finalproject.entity.UploadQuestionDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,5 +44,4 @@ public class UpdateQuestionVO {
 	private int sec;
 	private int milisec;
 	private int user_conclusion;
-
 }

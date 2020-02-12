@@ -2,7 +2,6 @@ package com.kh.finalproject.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +24,7 @@ import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.service.UploadQuestionService;
+import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
@@ -59,16 +59,36 @@ public class UploadQuestionController {
 	//문제 풀기(여러문제 최대 4문제)
 	@GetMapping("/multi")
 	public String multi(Model model) {
-		int wantQuestion=6;
+		int wantQuestion=11;
 		List<UploadQuestionDto> choice_list=uploadQuestionService.multiQuestion(wantQuestion);
 		model.addAttribute("count",wantQuestion);
 		model.addAttribute("list", choice_list);
 		return "question/multi";
 	}
 	@PostMapping("/multi")
-	public String multi2(Model model) {
+	public String multi2(@ModelAttribute ExamResultVO examResultVO,
+			@ModelAttribute UserQuestionResultDto dto, Model model) {
 		
-		return "question/list";
+		List<UserQuestionResultDto> list = new ArrayList<>();
+		for(ExamResultVO vo : examResultVO.getQuestion()) {
+			list.add(UserQuestionResultDto.builder()
+					.question_no(vo.getNo())
+					.question_answer(vo.getAnswer())
+					.tried_user(vo.getId())
+					.build());				
+		}
+
+		//문제를 푼 시간
+		model.addAttribute("time",dto);
+		//각 문제에 대한 번호, 결과값
+		model.addAttribute("list",list);
+		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", list.get(0).getQuestion_no());
+		uploadQuestionDto.getQuestion_answer();
+		boolean result;
+		list.get(0).getQuestion_no();
+		list.get(0).getQuestion_answer();
+		return "question/multi_result";
 	}
 	
 	@GetMapping("/upload")

@@ -108,8 +108,7 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	@Override
 	public void insert_result(UserQuestionResultDto userQuestionResultDto) {
-		sqlSession.insert("question.insert_result",userQuestionResultDto);
-		
+		sqlSession.insert("question.insert_result",userQuestionResultDto);		
 	}
 	@Override
 	public int userPriority(int question_no, int result_no) {
