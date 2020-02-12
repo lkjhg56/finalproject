@@ -79,43 +79,12 @@
 
 	
 	
-	/* function appendResult() {
-
-		 
-
-		$.ajax({
-
-			url : "${pageContext.request.contextPath}/question2/newwindow",
-
-			type : "post",
-
-			data : {
-
-				
-
-			}
-
- 
-
-		})
-
- 
-
-	}   */
-<<<<<<< HEAD
-
-/* 	function appendResult() {
-		var data=
-	} */
-=======
-	
-	
 	
 	function callInfo(session){
 
 		console.log(session);
-	}
->>>>>>> refs/remotes/origin/master
+}
+
 
 </script>
 
@@ -156,7 +125,7 @@
 
 				<option>회차를 선택하세요</option>
 			</select> 
-			<input type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
+			<input class="btn btn-secondary" type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
 		</form>
 
 
@@ -167,11 +136,10 @@
 
 </c:forEach>
 
-
+<img src = "<c:url value ="/img/Ggo.jpg"/>"/>
       </div>
     </div>
   </div>
- 
  
 
   </body>
