@@ -16,11 +16,6 @@
 		- Database나 스케쥴러, 트랜잭션 등과 관련된 설정을 구현
 	 -->
 
-	<!-- 
-		DBCP용 연결 도구 설정
-		- common-dbcp2가 필요함 
-		- properties 파일을 불러오도록 설정
-	-->
 	<context:property-placeholder location="classpath:/properties/*.properties"/>
 	
 	<bean id="dbcpSource" class="org.apache.commons.dbcp2.BasicDataSource">

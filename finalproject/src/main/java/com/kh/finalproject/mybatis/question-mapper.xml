@@ -59,8 +59,7 @@
  			#{category_name}
  		)
  	</insert>
- 	
- 	
+
  	<insert id="upload_file" parameterType="uploadQuestionFileDto">
  		insert into question_file values(
  		question_file_seq.nextval,
@@ -207,7 +206,7 @@
         		on u.user_no = ucq.user_no
         	)e
 		on q.user_custom_question_no = e.user_custom_question_no
-		where question_no=#{question_no}	
+		where question_no=#{question_no}
  	 </select>
  	  	 <select id="getTotal2" parameterType="int" resultType="uploadQuestionDto">
  	 	select * from 
@@ -240,10 +239,10 @@
  	 	delete from question_file where question_no=#{question_no}
  	 </delete>
  	 <select id="userResultTrue" resultType="int">
- 	 	select count(tried_user) from question_result where result=1
+ 	 	select count(tried_user) from question_result where  question_no=#{question_no} and result=1
  	 </select>
  	 <select id="userResultFalse" resultType="int">
- 	 	select count(tried_user) from question_result where result=0
+ 	 	select count(tried_user) from question_result where question_no=#{question_no} and result=0
  	 </select>
  	 <select id="userPriority" parameterType="userQuestionResultDto" resultType="int">
 		select * from(
