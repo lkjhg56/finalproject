@@ -43,5 +43,8 @@ public interface BoardDao {
 	//12.댓글 등록
 		void replyRegist(BoardReplyDto boardReplyDto);
 		
+	//13.댓글 조회수 업데이트
+		void replyCount(int board_reply_origin);
+		
 		
 }

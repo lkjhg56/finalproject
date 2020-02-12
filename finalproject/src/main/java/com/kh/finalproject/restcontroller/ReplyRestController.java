@@ -30,64 +30,74 @@ public class ReplyRestController {
 	private SqlSession sqlSession;
 	
 	@Autowired
-	private BoardDto boardDto;
-	
-	@Autowired
 	private BoardDao boardDao;
 	
 
 	
-	@PostMapping("/content")
-	public String insert(@RequestParam String board_reply_content, String board_reply_writer,
-									@RequestParam int board_reply_origin,
-									HttpSession session) {
+	//댓글 등록
+		@PostMapping("/insert")
+		public String insert(@RequestParam String board_reply_content, String board_reply_writer,
+														@RequestParam int board_reply_origin,
+														HttpSession session) {
+			String writer = (String) session.getAttribute("id");
+			
+			if(writer != null) {
+				int no = sqlSession.selectOne("board.getReplySequence");
+
+				BoardReplyDto boardReplyDto = BoardReplyDto.builder()
+										.board_reply_no(no)
+										.board_reply_content(board_reply_content)
+										.board_reply_writer(board_reply_writer)
+										.board_reply_origin(board_reply_origin)
+										.build();
+				sqlSession.insert("board.registReply", boardReplyDto);
+				BoardReplyDto result = sqlSession.selectOne("board.getOneReply", no);
+				
+				boardDao.replyCount(board_reply_origin);
+				return "success";		
+			}			
+			else {
+				return "fail";
+			}
+
+		}
 		
-		BoardReplyDto boardReplyDto = BoardReplyDto.builder()
-								.board_reply_content(board_reply_content)
-								.board_reply_writer(board_reply_writer)
-								.board_reply_origin(board_reply_origin)
-								.build();
-		
-		sqlSession.insert("board.registReply", boardReplyDto);
-		
-		int no = boardDto.getBoard_no();
-		return null;	
-	}
 	
-	
-	@DeleteMapping("/content")
-	public String delete(@RequestParam int board_reply_no) {
+	//댓글 삭제
+	@PostMapping("/delete")
+	public String delete(@RequestParam int board_reply_no,
+									@RequestParam int board_reply_origin) {
 		
 		sqlSession.delete("board.deleteReply", board_reply_no);
-		return null;
+		boardDao.replyCount(board_reply_origin);
+		
+		return "success";
 	}
 	
 	
 	//댓글 수정
-			@PutMapping("/content")
-			public String replyEdit(@ModelAttribute BoardReplyDto boardReplyDto,
-													@ModelAttribute BoardDto boardDto,
-													HttpSession session) {
-				System.out.println(boardReplyDto.getBoard_reply_no());
-				boardDao.replyEdit(boardReplyDto);			
+	@PostMapping("/edit2")
+	public String replyEdit(@ModelAttribute BoardReplyDto boardReplyDto,
+											@ModelAttribute BoardDto boardDto,
+											HttpSession session) {
+		System.out.println(boardReplyDto.getBoard_reply_no());
+		boardDao.replyEdit(boardReplyDto);			
+		
+		return "success";
+	}
+	
+	//댓글 목록 조회
+//	@PostMapping("/list")
+	public List<BoardReplyDto> getList(@RequestParam int board_reply_origin) {
+		log.info("iscome?");
+		BoardReplyDto replyDto =BoardReplyDto.builder()
+																					.board_reply_origin(board_reply_origin)
+																					.build();
 				
-//				int no = boardDto.getBoard_no();
-//				return "redirect:content?board_no="+no;
-				return null;
-			}
-			
-			@PostMapping("/list")
-			public List<BoardReplyDto> getList() {
-				log.info("iscome?");
-				BoardReplyDto replyDto =BoardReplyDto.builder()
-																							.board_reply_origin(33)
-																							.board_reply_no(4)
-																							.build();
-						
-						
-				List<BoardReplyDto> ReplyDto=sqlSession.selectList("board.ReplyList", replyDto);
-						
-						return ReplyDto;
-			}
+				
+		List<BoardReplyDto> ReplyDto=sqlSession.selectList("board.ReplyList", replyDto);
+				
+				return ReplyDto;
+	}
 
 }

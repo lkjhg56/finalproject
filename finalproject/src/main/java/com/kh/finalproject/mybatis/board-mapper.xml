@@ -115,13 +115,13 @@
 			board_reply_origin = #{board_reply_origin} 
 			 )
 		where 
-			board_reply_no = #{board_reply_no}
+			board_no = #{board_reply_origin}
 	</update>
 	
 	<!-- 댓글 등록 구문 -->
 	<insert id="registReply" parameterType="boardReplyDto">
 		insert into board_reply values(
-			reply_seq.nextval,
+			#{board_reply_no},
 			#{board_reply_content},
 			sysdate,
 			#{board_reply_writer},
@@ -134,9 +134,19 @@
 		delete board_reply where board_reply_no = #{board_reply_no}
 	</delete>
 	
+	<!-- 댓글 시퀀스 자동발급 구문 -->
+	<select id="getReplySequence" resultType="int">
+		select reply_seq.nextval from dual
+	</select>
+	
 	<!-- 댓글 조회 구문 -->
 	<select id="ReplyList" parameterType="int" resultType="boardReplyDto">
-		select * from board_reply where board_reply_origin = #{board_reply_origin} order by #{board_reply_no} asc
+		select * from board_reply where board_reply_origin = #{board_reply_origin} order by board_reply_no asc
+	</select>
+	
+	<!-- 댓글 한개 조회 구문 -->
+	<select id="getOneReply"  parameterType="int" resultType="boardReplyDto">
+		select * from board_reply where board_reply_no = #{board_reply_no}
 	</select>
 	
 	<!-- 댓글 수정 구문 -->

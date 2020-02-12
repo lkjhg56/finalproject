@@ -83,6 +83,12 @@ public class BoardDaoImpl implements BoardDao{
 		
 	}
 
+	@Override
+	public void replyCount(int board_reply_origin) {
+		sqlSession.update("board.calculate", board_reply_origin);
+		
+	}
+
 	
 
 
