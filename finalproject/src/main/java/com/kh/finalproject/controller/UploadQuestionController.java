@@ -74,23 +74,26 @@ public class UploadQuestionController {
 					.build());				
 		}
 
+
+		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
+		for(int i = 0;i<list.size();i++ ) {
+			UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", list.get(i).getQuestion_no());
+			//유저가 선택한 정답
+			int userAnswer = list.get(i).getQuestion_answer();
+			//정답여부 판별
+			boolean result = uploadQuestionDto.getQuestion_answer() == userAnswer;
+			if(userAnswer==0) {
+				list.get(i).setResult(0);
+			}else if(result){
+				list.get(i).setResult(1);
+			}else if(!result) {
+				list.get(i).setResult(0);
+			}
+		}
 		//문제를 푼 시간
 		model.addAttribute("time",dto);
 		//각 문제에 대한 번호, 결과값
 		model.addAttribute("list",list);
-		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
-		for(int i = 0;i<list.size();i++ ) {
-			UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", list.get(i).getQuestion_no());
-			//정답여부 판별
-			boolean result = uploadQuestionDto.getQuestion_answer() == list.get(i).getQuestion_answer();
-			if(result) {
-				list.get(i).setResult(1);
-			}else {
-				list.get(i).setResult(0);
-			}
-			
-		}
-
 		return "question/multi_result";
 	}
 	
