@@ -8,6 +8,14 @@
 <c:forEach var="result" items="${list}" varStatus="status">
 문제 ${status.count}<br>
 입력한 정답 : ${result.question_answer}<br>
-정답 여부 : <br>
+정답 여부 : 
+<c:choose>
+	<c:when test="${result.result==1}">
+		정답
+	</c:when>
+	<c:otherwise>
+		<font>오답</font>
+	</c:otherwise>
+</c:choose>
 </c:forEach>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
