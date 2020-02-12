@@ -8,16 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data@AllArgsConstructor@NoArgsConstructor@Builder
 public class ExamResultVO {
-	private int question_no;
-	private String question_title;
-	private List<Integer> question_answer;
+	private int no;
+	private int answer;
+	private List<ExamResultVO> question;
 /*************************************************/
-	private String id;
+	private String id;//tried_user에 넣는다.
 /*************************************************/
-	//시간
-	private int hour;
-	private int min;
-	private int sec;
-	private int milisec;
-	private int countData;
 }

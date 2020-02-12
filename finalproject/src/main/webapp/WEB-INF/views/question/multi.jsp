@@ -126,27 +126,25 @@ function pageChange(index, totalPage){
 <h1>여러문제 풀기</h1>
 <!-- 리스트로 받아온다. 리스트 내에는 Question_no을 포함한 문제의 DTO를 가진다. -->
 <form action="multi" method="post">
-<c:set var="no" value="${1}"/>
-	<input type="hidden" name="id" value="${id}">  
 	<input type="hidden" id="hourResult" name="hour">  
 	<input type="hidden" id="minResult" name="min">
 	<input type="hidden" id="secResult" name="sec">
 	<input type="hidden" id="milisecResult" name="milisec">
 	<input type="hidden" name = "countData" id="countData" value="${count}">
 <div id="paging">
-<c:forEach var="questionDto" items="${list}" begin="0" end="${count}">
+<c:forEach var="questionDto" items="${list}" varStatus="status">
 <div class="inputDiv">
-문제 ${no}<br>
+문제 ${status.count}<br>
 <span>문제 : ${questionDto.question_title}</span><br>
 <img class="preview" src="image?question_no=${questionDto.question_no}" width="120" height="120"><br><br>
 <span>문제 내용 : ${questionDto.question_content}</span>
-	<input type="hidden" name="question_no" value="${questionDto.question_no}"><br><br>
-		<input type="radio" name="question_answer[${no}]" value="1">1. ${questionDto.answer1}<br>
-		<input type="radio" name="question_answer[${no}]" value="2">2. ${questionDto.answer2}<br>
-		<input type="radio" name="question_answer[${no}]" value="3">3. ${questionDto.answer3}<br>
-		<input type="radio" name="question_answer[${no}]" value="4">4. ${questionDto.answer4}<br>
-		<input type="radio" name="question_answer[${no}]" value="5">5. ${questionDto.answer5}<br><br>
-		<c:set var="no" value="${no+1}"/>
+	<input type="hidden" name="question[${status.index}].id" value="${id}">  
+	<input type="hidden" name="question[${status.index}].no" value="${questionDto.question_no}"><br><br>
+		<input type="radio" name="question[${status.index}].answer" value="1">1. ${questionDto.answer1}<br>
+		<input type="radio" name="question[${status.index}].answer" value="2">2. ${questionDto.answer2}<br>
+		<input type="radio" name="question[${status.index}].answer" value="3">3. ${questionDto.answer3}<br>
+		<input type="radio" name="question[${status.index}].answer" value="4">4. ${questionDto.answer4}<br>
+		<input type="radio" name="question[${status.index}].answer" value="5">5. ${questionDto.answer5}<br><br>
 </div>		
 </c:forEach>
 </div>

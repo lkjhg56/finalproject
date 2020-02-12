@@ -56,17 +56,28 @@ public class UploadQuestionController {
 		return "question/multi";
 	}
 	@PostMapping("/multi")
-	public String multi2(@ModelAttribute ExamResultVO examResultVO,Model model) {
+	public String multi2(@ModelAttribute ExamResultVO examResultVO,
+			@ModelAttribute UserQuestionResultDto dto, Model model) {
 		
-//		List<ExamResultVO> answer_list = new ArrayList<>();
-//		index가 0인 값부터 받아오므로 처음 값이 null이 나옴.
-//		for(List<ExamResultVO> answer_list : examResultVO) {
-//			if(answer==null) {
-//				answer=0;
-//			}
-//			System.out.println(answer);
-//			answer_list.add(answer);
-//		}
+		List<UserQuestionResultDto> list = new ArrayList<>();
+		for(ExamResultVO vo : examResultVO.getQuestion()) {
+			list.add(UserQuestionResultDto.builder()
+					.question_no(vo.getNo())
+					.question_answer(vo.getAnswer())
+					.tried_user(vo.getId())
+					.build());				
+		}
+
+		//문제를 푼 시간
+		model.addAttribute("time",dto);
+		//각 문제에 대한 번호, 결과값
+		model.addAttribute("list",list);
+		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
+		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", list.get(0).getQuestion_no());
+		uploadQuestionDto.getQuestion_answer();
+		boolean result;
+		list.get(0).getQuestion_no();
+		list.get(0).getQuestion_answer();
 		return "question/multi_result";
 	}
 	
