@@ -15,28 +15,64 @@
 		<input type="submit" name="board_category" value="업데이트"><br><br>
 	</form>
 	
-	<c:forEach var="list" items="${list}">
-		${list.board_no } 
-		${list.board_category} 
-		<a href=${pageContext.request.contextPath}/board/content?board_no=${list.board_no}>${list.board_title }</a> 
-		[${list.board_replycount }] 
-		${list.board_writer } 
-		${list.board_wdate }
-		<br>
-	</c:forEach>
+	<table border="1" width="70%" style="text-align: center">
+			<tr>						
+				<th>번호</th>						
+				<th>카테고리</th>
+				<th width="40%">글제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+			</tr>
+			
+		<c:forEach var="list" items="${list}">
+			<tr>
+				<td>
+					${list.board_no } 
+				</td>
+				<td>
+					${list.board_category} 
+				</td>
+				<td style="text-align: left">
+					<a href=${pageContext.request.contextPath}/board/content?board_no=${list.board_no}>${list.board_title }</a> 
+					[${list.board_replycount }] 
+				</td>
+				<td>
+					${list.board_writer } 
+				</td>
+				<td>
+					${list.board_wdate.substring(0,16) }
+				</td>
+			</tr>	
+			
+		</c:forEach>
+			
+			<td colspan="5" style="text-align: right">
+				<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
+			</td>		
+	</table>
 	
-	<a href=${pageContext.request.contextPath}/board/regist>글쓰기</a>
+	  <div class="row">
+    		<!-- 네비게이터(navigator) -->    		
+    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
+    			<jsp:param name="pno" value="${pno}" />
+    			<jsp:param name="count" value="${count}" />
+    			<jsp:param name="navsize" value="${navsize}" />
+    			<jsp:param name="pagesize" value="${pagesize}" />
+    			<jsp:param value="${board_category}" name="board_category"/>
+    		</jsp:include>
+    	</div>
+	
 	
 	<br><br>
 	
-	<div class="row">
+	<div align="center">
 	    	<form action="search" method="post">    	
-		    		<select name="search_type">
+		    		<select name="type">
 		    			<option value="board_title">제목</option>
 		    			<option value="board_writer">작성자</option>
 		    			<option value="board_content">글내용</option>
 		    		</select>    		
-	    		<input type="search" name="search_keyword"  required>
+	    		<input type="search" name="keyword"  required>
 				<input type="submit"  value="검색" >  
 			</form>
 	</div>

@@ -11,13 +11,13 @@ public interface BoardDao {
 		void regist(BoardDto boardDto);
 		
 	//2. 게시판 전체글 조회기능
-		List<BoardDto> getList();
+		List<BoardDto> getList(Map<String, Integer> param);
 		
 	//3.게시글 단일조회 기능
 		BoardDto get(int board_no);
 
 	//4.카테고리별 게시판 조회기능
-		List<BoardDto> getCategoryList(String board_category);
+		List<BoardDto> getCategoryList(Map<String, String> param);
 		
 	//5.게시글 번호 자동 발급	
 		int getsequence();
@@ -42,6 +42,15 @@ public interface BoardDao {
 		
 	//12.댓글 등록
 		void replyRegist(BoardReplyDto boardReplyDto);
+		
+	//13.댓글 조회수 업데이트
+		void replyCount(int board_reply_origin);
+		
+	//14.게시판 전체 글 수 구하기
+		int boardCount();
+		
+	//15.게시판 카테고리별 글 수 구하기
+		int boardCategoryCount(String board_category);
 		
 		
 }
