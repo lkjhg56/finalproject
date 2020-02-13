@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 
 <script>
 	function callCategory(csname) {
@@ -74,16 +76,12 @@
 			var win = window.open(
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
 		});
-	});
-	
-
-	
-	
-	
-	function callInfo(session){
-
+	});	
+function callInfo(session){
 		console.log(session);
+	}
 }
+
 
 
 </script>

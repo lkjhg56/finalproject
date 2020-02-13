@@ -18,9 +18,9 @@ function previewImage(target){
 <h1>일반문제 업로드</h1>
 <form action="normalupload" method="post" enctype="multipart/form-data">
 
-	<input type="text" name="csname" placeholder="제목" required><br><br>
-		<input type="text" name="test_category" placeholder="문제유형" required><br><br>
-	<input type="text" name="category_no" placeholder="카테고리명" required><br><br>
+		<input type="text" name="test_category" placeholder="카테고리" required><br><br>
+	<input type="text" name="csname" placeholder="문제유형" required><br><br>
+	<input type="text" name="category_no" placeholder="회차" required><br><br>
 	<textarea name="question" placeholder="문제명" rows="10" cols="50"></textarea><br><br>
 	<img id="preview" src="http://placehold.it/200x200" width="120" height="120"><br>	
 	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>

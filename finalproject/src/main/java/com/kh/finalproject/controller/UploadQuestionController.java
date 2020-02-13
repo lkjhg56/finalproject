@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
@@ -127,6 +128,7 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto",updateQuestionVO);
 		return "question/content";
 	}
+	
 	//아직 덜됨.
 	@GetMapping("/delete")
 	public String delete(@RequestParam int question_no,@RequestParam int user_custom_question_no) {
@@ -140,6 +142,7 @@ public class UploadQuestionController {
 		model.addAttribute("list",list);
 		return "question/list";
 	}
+	
 	@GetMapping("/content")
 	public String content(@RequestParam int question_no, Model model) {
 		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
@@ -157,13 +160,36 @@ public class UploadQuestionController {
 	
 	
 	@PostMapping("/normalupload")
-	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session) throws Exception {
+	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session,Model model) throws Exception {
 		
 //		uploadQuestionService.questionUpload(updateQuestionVO);
 		
 		normalUploadQuestionService.normalquestionUpload(normalUpdateQuestionVO);
+		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal",normalUpdateQuestionVO);
+		model.addAttribute("list",list2);
 		
-		return "question/list";
+		return "question/normallist";
 	}
+	//일반문제 목록
+	@GetMapping("/normallist")
+	public String normallist(Model model) {
+
+		
+		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal");
+		model.addAttribute("list",list2);
+		
+		return "question/normallist";
+	}
+	
+	//일반문제 상세보기
+	@GetMapping("/normalcontent")
+	public String normalcontent(@RequestParam int no, Model model) {
+	
+		
+		TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent",no);
+		model.addAttribute("questionDto",testQuestionDto);
+		return "question/normalcontent";
+	}
+	
 	
 }

@@ -30,49 +30,96 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 	public void normalquestionUpload(NormalUpdateQuestionVO normalUpdateQuestionVO) throws Exception {
 		//1. DB에 등록
 			
+		int test_no = NormalUploadQuestionDao.testSequece();
+		int category_no=NormalUploadQuestionDao.categorySequence();
 				
 				int no= NormalUploadQuestionDao.testquestionSequece();
-			int category_no=NormalUploadQuestionDao.categorySequence();
 				
-			int test_no = NormalUploadQuestionDao.testSequece();
-				
+				int categoryExist=NormalUploadQuestionDao.categoryExist(normalUpdateQuestionVO);
+	
+	
+				if(categoryExist>0) {
+					
+					
 			
-			TestDto testDto=TestDto.builder()
-					.tno(test_no)
-					.test_category(normalUpdateQuestionVO.getTest_category())////////////
-					.build();
-				
-			CategoryDto categoryDto =CategoryDto.builder()
-					.category_no(category_no)
-					.csname(normalUpdateQuestionVO.getCsname())
-					.test_no(test_no)
-					.lim_hour(0)
-					.lim_min(0)
-					.build();
-			
-				TestQuestionDto testQuestionDto =TestQuestionDto.builder()
-						.no(no)
-//						.test_no(normalUpdateQuestionVO.getTest_question_no())//
-						.csname(normalUpdateQuestionVO.getCsname())
-						.category_no(normalUpdateQuestionVO.getCategory_no())
-						.question(normalUpdateQuestionVO.getQuestion())
-						.ispremium(0)
-						.answer(normalUpdateQuestionVO.getAnswer())
-						.correct(0)
-						.incorrect(0)
-						.dis1(normalUpdateQuestionVO.getDis1())
-						.dis2(normalUpdateQuestionVO.getDis2())
-						.dis3(normalUpdateQuestionVO.getDis3())
-						.dis4(normalUpdateQuestionVO.getDis4())
-						.dis5(normalUpdateQuestionVO.getDis5())
-						.rate(0)
-						.build();
+						TestQuestionDto testQuestionDto =TestQuestionDto.builder()
+								.no(no)
+//								.test_no(normalUpdateQuestionVO.getTest_question_no())//
+								.csname(normalUpdateQuestionVO.getCsname())//수정!!
+								.category_no(normalUpdateQuestionVO.getCategory_no())
+								.question(normalUpdateQuestionVO.getQuestion())
+								.ispremium(0)
+								.answer(normalUpdateQuestionVO.getAnswer())
+								.correct(0)
+								.incorrect(0)
+								.dis1(normalUpdateQuestionVO.getDis1())
+								.dis2(normalUpdateQuestionVO.getDis2())
+								.dis3(normalUpdateQuestionVO.getDis3())
+								.dis4(normalUpdateQuestionVO.getDis4())
+								.dis5(normalUpdateQuestionVO.getDis5())
+								.rate(0)
+								.build();
 
-				SolutionDto solutionDto =SolutionDto.builder()
-					.solution(normalUpdateQuestionVO.getSolution())
-					.question_no(no)
-						.build();
-				NormalUploadQuestionDao.upload(testQuestionDto,categoryDto,testDto,solutionDto);
+						
+						
+						
+						SolutionDto solutionDto =SolutionDto.builder()
+							.solution(normalUpdateQuestionVO.getSolution())
+							.question_no(no)
+							.user_no(62)
+								.build();
+						
+					
+					
+					NormalUploadQuestionDao.upload2(testQuestionDto, solutionDto);
+				}
+				else {
+					
+					TestDto testDto=TestDto.builder()
+							.tno(test_no)
+							.test_category(normalUpdateQuestionVO.getTest_category())////////////
+							.build();
+						
+					CategoryDto categoryDto =CategoryDto.builder()
+							.category_no(category_no)
+							.csname(normalUpdateQuestionVO.getCsname())
+							.test_no(test_no)
+							.lim_hour(0)
+							.lim_min(0)
+							.build();
+					
+						TestQuestionDto testQuestionDto =TestQuestionDto.builder()
+								.no(no)
+//								.test_no(normalUpdateQuestionVO.getTest_question_no())//
+								.csname(normalUpdateQuestionVO.getCsname())//수정!!
+								.category_no(normalUpdateQuestionVO.getCategory_no())
+								.question(normalUpdateQuestionVO.getQuestion())
+								.ispremium(0)
+								.answer(normalUpdateQuestionVO.getAnswer())
+								.correct(0)
+								.incorrect(0)
+								.dis1(normalUpdateQuestionVO.getDis1())
+								.dis2(normalUpdateQuestionVO.getDis2())
+								.dis3(normalUpdateQuestionVO.getDis3())
+								.dis4(normalUpdateQuestionVO.getDis4())
+								.dis5(normalUpdateQuestionVO.getDis5())
+								.rate(0)
+								.build();
+
+						
+						
+						
+						SolutionDto solutionDto =SolutionDto.builder()
+							.solution(normalUpdateQuestionVO.getSolution())
+							.question_no(no)
+							.user_no(62)
+								.build();
+						
+					
+					
+					NormalUploadQuestionDao.upload(testQuestionDto,categoryDto,testDto,solutionDto);
+					
+				}
 //				
 //				2. 파일 업로드(문제 사진)
 //				**********************************************************************/
