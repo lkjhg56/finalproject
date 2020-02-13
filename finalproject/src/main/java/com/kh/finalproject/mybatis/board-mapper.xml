@@ -126,7 +126,7 @@
 	
 	<!-- 파일 불러오기 -->
  	 <select id="getFile2" parameterType="int" resultType="boardfileDto">
- 	 	select * from board_file where board_origin_content_no=#{board_no}
+ 	 	select * from board_file where BOARD_ORIGIN_CONTENT_NO=#{board_no}
  	 </select>
 	
 	<!-- /////////////////////////////////////////////
