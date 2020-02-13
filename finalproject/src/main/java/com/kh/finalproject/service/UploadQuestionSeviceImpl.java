@@ -18,6 +18,7 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
+import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
 @Service
@@ -133,8 +134,9 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}
 			
 	}
-	public void questionDelete(int question_no, int user_custom_question_no) {	
-		uploadQuestionDao.fileDelete2(question_no,user_custom_question_no);
+	public void questionDelete(int question_no,int user_custom_question_no) {
+		UploadQuestionFileDto uploadQuestionFileDto=uploadQuestionDao.getFile(question_no);
+		uploadQuestionDao.fileDelete2(question_no,user_custom_question_no,uploadQuestionFileDto.getQuestion_file_no());
 		UploadQuestionFileDto delete = uploadQuestionDao.getFile(question_no);
 		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
 		File file = new File(filepath);
@@ -147,6 +149,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
 							 +updateQuestionVO.getSec()+":"+updateQuestionVO.getMilisec();
 		int question_result_no=uploadQuestionDao.questionResultSequece();
+		 System.out.println(updateQuestionVO.getId()); 
 		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
 				.hour(updateQuestionVO.getHour())
 				.min(updateQuestionVO.getMin())
@@ -159,9 +162,10 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.tried_user(updateQuestionVO.getId())
 				.solveDate(time)
 				.question_no(updateQuestionVO.getQuestion_no())
-				.question_true(uploadQuestionDao.question_true())
-				.question_false(uploadQuestionDao.question_false())
+				.question_true(uploadQuestionDao.question_true(updateQuestionVO.getQuestion_no()))
+				.question_false(uploadQuestionDao.question_false(updateQuestionVO.getQuestion_no()))
 				.build();
+		
 		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
 		if(result) {
 			userQuestionResultDto.setResult(1);
@@ -169,6 +173,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			userQuestionResultDto.setResult(0);
 		}
 		uploadQuestionDao.insert_result(userQuestionResultDto);
+		
 		userQuestionResultDto.setUser_priority(uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no));
 		return userQuestionResultDto;
 		
@@ -180,12 +185,15 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
 		
 		File file = new File(directory, String.valueOf(uploadQuestionFileDto.getFile_save_name()));
+		if(!file.exists()) {
+			return ResponseEntity.notFound().build();
+		}
 		byte[] data = FileUtils.readFileToByteArray(file);
 
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
 		return ResponseEntity.ok()
-				//.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+//				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
 				.contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.contentLength(uploadQuestionFileDto.getFile_size())
 				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
@@ -207,5 +215,33 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}
 		}
 		return choice_list;
+	}
+	@Override
+	public List<UserQuestionResultDto> checkMulti(ExamResultVO examResultVO) {
+		List<UserQuestionResultDto> list = new ArrayList<>();
+		for(ExamResultVO vo : examResultVO.getQuestion()) {
+			list.add(UserQuestionResultDto.builder()
+					.question_no(vo.getNo())
+					.question_answer(vo.getAnswer())
+					.tried_user(vo.getId())
+					.build());				
+		}
+		
+		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
+		for(int i = 0;i<list.size();i++ ) {
+			int answer = list.get(i).getQuestion_answer();
+			UploadQuestionDto uploadQuestionDto = uploadQuestionDao.isCorrect(list.get(i).getQuestion_no());
+			//유저가 선택한 정답
+			//정답여부 판별
+			boolean result = uploadQuestionDto.getQuestion_answer() == answer;
+			if(answer==0) {
+				list.get(i).setResult(0);
+			}else if(result){
+				list.get(i).setResult(1);
+			}else if(!result) {
+				list.get(i).setResult(0);
+			}
+		}
+		return list;
 	}
 }

@@ -26,11 +26,7 @@
  	<select id="testSequence" resultType="int">
  	select test_seq.nextval from dual
  	</select>
- 	
- 	
- 	
- 	
- 	
+
  	<!-- 
  	문제 업로드
  	* 관리자만 question_premium 변경 가능하도록 해야함.
@@ -81,14 +77,9 @@
 			#{question_no}
  		)
  	</insert>
- 	
- 	
- 	
- 	
+
  	<!-- test_question 업로드 -->
- 	
- 	
- 	
+ 	 	
  	<insert id="uploadtestquestion" parameterType="testQuestionDto">
  		insert into test_question values(
  			#{no},
@@ -236,12 +227,16 @@
  	 	delete from user_custom_question where user_custom_question_no=#{user_custom_question_no}
  	 </delete>
  	 <delete id="deleteFile">
- 	 	delete from question_file where question_no=#{question_no}
+ 	 	delete from question_file where question_file_no=#{question_file_no}
  	 </delete>
- 	 <select id="userResultTrue" resultType="int">
+ 	 <delete id="deleteResult">
+ 	 	delete from question_result where question_no=#{question_no}
+ 	 </delete>
+ 	 
+ 	 <select id="userResultTrue" parameterType="int" resultType="int">
  	 	select count(tried_user) from question_result where  question_no=#{question_no} and result=1
  	 </select>
- 	 <select id="userResultFalse" resultType="int">
+ 	 <select id="userResultFalse" parameterType="int" resultType="int">
  	 	select count(tried_user) from question_result where question_no=#{question_no} and result=0
  	 </select>
  	 <select id="userPriority" parameterType="userQuestionResultDto" resultType="int">

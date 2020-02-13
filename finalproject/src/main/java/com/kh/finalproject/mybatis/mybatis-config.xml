@@ -25,8 +25,8 @@
 		<typeAlias type="com.kh.finalproject.payentity.CashListDto" alias="cashList"/>
 		<typeAlias type="com.kh.finalproject.payentity.PayDto" alias="payDto"/>
 		<typeAlias type="com.kh.finalproject.entity.GradePointDto" alias="grade_pointDto"/>
-		<typeAlias type="com.kh.finalproject.entity.BoardReplyDto" alias="boardReplyDto"/>
 		<typeAlias type="com.kh.finalproject.entity.UploadTestQuestionFileDto" alias="uploadTestQuestionFileDto"/>
+		<typeAlias type="com.kh.finalproject.entity.BoardReplyDto" alias="boardReplyDto"/>
 		<typeAlias type="com.kh.finalproject.entity.SolutionDto" alias="solutionDto"/>
 	</typeAliases>
 </configuration>
