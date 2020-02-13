@@ -4,18 +4,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
-	$(function() {
-		
-		
-		
-		
+$(function() {
 		
 // 댓글 수정		
 	    // edit 클래스를 숨긴다
 	    $(".edit").hide();
 	    
 	 	// 수정을 누르면 표시되도록 처리
-        $(".view").find(".su").click(function() {
+        $(".view").find("#su").click(function() {
+        	//this = #su
         	$(this)
             .parents(".view")
             .hide();
@@ -25,125 +22,118 @@
             .show();
         });	
 	
-    $(".edit")
-      .find("form")
-      .submit(function(e) {
-        //this == form
+   		$(".edit").find("#finish").click(function(e){
+        //this == #finish
         e.preventDefault(); //기본이벤트 방지하는 코드, form전송을 막는방법임
        
-        //비동기통신을 이용하여 작성한 댓글을 수정페이지로 전달
-        var method = $(this).attr("method");
-        var data = $(this).serialize(); //form에만 있는 기능 (전송할 정보)
-
-        console.log(url, method, data);
+        //비동기통신을 이용하여 작성한 댓글을 수정페이지로 전달        
+        var data = $(this).parents(".edit").find("#editform").serialize(); //form에만 있는 기능 (전송할 정보)
+        console.log(data);
+        
         $.ajax({
-          url: "${pageContext.request.contextPath}/board/content",
-          type: method,
+          url: "${pageContext.request.contextPath}/board2/edit2",
+          type: "post",
           data: data,
-          success: function(resp) {        	  
+          success: function(success) {
+        	  console.log("성공")
+        	  window.location.reload();
+	  		},
+	  	  error:function(){
+	  		  console.log("실패")	  		
           }
-        });
 
+        });
         $(this)
           .parents(".edit")
           .hide();
         $(this)
           .parents(".edit")
           .prev(".view")
-          .show(); //나를 숨기고 내 앞줄을 보여주세요
+          .show(); //나를 숨기고 내 앞줄을 보여줌
       });
-    
-    
+   		
+   		
+//수정 중 취소버튼 누르면 수정을 취소한다
+   		$(".edit").find("#cancel").click(function(){
+   			//this = #cancel
+   			
+   			$(this)
+          .parents(".edit")
+          .hide();
+        $(this)
+          .parents(".edit")
+          .prev(".view")
+          .show(); //나를 숨기고 내 앞줄을 보여줌   			
+   		});
+        	
+});   
+
+	
+
     
  // 댓글 등록   
-    $("#regist-btn").submit(function(e) {
+ $(function() {
+    $("#registbtn").submit(function(e) {
     	e.preventDefault();
     	
         var data = $(this).serialize();
+        console.log(data);
     	
     	$.ajax({
-    		url: "${pageContext.request.contextPath}/board/content",
+    		url: "${pageContext.request.contextPath}/board2/insert",
             type: "post",
             data: data,
             success: function(resp) {
-            	location.reload();
+            	if(resp == "success"){
+            		 console.log("성공")
+               	  window.location.reload();
+            	}
+            	else{
+            		alert("로그인이 필요합니다.");
+            		 window.location.reload();
+            	}
             	
-            }
+            	 
+    	  		},
+    	  	    error:function(){
+    	  		  console.log("실패")	  		
+              }
     	});        
     });
-    
+ });    
     
 // 댓글 삭제
-    $(".sak").click(function(e){
-    	e.preventDefault();
+$(function() {
+    $(".view").find("#sak").click(function() {
+    	//this = #sak
     	
-        var data = $(this).serialize();
+		//비동기통신을 이용하여 수정할 댓글의 no를 삭제페이지로 전달        
+        var data = $(this).parents(".view").find("#deleteform").serialize(); //form에만 있는 기능 (전송할 정보)
+        console.log(data);
         	
         $.ajax({
-        	url: "${pageContext.request.contextPath}/board/content",
-            type: "delete",
+        	url: "${pageContext.request.contextPath}/board2/delete",
+            type: "post",
             data: data,
-            success: function(resp) {   
-            	location.reload();
+            success: function(success) {
+          	  console.log("성공")
+          	  window.location.reload();
+  	  		},
+  	  	    error:function(){
+  	  		  console.log("실패")	  		
             }
         	
         });
     	
     });
+});   
     
-    
-    
- });
-		$(function() {   
-	
-		    	
-		    	$.ajax({
-		    		
-		    		url : "${pageContext.request.contextPath}/board2/list",
-		    		type : "post",
-		    		datatype : "json",
-		    		success: function(ans){
-		    			var html = "";
-		    			
-		    			if(ans.length >0){
-		    				for(i=0; i<ans.length; i++){
-		    					 html += "<div>";
-		    	                 html += "<div><table class='table'><h6><strong>"+ans[i].board_reply_wdate+"</strong></h6>";
-		    	                 html += ans[i].board_reply_content + "<tr><td></td></tr>";
-		    	                 html += "</table></div>";
-		    	                 html += "</div>";
-		    					
-		    				}
-		    			}else {
-		    	                
-		    	                html += "<div>";
-		    	                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
-		    	                html += "</table></div>";
-		    	                html += "</div>";
-		    	                
-		    	            }
-		    				$("#commentList").html(html);
-		    			
-		    			
-		    			console.log("성공")
-		    		},
-		    		error:function(){
-		    			console.log("실패")
-		    		}
-		    		
-		    		
-		    	})
-		
-		});
-    
-   
 </script>
  
 
 <div align="center">	
 <h2>게시글 보기</h2>
 		<table border="1" width="70%">
-			<thead>
 				<tr>
 					<td><input type="button" value="${boardDto.board_category}">  
 							${boardDto.board_title }      
@@ -164,66 +154,81 @@
 						댓글수 ${boardDto.board_replycount}
 					</td>
 				</tr>
-			</thead>
+		</table>
 			
-			<!-- 댓글 목록을 보여주는 칸 -->				
-			<tbody>
-				<tr>
-					<td id = "comment">				
-						<table  width = "100%">
+			
+			<!-- 댓글 목록을 보여주는 칸 -->
+				<c:forEach var="boardReplyDto" items="${boardReplyDto}">
+					<div class="replystart">
+						<table  border="1"   width = "70%">
 						
-							<tbody>
-								<c:forEach var="boardReplyDto" items="${boardReplyDto}">
 									<tr class="info">
 										<td>
-											${boardReplyDto.board_reply_writer}								
-											${boardReplyDto.board_reply_wdate}
+											<span>${boardReplyDto.board_reply_writer}</span>
+											<span>　</span>		
+											<span>${boardReplyDto.board_reply_wdate.substring(0,16)}</span>								
 										</td>
 									</tr>
+									
+									<!-- 	본인글인지 여부와 관리자인지 여부 확인 -->
+									<c:set var="isMine" value="${id == boardReplyDto.board_reply_writer}"></c:set>
+									<c:set var="isAdmin" value="${grade == '관리자'}"></c:set>
+									
+									
 									<tr class="view">
-										<td height="52">
-											${boardReplyDto.board_reply_content}											
+										<td height="83">
+											<form id="deleteform" method="post">
+												<input type="hidden" name="board_reply_no" value="${boardReplyDto.board_reply_no}">
+												<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}">
+												<div>${boardReplyDto.board_reply_content}</div>
+												
+												<c:if test="${isMine or isAdmin}">	
+													<div id="a" style="text-align: right">
+														<a href="#" id="su">수정</a>
+														| <a href="#" id="sak">삭제</a>										
+													</div>	
+												</c:if>
+												
+											</form>
 										</td>						
-										<td  width="160">
-											<button>답글</button>												
-											| <button class="su">수정</button>
-											| <button class="sak">삭제</button>
-										</td>
 									</tr>	
 									
 									<!-- 댓글을 수정하는 칸 -->
+							
 									<tr class="edit">
 							            <td>
-								              <form action="content" method="put">
-								                <input type="hidden" name="board_reply_no" value="${boardReplyDto.board_reply_no}" />
-								                <textarea name="board_reply_content" rows="3" cols="161" >${boardReplyDto.board_reply_content}</textarea>
-								                <td align="center" width="160">
-									                <input type="submit" value="완료" />
-									                | <button>취소</button>
-								                </td>
+								              <form id="editform" method="post">
+									                <input type="hidden" name="board_reply_no" value="${boardReplyDto.board_reply_no}" />
+									                <textarea name="board_reply_content" rows="2" cols="150" >${boardReplyDto.board_reply_content}</textarea>
+									                <div id="a" style="text-align: right">
+														<a href="#" id="finish">완료</a>
+														| <a href="#" id="cancel">취소</a>										
+													</div>	
 								              </form>
 							            </td>							
 									</tr>	
-								</c:forEach>
-							</tbody>
-						
-						</table>					
-					</td>
-				</tr>
-			</tbody>
+								
+						</table>
+					</div>					
+				</c:forEach>
+					
 					    
 			
 			<!-- 	댓글 등록창 -->
-			<tr>
-				<td align="right">				
-					<form id="regist-btn" action="${pageContext.request.contextPath}/board/content?board_no=${boardDto.board_no}" method="post">					
-						<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
-						<input type="hidden" name="board_reply_writer" value="${id}">				
-						<textarea class="user-input" name="board_reply_content" rows="4" cols="155" required></textarea>						
-						<input type="submit" value="등록">						
-					</form>					
-				</td>
-			</tr>		
+			<table  border="1"   width = "70%">
+				<tr>
+					<td align="right">				
+						<form id="registbtn" method="post">					
+							<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
+							<input type="hidden" name="board_reply_writer" value="${id}">					
+							<textarea class="user-input" name="board_reply_content" rows="4" cols="155" required></textarea>						
+							<input type="submit" value="등록">						
+						</form>					
+					</td>
+				</tr>
+			</table>	
+			
+				
 			
 			<tr>
 				<td align="right">
@@ -247,16 +252,7 @@
 	
 	
 	
-
 	
-	
-	
-	<div class="container">
-    <form id="commentListForm" name="commentListForm" method="post">
-        <div id="commentList">
-        </div>
-    </form>
-</div>
 	
 	
 	
