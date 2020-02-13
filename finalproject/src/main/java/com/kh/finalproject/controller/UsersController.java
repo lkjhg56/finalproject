@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UsersDto;
 import com.kh.finalproject.repository.ResultDao;
+import com.kh.finalproject.repository.UsersDao;
 import com.kh.finalproject.service.GradePointService;
 
 
@@ -38,6 +39,9 @@ public class UsersController {
 	
 	@Autowired
 	private ResultDao resultDao;
+	
+	@Autowired
+	private UsersDao usersDao;
 	
 	@Autowired
 	private GradePointService pointService;
@@ -137,8 +141,8 @@ public class UsersController {
 	 @GetMapping("users/test_result")
 	 public String test_result(HttpServletRequest req,Model model,HttpSession session) {
 		
-		int pagesize = 10;
-		int navsize = 10;
+		int pagesize = 2;
+		int navsize = 2;
 		
 		int pno;
 		try{
@@ -155,6 +159,16 @@ public class UsersController {
 		String users_id = (String) session.getAttribute("id");
 		
 		int count = sqlSession.selectOne("resultDto.getCount", users_id);
+		
+		int pagecount = (count + pagesize) / pagesize;
+		
+		int startBlock = (pno - 1) / navsize * navsize + 1;
+		int finishBlock = startBlock + (navsize - 1);
+		
+		//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
+		if(finishBlock > pagecount){
+			finishBlock = pagecount;
+		}
 		
 		Map<String, String> total = new HashMap<>();
 		total.put("users_id", users_id);
@@ -172,11 +186,11 @@ public class UsersController {
 		return "users/test_result";
 	 }
 	 // - 검색 조회
-	 @PostMapping("users/test_result")
-	 public String test_result(@RequestParam String keyword,HttpServletRequest req,HttpSession session,Model model){
+	 @GetMapping("users/test_result_search")
+	 public String test_result_search(@RequestParam String keyword,HttpServletRequest req,HttpSession session,Model model){
 		
-		int pagesize = 10;
-		int navsize = 10;
+		int pagesize = 2;
+		int navsize = 2;
 		int pno;
 		try{
 			pno = Integer.parseInt(req.getParameter("pno"));
@@ -190,7 +204,20 @@ public class UsersController {
 		int start = finish - (pagesize - 1);
 		
 		String users_id = (String) session.getAttribute("id");
-		int count = sqlSession.selectOne("resultDto.getCount", users_id);
+		Map<String, String> ready = new HashMap<>();
+		ready.put("users_id", users_id);
+		ready.put("keyword", keyword);
+		int count = sqlSession.selectOne("resultDto.search_getCount", ready);
+		
+		int pagecount = (count + pagesize) / pagesize;
+		
+		int startBlock = (pno - 1) / navsize * navsize + 1;
+		int finishBlock = startBlock + (navsize - 1);
+		
+		//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
+		if(finishBlock > pagecount){
+			finishBlock = pagecount;
+		}
 		 
 		Map<String, String> total = new HashMap<>();
 		total.put("users_id", users_id);
@@ -206,14 +233,14 @@ public class UsersController {
 		req.setAttribute("pagesize", pagesize);
 		req.setAttribute("navsize", navsize);
 		
-		return "users/test_result";
+		return "users/test_result_search";
 	 } 
 	 
 	 // 포인트 랭킹 조회
 	 @GetMapping("users/grade_point_rank")
 	 public String point_rank(Model model, HttpServletRequest req) {
-		int pagesize = 8;
-		int navsize = 8;
+		int pagesize = 2;
+		int navsize = 2;
 		int pno;
 		try{
 			pno = Integer.parseInt(req.getParameter("pno"));
@@ -227,8 +254,12 @@ public class UsersController {
 		int start = finish - (pagesize - 1);
 		
 		int count = sqlSession.selectOne("users.getCount");
+		
+		Map<String, Integer> total = new HashMap<>();
+		total.put("start", start);
+		total.put("finish", finish);
 		 
-		model.addAttribute("grade_point_rank", sqlSession.selectList("users.grade_point_rank"));
+		model.addAttribute("grade_point_rank", usersDao.getRank(total));
 		 
 		//뷰에서 필요한 데이터를 첨부(4개)
 		req.setAttribute("pno", pno);

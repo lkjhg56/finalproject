@@ -23,8 +23,8 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public List<BoardDto> getList() {		
-		return sqlSession.selectList("board.list");
+	public List<BoardDto> getList(Map<String, Integer> param) {		
+		return sqlSession.selectList("board.list", param);
 	}
 
 	@Override
@@ -33,9 +33,9 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public List<BoardDto> getCategoryList(String board_category) {
+	public List<BoardDto> getCategoryList(Map<String, String> param) {
 		//board_category를 주고 선택한 카테고리에 해당하는 게시판목록 조회한다.
-		return sqlSession.selectList("board.getCategoryList", board_category); 
+		return sqlSession.selectList("board.getCategoryList", param); 
 	}
 
 	@Override
@@ -81,6 +81,23 @@ public class BoardDaoImpl implements BoardDao{
 	public void replyRegist(BoardReplyDto boardReplyDto) {
 		sqlSession.insert("board.registReply", boardReplyDto);
 		
+	}
+
+	@Override
+	public void replyCount(int board_reply_origin) {
+		sqlSession.update("board.calculate", board_reply_origin);
+		
+	}
+
+	@Override
+	public int boardCount() {		
+		return sqlSession.selectOne("board.boardCount");
+
+	}
+
+	@Override
+	public int boardCategoryCount(String board_category) {
+		return sqlSession.selectOne("board.boardCategoryCount", board_category);
 	}
 
 	

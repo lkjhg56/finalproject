@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class BoardDto {
-	private int board_no, board_replycount;
+	private int board_no, board_replycount, rn;
 	private String 	board_category, board_title, board_wdate, board_content, board_writer;
 }

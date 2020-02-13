@@ -9,5 +9,5 @@ public interface ResultDao {
 	List<ResultDto> getList(Map<String, String> total);
 	List<ResultDto> searchList(Map<String,String> total);
 //	int getCount(String users_id);
-//	int search_getCount(Map<String,String> ready);
+	int search_getCount(Map<String,String> ready);
 }

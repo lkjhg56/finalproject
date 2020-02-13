@@ -57,6 +57,7 @@ public class TestDaoImpl implements TestDao{
 		int correctCount = sqlSession.selectOne("test.getCorrectNum", rno);
 		log.info("questioncount={}", questionCount);
 		log.info("correctCount={}", questionCount);
+		
 				int score = 100/questionCount*correctCount;
 		SetScoreVO scoreVO = SetScoreVO.builder()
 															.score(score)

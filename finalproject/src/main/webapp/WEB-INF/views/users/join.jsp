@@ -55,12 +55,15 @@
 		}).open();
 	}
 	
-	//아이디 중복 검사
+	//아이디 중복&형식 검사 
 	$(function(){
 		//아이디 중복 검사를 누르면(click) 비동기통신으로 아이디 유무를 검사
 		$(".id_check_btn").click(function(){
 			var id = $("input[name=id]").val();
 // 			console.log(id);
+
+			var regex = /^[a-z0-9]{8,20}$/;
+
 			if(id == ""){
 				$(".id_check_btn").next(".id").text("아이디를 입력해주세요.");
 				
@@ -78,11 +81,31 @@
 					dataType:"text",
 					success:function(resp){
 	// 					console.log(resp);
+	
 						if(resp === "Y"){//사용중
-							$(".id_check_btn").next(".id").text("사용중인 아이디입니다.");
+							
+							 if(regex.test(id)){
+								window.alert("이미 사용중인 아이디입니다.");
+								$("input[name=id]").focus().val("");
+							 }
+							 else{
+								 window.alert("아이디 형식을 맞춰주세요.");
+					            $("input[name=id]").focus().val("");
+							 }
+						
 						}
+						
 						else if(resp === "N"){//사용가능
-							$(".id_check_btn").next(".id").text("사용가능한 아이디입니다.");
+							
+							if(regex.test(id)){
+								window.alert("사용 가능한 아이디입니다.");
+								$("input[name=pw]").focus();
+							}
+							else{
+								 window.alert("아이디 형식을 맞춰주세요.");
+					            $("input[name=id]").focus().val("");
+							 }
+						
 						}
 					}
 				});
@@ -90,19 +113,37 @@
 		});
 	});
 	
+	//비밀번호 형식 검사
+// 	$(function(){
+		
+// 		$("input[name=pw]").on("input",function(){
+// 			var pw = $("input[name=pw]").val();
+// 			var regex = /^[a-zA-Z0-9]{8,16}$/;
+			
+// 			if(regex.test(pw)){
+// 				console.log("굳굳!!!!!!!");
+// 			}
+// 			else{
+// 				console.log("노노노!!!!!!");
+// 			}
+			
+// 		});
+// 	});	
+	
 	//비밀번호 재확인
 	$(function(){
-		$("input[name=ppww]").blur(function(){
+		
+		$(".pw_check_btn").click(function(){
 			var pw = $("input[name=pw]").val();
-			var ppww = $(this).val();
+			var ppww = $("input[name=ppww]").val();
+			
 			
 			if(pw != ppww){
-				$("input[name=ppww]").next(".pw").text("비밀번호가 맞지 않습니다.");				
-				
-				$("input[name=ppww]").click(function(){
-				$(".pw").empty();
-				});
-				
+				window.alert("비밀번호가 맞지 않습니다.");
+				$("input[name=ppww]").focus().val("");
+			}
+			else{
+				$("input[name=email]").focus();
 			}
 			
 			
@@ -134,7 +175,7 @@
 			success:function(resp){
 				//console.log(resp);
 				if(resp == "success"){
-					$(".email-form").find("input[type=submit]").val("인증번호 발송완료");
+					$(".email").find("input[type=submit]").val("인증번호 발송완료");
 					$(".validate").show();
 				}
 			}
@@ -153,11 +194,14 @@
 			data:data,
 			success:function(resp){
 				if(resp == "success"){
-					$("input[type=submit]").next(".finish_cert").text("인증이 완료되었습니다.");
+					window.alert("인증이 완료되었습니다.");
+					$(".email").hide();
+					$(".validate").hide();
 					$(".join-form").show();
 				}
 				else{
-					alert("인증 실패");
+					window.alert("인증 실패! 다시 시도해주세요");
+					window.location.reload();
 				}
 			}
 		});
@@ -167,8 +211,8 @@
 </script>
 
 <h1>회원가입</h1>
-<h2>본인 확인을 위한 이메일인증을 해주세요.</h2>
 <form class="email" action="send" method="post">
+	<h2>본인 확인을 위한 이메일인증을 해주세요.</h2>
 	<input type="text" name="email" placeholder="이메일 입력">
 	<input type="submit" value="인증번호 보내기">
 </form>
@@ -182,13 +226,18 @@
 <form class="join-form" action="join" method="post">
 
 	이름 : <input type="text" name="name" required><br><br>
-	아이디 : <input type="text" name="id" required>
+	아이디 : <input type="text" name="id" maxlength="20" required>
 	<input type="button" class="id_check_btn" value="아이디 중복 검사">
-	<div class="id"></div>
+	<div class="id">
+		<h6>8~20자의 영문 소문자와 숫자만 사용 가능합니다.</h6>
+	</div>
 	<br>
-	비밀번호 : <input type="text" name="pw" required><br><br>
+	비밀번호 : <input type="text" name="pw" maxlength="16" required><br><br>
+	<div class="pw">
+		<h6>8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</h6>
+	</div>
 	비밀번호 확인 : <input type="text" name="ppww" required>
-	<div class="pw"></div>
+	<input type="button" class="pw_check_btn" value="확인">
 	<br>
 	이메일 : <input type="text" name="email" required><br><br>
 	전화번호 : <input type="text" name="phone" required><br><br>

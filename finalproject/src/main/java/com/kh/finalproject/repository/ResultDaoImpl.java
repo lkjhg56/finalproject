@@ -47,11 +47,11 @@ public class ResultDaoImpl implements ResultDao{
 //	}
 	
 	//시험 내역 검색 개수
-//	@Override
-//	public int search_getCount(Map<String, String> ready) {
-//		int count = sqlSession.selectOne("resultDto.search_getCount", ready);
-//		return count;
-//	}
+	@Override
+	public int search_getCount(Map<String, String> ready) {
+		int count = sqlSession.selectOne("resultDto.search_getCount", ready);
+		return count;
+	}
 
 
 }

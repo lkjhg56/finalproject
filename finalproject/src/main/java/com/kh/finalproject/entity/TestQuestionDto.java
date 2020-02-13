@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 public class TestQuestionDto {
 
 	private int no;
+	
 	private int test_no;
+	
 	private String csname;
 	private String category_no;
 	private String question;

@@ -9,6 +9,7 @@
 		
 		<thead align="center">
 			<tr>
+				<th>no</th>
 				<th>name</th>
 				<th>grade_point</th>
 			</tr>
@@ -18,6 +19,7 @@
 		
 			<c:forEach var="grade_point_rank" items="${grade_point_rank}">
 				<tr>
+					<td>${grade_point_rank.rank}등</td>
 					<td>${grade_point_rank.name}</td>
 					<td>${grade_point_rank.grade_point}</td>
 				</tr>

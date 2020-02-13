@@ -5,8 +5,6 @@
    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
    <script>
-   
-   
 
    
    function save(quesno, disno, answer){
@@ -111,7 +109,14 @@
    
    
 
+
+   
+
+   
+
+
    <div>
+
    	
 
    		<h2>${clist.question}</h2>
@@ -121,6 +126,7 @@
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}3" onclick="save('${clist.no}', '3', '${clist.answer}');">${clist.dis3}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}4" onclick="save('${clist.no}', '4', '${clist.answer}');">${clist.dis4}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}5" onclick="save('${clist.no}', '5', '${clist.answer}');">${clist.dis5}</h4>
+
 
    </div>
  

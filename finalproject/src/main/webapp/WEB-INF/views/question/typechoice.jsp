@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 
 <script>
 	function callCategory(csname) {
@@ -74,48 +76,13 @@
 			var win = window.open(
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
 		});
-	});
-	
-
-	
-	
-	/* function appendResult() {
-
-		 
-
-		$.ajax({
-
-			url : "${pageContext.request.contextPath}/question2/newwindow",
-
-			type : "post",
-
-			data : {
-
-				
-
-			}
-
- 
-
-		})
-
- 
-
-	}   */
-<<<<<<< HEAD
-
-/* 	function appendResult() {
-		var data=
-	} */
-=======
-	
-	
-	
-	function callInfo(session){
-
+	});	
+function callInfo(session){
 		console.log(session);
 	}
->>>>>>> refs/remotes/origin/master
+}
+
+
 
 </script>
 
@@ -156,7 +123,7 @@
 
 				<option>회차를 선택하세요</option>
 			</select> 
-			<input type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
+			<input class="btn btn-secondary" type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
 		</form>
 
 
@@ -167,11 +134,10 @@
 
 </c:forEach>
 
-
+<img src = "<c:url value ="/img/Ggo.jpg"/>"/>
       </div>
     </div>
   </div>
- 
  
 
   </body>
