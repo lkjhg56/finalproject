@@ -77,10 +77,10 @@
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
 		});
 	});	
-function callInfo(session){
+/* function callInfo(session){
 		console.log(session);
 	}
-}
+} */
 
 
 
