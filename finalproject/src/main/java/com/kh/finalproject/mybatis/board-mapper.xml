@@ -80,14 +80,20 @@
 	
 	<!-- 게시판 카테고리별 조회 구문 -->
  	<select id="getCategoryList" parameterType="map" resultType="boardDto">
- 		select * from(select rownum rn, A.* from(select * from board where board_category = #{board_category} order by board_no desc)A)where rn between #{start} and #{finish}
+ 		select * from(
+ 			select rownum rn, A.* from(select * from board 
+ 				where board_category = #{board_category} order by board_no desc
+ 			)A)
+ 		where rn between #{start} and #{finish}
 	</select>
 	
 	<!-- 게시글 검색 구문 -->
 	<select id="search" parameterType="hashmap" resultType="boardDto">		
-	select * from(select rownum rn, A.* from(select * from board 
-		where ${type} like '%'||#{keyword}||'%'
-		order by board_no desc	)A)where rn between #{start} and #{finish}
+	select * from(
+		select rownum rn, A.* from(select * from board 
+			where ${type} like '%'||#{keyword}||'%' order by board_no desc
+		)A)
+	where rn between #{start} and #{finish}
 <!-- 		select * from board  -->
 <!-- 		where ${type} like '%'||#{keyword}||'%' -->
 <!-- 		order by board_no desc		 -->
@@ -103,16 +109,25 @@
 		select board_file_seq.nextval from dual
 	</select>
 	
-	<!-- 게시판 전체 글 개수 구하는 구문 -->
+	<!-- 게시판 전체 글 개수 세는 구문 -->
 	<select id="boardCount" resultType="int">
 		select count(*) from board
 	</select>
 	
-	<!-- 게시판 카테고리별 글 개수 구하는 구문 -->
+	<!-- 게시판 카테고리별 글 개수 세는 구문 -->
 	<select id="boardCategoryCount" parameterType="String" resultType="int">
 		select count(*) from board where board_category = #{board_category}
 	</select>
 	
+	<!-- 게시판 검색 결과 글 개수 세는 구문 -->
+	<select id="boardSearchCount" parameterType="map" resultType="int">
+		select count(*) from board where ${type} like '%'||#{keyword}||'%' 
+	</select>
+	
+	<!-- 파일 불러오기 -->
+ 	 <select id="getFile2" parameterType="int" resultType="boardfileDto">
+ 	 	select * from board_file where board_origin_content_no=#{board_no}
+ 	 </select>
 	
 	<!-- /////////////////////////////////////////////
 								댓글 sql구문 시작

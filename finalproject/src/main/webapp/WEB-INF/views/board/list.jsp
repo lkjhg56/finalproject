@@ -7,7 +7,7 @@
 
 <h1>게시글 목록</h1>
 
-	<form action="list" method="post">
+	<form action="list" method="get">
 		<input type="submit" name="board_category" value="전체">
 		<input type="submit" name="board_category" value="공지">
 		<input type="submit" name="board_category" value="자유">
@@ -46,9 +46,12 @@
 			
 		</c:forEach>
 			
-			<td colspan="5" style="text-align: right">
-				<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
-			</td>		
+			<!-- 글쓰기 버튼은 로그인시 표시됨 -->
+			<c:if test="${id != null}">				
+				<td colspan="5" style="text-align: right">
+					<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
+				</td>						
+			</c:if>	
 	</table>
 	
 	  <div class="row">
@@ -58,7 +61,7 @@
     			<jsp:param name="count" value="${count}" />
     			<jsp:param name="navsize" value="${navsize}" />
     			<jsp:param name="pagesize" value="${pagesize}" />
-    			<jsp:param value="${board_category}" name="board_category"/>
+    			<jsp:param name="board_category" value="${board_category}"/>
     		</jsp:include>
     	</div>
 	
@@ -66,7 +69,7 @@
 	<br><br>
 	
 	<div align="center">
-	    	<form action="search" method="post">    	
+	    	<form action="search" method="get">    	
 		    		<select name="type">
 		    			<option value="board_title">제목</option>
 		    			<option value="board_writer">작성자</option>
