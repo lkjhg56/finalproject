@@ -19,15 +19,16 @@
 		</thead>
 		
 		<tbody align="center">
-			<c:forEach var="test_result" items="${test_result}">
+			
+			<!-- 검색한 경우 -->
+			<c:forEach var="search_result" items="${search_result}">
 				<tr>
-					<td>${test_result.rn}</td>
-					<td>${test_result.cs_no}</td>
-					<td>${test_result.sumscore}</td>
-					<td>${test_result.test_date}</td>
+					<td>${search_result.rn}</td>
+					<td>${search_result.cs_no}</td>
+					<td>${search_result.sumscore}</td>
+					<td>${search_result.test_date}</td>
 				</tr>
 			</c:forEach>
-			
 		</tbody>
 	</table>
 	
