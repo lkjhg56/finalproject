@@ -7,4 +7,6 @@ import com.kh.finalproject.entity.UsersDto;
 
 public interface UsersDao {
 	List<UsersDto> getRank(Map<String, Integer> total);
+	UsersDto getInfo(String id);
+
 }

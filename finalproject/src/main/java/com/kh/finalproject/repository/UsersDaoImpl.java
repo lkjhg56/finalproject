@@ -17,5 +17,12 @@ public class UsersDaoImpl implements UsersDao{
 	public List<UsersDto> getRank(Map<String, Integer> total) {
 		return sqlSession.selectList("users.grade_point_rank", total);
 	}
+	//회원 정보를 읽어옴.
+	@Override
+	public UsersDto getInfo(String id) {
+		return sqlSession.selectOne("users.info", id);
+	}
+	
+	
 
 }

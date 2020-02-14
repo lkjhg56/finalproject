@@ -16,7 +16,7 @@ function previewImage(target){
 }
 </script>
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
 <h1>문제 수정</h1>
 <form action="update" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="question_no" value="${questionDto.question_no}">
@@ -39,4 +39,4 @@ function previewImage(target){
 	<input type="submit" value="수정하기">
 	<input type="reset" value="초기화">
 </form>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>
