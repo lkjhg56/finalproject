@@ -4,7 +4,8 @@ import com.kh.finalproject.entity.CategoryDto;
 import com.kh.finalproject.entity.SolutionDto;
 import com.kh.finalproject.entity.TestDto;
 import com.kh.finalproject.entity.TestQuestionDto;
-
+import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UploadTestQuestionFileDto;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 
@@ -23,4 +24,7 @@ public interface NormalUploadQuestionDao {
 	UploadTestQuestionFileDto getFile(int no);
 	
 	String makeDispositionString(UploadTestQuestionFileDto uploadTestQuestionFileDto) throws Exception;
+	
+	void updateQustion(NormalUpdateQuestionVO normalUpdateQuestionVO);
+	void updateFile(UploadTestQuestionFileDto uploadTestQuestionFileDto);
 }

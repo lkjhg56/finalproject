@@ -160,9 +160,16 @@
  	</select>
  	
  	<!-- 일반 문제 상세보기 -->
- 	<select id="getContent" resultType="testQuestionDto">
+ 	<select id="getContent" resultType="testQuestionDto" parameterType="int">
  	select * from test_question where no=#{no}
  	</select>
+ 	
+ 		<select id="getContent2" parameterType="int" resultType="normalUpdateQuestionVO">
+     select T.*,S.solution_no,s.solution 
+from test_question T inner join solution S
+on t.no=S.question_no where t.no=#{no}
+ 	</select>
+ 	
  	
  	<!-- 
  	문제 수정
@@ -249,6 +256,38 @@
 select * from test_question_file where test_question_no=#{no}
  	 
  	 </select>
+ 	 <!-- 일반문제 수정 -->
+ 	  	<update id="updateTestQuestion" parameterType="normalUpdateQuestionVO">
+ 		update test_question set 
+ 			
+ 		
+ 			question=#{question},
+ 		
+ 			answer=#{answer},
+ 		
+ 			dis1=#{dis1},
+ 			dis2=#{dis2},
+ 			dis3=#{dis3},
+ 			dis4=#{dis4},
+ 			dis5=#{dis5}
+ 	
+ 		where no=#{no}
+ 	</update>
+<!-- solution -->
+<update id="updateSolution" parameterType="normalUpdateQuestionVO">
+
+update solution set 
+ 			
+ 		
+ 		
+ 		
+ 			solution=#{solution}
+ 		
+ 		
+ 	
+ 		where question_no=#{no}
+</update>
+ 	 
  	 <!-- 
  	 문제 삭제
  	 1. Question 삭제
@@ -276,4 +315,9 @@ select * from test_question_file where test_question_no=#{no}
 				select * from question_result)e
 		)where question_no=#{question_no} and result_no=#{result_no}
 	 </select>
+	 
+	 
+	 
+	 
+	 
  </mapper>

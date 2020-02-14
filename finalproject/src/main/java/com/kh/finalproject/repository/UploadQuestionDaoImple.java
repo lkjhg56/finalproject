@@ -69,6 +69,8 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		sqlSession.update("question.updateFile",uploadQuestionFileDto);
 	}
 	
+	
+	
 	@Override
 	public UploadQuestionDto getOne() {		
 		return null;

@@ -140,6 +140,7 @@ public class UploadQuestionController {
 		return "question/list";
 	}
 	
+	
 	@GetMapping("/list")
 	public String list(Model model) {
 		List<UploadQuestionDto> list = sqlSession.selectList("question.getTotal2");
@@ -170,10 +171,13 @@ public class UploadQuestionController {
 		
 		normalUploadQuestionService.normalquestionUpload(normalUpdateQuestionVO);
 		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal",normalUpdateQuestionVO);
+//		model.addAttribute("vo",normalUpdateQuestionVO);
 		model.addAttribute("list",list2);
 		
 		return "question/normallist";
 	}
+	
+	
 	//일반문제 목록
 	@GetMapping("/normallist")
 	public String normallist(Model model) {
@@ -204,4 +208,30 @@ public class UploadQuestionController {
 		
 	}
 	
+	
+	
+	@GetMapping("/normalupdate")
+	public String normalupdate(@RequestParam int no, Model model) {
+//		TestQuestionDto testQuestionDto= sqlSession.selectOne("question.getContent", no);
+		
+		NormalUpdateQuestionVO normalUpdateQuestionVO=sqlSession.selectOne("question.getContent2", no);
+		model.addAttribute("questionDto",normalUpdateQuestionVO);
+		return "question/normalupdate";
+	}
+	
+	
+	
+	@PostMapping("/normalupdate")
+	public String normalupdate2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, Model model) throws Exception {		
+		
+		normalUploadQuestionService.normalquestionUpdate(normalUpdateQuestionVO);
+		
+		model.addAttribute("questionDto",normalUpdateQuestionVO);
+		return "question/normalcontent";
+	}
+	
+	/*
+	 * @GetMapping("/normaldelete") public String normaldelete(@RequestParam int no)
+	 * { uploadQuestionService.questionDelete(no); return "question/list"; }
+	 */
 }

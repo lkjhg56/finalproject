@@ -15,6 +15,7 @@ public interface UploadQuestionDao {
 	UploadQuestionDto getOne();
 	void fileUpload(UploadQuestionFileDto uploadQuestionFileDto);
 	String makeDispositionString(UploadQuestionFileDto uploadQuestionFileDto) throws Exception;
+	
 	void updateQustion(UploadQuestionDto uploadQuestionDto);
 	void updateFile(UploadQuestionFileDto uploadQuestionFileDto);
 	UploadQuestionFileDto getFile(int question_no);

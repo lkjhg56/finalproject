@@ -145,7 +145,9 @@
     
    function file(abc) {
     	console.log("show")
-  $(this).show();
+    	var checking = document.getElementsByName(abc);
+    	console.log(checking)
+  	$(checking).show();
 		
     	
 	}
@@ -197,11 +199,11 @@ main{
 }
 .plural-question{
 	 float:left;
-    width:30%;
+    width:50%;
 }
 .plural-pic{
 	 float:left;
-    width:40%;
+    width:20%;
   
 }
 .plural-textarea{
@@ -240,7 +242,7 @@ main{
   
  
   		<div class = "container">
-   			<c:forEach var="qlist" items ="${clist}">
+   			<c:forEach var="qlist" items ="${clist}"> 
    	
    			
    			
@@ -268,8 +270,8 @@ main{
    					
    			
    				
-   					 <div class = "plural-pic ${qlist.no}" id="${qlist.no}">
-   									<img class = "test ${qlist.no}" id="${qlist.no}"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}');"  width="400" height="250" >
+   					 <div class = "plural-pic" >
+   									<img class = "test ${qlist.no}"  name = "${qlist.no}"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}');"  width="400" height="250" >
    					</div>
    					
 			
@@ -281,9 +283,9 @@ main{
  							  
       </div>
    			
+   		</div>
    		
-   			</c:forEach>
-  
+  </c:forEach>
 
   
   
