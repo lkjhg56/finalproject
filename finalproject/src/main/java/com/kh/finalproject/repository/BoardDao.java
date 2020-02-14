@@ -59,11 +59,11 @@ public interface BoardDao {
 		int boardSearchCount(Map<String, String> param);
 		
 	//17.게시판 파일 가져오기
-		BoardFileDto getFile(int board_no);
+		BoardFileDto getFile(int board_file_no);
 	
 	//18.파일 불러오기 내부 기능
 		String makeDispositionString(BoardFileDto boardfileDto) throws UnsupportedEncodingException;
 	
-	//19.게시판 파일 여러개 가져오기	
-		List<BoardFileDto> getFileList(int board_no);
+	//19.게시글 파일 번호 가져오기
+		BoardFileDto getFileNo(int board_no);
 }

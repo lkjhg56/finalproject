@@ -48,10 +48,6 @@
 	 	)
 	 </insert>
 	 
-	 <!-- 파일 불러오는 구문 -->
-	  <select id="getFile" parameterType="int">
-	  	select * from board_file where board_file_no = #{board_file_no}
-	  </select>
  	
  	<!-- 게시글 수정 구문 -->
  	 <update id="edit" parameterType="boardDto">
@@ -124,9 +120,14 @@
 		select count(*) from board where ${type} like '%'||#{keyword}||'%' 
 	</select>
 	
-	<!-- 파일 불러오기 -->
- 	 <select id="getFile2" parameterType="int" resultType="boardfileDto">
- 	 	select * from board_file where BOARD_ORIGIN_CONTENT_NO=#{board_no}
+	<!-- 게시글 파일 불러오기 -->
+ 	 <select id="getFileOne" parameterType="int" resultType="boardfileDto">
+ 	 	select * from board_file where board_file_no=#{board_file_no}
+ 	 </select>
+ 	 
+ 	 <!-- 게시글 파일 번호 가져오기 -->
+ 	 <select id="getFileNO" parameterType="int" resultType="boardfileDto">
+ 	 	select * from board_file where board_origin_content_no = #{board_no}
  	 </select>
 	
 	<!-- /////////////////////////////////////////////

@@ -110,8 +110,8 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public BoardFileDto getFile(int board_no) {
-		return sqlSession.selectOne("board.getFile2",board_no);		
+	public BoardFileDto getFile(int board_file_no) {
+		return sqlSession.selectOne("board.getFileOne",board_file_no);		
 	}
 
 	@Override
@@ -126,9 +126,11 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public List<BoardFileDto> getFileList(int board_no) {
-		return sqlSession.selectList("board.getFile2",board_no);	
+	public BoardFileDto getFileNo(int board_no) {
+		return sqlSession.selectOne("board.getFileNO", board_no);
 	}
+
+
 
 	
 
