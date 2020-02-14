@@ -30,7 +30,18 @@
 	<!-- 
 		로그인 필터
 	 -->
-
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>com.kh.finalproject.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/users/pw/*</url-pattern>
+		<url-pattern>/users/info</url-pattern>
+		<url-pattern>/users/change</url-pattern>
+		<url-pattern>/users/test_result</url-pattern>
+		<url-pattern>/users/test_result_search</url-pattern>
+	</filter-mapping>
 	
 	
 	
