@@ -46,7 +46,7 @@ public interface BoardDao {
 	//12.댓글 등록
 		void replyRegist(BoardReplyDto boardReplyDto);
 		
-	//13.댓글 조회수 업데이트
+	//13.댓글 수 업데이트
 		void replyCount(int board_reply_origin);
 		
 	//14.게시판 전체 글 수 구하기
@@ -58,12 +58,7 @@ public interface BoardDao {
 	//16.게시판 검색별 글 개수 구하기
 		int boardSearchCount(Map<String, String> param);
 		
-	//17.게시판 파일 가져오기
-		BoardFileDto getFile(int board_file_no);
 	
-	//18.파일 불러오기 내부 기능
-		String makeDispositionString(BoardFileDto boardfileDto) throws UnsupportedEncodingException;
-	
-	//19.게시글 파일 번호 가져오기
-		BoardFileDto getFileNo(int board_no);
+		
+
 }

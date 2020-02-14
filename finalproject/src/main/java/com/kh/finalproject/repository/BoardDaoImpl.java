@@ -109,32 +109,5 @@ public class BoardDaoImpl implements BoardDao{
 
 	}
 
-	@Override
-	public BoardFileDto getFile(int board_file_no) {
-		return sqlSession.selectOne("board.getFileOne",board_file_no);		
-	}
-
-	@Override
-	public String makeDispositionString(BoardFileDto boardfileDto) throws UnsupportedEncodingException {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("attachment;");
-		buffer.append("filename=");
-		buffer.append("\"");
-		buffer.append(URLEncoder.encode(boardfileDto.getBoard_file_upload_name(), "UTF-8"));
-		buffer.append("\"");
-		return buffer.toString();
-	}
-
-	@Override
-	public BoardFileDto getFileNo(int board_no) {
-		return sqlSession.selectOne("board.getFileNO", board_no);
-	}
-
-
-
 	
-
-
-
-
 }

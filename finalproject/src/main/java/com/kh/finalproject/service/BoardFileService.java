@@ -19,6 +19,10 @@ public interface BoardFileService {
 	
 	//2. 파일 불러오기
 	ResponseEntity<ByteArrayResource> getImg(int board_no) throws Exception;
+	
+	//3.게시글 수정(+파일)
+	void editWithFile(BoardDto boardDto, List<MultipartFile> board_file) throws IllegalStateException, IOException;
 
-
+	//4.게시글 삭제
+//	void deleteFile2(int board_no, int board_file_no);
 }

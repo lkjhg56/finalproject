@@ -18,7 +18,7 @@
 <script>
 	$(function(){
 		 loadEditor();
-
+		//수정 시 원래 설정한 카테고리 값을 기본값으로 설정함//
 		 $("select[name=board_category]").val("${boardDto.board_category}"); 
 	});
 	
@@ -57,7 +57,7 @@
 <div align="center">    
 <h1>게시글 수정</h1>
 
-<form action="edit" method="post">
+<form action="edit" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="board_no" value="${boardDto.board_no}">
 	<table border="1" width="70%">		
 			<!-- 번호는 숨김 처리로 전송 -->
@@ -82,8 +82,15 @@
 			</tr>
 			
 			<tr>
+				<th>첨부파일</th>
+				<td>
+					<input type="file" name="board_file"  multiple accept="image/*">
+				</td>
+			</tr>
+			
+			<tr>
 				<td colspan="2">			
-					<textarea name="board_content">${boardDto.board_content }</textarea> <!-- textarea 시작과 끝 사이에는 아무것도 적으면 안됨 -->									
+					<textarea name="board_content">${boardDto.board_content }</textarea> 					
 				</td>
 			</tr>
 			
