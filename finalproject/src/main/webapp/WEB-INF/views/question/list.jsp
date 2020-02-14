@@ -27,4 +27,5 @@
 	</tr>
 </c:forEach>
 </table>
+<a href="${pageContext.request.contextPath}/question/multi">랜덤문제 풀기</a>
 <jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>

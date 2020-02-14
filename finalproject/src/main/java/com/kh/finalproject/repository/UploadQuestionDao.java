@@ -17,7 +17,7 @@ public interface UploadQuestionDao {
 	void updateQustion(UploadQuestionDto uploadQuestionDto);
 	void updateFile(UploadQuestionFileDto uploadQuestionFileDto);
 	UploadQuestionFileDto getFile(int question_no);
-	void fileDelete2(int question_no,int user_custom_question_no, int question_file_no);
+	void fileDelete2(int question_no,int user_custom_question_no);
 	String timeCheck();
 	int question_true(int question_no);
 	int question_false(int question_no);

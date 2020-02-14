@@ -26,7 +26,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 
 	@Autowired
 	private UploadQuestionDao uploadQuestionDao;
-	
+	//문제 업로드 C
 	@Override
 	public void questionUpload(UpdateQuestionVO updateQuestionVO) throws Exception{
 		//1. DB에 등록
@@ -77,7 +77,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			mf.transferTo(target);
 		}
 	}
-	//문제 수정
+	//문제 수정 U
 	@Override
 	public void questionUpdate(UpdateQuestionVO updateQuestionVO) throws Exception {
 
@@ -134,14 +134,16 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}
 			
 	}
-	public void questionDelete(int question_no,int user_custom_question_no) {
-		UploadQuestionFileDto uploadQuestionFileDto=uploadQuestionDao.getFile(question_no);
-		uploadQuestionDao.fileDelete2(question_no,user_custom_question_no,uploadQuestionFileDto.getQuestion_file_no());
+	//문제 삭제 D
+	@Override
+	public void questionDelete(int question_no, int user_custom_question_no) {
 		UploadQuestionFileDto delete = uploadQuestionDao.getFile(question_no);
 		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
 		File file = new File(filepath);
 		file.delete();
+		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);
 	}
+	//단일 문제 해결 R
 	@Override
 	public UserQuestionResultDto questionSolve(UpdateQuestionVO updateQuestionVO) {
 		UploadQuestionDto uploadQuestionDto = uploadQuestionDao.question_all(updateQuestionVO.getQuestion_no());
@@ -178,6 +180,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		return userQuestionResultDto;
 		
 	}
+	//저장된 이미지 호출 R
 	@Override
 	public ResponseEntity<ByteArrayResource> downloadImg(int question_no) throws Exception {
 		UploadQuestionFileDto uploadQuestionFileDto = uploadQuestionDao.getFile(question_no);
@@ -201,6 +204,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 						uploadQuestionDao.makeDispositionString(uploadQuestionFileDto))
 				.body(resource);
 	}
+	//저장된 문제 여러개 호출 및 랜덤으로 출제 R
 	@Override
 	public List<UploadQuestionDto> multiQuestion(int wantQuestion) {
 		Random r = new Random();
@@ -216,17 +220,18 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		}
 		return choice_list;
 	}
+	//다중문제 해결한 결과값 출력 R
 	@Override
 	public List<UserQuestionResultDto> checkMulti(ExamResultVO examResultVO) {
+
 		List<UserQuestionResultDto> list = new ArrayList<>();
 		for(ExamResultVO vo : examResultVO.getQuestion()) {
 			list.add(UserQuestionResultDto.builder()
 					.question_no(vo.getNo())
 					.question_answer(vo.getAnswer())
 					.tried_user(vo.getId())
-					.build());				
-		}
-		
+					.build());			
+		}		
 		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
 		for(int i = 0;i<list.size();i++ ) {
 			int answer = list.get(i).getQuestion_answer();

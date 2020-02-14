@@ -30,4 +30,8 @@
 
 ??포인트가 적립됬습니다.<br>
 풀이 날짜 : ${result.solveDate}
+<div>
+<a href="${pageContext.request.contextPath}">처음 페이지로</a>
+<a href="${pageContext.request.contextPath}/question/list">유저 문제 목록으로</a>
+</div>
 <jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>

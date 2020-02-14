@@ -52,11 +52,11 @@ public class UploadQuestionController {
 		model.addAttribute("result", uploadQuestionService.questionSolve(updateQuestionVO));
 		return "question/solve_result";
 	}
-	//문제 풀기(여러문제 최대 4문제)
+	//문제 풀기(여러문제 한페이지당 최대 4문제)
 	@GetMapping("/multi")
 	public String multi(Model model) {
 		//향후 원하는 문제개수를 받을 수 있도록 해야함.
-		int wantQuestion=11;
+		int wantQuestion=10;
 		model.addAttribute("count",wantQuestion);
 		model.addAttribute("list", uploadQuestionService.multiQuestion(wantQuestion));
 		return "question/multi";
@@ -65,21 +65,25 @@ public class UploadQuestionController {
 	public String multi2(@ModelAttribute ExamResultVO examResultVO,
 			@ModelAttribute UserQuestionResultDto dto, Model model) {	
 		//문제를 푼 시간
-		model.addAttribute("time",dto);
-		//각 문제에 대한 번호, 결과값
-		List<UserQuestionResultDto> list = uploadQuestionService.checkMulti(examResultVO);
+		model.addAttribute("time",dto);		
+		//각 문제에 대한 번호, 결과값을 비교하는 서비스
+		List<UserQuestionResultDto> list = uploadQuestionService.checkMulti(examResultVO);		
+		//다음은 결과값(본 시험의 총점, 정답률, 문제 개수 등)을 취합하여 DB내에 test_result 테이블을 생성하여 insert해줘야함.
+		//UserQuestionResultDto dto_list = list.get(i); 이용해야함
+		
 		model.addAttribute("list", list);
 		return "question/multi_result";
 	}
-	
+	//문제 업로드
 	@GetMapping("/upload")
 	public String upload() {
 		return "question/upload";
 	}
 	@PostMapping("/upload")
-	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO, HttpSession session) throws Exception {
+	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO, HttpSession session, Model model) throws Exception {
 		updateQuestionVO.setUser_no(sqlSession.selectOne("question.getNo", (String)session.getAttribute("id")));
 		uploadQuestionService.questionUpload(updateQuestionVO);
+		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
 	}
 	//파일 다운로드(미리보기)
@@ -87,6 +91,7 @@ public class UploadQuestionController {
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_no) throws Exception{
 			return uploadQuestionService.downloadImg(question_no);					
 	}
+	//문제 수정
 	@GetMapping("/update")
 	public String update(@RequestParam int question_no, Model model) {
 		model.addAttribute("questionDto",sqlSession.selectOne("question.getTotal", question_no));
@@ -99,19 +104,20 @@ public class UploadQuestionController {
 		return "question/content";
 	}
 	
-	//아직 덜됨.
+	//문제 삭제
 	@GetMapping("/delete")
-	public String delete(@RequestParam int question_no, @RequestParam int user_custom_question_no) {
+	public String delete(@RequestParam int question_no, @RequestParam int user_custom_question_no, Model model) {
 		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
+		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
 	}
-	
+	//전체 유저 문제 호출
 	@GetMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
 	}
-	
+	//문제 정보 호출
 	@GetMapping("/content")
 	public String content(@RequestParam int question_no, Model model) {
 		model.addAttribute("questionDto",sqlSession.selectOne("question.getTotal", question_no));
@@ -158,6 +164,4 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto",testQuestionDto);
 		return "question/normalcontent";
 	}
-	
-	
 }
