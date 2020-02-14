@@ -67,7 +67,6 @@
 비밀번호 : <input type="submit" value="비밀번호 변경하기">
 </form> 
 이메일 : ${users.email}<br><br> 
-cash : ${users.cash} <br><br>
 point : ${users.point} <br><br>
 grade_point : ${users.grade_point} <br><br>
 가입일 : ${users.join_date}<br><br>

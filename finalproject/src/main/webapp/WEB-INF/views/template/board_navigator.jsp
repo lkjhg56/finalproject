@@ -3,7 +3,7 @@
 
 <!-- 네비게이터(navigator) -->
 <!-- 
-	반드시 받아야 하는 데이터 : type, keyword, pno, count, navsize, pagesize
+	반드시 받아야 하는 데이터 : type, keyword, pno, count, navsize, pagesize, board_category
  -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -40,6 +40,9 @@
 			<c:when test="${isSearch}">
 				<li><a href="${uri}?type=${type}&keyword=${keyword}&pno=${startBlock-1}">이전</a></li>
 			</c:when>
+			<c:when test="${isCategory}">
+				<li><a href="${uri}?board_category=${board_category}&pno=${startBlock-1}">이전</a></li>
+			</c:when>
 			<c:otherwise>
 				<li><a href="${uri}?pno=${startBlock-1}">이전</a></li>
 			</c:otherwise>
@@ -57,7 +60,7 @@
 						<li><a href="${uri}?type=${type}&keyword=${keyword}&pno=${i}">${i}</a></li>
 					</c:when>
 					<c:when test="${isCategory}">
-						<li><a href="${uri}?board_category=${board_category}?pno=${i}">${i}</a></li>
+						<li><a href="${uri}?board_category=${board_category}&pno=${i}">${i}</a></li>
 					</c:when>
 					<c:otherwise>
 						<li><a href="${uri}?pno=${i}">${i}</a></li>
@@ -72,6 +75,9 @@
     	<c:choose>
 			<c:when test="${isSearch}">
 				<li><a href="${uri}?type=${type}&keyword=${keyword}&pno=${finishBlock+1}">다음</a></li>
+			</c:when>
+			<c:when test="${isCategory}">
+				<li><a href="${uri}?board_category=${board_category}&pno=${finishBlock+1}">다음</a></li>
 			</c:when>
 			<c:otherwise>
 				<li><a href="${uri}?pno=${finishBlock+1}">다음</a></li>	

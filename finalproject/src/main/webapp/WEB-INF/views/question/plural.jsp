@@ -14,7 +14,7 @@
 		console.log(test+"확인")
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
-
+		console.log(checkbox2);
 
        if (checked.checked==true){
            console.log("체크됨")

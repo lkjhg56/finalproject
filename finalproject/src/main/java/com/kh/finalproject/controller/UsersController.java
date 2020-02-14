@@ -3,6 +3,7 @@ package com.kh.finalproject.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ import com.kh.finalproject.service.GradePointService;
 
 
 @Controller
+
 public class UsersController {
 	
 //	@Autowired
@@ -141,7 +143,7 @@ public class UsersController {
 	 @GetMapping("users/test_result")
 	 public String test_result(HttpServletRequest req,Model model,HttpSession session) {
 		
-		int pagesize = 2;
+		int pagesize = 4;
 		int navsize = 2;
 		
 		int pno;
@@ -189,8 +191,8 @@ public class UsersController {
 	 @GetMapping("users/test_result_search")
 	 public String test_result_search(@RequestParam String keyword,HttpServletRequest req,HttpSession session,Model model){
 		
-		int pagesize = 2;
-		int navsize = 2;
+		int pagesize = 5;
+		int navsize = 3;
 		int pno;
 		try{
 			pno = Integer.parseInt(req.getParameter("pno"));
@@ -239,8 +241,8 @@ public class UsersController {
 	 // 포인트 랭킹 조회
 	 @GetMapping("users/grade_point_rank")
 	 public String point_rank(Model model, HttpServletRequest req) {
-		int pagesize = 2;
-		int navsize = 2;
+		int pagesize = 10;
+		int navsize = 3;
 		int pno;
 		try{
 			pno = Integer.parseInt(req.getParameter("pno"));

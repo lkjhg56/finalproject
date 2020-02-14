@@ -77,10 +77,7 @@
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
 		});
 	});	
-/* function callInfo(session){
-		console.log(session);
-	}
-} */
+
 
 
 
@@ -119,7 +116,7 @@
 				<option>한번에풀기</option>
 			</select>
 
-			 <select name="session" id='${list.csname}' onclick="callInfo(${list.csname})">
+			 <select name="session" id='${list.csname}' >
 
 				<option>회차를 선택하세요</option>
 			</select> 
@@ -134,7 +131,6 @@
 
 </c:forEach>
 
-<img src = "<c:url value ="/img/Ggo.jpg"/>"/>
       </div>
     </div>
   </div>
