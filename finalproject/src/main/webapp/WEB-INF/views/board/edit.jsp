@@ -1,15 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+
+<style>
+    textarea[name=board_content]{
+        width:100%;
+        height:250px;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+<!-- languages (Basic Language: English/en) -->
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
+
 <script>
 	$(function(){
-		$("select[name=board_category]").val("${boardDto.board_category}"); 
+		 loadEditor();
+
+		 $("select[name=board_category]").val("${boardDto.board_category}"); 
 	});
+	
+	function loadEditor(){
+	    var editor = SUNEDITOR.create((document.querySelector('textarea[name=board_content]')),{
+	        //언어 설정
+	        lang: SUNEDITOR_LANG['ko'],
+	        
+	        //버튼 목록
+	        buttonList:[
+	            ['font', 'fontSize', 'fontColor'], 
+	            ['underline', 'italic', 'paragraphStyle', 'formatBlock'],
+	            ['align', 'table', 'image']
+	        ],
+	        //글꼴 설정
+	        font:[
+	            '굴림', '궁서', 'Verdana', 'Arial'
+	        ],
+	        //크기 설정
+	        fontSize:[
+	            10, 16, 32
+	        ],
+	        
+	    });
+
+	  	//중요 : 키입력시마다 값을 원래위치(textarea)에 복사
+	    editor.onKeyUp = function(e){
+	    	var content = document.querySelector("textarea[name=board_content]");
+	    	content.value = editor.getContents();
+	    }
+	}
 </script>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <div align="center">    
 <h1>게시글 수정</h1>
 
@@ -39,8 +83,7 @@
 			
 			<tr>
 				<td colspan="2">			
-					<textarea name="board_content" rows="15" cols="155" 
-					style="resize:vertical;">${boardDto.board_content }</textarea> <!-- textarea 시작과 끝 사이에는 아무것도 적으면 안됨 -->									
+					<textarea name="board_content">${boardDto.board_content }</textarea> <!-- textarea 시작과 끝 사이에는 아무것도 적으면 안됨 -->									
 				</td>
 			</tr>
 			

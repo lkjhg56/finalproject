@@ -1,5 +1,7 @@
 package com.kh.finalproject.repository;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.BoardDto;
+import com.kh.finalproject.entity.BoardFileDto;
 import com.kh.finalproject.entity.BoardReplyDto;
 
 @Repository
@@ -98,6 +101,33 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public int boardCategoryCount(String board_category) {
 		return sqlSession.selectOne("board.boardCategoryCount", board_category);
+	}
+
+	@Override
+	public int boardSearchCount(Map<String, String> param) {
+		return sqlSession.selectOne("board.boardSearchCount", param);
+
+	}
+
+	@Override
+	public BoardFileDto getFile(int board_no) {
+		return sqlSession.selectOne("board.getFile2",board_no);		
+	}
+
+	@Override
+	public String makeDispositionString(BoardFileDto boardfileDto) throws UnsupportedEncodingException {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("attachment;");
+		buffer.append("filename=");
+		buffer.append("\"");
+		buffer.append(URLEncoder.encode(boardfileDto.getBoard_file_upload_name(), "UTF-8"));
+		buffer.append("\"");
+		return buffer.toString();
+	}
+
+	@Override
+	public List<BoardFileDto> getFileList(int board_no) {
+		return sqlSession.selectList("board.getFile2",board_no);	
 	}
 
 	

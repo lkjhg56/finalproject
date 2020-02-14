@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,6 +101,30 @@ public class BoardFileServiceImpl implements BoardFileService{
 			boardDto.setBoard_no(board_no);
 			boardDao.regist(boardDto);
 		
+	}
+
+
+	
+	@Override
+	public ResponseEntity<ByteArrayResource> getImg(int board_no) throws Exception {
+		
+		BoardFileDto boardfileDto = boardDao.getFile(board_no);
+		File dir = new File("D:/upload/board_files");
+		
+		File file = new File(dir, String.valueOf(boardfileDto.getBoard_file_save_name()));
+		byte[] data = FileUtils.readFileToByteArray(file);
+
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		return ResponseEntity.ok()
+				//.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.contentLength(boardfileDto.getBoard_file_size())
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_DISPOSITION, 
+							boardDao.makeDispositionString(boardfileDto))
+				.body(resource);
+	
 	}
 }
 		

@@ -133,11 +133,18 @@ $(function() {
 
 <div align="center">	
 <h2>게시글 보기</h2>
+			
+
+				
 		<table border="1" width="70%">
 				<tr>
-					<td><input type="button" value="${boardDto.board_category}">  
-							${boardDto.board_title }      
-							${boardDto.board_wdate }</td>
+					<td>
+						<div>
+							<span><input type="button" value="${boardDto.board_category}">　</span>
+							<span>${boardDto.board_title }　</span>      
+							<span style="text-align: right">${boardDto.board_wdate.substring(0,16) }</span>
+						</div>
+					</td>
 				</tr>	
 				<tr>
 					<td>
@@ -145,7 +152,9 @@ $(function() {
 					</td>
 				</tr>		
 				<tr height="200">
+					
 					<td valign="top">
+					<div><img src="boardcontent?board_no=${boardDto.board_no}"  width="120" height="120"></div>	
 						${boardDto.board_content }
 					</td>
 				</tr>
@@ -232,8 +241,11 @@ $(function() {
 			
 			<tr>
 				<td align="right">
-					<a href="regist"><input type="button" value="글쓰기"></a>
-					
+					<!-- 글쓰기 버튼은 로그인시 표시됨 -->
+					<c:if test="${id != null}">							
+						<a href="regist"><input type="button" value="글쓰기"></a>
+					</c:if>	
+				
 					<!-- 	본인글인지 여부와 관리자인지 여부 확인 -->
 					<c:set var="isMine" value="${id == boardDto.board_writer}"></c:set>
 					<c:set var="isAdmin" value="${grade == '관리자'}"></c:set>
