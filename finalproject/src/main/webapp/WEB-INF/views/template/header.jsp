@@ -75,6 +75,9 @@ function islogin(id){
             <a class="nav-link" href="${pageContext.request.contextPath}/board/list">Board</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/question/list">User Quiz</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/question/choose">Quiz</a>
           </li>
           <li>

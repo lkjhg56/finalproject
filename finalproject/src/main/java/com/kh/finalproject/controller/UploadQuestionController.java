@@ -1,6 +1,5 @@
 package com.kh.finalproject.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -44,86 +43,57 @@ public class UploadQuestionController {
 	//문제 풀기(한문제)
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = uploadQuestionDao.question_all(question_no);
-		model.addAttribute("questionDto",uploadQuestionDto);
+		model.addAttribute("questionDto",uploadQuestionDao.question_all(question_no));
 		return "question/solve";
 	}
 	@PostMapping("/solve")
 	public String solve2(@ModelAttribute UpdateQuestionVO updateQuestionVO, Model model) {
-		UserQuestionResultDto userQuestionResultDto = uploadQuestionService.questionSolve(updateQuestionVO);
-		model.addAttribute("result", userQuestionResultDto);
+		model.addAttribute("result", uploadQuestionService.questionSolve(updateQuestionVO));
 		return "question/solve_result";
 	}
-	//문제 풀기(여러문제 최대 4문제)
+	//문제 풀기(여러문제 한페이지당 최대 4문제)
 	@GetMapping("/multi")
 	public String multi(Model model) {
-		int wantQuestion=11;
-		List<UploadQuestionDto> choice_list=uploadQuestionService.multiQuestion(wantQuestion);
+		//향후 원하는 문제개수를 받을 수 있도록 해야함.
+		int wantQuestion=10;
 		model.addAttribute("count",wantQuestion);
-		model.addAttribute("list", choice_list);
+		model.addAttribute("list", uploadQuestionService.multiQuestion(wantQuestion));
 		return "question/multi";
 	}
 	@PostMapping("/multi")
 	public String multi2(@ModelAttribute ExamResultVO examResultVO,
 			@ModelAttribute UserQuestionResultDto dto, Model model) {	
-		List<UserQuestionResultDto> list = new ArrayList<>();
-		for(ExamResultVO vo : examResultVO.getQuestion()) {
-			list.add(UserQuestionResultDto.builder()
-					.question_no(vo.getNo())
-					.question_answer(vo.getAnswer())
-					.tried_user(vo.getId())
-					.build());				
-		}
-
-
-		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
-		for(int i = 0;i<list.size();i++ ) {
-			UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getOne", list.get(i).getQuestion_no());
-			//유저가 선택한 정답
-			int userAnswer = list.get(i).getQuestion_answer();
-			//정답여부 판별
-			boolean result = uploadQuestionDto.getQuestion_answer() == userAnswer;
-			if(userAnswer==0) {
-				list.get(i).setResult(0);
-			}else if(result){
-				list.get(i).setResult(1);
-			}else if(!result) {
-				list.get(i).setResult(0);
-			}
-		}
 		//문제를 푼 시간
-		model.addAttribute("time",dto);
-		//각 문제에 대한 번호, 결과값
-		model.addAttribute("list",list);
+		model.addAttribute("time",dto);		
+		//각 문제에 대한 번호, 결과값을 비교하는 서비스
+		List<UserQuestionResultDto> list = uploadQuestionService.checkMulti(examResultVO);		
+		//다음은 결과값(본 시험의 총점, 정답률, 문제 개수 등)을 취합하여 DB내에 test_result 테이블을 생성하여 insert해줘야함.
+		//UserQuestionResultDto dto_list = list.get(i); 이용해야함
+		
+		model.addAttribute("list", list);
 		return "question/multi_result";
 	}
-	
+	//문제 업로드
 	@GetMapping("/upload")
 	public String upload() {
 		return "question/upload";
 	}
 	@PostMapping("/upload")
-	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO, HttpSession session) throws Exception {
-		String id = (String)session.getAttribute("id");
-		int sq = sqlSession.selectOne("question.getNo", id);
-		updateQuestionVO.setUser_no(sq);
+	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO, HttpSession session, Model model) throws Exception {
+		updateQuestionVO.setUser_no(sqlSession.selectOne("question.getNo", (String)session.getAttribute("id")));
 		uploadQuestionService.questionUpload(updateQuestionVO);
+		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
-	}
-	
-	
+	}	
 	//파일 다운로드(미리보기)
 	@GetMapping("/image")
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_no) throws Exception{
-		return uploadQuestionService.downloadImg(question_no);
-		
+			return uploadQuestionService.downloadImg(question_no);					
 	}
-	
-	
+	//문제 수정
 	@GetMapping("/update")
 	public String update(@RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
-		model.addAttribute("questionDto",uploadQuestionDto);
+		model.addAttribute("questionDto",sqlSession.selectOne("question.getTotal", question_no));
 		return "question/update";
 	}
 	@PostMapping("/update")
@@ -133,30 +103,25 @@ public class UploadQuestionController {
 		return "question/content";
 	}
 	
-	//아직 덜됨.
+	//문제 삭제
 	@GetMapping("/delete")
-	public String delete(@RequestParam int question_no,@RequestParam int user_custom_question_no) {
+	public String delete(@RequestParam int question_no, @RequestParam int user_custom_question_no, Model model) {
 		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
+		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
 	}
-	
-	
+
 	@GetMapping("/list")
 	public String list(Model model) {
-		List<UploadQuestionDto> list = sqlSession.selectList("question.getTotal2");
-		model.addAttribute("list",list);
+		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
 	}
-	
+	//문제 정보 호출
 	@GetMapping("/content")
 	public String content(@RequestParam int question_no, Model model) {
-		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
-		model.addAttribute("questionDto",uploadQuestionDto);
+		model.addAttribute("questionDto",sqlSession.selectOne("question.getTotal", question_no));
 		return "question/content";
 	}
-	
-	
-	
 	//일반문제만들기
 	@GetMapping("/normalupload")
 	public String normalupload() {
@@ -197,15 +162,14 @@ public class UploadQuestionController {
 		TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent",no);
 		model.addAttribute("questionDto",testQuestionDto);
 		return "question/normalcontent";
-	}
-	
-	
+	}	
 	//일반문제 파일 미리보기
 	@GetMapping("/qimage")
 	public ResponseEntity<ByteArrayResource> previewImg2(@RequestParam int no) throws Exception{
 	
 		return normalUploadQuestionService.downloadImg(no);
 		
+
 	}
 	
 	
@@ -230,8 +194,5 @@ public class UploadQuestionController {
 		return "question/normalcontent";
 	}
 	
-	/*
-	 * @GetMapping("/normaldelete") public String normaldelete(@RequestParam int no)
-	 * { uploadQuestionService.questionDelete(no); return "question/list"; }
-	 */
+
 }

@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
@@ -32,21 +33,17 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		return sqlSession.selectOne("question.questionSequence");
 	}
 	
-	//DB에 업로드
+	//문제를 DB에 업로드
 	public void upload(UploadQuestionDto uploadQuestionDto) {
 		sqlSession.insert("question.upload_sub", uploadQuestionDto);//user_costom_question 등록
 		sqlSession.insert("question.upload", uploadQuestionDto);// question 등록
 	}
-	
-	
-	
-	//파일 업로드
+	//문제 이미지 파일 업로드
 	@Override
 	public void fileUpload(UploadQuestionFileDto uploadQuestionFileDto) {
 		sqlSession.insert("question.upload_file", uploadQuestionFileDto);	
 	}
-	
-	//ResponseEntity 헤더에 추가할 내용
+	//이미지 업로드시 ResponseEntity 헤더에 추가할 내용
 	@Override
 	public String makeDispositionString(UploadQuestionFileDto uploadQuestionFileDto) throws Exception {
 		StringBuffer buffer = new StringBuffer();
@@ -57,63 +54,71 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		buffer.append("\"");
 		return buffer.toString();
 	}
-	
-	
 	//문제 수정
 	@Override
 	public void updateQustion(UploadQuestionDto uploadQuestionDto) {
 		sqlSession.update("question.updateCustom",uploadQuestionDto);
 		sqlSession.update("question.updateQuestion",uploadQuestionDto);
 	}
+	//문제 이미지 수정
 	public void updateFile(UploadQuestionFileDto uploadQuestionFileDto) {		
 		sqlSession.update("question.updateFile",uploadQuestionFileDto);
 	}
 	
+
 	
 	
-	@Override
+
 	public UploadQuestionDto getOne() {		
 		return null;
 	}
 	//리스트 조회를 위한 것
+
+	//전체 리스트 조회를 위한 것
+
 	@Override
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");
 	}
-	//파일 삭제를 위한 검색
+	//문제 파일 조회
 	@Override
 	public UploadQuestionFileDto getFile(int question_no) {
 		return sqlSession.selectOne("question.getFile",question_no);		
 	}
-	//파일 삭제
-	public void fileDelete2(int question_no,int user_custom_question_no) {
-		sqlSession.delete("question.deleteFile",question_no);
+	//문제 삭제(하나의 question table 삭제 시 file, result가 날아가도록 함.)
+	//user_custom_question은 별도로 지워줘야함.
+	public void fileDelete2(int question_no, int user_custom_question_no) {	
 		sqlSession.delete("question.deleteUser",user_custom_question_no);
-		sqlSession.delete("question.deleteQuestion",question_no);		
+		sqlSession.delete("question.deleteQuestion",question_no);
 	}
-	
+	//시간 포멧 설정
 	public String timeCheck() {
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm");
 		Date time = new Date();		
 		String time1 = format.format(time);
 		return time1;
 	}
+	//사용자가 맞았는지 DB에서 조회
 	@Override
-	public int question_true() {		
-		return sqlSession.selectOne("question.userResultTrue");
+	public int question_true(int question_no) {		
+		return sqlSession.selectOne("question.userResultTrue",question_no);
 	}
+	//사용자가 틀렸는지 DB에서 조회
 	@Override
-	public int question_false() {		
-		return sqlSession.selectOne("question.userResultFalse");
+	public int question_false(int question_no) {		
+		return sqlSession.selectOne("question.userResultFalse",question_no);
 	}
+	//join 검색(user, user_custom_question, question)
 	@Override
 	public UploadQuestionDto question_all(int question_no) {		
 		return sqlSession.selectOne("question.getTotal", question_no);
 	}
+	//사용자가 해결한 문제 결과를 DB에 저장
 	@Override
 	public void insert_result(UserQuestionResultDto userQuestionResultDto) {
 		sqlSession.insert("question.insert_result",userQuestionResultDto);		
 	}
+	//사용자가 한 문제에 대해 해결한 순위 조회
 	@Override
 	public int userPriority(int question_no, int result_no) {
 		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
@@ -122,4 +127,16 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 				.build();
 		return sqlSession.selectOne("question.userPriority", userQuestionResultDto);
 	}
+	//사용자가 다중 문제 해결시 각 문제에 대한 정답을 DB에서 조회
+	@Override
+	public UploadQuestionDto isCorrect(int question_no) {
+		return sqlSession.selectOne("question.getOne", question_no);
+	}
+	//유저 문제 해결 후 3point 제공
+	@Override
+	public void givePointforSolving(int user_no) {
+		sqlSession.insert("grade_point.userQuestionSolve", user_no);
+	}
+	
+
 }

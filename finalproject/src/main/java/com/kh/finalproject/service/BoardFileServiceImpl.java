@@ -48,7 +48,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 		
 		for(MultipartFile mf : board_file) { //올린 파일 개수만큼 반복
 //			int board_file_no = boardDao.getsequence();
-			if(board_file.isEmpty()) {
+			if(!board_file.isEmpty()) {
 				list.add(BoardFileDto.builder()
 	//												.board_file_no(board_file_no)
 													.board_file_upload_name(mf.getOriginalFilename())
@@ -106,25 +106,38 @@ public class BoardFileServiceImpl implements BoardFileService{
 
 	
 	@Override
-	public ResponseEntity<ByteArrayResource> getImg(int board_no) throws Exception {
+	public ResponseEntity<ByteArrayResource> getImg(int board_file_no) throws Exception {
 		
-		BoardFileDto boardfileDto = boardDao.getFile(board_no);
-		File dir = new File("D:/upload/board_files");
+		//board_file_no에 대한 파일정보를 가져온다
+		BoardFileDto dto = boardDao.getFile(board_file_no);
+		System.out.println(dto);
+		System.out.println("저장명 = " +dto.getBoard_file_save_name());
 		
-		File file = new File(dir, String.valueOf(boardfileDto.getBoard_file_save_name()));
-		byte[] data = FileUtils.readFileToByteArray(file);
 
+		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
+		//실제 파일을 읽어들인다. (폴더, 파일명)
+		File dir = new File("D:/upload/board_files");	
+		File file = new File(dir, String.valueOf(dto.getBoard_file_save_name()));
+		
+		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환
+		System.out.println("data = "+ data);
+		
+		
+		//헤더 설정 및 전송
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
+		//읽어들인 내용을 사용자에게 전송한다.
 		return ResponseEntity.ok()
 				//.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
 				.contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.contentLength(boardfileDto.getBoard_file_size())
+				.contentLength(dto.getBoard_file_size())
 				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-				.header(HttpHeaders.CONTENT_DISPOSITION, 
-							boardDao.makeDispositionString(boardfileDto))
-				.body(resource);
-	
+				.header(HttpHeaders.CONTENT_DISPOSITION, boardDao.makeDispositionString(dto))
+				.body(resource);				
+				
 	}
+	
+	
+	
 }
 		
