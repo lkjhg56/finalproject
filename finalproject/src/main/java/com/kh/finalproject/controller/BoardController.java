@@ -1,6 +1,7 @@
 package com.kh.finalproject.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
+import com.kh.finalproject.entity.BoardFileDto;
 import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.service.BoardFileService;
 
@@ -39,6 +42,12 @@ public class BoardController {
 	
 	@Autowired
 	private BoardFileService boardfileService;
+	
+	@Autowired
+	private BoardFileDto boardfileDto;
+	
+	@Autowired
+	private SqlSession sqlSession;
 	
 ////////////글 작성///////////////////////////
 	@GetMapping("/regist")
@@ -93,10 +102,34 @@ public class BoardController {
 		model.addAttribute("boardDto", boardDao.get(board_no));
 		boardDao.getReplyList(board_no);
 		model.addAttribute("boardReplyDto", boardDao.getReplyList(board_no));
-		boardfileService.getImg(board_no);
+		
+		List<BoardFileDto> list = new ArrayList<>();
+		
+		//파일정보도 리스트로 담아서 첨부
+		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);
+		for(int i = 0; i < dto.size(); i ++) {
+			System.out.println("board_file_no = "+dto.get(i).getBoard_file_no());
+		}
+		
+		for(int i = 0; i < dto.size(); i ++) {
+			int board_file_no = dto.get(i).getBoard_file_no();
+			boardfileDto = boardDao.getFile(board_file_no);
+			System.out.println("파일정보 = "+boardfileDto);		
+			list.add(boardfileDto);
+		}
+		
+		model.addAttribute("list", list);
+		
 		return "board/content";
 	}
 
+	////////////////////////////이미지 1개 보여주기//////////////////////////////
+	@GetMapping("/boardimg")
+	public ResponseEntity<ByteArrayResource> getImg(@RequestParam int board_file_no) throws Exception{
+		return boardfileService.getImg(board_file_no);
+	}
+	
+	
 	
 ////////////////////전체 목록 조회///////////////////
 	@GetMapping("/list")
@@ -278,11 +311,6 @@ public class BoardController {
 		}
 		
 		
-		//파일 보여주기
-		@GetMapping("/boardcontent")
-		public ResponseEntity<ByteArrayResource> getImg(@RequestParam int board_no) throws Exception{
-			return boardfileService.getImg(board_no);
-		}
 		
 }
 

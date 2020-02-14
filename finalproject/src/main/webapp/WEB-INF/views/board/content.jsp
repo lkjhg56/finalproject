@@ -153,10 +153,12 @@ $(function() {
 				</tr>		
 				<tr height="200">
 					
-					<td valign="top">
-					<div><img src="boardcontent?board_no=${boardDto.board_no}"  width="120" height="120"></div>	
-						${boardDto.board_content }
-					</td>
+						<td valign="top">
+					<c:forEach var="list"  items="${list}">
+						<div><img src="boardimg?board_file_no=${list.board_file_no}"  width="120" height="120"></div>	
+					</c:forEach>
+							${boardDto.board_content }
+						</td>
 				</tr>
 				<tr>
 					<td>
