@@ -8,6 +8,10 @@
 
 <script>
 	function callCategory(csname) {
+		 var selection= document.getElementsByName(csname);
+		 $(selection).show();
+		
+		
 		var option = document.getElementById(csname)
 
 		$.ajax({
@@ -67,12 +71,17 @@
 	}
 	
 	$(function(){
+		
+		$(".btn").hide();
+		
 		$("form[name=form1]").submit(function(e){
 
-		/* 	e.preventDefault();//기본전송 방지 */
-
+			/* e.preventDefault();//기본전송 방지 */
+		
+	
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
 			console.log(data);
+			
 			var win = window.open(
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
 		});
@@ -80,10 +89,74 @@
 
 
 
-
 </script>
 
+<style>
+.select_area::after{
+	 content:"";
+    display:block;
+    clear:both;
+    flex-wrap:wrap-reverse;
+}
+.method_area{
+	 float:left;
+    width:35%;
 
+}
+.session_area{
+	 float:left;
+    width:35%;
+
+}
+.btn_area{
+	 float:left;
+    width:30%;
+
+}
+
+
+
+.for_aside{
+	 content:"";
+    display:block;
+    clear:both;
+    flex-wrap:wrap-reverse;
+}
+
+.section_area{
+	 float:left;
+    width:70%;
+}
+.aside_area{
+	 float:left;
+    width:30%;
+    min-height:600px;
+}
+
+.member_info{
+	 border-spacing: 15px;
+    background-color: #AAA5A4;
+    width:100%;
+   
+}
+
+.member_info1{
+	width : 100%;
+	height: 120px;
+	 background-color: #c3c7c4;
+	  padding-left: 15px;
+     padding-top: 15px;
+	 
+}
+
+.aside_link{
+	width:100%;
+	height:120px;
+	 background-color: #c3c7c4;
+}
+
+
+</style>
 
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
@@ -96,31 +169,45 @@
 		<h6><a href = "${pageContext.request.contextPath}">home</a> > <a href = "${pageContext.request.contextPath }/question/choose">문제 종류 고르기</a>
       				><a href = "#">문제 고르기</a>
       	</h6>
-		<h1>시험 목록</h1>
+      	
+			<div class = "for_aside">
+      			<div class="section_area">
+      	
+					<h1>시험 목록</h1>
 
-<c:forEach var="list" items="${list}">
+							<c:forEach var="list" items="${list}">
 
-	<div>
-		<form method="post" name="form1"  action="${pageContext.request.contextPath}/question/solving">
-		<input type="hidden" name="tno" value="${tno}">
-			<input type="hidden" name="hour" value="${list.lim_hour}"> <input
-				type="hidden" name="min" value="${list.lim_min}"> <input
-				type="hidden" name="categoryname" value="${list.csname}">
-			<div>${list.csname}</div>
-			<select class="method" name="method"
-				onchange="callCategory('${list.csname}')">
-				
-
-				<option>방법 선택하세요</option>
-				<option>한문제씩풀기</option>
-				<option>한번에풀기</option>
-			</select>
-
-			 <select name="session" id='${list.csname}' >
-
-				<option>회차를 선택하세요</option>
-			</select> 
-			<input class="btn btn-secondary" type="submit" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
+								<div>
+									<form method="post" name="form1"  action="${pageContext.request.contextPath}/question/solving">
+									<input type="hidden" name="tno" value="${tno}">
+										<input type="hidden" name="hour" value="${list.lim_hour}"> <input
+											type="hidden" name="min" value="${list.lim_min}"> <input
+											type="hidden" name="categoryname" value="${list.csname}">
+										<div>${list.csname}</div>
+										<div class= "select_area">
+												<div class = "method_area">
+													<select class="method" name="method"
+													onchange="callCategory('${list.csname}')">
+											
+							
+															<option>방법 선택하세요</option>
+																<option>한문제씩풀기</option>
+																<option>한번에풀기</option>
+															</select>
+												</div>
+												<div class = "session_area">
+														 <select name="session" id="${list.csname}">
+							
+															<option>회차를 선택하세요</option>
+														</select> 
+													</div>
+													<div class = "btn_area">
+															<input class="btn btn-secondary" type="submit" name ="${list.csname}" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
+													</div>
+			
+			
+			</div>
+		
 		</form>
 
 
@@ -130,6 +217,20 @@
 
 
 </c:forEach>
+					</div>
+	 				<div class ="aside_area">
+	 			
+	 				<div class= "member_info1">
+	 						<h6>${id}님</h6>
+	 						<h6>레벨 : 5   포인트 : 100</h6>
+	 						<h6>토큰:100  <a href="${pageContext.request.contextPath }/pay/list">충전</a></h6>
+	 				</div>
+	 				<hr>
+	 				<div	class = "aside_link">
+	 					
+	 				</div>
+	 				
+	 			</div>
 
       </div>
     </div>
