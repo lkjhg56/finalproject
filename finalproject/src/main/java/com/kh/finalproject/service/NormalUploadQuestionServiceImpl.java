@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,7 +90,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 							.csname(normalUpdateQuestionVO.getCsname())
 							.test_no(test_no)
 							.lim_hour(0)
-							.lim_min(0)
+							.lim_min(10)
 							.build();
 					
 						TestQuestionDto testQuestionDto =TestQuestionDto.builder()
@@ -145,11 +150,43 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 				for(int i=0;i<list.size();i++) {
 					MultipartFile mf = normalUpdateQuestionVO.getFile().get(i);
 				UploadTestQuestionFileDto uploadTestQuestionFileDto = list.get(i);
-				NormalUploadQuestionDao.fileUpload(uploadTestQuestionFileDto);
+				
+				
+				
+				if(!uploadTestQuestionFileDto.getFile_upload_name().isEmpty()) {
+					
+					NormalUploadQuestionDao.fileUpload(uploadTestQuestionFileDto);
 					File target = new File(dir, uploadTestQuestionFileDto.getFile_save_name());
-				mf.transferTo(target);
+					mf.transferTo(target);
+				}
 				}
 		
+	}
+
+	@Override
+	public ResponseEntity<ByteArrayResource> downloadImg(int no) throws Exception {
+		
+		
+		UploadTestQuestionFileDto uploadTestQuestionFileDto=NormalUploadQuestionDao.getFile(no);
+		File directory = new File("D:/upload/normalquestion_image");
+		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
+		
+		File file = new File(directory, String.valueOf(uploadTestQuestionFileDto.getFile_save_name()));
+		
+		
+		byte[] data = FileUtils.readFileToByteArray(file);
+
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		return ResponseEntity.ok()
+				//.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.contentLength(uploadTestQuestionFileDto.getFile_size())
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.header(HttpHeaders.CONTENT_DISPOSITION, 
+						NormalUploadQuestionDao.makeDispositionString(uploadTestQuestionFileDto)
+						)
+				.body(resource);
 	}
 	
 

@@ -3,14 +3,25 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-
+<script>
+function previewImage(target){    
+    if(target.files && target.files[0]){       
+        var reader = new FileReader();
+        reader.onload = function(data){
+            var img = document.querySelector("#preview");
+            img.src = data.target.result;    
+        }
+        reader.readAsDataURL(target.files[0]);
+    }
+}
+</script>
 <div>문제 번호 : ${questionDto.no}</div>
 <div>문제 제목 : ${questionDto.question}</div>
 <div>문제 내용 : ${questionDto.answer}</div>
 <c:if test="${grade=='관리자'}">
 <div>유료 여부    : ${questionDto.question_premium}</div>
 </c:if>
-<div><img src="image?question_no=${questionDto.no}"  width="120" height="120"></div>
+<div><img id="preview" src="qimage?no=${questionDto.no}"  width="120" height="120"></div>
 <div>문제 보기1 : ${questionDto.dis1}</div>
 <div>문제 보기2 : ${questionDto.dis2}</div>
 <div>문제 보기3 : ${questionDto.dis3}</div>

@@ -160,6 +160,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 			model.addAttribute("session", session);
 			model.addAttribute("method", method);
 			model.addAttribute("csname", categoryname);
+
 	
 			return "question/one";
 			

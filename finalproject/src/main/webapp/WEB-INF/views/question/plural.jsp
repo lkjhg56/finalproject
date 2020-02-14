@@ -136,6 +136,10 @@
             history.go(1);
     };
         
+    
+    
+    
+    
     </script>
    
    
@@ -246,8 +250,9 @@ main{
    								<br>
    								<br>
    					</div>
+   					
    					 <div class = "plural-pic">
-   										<img src="http://placehold.it/400x250"/>
+   									<img id="preview" src="qimage?no=${qlist.no}"  width="400" height="250">
    					</div>
    
   
