@@ -9,7 +9,6 @@
 <h3>아이디 : ${users.id}</h3>
 <h3>비밀번호 : ********</h3>
 <h3>이메일 : ${users.email}</h3> 
-<h3>cash : ${users.cash}</h3> 
 <h3>point : ${users.point}</h3> 
 <h3>grade_point : ${users.grade_point}</h3> 
 <h3>가입일 : ${users.join_date}</h3> 
@@ -21,4 +20,5 @@
 <a href="${context}/users/grade_point_rank">등급 포인트 랭킹</a><br>
 <a href="${context}/users/test_point">포인트 줘보기 test</a><br>
 <a href="${context}/users/bye">탈퇴하기</a><br>
+<a href="${context}/users/logout">로그아웃</a><br>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
