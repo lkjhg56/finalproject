@@ -85,6 +85,8 @@ public class UploadQuestionController {
 		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
 	}
+	
+	
 	//파일 다운로드(미리보기)
 	@GetMapping("/image")
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_no) throws Exception{
@@ -162,5 +164,12 @@ public class UploadQuestionController {
 		TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent",no);
 		model.addAttribute("questionDto",testQuestionDto);
 		return "question/normalcontent";
+	}	
+	//일반문제 파일 미리보기
+	@GetMapping("/qimage")
+	public ResponseEntity<ByteArrayResource> previewImg2(@RequestParam int no) throws Exception{
+	
+		return normalUploadQuestionService.downloadImg(no);
+		
 	}
 }

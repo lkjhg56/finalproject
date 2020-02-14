@@ -78,6 +78,80 @@
 			#{question_no}
  		)
  	</insert>
+ 	<!-- test_question 업로드 -->
+ 	<insert id="uploadtestquestion" parameterType="testQuestionDto">
+ 		insert into test_question values(
+ 			#{no},
+ 			#{csname},
+ 			#{category_no},
+ 			#{question},
+ 			#{ispremium},
+ 			#{answer},
+ 			#{correct},
+ 			#{incorrect},
+ 				#{dis1},
+ 			#{dis2},
+ 			#{dis3},
+ 			#{dis4},
+ 			#{dis5},
+ 			#{rate}
+ 			)
+ 	</insert>
+ 	
+ 	<insert id="uploadcategory" parameterType="categoryDto">
+ 	insert into category values(
+ 	#{category_no},
+ 	#{csname},
+ 	#{test_no},
+ 	 	#{lim_hour},
+ 	#{lim_min}
+ 	
+ 	)
+ 	</insert>
+ 	
+ 	<insert id="uploadtest" parameterType="testDto">
+ 		insert into test values(
+ #{tno},
+ 	#{test_category}
+ 
+ 	
+ 	
+ 	)
+ 	</insert>
+ 	
+ 	<insert id="normalupload_file" parameterType="uploadTestQuestionFileDto">
+ 			insert into test_question_file values(
+ 		test_question_file_seq.nextval,
+		#{file_upload_name},
+		#{file_save_name},
+		#{file_type},
+		#{file_size},
+		#{test_question_no}
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="uploadsolution" parameterType="solutionDto">
+ 	insert into solution values(
+ 	solution_seq.nextval,
+ 	#{solution},
+ 	#{question_no},
+ 	#{user_no}
+ 	)
+ 	
+ 	</insert>
+ 	
+ 	<!-- 일반문제 목록 -->
+ 	<select id="getNormal"  parameterType="normalUpdateQuestionVO" resultType="testQuestionDto">
+ 	
+ 	
+ 	   select * from test_question where category_no=#{category_no} and csname=#{csname} order by no asc
+ 	</select>
+ 	
+ 	<!-- 일반 문제 상세보기 -->
+ 	<select id="getContent" resultType="testQuestionDto">
+ 	select * from test_question where no=#{no}
+ 	</select>
+ 	
  	<!-- 유저 문제 수정 -->
  	<update id="updateQuestion" parameterType="uploadQuestionDto">
  		update question set 
@@ -159,7 +233,12 @@
  	 <select id="getFile" parameterType="int" resultType="uploadQuestionFileDto">
  	 	select * from question_file where question_no=#{question_no}
  	 </select>
+
+ 	 <!-- 일반문제 파일 불러오기 -->
  	 
+ 	 <select id="getNormalFile" parameterType="int" resultType="uploadTestQuestionFileDto">
+		select * from test_question_file where test_question_no=#{no}
+ 	 </select>
  	 <!-- 문제 삭제 -->
  	 <delete id="deleteQuestion">
  	 	delete from question where question_no=#{question_no}

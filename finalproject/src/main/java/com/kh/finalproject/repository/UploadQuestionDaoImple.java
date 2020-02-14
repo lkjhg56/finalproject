@@ -53,6 +53,8 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		buffer.append("\"");
 		return buffer.toString();
 	}
+	
+	
 	//문제 수정
 	@Override
 	public void updateQustion(UploadQuestionDto uploadQuestionDto) {

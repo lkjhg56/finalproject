@@ -22,7 +22,6 @@ public class UsersDto {
 	private String address;
 	private String detailAddress;
 	private String extraAddress;
-	private int cash;
 	private String is_premium;
 	private int rank;
 	

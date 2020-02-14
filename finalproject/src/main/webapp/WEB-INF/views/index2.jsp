@@ -2,56 +2,17 @@
     pageEncoding="UTF-8"%>
 <style>
 
-
-.button_zone::after{
-	 content:"";
-    display:block;
-    clear:both;
-    flex-wrap:wrap-reverse;
-}
 .button_zone{
 	position : absolute;
+	left :31%;
 	top :450px;
 	z-index:10;
 	}
 .onmain{
- 	width:100%;
- 	height: 100%;
+ 	width:15%;
+ 	height: 150px;
  	border-radius:20%;
  	cursor:pointer;
-}
-
-.left_aside{
-	 float:left;
-    width:14%;
-    height:100px;
-
-}
-.right_aside{
-	 float:left;
-    width:30%;
-    height:100px;
-
-}
-.mainlink1{
-	 float:left;
-    width:14%;
-    height:100px;
-}
-.mainlink2{
-	 float:left;
-    width:14%;
-    height:100px;
-}
-.mainlink3{
-	 float:left;
-    width:14%;
-    height:100px;
-}
-.mainlink4{
-	 float:left;
-    width:14%;
-    height:100px;
 }
 	</style>
 	
@@ -63,38 +24,15 @@
 	</script>
 	
 <jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
-</section>
-
-
-
-
-	<div class ="container">
-		<div class = "button_zone">
-			<div class="left_aside">
-			</div>
-			<div class = "mainlink1">
-				<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
-			</div>
-				<div class = "mainlink2">
-				<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
-			</div>
-				<div class = "mainlink3">
-				<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
-			</div>
-				<div class = "mainlink4">
-				<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
-			</div>
-				<div class = "right_aside">
-			</div>
-		
-		</div>
-	</div>
-	
-	<div class = "container">
-	<h1>확인</h1>
-</div>
-<section>
 <article>
+
+  <div class = "container button_zone">
+  	<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+  	<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+  	<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+  	<img src="${pageContext.request.contextPath}/res/image/grey.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+
+  </div>
 
   <!-- Main Content -->
   <div class="container">
@@ -167,3 +105,5 @@
 
 </article>
 <jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>
+
+

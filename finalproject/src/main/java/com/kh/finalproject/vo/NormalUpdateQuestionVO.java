@@ -23,6 +23,7 @@ public class NormalUpdateQuestionVO {
 	private String dis3;
 	private String dis4;
 	private String dis5;
+	private int rate;
 /*************************************************/
 	
 	

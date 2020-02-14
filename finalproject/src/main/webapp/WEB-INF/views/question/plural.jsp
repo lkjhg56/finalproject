@@ -14,7 +14,7 @@
 		console.log(test+"확인")
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
-
+		console.log(checkbox2);
 
        if (checked.checked==true){
            console.log("체크됨")
@@ -73,7 +73,7 @@
 	            history.go(1);
 	    };
 	        
-   
+  
    </script>
    
    <script>
@@ -136,6 +136,21 @@
             history.go(1);
     };
         
+    $(function () {
+    	  $(".test").hide()
+    	console.log("hide")
+    	
+    });
+    
+    
+   function file(abc) {
+    	console.log("show")
+  $(this).show();
+		
+    	
+	}
+     
+    
     </script>
    
    
@@ -187,6 +202,7 @@ main{
 .plural-pic{
 	 float:left;
     width:40%;
+  
 }
 .plural-textarea{
 	float:left;
@@ -225,13 +241,16 @@ main{
  
   		<div class = "container">
    			<c:forEach var="qlist" items ="${clist}">
+   	
+   			
+   			
  				<div class = "plural-wrap">
 				<div class = "plural-textarea">
 							<textarea  rows="10">
 							
 							</textarea>
 					</div>
-   					<div class = "plural-question">
+   					<div class = "plural-question" >
    	
 
    							<h2>${qlist.question}</h2><h6>${qlist.rate}%</h6>
@@ -246,15 +265,23 @@ main{
    								<br>
    								<br>
    					</div>
-   					 <div class = "plural-pic">
-   										<img src="http://placehold.it/400x250"/>
+   					
+   			
+   				
+   					 <div class = "plural-pic ${qlist.no}" id="${qlist.no}">
+   									<img class = "test ${qlist.no}" id="${qlist.no}"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}');"  width="400" height="250" >
    					</div>
+   					
+			
+   					
    
   
    				
    
  							  
       </div>
+   			
+   		
    			</c:forEach>
   
 

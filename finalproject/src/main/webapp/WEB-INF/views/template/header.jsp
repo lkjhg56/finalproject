@@ -7,6 +7,25 @@
 </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
 </script>
+	
+
+
+<script>
+
+function islogin(id){
+	
+	if(id.length<1){
+			console.log("asd");
+			$(".logined").hide();
+			$(".nolgoin").show();
+	}else{
+			$(".nologin").hide();
+			$(".logined").show();
+
+	}
+}
+	
+</script>
 
 
 
@@ -31,9 +50,10 @@
 		width : 100;
 		height: 30
 	}
+
 </style>
 </head>
-<body>
+<body onload="islogin('${id}')">
 <main>
 
 <!-- 운영자 페이지 넣어야 함. -->
@@ -60,12 +80,32 @@
           <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/question/choose">Quiz</a>
           </li>
-          <li class="nav-item">
+          <li>
+            <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/question/list">CustomQuiz</a>
+          </li>
+          
+
+
+          
+          <li class="nav-item nologin">
             <a class="nav-link" href="${pageContext.request.contextPath}/users/login">Login</a>
           </li>
-            <li class="nav-item">
+         
+            <li class="nav-item nologin">
             <a class="nav-link" href="${pageContext.request.contextPath}/users/join">Regist</a>
           </li>
+
+           <li>
+            <li class="nav-item logined">
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/info">Memberinfo</a>
+          </li>
+            <li>
+            <li class="nav-item logined">
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/logout">Logout</a>
+          </li>
+
+          
         </ul>
       </div>
     </div>
@@ -89,6 +129,10 @@
     </div>
 
   </header>
+  
+
+  
+  
   	<div class= "forfooter">
 
 <section>
