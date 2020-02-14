@@ -14,10 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
+import com.kh.finalproject.entity.UsersDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
+import com.kh.finalproject.repository.UsersDao;
+import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
 @Service
@@ -25,7 +29,9 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 
 	@Autowired
 	private UploadQuestionDao uploadQuestionDao;
-	
+	@Autowired
+	private UsersDao usersDao;
+	//문제 업로드 C
 	@Override
 	public void questionUpload(UpdateQuestionVO updateQuestionVO) throws Exception{
 		//1. DB에 등록
@@ -76,7 +82,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			mf.transferTo(target);
 		}
 	}
-	//문제 수정
+	//문제 수정 U
 	@Override
 	public void questionUpdate(UpdateQuestionVO updateQuestionVO) throws Exception {
 
@@ -133,13 +139,16 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}
 			
 	}
-	public void questionDelete(int question_no, int user_custom_question_no) {	
-		uploadQuestionDao.fileDelete2(question_no,user_custom_question_no);
+	//문제 삭제 D
+	@Override
+	public void questionDelete(int question_no, int user_custom_question_no) {
 		UploadQuestionFileDto delete = uploadQuestionDao.getFile(question_no);
 		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
 		File file = new File(filepath);
 		file.delete();
+		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);
 	}
+	//단일 문제 해결 R
 	@Override
 	public UserQuestionResultDto questionSolve(UpdateQuestionVO updateQuestionVO) {
 		UploadQuestionDto uploadQuestionDto = uploadQuestionDao.question_all(updateQuestionVO.getQuestion_no());
@@ -147,6 +156,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
 							 +updateQuestionVO.getSec()+":"+updateQuestionVO.getMilisec();
 		int question_result_no=uploadQuestionDao.questionResultSequece();
+		 System.out.println(updateQuestionVO.getId()); 
 		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
 				.hour(updateQuestionVO.getHour())
 				.min(updateQuestionVO.getMin())
@@ -159,12 +169,15 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.tried_user(updateQuestionVO.getId())
 				.solveDate(time)
 				.question_no(updateQuestionVO.getQuestion_no())
-				.question_true(uploadQuestionDao.question_true())
-				.question_false(uploadQuestionDao.question_false())
+				.question_true(uploadQuestionDao.question_true(updateQuestionVO.getQuestion_no()))
+				.question_false(uploadQuestionDao.question_false(updateQuestionVO.getQuestion_no()))
 				.build();
+		
 		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
 		if(result) {
 			userQuestionResultDto.setResult(1);
+			UsersDto usersDto = usersDao.getInfo(updateQuestionVO.getId());
+			uploadQuestionDao.givePointforSolving(usersDto.getUser_no());
 		}else {
 			userQuestionResultDto.setResult(0);
 		}
@@ -173,6 +186,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		return userQuestionResultDto;
 		
 	}
+	//저장된 이미지 호출 R
 	@Override
 	public ResponseEntity<ByteArrayResource> downloadImg(int question_no) throws Exception {
 		UploadQuestionFileDto uploadQuestionFileDto = uploadQuestionDao.getFile(question_no);
@@ -180,12 +194,15 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
 		
 		File file = new File(directory, String.valueOf(uploadQuestionFileDto.getFile_save_name()));
+		if(!file.exists()) {
+			return ResponseEntity.notFound().build();
+		}
 		byte[] data = FileUtils.readFileToByteArray(file);
 
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
 		return ResponseEntity.ok()
-				//.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+//				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
 				.contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.contentLength(uploadQuestionFileDto.getFile_size())
 				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
@@ -193,6 +210,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 						uploadQuestionDao.makeDispositionString(uploadQuestionFileDto))
 				.body(resource);
 	}
+	//저장된 문제 여러개 호출 및 랜덤으로 출제 R
 	@Override
 	public List<UploadQuestionDto> multiQuestion(int wantQuestion) {
 		Random r = new Random();
@@ -207,5 +225,34 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}
 		}
 		return choice_list;
+	}
+	//다중문제 해결한 결과값 출력 R
+	@Override
+	public List<UserQuestionResultDto> checkMulti(ExamResultVO examResultVO) {
+
+		List<UserQuestionResultDto> list = new ArrayList<>();
+		for(ExamResultVO vo : examResultVO.getQuestion()) {
+			list.add(UserQuestionResultDto.builder()
+					.question_no(vo.getNo())
+					.question_answer(vo.getAnswer())
+					.tried_user(vo.getId())
+					.build());			
+		}		
+		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
+		for(int i = 0;i<list.size();i++ ) {
+			int answer = list.get(i).getQuestion_answer();
+			UploadQuestionDto uploadQuestionDto = uploadQuestionDao.isCorrect(list.get(i).getQuestion_no());
+			//유저가 선택한 정답
+			//정답여부 판별
+			boolean result = uploadQuestionDto.getQuestion_answer() == answer;
+			if(answer==0) {
+				list.get(i).setResult(0);
+			}else if(result){
+				list.get(i).setResult(1);
+			}else if(!result) {
+				list.get(i).setResult(0);
+			}
+		}
+		return list;
 	}
 }
