@@ -1,5 +1,7 @@
 package com.kh.finalproject.repository;
 
+import java.net.URLEncoder;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,6 +10,7 @@ import com.kh.finalproject.entity.CategoryDto;
 import com.kh.finalproject.entity.SolutionDto;
 import com.kh.finalproject.entity.TestDto;
 import com.kh.finalproject.entity.TestQuestionDto;
+import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UploadTestQuestionFileDto;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 
@@ -67,6 +70,22 @@ private SqlSession sqlSession;
 	public void fileUpload(UploadTestQuestionFileDto uploadTestQuestionFileDto) {
 		sqlSession.insert("question.normalupload_file", uploadTestQuestionFileDto);	
 		
+	}
+	
+	//파일검색
+	@Override
+	public UploadTestQuestionFileDto getFile(int no) {
+		return sqlSession.selectOne("question.getNormalFile",no);		
+	}
+	@Override
+	public String makeDispositionString(UploadTestQuestionFileDto uploadTestQuestionFileDto) throws Exception {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("attachment;");
+		buffer.append("filename=");
+		buffer.append("\"");
+		buffer.append(URLEncoder.encode(uploadTestQuestionFileDto.getFile_upload_name(), "UTF-8"));
+		buffer.append("\"");
+		return buffer.toString();
 	}
 	
 	

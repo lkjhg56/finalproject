@@ -97,7 +97,16 @@
 	
 
 	    
-	    
+    	function previewImage(target){    
+    	    if(target.files && target.files[0]){       
+    	        var reader = new FileReader();
+    	        reader.onload = function(data){
+    	            var img = document.querySelector("#preview");
+    	            img.src = data.target.result;    
+    	        }
+    	        reader.readAsDataURL(target.files[0]);
+    	    }
+    	}
 	    
 
 
@@ -120,7 +129,10 @@
    	
 
    		<h2>${clist.question}</h2>
-  	${clist.no}
+  <!-- 이미지 파일 조건 -->
+  	
+<div><img id="preview" src="qimage?no=${clist.no}"  width="120" height="120"></div><br><br>
+  	
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}');">${clist.dis1}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}2" onclick="save('${clist.no}', '2', '${clist.answer}');">${clist.dis2}</h4>
    		<h4><input type="checkbox" name="${clist.no}" id="${clist.no}3" onclick="save('${clist.no}', '3', '${clist.answer}');">${clist.dis3}</h4>
