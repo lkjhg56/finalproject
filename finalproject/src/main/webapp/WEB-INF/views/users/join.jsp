@@ -173,25 +173,35 @@
 	$(".email").submit(function(e){
 		e.preventDefault();
 		
-		$(this).find("input[type=submit]").prop("disabled", true);
-		$(this).find("input[type=submit]").val("인증번호 발송중...");
-
 		//var url = $(this).attr("action"); 
 		var method = $(this).attr("method");
 		var data = $(this).serialize();
 		
-		$.ajax({
-			url:"${pageContext.request.contextPath}/users/send",
-			type:"get",
-			data:data,
-			success:function(resp){
-				//console.log(resp);
-				if(resp == "success"){
-					$(".email").find("input[type=submit]").val("인증번호 발송완료");
-					$(".validate").show();
+		var email = $("input[name=email]").val();
+		
+		if(email == ""){
+			window.alert("이메일을 입력해주세요.");
+			$("input[name=email]").focus();
+			$(".email").find("input[type=submit]").val("인증번호 보내기");
+		}
+		
+		else{
+			$(this).find("input[type=submit]").prop("disabled", true);
+			$(this).find("input[type=submit]").val("인증번호 발송중...");
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/users/send",
+				type:"get",
+				data:data,
+				success:function(resp){
+					//console.log(resp);
+					if(resp == "success"){
+						$(".email").find("input[type=submit]").val("인증번호 발송완료");
+						$(".validate").show();
+					}
 				}
-			}
-		});
+			});
+		}
 	});
 //		validate-form이 전송되면 /validate로 비동기 요청을 전송
 	$(".validate").submit(function(e){

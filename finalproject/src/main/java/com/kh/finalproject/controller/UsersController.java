@@ -3,9 +3,7 @@ package com.kh.finalproject.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -54,10 +52,11 @@ public class UsersController {
 		return "users/join";
 	}
 	@PostMapping("users/join")
-	public String join(@ModelAttribute UsersDto usersDto) {
+	public String join(@ModelAttribute UsersDto usersDto, @ModelAttribute GradePointDto pointDto) {
 		usersDto.setPw(encoder.encode(usersDto.getPw()));
 //		usersDao.join(usersDto);
-		sqlSession.insert("users.join", usersDto);	
+		sqlSession.insert("users.join", usersDto);
+		pointService.giveJoinPoint(pointDto,usersDto);
 		return "redirect:/";
 	}
 	
@@ -279,7 +278,22 @@ public class UsersController {
 	 }
 	 @PostMapping("users/test_point")
 	 public String givePoint(@ModelAttribute UsersDto usersDto,@ModelAttribute GradePointDto pointDto) {
-		 pointService.givePoint(pointDto,usersDto);
-		 return "redirect:/";
+//		 pointService.giveCheckPoint(pointDto,usersDto);
+//		 pointService.giveQuestionUploadPoint(pointDto,usersDto);
+//		 pointService.giveQuestionSolvePoint(pointDto,usersDto);
+		 pointService.giveAnswerPoint(pointDto,usersDto);
+		 return "redirect:info";
+	 }
+	 
+	 //나의 포인트 내역 조회
+//	 @GetMapping("users/my_grade_point")
+//	 public String my_grade_point() {
+//		 return "users/my_grade_point";
+//	 }
+	 @GetMapping("users/my_grade_point")
+	 public String my_grade_point(Model model,HttpSession session) {
+		 String id = (String) session.getAttribute("id");
+		 model.addAttribute("grade_point", sqlSession.selectList("grade_point.my_grade_point", id));
+		 return "users/my_grade_point";
 	 }
 }
