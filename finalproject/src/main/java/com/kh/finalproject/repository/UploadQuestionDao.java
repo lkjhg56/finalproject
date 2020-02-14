@@ -2,6 +2,7 @@ package com.kh.finalproject.repository;
 
 import java.util.List;
 
+import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
@@ -25,4 +26,5 @@ public interface UploadQuestionDao {
 	void insert_result(UserQuestionResultDto userQuestionResultDto);
 	int userPriority(int question_no, int result_no);
 	UploadQuestionDto isCorrect(int question_no);
+	void givePointforSolving(int user_no);
 }

@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
@@ -53,8 +54,6 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		buffer.append("\"");
 		return buffer.toString();
 	}
-	
-	
 	//문제 수정
 	@Override
 	public void updateQustion(UploadQuestionDto uploadQuestionDto) {
@@ -122,6 +121,11 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	@Override
 	public UploadQuestionDto isCorrect(int question_no) {
 		return sqlSession.selectOne("question.getOne", question_no);
+	}
+	//유저 문제 해결 후 3point 제공
+	@Override
+	public void givePointforSolving(int user_no) {
+		sqlSession.insert("grade_point.userQuestionSolve", user_no);
 	}
 	
 

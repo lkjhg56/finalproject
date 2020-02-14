@@ -5,6 +5,12 @@
 <jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
 <%-- ${list} --%>
 수험 시간 : <c:if test="${time.hour!=0}">${time.hour}시간</c:if> ${time.min}분 ${time.sec}초<br>
+<!-- 결과 페이지 -->
+<div>
+
+</div>
+<!-- 상세 페이지 -->
+<div>
 <c:forEach var="result" items="${list}" varStatus="status">
 <p>문제 ${status.count}<br>
 입력한 정답 :
@@ -25,7 +31,10 @@
 		<font color="red">오답</font><br>
 	</c:otherwise>
 </c:choose></p>
+<c:set/>
 </c:forEach>
+<c:set var="count" value="${status.count}"></c:set>
+</div>
 <div>
 <a href="${pageContext.request.contextPath}">처음 페이지로</a>
 <a href="${pageContext.request.contextPath}/question/list">유저 문제 목록으로</a>

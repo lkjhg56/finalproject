@@ -14,10 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
+import com.kh.finalproject.entity.UsersDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
+import com.kh.finalproject.repository.UsersDao;
 import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
@@ -26,6 +29,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 
 	@Autowired
 	private UploadQuestionDao uploadQuestionDao;
+	@Autowired
+	private UsersDao usersDao;
 	//문제 업로드 C
 	@Override
 	public void questionUpload(UpdateQuestionVO updateQuestionVO) throws Exception{
@@ -171,11 +176,12 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
 		if(result) {
 			userQuestionResultDto.setResult(1);
+			UsersDto usersDto = usersDao.getInfo(updateQuestionVO.getId());
+			uploadQuestionDao.givePointforSolving(usersDto.getUser_no());
 		}else {
 			userQuestionResultDto.setResult(0);
 		}
 		uploadQuestionDao.insert_result(userQuestionResultDto);
-		
 		userQuestionResultDto.setUser_priority(uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no));
 		return userQuestionResultDto;
 		

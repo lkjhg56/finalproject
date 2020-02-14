@@ -84,9 +84,7 @@ public class UploadQuestionController {
 		uploadQuestionService.questionUpload(updateQuestionVO);
 		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
 		return "question/list";
-	}
-	
-	
+	}	
 	//파일 다운로드(미리보기)
 	@GetMapping("/image")
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_no) throws Exception{
@@ -124,9 +122,6 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto",sqlSession.selectOne("question.getTotal", question_no));
 		return "question/content";
 	}
-	
-	
-	
 	//일반문제만들기
 	@GetMapping("/normalupload")
 	public String normalupload() {
