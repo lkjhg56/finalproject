@@ -57,7 +57,6 @@
 	
 	//아이디 중복&형식 검사 
 	$(function(){
-		//아이디 중복 검사를 누르면(click) 비동기통신으로 아이디 유무를 검사
 		$(".id_check_btn").click(function(){
 			var id = $("input[name=id]").val();
 // 			console.log(id);
@@ -65,11 +64,9 @@
 			var regex = /^[a-z0-9]{8,20}$/;
 
 			if(id == ""){
-				$(".id_check_btn").next(".id").text("아이디를 입력해주세요.");
+				window.alert("아이디를 입력해주세요.");
+				$("input[name=id]").focus();
 				
-				$("input[name=id]").click(function(){
-					$(".id").empty();
-				});
 				
 			}
 			else{
@@ -118,7 +115,7 @@
 		
 // 		$("input[name=pw]").on("input",function(){
 // 			var pw = $("input[name=pw]").val();
-// 			var regex = /^[a-zA-Z0-9]{8,16}$/;
+// 			var regex = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,16}$/;
 			
 // 			if(regex.test(pw)){
 // 				console.log("굳굳!!!!!!!");
@@ -129,6 +126,21 @@
 			
 // 		});
 // 	});	
+	$(function(){
+		
+		$(".join").click(function(){
+			var pw = $("input[name=pw]").val();
+			var regex = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,16}$/;
+			
+			if(!regex.test(pw)){
+				window.alert("비밀번호 형식을 맞춰주세요.");
+				$("input[name=pw]").focus().val("");
+				$("input[name=ppww]").val("");
+			}
+			
+			
+		});
+	});	
 	
 	//비밀번호 재확인
 	$(function(){
@@ -225,7 +237,7 @@
 
 <form class="join-form" action="join" method="post">
 
-	이름 : <input type="text" name="name" required><br><br>
+	이름 : <input type="text" name="name" maxlength="7" required><br><br>
 	아이디 : <input type="text" name="id" maxlength="20" required>
 	<input type="button" class="id_check_btn" value="아이디 중복 검사">
 	<div class="id">
@@ -234,13 +246,30 @@
 	<br>
 	비밀번호 : <input type="text" name="pw" maxlength="16" required><br><br>
 	<div class="pw">
-		<h6>8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</h6>
+		<h6>8~16자 영문자, 숫자, 특수문자 조합을 사용하세요.</h6>
 	</div>
 	비밀번호 확인 : <input type="text" name="ppww" required>
-	<input type="button" class="pw_check_btn" value="확인">
-	<br>
-	이메일 : <input type="text" name="email" required><br><br>
-	전화번호 : <input type="text" name="phone" required><br><br>
+			   <input type="button" class="pw_check_btn" value="확인">
+	<br><br>
+	이메일 : <input type="text" name="email" required>
+		  <select name="email">
+		  	<option>@naver.com</option>
+		  	<option>@daum.net</option>
+		  	<option>@nate.com</option>
+		  	<option>@gmail.com</option>
+		  	<option>@hanmail.com</option>
+		  	<option>@icloud.com</option>
+		  </select>
+			<br><br>
+	전화번호 : <select name="phone">
+				<option>010</option>
+				<option>011</option>
+				<option>016</option>
+				<option>019</option>
+			</select>-
+			<input type="tel" name="phone" maxlength="4" required>-
+			<input type="tel" name="phone" maxlength="4" required>
+			<br><br>
 	주소 : <br><br>
 	<input type="text" id="postcode" name="postcode" placeholder="우편번호" required> 
 	<input type="button" onclick="DaumPostcode()"value="우편번호 찾기"><br> 

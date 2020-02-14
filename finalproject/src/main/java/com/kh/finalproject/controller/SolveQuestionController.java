@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.TestQuestionDto;
+import com.kh.finalproject.entity.UploadTestQuestionFileDto;
+import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.TestDao;
+import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +32,9 @@ public class SolveQuestionController {
 	
 	@Autowired
 	private TestDao testDao;
+	
+	@Autowired
+	private NormalUploadQuestionDao NormalUploadQuestionDao;
 	
 	@GetMapping("question/choose")
 	public String choose(Model model) {
@@ -66,10 +72,15 @@ public String category2(@RequestParam String categoryname, String session, Strin
 
 		if(method.equals("한번에풀기")) {
 			List<TestQuestionDto> questionDto = testDao.getQuestionList(categoryname);
+			
 			List<TestQuestionDto> question = new ArrayList<>();		
+	
+//			 UploadTestQuestionFileDto uploadTestQuestionFileDto;
 			for(TestQuestionDto qlist : questionDto) {
 				if(qlist.getCategory_no().equals(session)) {
 					TestQuestionDto dto = new TestQuestionDto();
+				
+					
 					dto.setNo(qlist.getNo());
 					log.info("testno 확인 {}=", qlist.getNo());
 					dto.setAnswer(qlist.getAnswer());
@@ -81,12 +92,19 @@ public String category2(@RequestParam String categoryname, String session, Strin
 					dto.setDis5(qlist.getDis5());
 					dto.setQuestion(qlist.getQuestion());
 					dto.setRate(qlist.getRate());
-					question.add(dto);
+				question.add(dto);
+					
+					
+					
 				}
 
 
+			
+				
+				
 			}
-		
+			
+			
 			model.addAttribute("clist", question);
 			model.addAttribute("session", session);
 
@@ -160,6 +178,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 			model.addAttribute("session", session);
 			model.addAttribute("method", method);
 			model.addAttribute("csname", categoryname);
+
 	
 			return "question/one";
 			
@@ -191,6 +210,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 					dto.setDis5(qlist.getDis5());
 					dto.setQuestion(qlist.getQuestion());
 					question.add(dto);
+					
 				}
 
 

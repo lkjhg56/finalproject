@@ -19,4 +19,8 @@ public interface NormalUploadQuestionDao {
 	void upload(TestQuestionDto testQuestionDto,CategoryDto categoryDto,TestDto testDto,SolutionDto solutionDto);
 	void fileUpload(UploadTestQuestionFileDto uploadTestQuestionFileDto);
 	void upload2(TestQuestionDto testQuestionDto,SolutionDto solutionDto);
+	
+	UploadTestQuestionFileDto getFile(int no);
+	
+	String makeDispositionString(UploadTestQuestionFileDto uploadTestQuestionFileDto) throws Exception;
 }

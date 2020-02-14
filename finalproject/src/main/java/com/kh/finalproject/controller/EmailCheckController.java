@@ -29,8 +29,6 @@ public class EmailCheckController {
 	@GetMapping("users/send")
 	@ResponseBody	// 내가 반환하는 내용이 곧 결과무리
 	public String send(@RequestParam String email, HttpSession session) {
-		// 인증번호를 세션이든 DB든 어디에 저장
-//		String cert = "123456";
 		String cert = randomService.generateCertificationNumber(6);
 		session.setAttribute("cert", cert);
 		return emailService.sendCertMessage(email, cert);

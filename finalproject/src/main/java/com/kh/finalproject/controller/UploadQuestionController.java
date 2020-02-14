@@ -110,12 +110,16 @@ public class UploadQuestionController {
 		uploadQuestionService.questionUpload(updateQuestionVO);
 		return "question/list";
 	}
+	
+	
 	//파일 다운로드(미리보기)
 	@GetMapping("/image")
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_no) throws Exception{
 		return uploadQuestionService.downloadImg(question_no);
 		
 	}
+	
+	
 	@GetMapping("/update")
 	public String update(@RequestParam int question_no, Model model) {
 		UploadQuestionDto uploadQuestionDto = sqlSession.selectOne("question.getTotal", question_no);
@@ -191,5 +195,13 @@ public class UploadQuestionController {
 		return "question/normalcontent";
 	}
 	
+	
+	//일반문제 파일 미리보기
+	@GetMapping("/qimage")
+	public ResponseEntity<ByteArrayResource> previewImg2(@RequestParam int no) throws Exception{
+	
+		return normalUploadQuestionService.downloadImg(no);
+		
+	}
 	
 }
