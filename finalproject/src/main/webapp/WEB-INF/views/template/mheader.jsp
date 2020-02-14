@@ -14,6 +14,24 @@
 <title>문제 마스터 홈페이지</title>
 
 
+<script>
+
+function islogin(id){
+	
+	if(id.length<1){
+		console.log("asd");
+		$(".logined").hide();
+		$(".nolgoin").show();
+	}else{
+		$(".nologin").hide();
+		$(".logined").show();
+		console.log(id+"로그인됨")
+	}
+}
+	
+</script>
+
+
 <link href="${pageContext.request.contextPath}/res/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
@@ -29,10 +47,12 @@
 		width : 100;
 		height: 30
 	}
+	
+	
 </style>
 
 </head>
-<body>
+<body onload="islogin('${id}')">
 <!-- 메인페이지 -->
 <main>
 
@@ -58,11 +78,28 @@
           <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/question/choose">Quiz</a>
           </li>
-               <li class="nav-item">
+          <li>
+            <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/question/list">CustomQuiz</a>
+          </li>
+          
+              
+          <li class="nav-item nologin">
             <a class="nav-link" href="${pageContext.request.contextPath}/users/login">Login</a>
           </li>
-            <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/users/Join">Regist</a>
+         
+            <li class="nav-item nologin">
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/join">Regist</a>
+          </li>
+
+           <li>
+            <li class="nav-item logined">
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/info">Memberinfo</a>
+          </li>
+            <li>
+            <li class="nav-item logined">
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/logout">Logout</a>
+          </li>
         </ul>
       </div>
     </div>

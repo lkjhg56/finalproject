@@ -1,8 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<style>
 
+.button_zone{
+	position : absolute;
+	left :38%;
+	top :500px;
+	z-index:10;
+	}
+.onmain{
+ 	width:10%;
+ 	height: 100px;
+}
+	</style>
+	
+	<script>
+	function redirectPage(url){
+		console.log("iscome?");
+		console.log(url);
+	window.location.href = url;
+	}
+	</script>
+	
 <jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
 <article>
+
+  <div class = "container button_zone">
+  	<img style="cursor:pointer;" src="${pageContext.request.contextPath}/res/image/grey-9.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+  	<img style="cursor:pointer;" src="${pageContext.request.contextPath}/res/image/grey-9.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+  	<img style="cursor:pointer;" src="${pageContext.request.contextPath}/res/image/grey-9.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+  	<img style="cursor:pointer;" src="${pageContext.request.contextPath}/res/image/grey-9.jpg" class = "onmain" onclick="redirectPage('${pageContext.request.contextPath}/board/list')">
+
+  </div>
 
   <!-- Main Content -->
   <div class="container">
@@ -69,7 +98,7 @@
 
   <!-- Footer -->
   
-
+<h1>id : ${id}</h1>
 
 
 

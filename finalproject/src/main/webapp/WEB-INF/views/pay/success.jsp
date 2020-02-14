@@ -7,8 +7,7 @@
       			<div class="col-lg-8 col-md-10 mx-auto">  
     
 					  
-					    <h1>완료</h1>
-					${result}
+				
 					<h1>${token} 만큼 충전 됨 현재 포인트는 ${point}</h1>
 				</div>
 			</div>
