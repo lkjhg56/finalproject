@@ -1,5 +1,6 @@
 package com.kh.finalproject.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.finalproject.entity.BoardDto;
 import com.kh.finalproject.entity.BoardFileDto;
 import com.kh.finalproject.repository.BoardDao;
+import com.kh.finalproject.repository.BoardFileDao;
 import com.kh.finalproject.service.BoardFileService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	
 	@Autowired
-	private BoardDto boardDto;
+	private BoardFileDao boardfileDao;
 	
 	@Autowired
 	private BoardDao boardDao;
@@ -78,9 +80,25 @@ public class BoardController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute BoardDto boardDto) {
-		boardDao.edit(boardDto);
-		int no = boardDto.getBoard_no();
+	public String edit(@ModelAttribute BoardDto boardDto,
+									@RequestParam (required = false) List<MultipartFile> board_file) throws IllegalStateException, IOException {
+		
+		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no());
+		
+		if(!dto.isEmpty()) {
+			for(int i = 0; i < dto.size(); i ++) {
+				int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기			
+				boardfileDao.deleteFile(board_file_no);
+				BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
+				String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();
+				File file = new File(filepath);
+				file.delete();
+			}
+		}
+		
+		boardfileService.editWithFile(boardDto, board_file);
+		
+		int no = boardDto.getBoard_no(); //게시글 번호 구해서 리다이렉트에 사용
 		return "redirect:content?board_no="+no;		
 	}	
 	
@@ -90,6 +108,17 @@ public class BoardController {
 	@GetMapping("/delete")
 	public String delete(@RequestParam int board_no) {
 		boardDao.delete(board_no);
+		
+		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);
+		for(int i = 0; i < dto.size(); i ++) {
+			int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기			
+			boardfileDao.deleteFile(board_file_no);
+			BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
+			String filepath = "D:/upload/question_image/"+delete.getBoard_file_save_name();
+			File file = new File(filepath);
+			file.delete();
+		}
+		
 		return "redirect:list";
 	}
 	
@@ -113,7 +142,7 @@ public class BoardController {
 		
 		for(int i = 0; i < dto.size(); i ++) {
 			int board_file_no = dto.get(i).getBoard_file_no();
-			boardfileDto = boardDao.getFile(board_file_no);
+			boardfileDto = boardfileDao.getFile(board_file_no);
 			System.out.println("파일정보 = "+boardfileDto);		
 			list.add(boardfileDto);
 		}
