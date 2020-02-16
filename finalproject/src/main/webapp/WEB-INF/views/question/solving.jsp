@@ -31,6 +31,46 @@ function appendResult() {
 
 </script>
 
+
+<style>
+.for_aside{
+	 content:"";
+    display:block;
+    clear:both;
+    flex-wrap:wrap-reverse;
+}
+
+.section_area{
+	 float:left;
+    width:70%;
+}
+.aside_area{
+	 float:left;
+    width:30%;
+    min-height:600px;
+}
+
+.member_info{
+	 border-spacing: 15px;
+    background-color: #AAA5A4;
+    width:100%;
+   
+}
+
+.member_info1{
+	width : 100%;
+	height: 120px;
+	 background-color: #c3c7c4;
+	  padding-left: 15px;
+     padding-top: 15px;
+	 
+}
+.aside_link{
+	width:100%;
+	height:120px;
+	 background-color: #c3c7c4;
+}
+</style>
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  
  
@@ -40,8 +80,9 @@ function appendResult() {
       <div class="col-lg-8 col-md-10 mx-auto">
       
       			<br>
-      			<br>
-      			<br>
+      			<div class = "for_aside">
+      				<div class="section_area">
+    
       			<br>
 				<h1>문제푸는중</h1>
 
@@ -50,6 +91,21 @@ function appendResult() {
 					<input type="hidden"  name="tno" value="${tno}">
 					<input type="submit"  class="btn btn-info" value="돌아가기">
 				</form>
+				</div>
+	 			<div class ="aside_area">
+	 			
+	 				<div class= "member_info1">
+	 						<h6>${id}님</h6>
+	 						<h6>레벨 : 5   포인트 : 100</h6>
+	 						<h6>토큰:100  <a href="${pageContext.request.contextPath }/pay/list">충전</a></h6>
+	 				</div>
+	 				<hr>
+	 				<div	class = "aside_link">
+	 					
+	 				</div>
+	 				
+	 			</div>
+				
 		</div>
 	</div>
 </div>

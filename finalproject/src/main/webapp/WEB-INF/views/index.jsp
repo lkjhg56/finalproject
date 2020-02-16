@@ -17,41 +17,41 @@
 .onmain{
  	width:100%;
  	height: 100%;
- 	border-radius:20%;
+ 	border-radius:10%;
  	cursor:pointer;
 }
 
 .left_aside{
 	 float:left;
-    width:14%;
-    height:100px;
+    width:36%;
+    height:150px;
 
 }
 .right_aside{
 	 float:left;
-    width:30%;
-    height:100px;
+    width:36%;
+    height:150px;
 
 }
 .mainlink1{
 	 float:left;
-    width:14%;
-    height:100px;
+    width:7%;
+    height:150px;
 }
 .mainlink2{
 	 float:left;
-    width:14%;
-    height:100px;
+    width:7%;
+    height:150px;
 }
 .mainlink3{
 	 float:left;
-    width:14%;
-    height:100px;
+    width:7%;
+    height:150px;
 }
 .mainlink4{
 	 float:left;
-    width:14%;
-    height:100px;
+    width:7%;
+    height:150px;
 }
 	</style>
 	
@@ -68,8 +68,8 @@
 
 
 
-	<div class ="container">
-		<div class = "button_zone">
+	
+	<div class = "button_zone">
 			<div class="left_aside">
 			</div>
 			<div class = "mainlink1">
@@ -88,11 +88,7 @@
 			</div>
 		
 		</div>
-	</div>
-	
-	<div class = "container">
-	<h1>확인</h1>
-</div>
+
 <section>
 <article>
 
