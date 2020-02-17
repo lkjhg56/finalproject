@@ -188,6 +188,71 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 						)
 				.body(resource);
 	}
+
+	@Override
+	public void normalquestionUpdate(NormalUpdateQuestionVO normalUpdateQuestionVO) throws Exception {
+		//test_question 테이블 변경
+		
+		TestQuestionDto testQuestionDto=TestQuestionDto.builder()
+				.no(normalUpdateQuestionVO.getNo())
+				.csname(normalUpdateQuestionVO.getCsname())//수정!!
+				.category_no(normalUpdateQuestionVO.getCategory_no())
+				.question(normalUpdateQuestionVO.getQuestion())
+				.ispremium(normalUpdateQuestionVO.getIspremium())
+				.answer(normalUpdateQuestionVO.getAnswer())
+				.correct(normalUpdateQuestionVO.getCorrect())
+				.incorrect(normalUpdateQuestionVO.getIncorrect())
+				.dis1(normalUpdateQuestionVO.getDis1())
+				.dis2(normalUpdateQuestionVO.getDis2())
+				.dis3(normalUpdateQuestionVO.getDis3())
+				.dis4(normalUpdateQuestionVO.getDis4())
+				.dis5(normalUpdateQuestionVO.getDis5())
+				.rate(normalUpdateQuestionVO.getRate())
+				.build();
+		
+	NormalUploadQuestionDao.updateQustion(normalUpdateQuestionVO);
+		
+//
+//			//question_file 테이블 변경	
+//			List<UploadQuestionFileDto> list = new ArrayList<>();
+//			for(MultipartFile mf : updateQuestionVO.getFile()) {
+//				if(!mf.isEmpty()) {
+//					list.add(UploadQuestionFileDto.builder()
+//							.file_save_name(UUID.randomUUID().toString())
+//							.file_upload_name(mf.getOriginalFilename())
+//							.file_type(mf.getContentType())
+//							.file_size(mf.getSize())
+//							.question_no(updateQuestionVO.getQuestion_no())
+//							.build());
+//				}
+//			}		
+//			//변경된 파일을 다시 저장.	
+//			String Path="D:/upload/normalquestion_image";
+//			File dir = new File(Path);
+//			dir.mkdir();
+//
+//			for(int i=0;i<list.size();i++) {				
+//					MultipartFile mf = updateQuestionVO.getFile().get(i);
+//					if(!mf.isEmpty()) {
+//					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
+//					UploadQuestionFileDto delete = uploadQuestionDao.getFile(updateQuestionVO.getQuestion_no());
+//					String filepath = "D:/upload/question_image/"+delete.getFile_save_name();		
+//					File file = new File(filepath);
+//					file.delete();
+//					/*******************************************************/
+//					UploadQuestionFileDto dto = list.get(i);
+//					uploadQuestionDao.updateFile(dto);
+//					File target = new File(dir, dto.getFile_save_name());
+//					mf.transferTo(target);
+//					}
+//			}
+		
+	}
+
+	@Override
+	public void questionDelete(int no) {
+
+	}
 	
 
 }

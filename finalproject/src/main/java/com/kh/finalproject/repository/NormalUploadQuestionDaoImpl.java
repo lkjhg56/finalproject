@@ -87,6 +87,17 @@ private SqlSession sqlSession;
 		buffer.append("\"");
 		return buffer.toString();
 	}
+	@Override
+	public void updateQustion(NormalUpdateQuestionVO normalUpdateQuestionVO) {
+		sqlSession.update("question.updateTestQuestion",normalUpdateQuestionVO);
+		sqlSession.update("question.updateSolution",normalUpdateQuestionVO);
+		
+	}
+	@Override
+	public void updateFile(UploadTestQuestionFileDto uploadTestQuestionFileDto) {
+		sqlSession.update("question.updateFile",uploadTestQuestionFileDto);
+		
+	}
 	
 	
 }

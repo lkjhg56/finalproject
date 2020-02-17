@@ -65,7 +65,17 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		sqlSession.update("question.updateFile",uploadQuestionFileDto);
 	}
 	
+
+	
+	
+
+	public UploadQuestionDto getOne() {		
+		return null;
+	}
+	//리스트 조회를 위한 것
+
 	//전체 리스트 조회를 위한 것
+
 	@Override
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");

@@ -104,11 +104,25 @@
  	</select>
  	
  	<!-- 일반 문제 상세보기 -->
- 	<select id="getContent" resultType="testQuestionDto">
+ 	<select id="getContent" resultType="testQuestionDto" parameterType="int">
  	select * from test_question where no=#{no}
  	</select>
  	
+
+ 		<select id="getContent2" parameterType="int" resultType="normalUpdateQuestionVO">
+     select T.*,S.solution_no,s.solution 
+from test_question T inner join solution S
+on t.no=S.question_no where t.no=#{no}
+ 	</select>
+ 	
+ 	
+ 	<!-- 
+ 	문제 수정
+ 	* 관리자만 question_premium 변경 가능하도록 해야함.
+ 	 -->
+
  	<!-- 유저 문제 수정 -->
+
  	<update id="updateQuestion" parameterType="uploadQuestionDto">
  		update question set 
  			question_title=#{question_title},
@@ -195,7 +209,48 @@
  	 <select id="getNormalFile" parameterType="int" resultType="uploadTestQuestionFileDto">
 		select * from test_question_file where test_question_no=#{no}
  	 </select>
+
+ 	 <!-- 일반문제 수정 -->
+ 	  	<update id="updateTestQuestion" parameterType="normalUpdateQuestionVO">
+ 		update test_question set 
+ 			
+ 		
+ 			question=#{question},
+ 		
+ 			answer=#{answer},
+ 		
+ 			dis1=#{dis1},
+ 			dis2=#{dis2},
+ 			dis3=#{dis3},
+ 			dis4=#{dis4},
+ 			dis5=#{dis5}
+ 	
+ 		where no=#{no}
+ 	</update>
+<!-- solution -->
+<update id="updateSolution" parameterType="normalUpdateQuestionVO">
+
+update solution set 
+ 			
+ 		
+ 		
+ 		
+ 			solution=#{solution}
+ 		
+ 		
+ 	
+ 		where question_no=#{no}
+</update>
+ 	 
+ 	 <!-- 
+ 	 문제 삭제
+ 	 1. Question 삭제
+ 	 2. Question_file 삭제
+ 	 3. 실제 이미지파일 삭제
+ 	 -->
+
  	 <!-- 문제 삭제 -->
+
  	 <delete id="deleteQuestion">
  	 	delete from question where question_no=#{question_no}
  	 </delete>
@@ -205,6 +260,25 @@
  	 <delete id="deleteFile">
  	 	delete from question_file where question_file_no=#{question_file_no}
  	 </delete>
+
+ 	 <select id="userResultTrue" resultType="int">
+ 	 	select count(tried_user) from question_result where  question_no=#{question_no} and result=1
+ 	 </select>
+ 	 <select id="userResultFalse" resultType="int">
+ 	 	select count(tried_user) from question_result where question_no=#{question_no} and result=0
+ 	 </select>
+ 	 <select id="userPriority" parameterType="userQuestionResultDto" resultType="int">
+		select * from(
+			select rownum,e.* from(
+				select * from question_result)e
+		)where question_no=#{question_no} and result_no=#{result_no}
+	 </select>
+	 
+	 
+	 
+	 
+	 
+
  	 <delete id="deleteResult">
  	 	delete from question_result where question_no=#{question_no}
  	 </delete>
@@ -246,4 +320,5 @@
  	#{user_no}
  	)	
  	</insert>
+
  </mapper>

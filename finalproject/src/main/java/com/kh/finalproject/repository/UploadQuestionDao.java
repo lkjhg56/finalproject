@@ -15,6 +15,7 @@ public interface UploadQuestionDao {
 	List<UploadQuestionDto> getList();
 	void fileUpload(UploadQuestionFileDto uploadQuestionFileDto);
 	String makeDispositionString(UploadQuestionFileDto uploadQuestionFileDto) throws Exception;
+	
 	void updateQustion(UploadQuestionDto uploadQuestionDto);
 	void updateFile(UploadQuestionFileDto uploadQuestionFileDto);
 	UploadQuestionFileDto getFile(int question_no);
@@ -27,4 +28,5 @@ public interface UploadQuestionDao {
 	int userPriority(int question_no, int result_no);
 	UploadQuestionDto isCorrect(int question_no);
 	void givePointforSolving(int user_no);
+	UploadQuestionDto getOne();
 }

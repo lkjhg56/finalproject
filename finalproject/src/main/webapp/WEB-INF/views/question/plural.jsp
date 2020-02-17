@@ -135,8 +135,22 @@
         window.onpopstate = function () {
             history.go(1);
     };
-        
-    </script>
+    $(function () {
+    	  $(".test").hide()
+    	console.log("hide")
+    	
+    });
+    
+    
+   function file(abc) {
+    	console.log("show")
+    	var checking = document.getElementsByName(abc);
+    	console.log(checking)
+  	$(checking).show();
+		
+    	
+	}
+</script>
    
    
    
@@ -182,11 +196,11 @@ main{
 }
 .plural-question{
 	 float:left;
-    width:30%;
+    width:50%;
 }
 .plural-pic{
 	 float:left;
-    width:40%;
+   width:20%;
 }
 .plural-textarea{
 	float:left;
@@ -224,7 +238,8 @@ main{
   
  
   		<div class = "container">
-   			<c:forEach var="qlist" items ="${clist}">
+   			<c:forEach var="qlist" items ="${clist}"> 
+
  				<div class = "plural-wrap">
 				<div class = "plural-textarea">
 							<textarea  rows="10">
@@ -246,17 +261,12 @@ main{
    								<br>
    								<br>
    					</div>
-   					 <div class = "plural-pic">
-   										<img src="http://placehold.it/400x250"/>
-   					</div>
-   
-  
-   				
-   
- 							  
+   					 <div class = "plural-pic" >
+   									<img class = "test ${qlist.no}"  name = "${qlist.no}"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}');"  width="400" height="250" >
+   					</div> 							  
       </div>
-   			</c:forEach>
-  
+   	</div>  		
+  </c:forEach>
 
   
   

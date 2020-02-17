@@ -8,5 +8,7 @@ import com.kh.finalproject.vo.UpdateQuestionVO;
 
 public interface NormalUploadQuestionService {
 	void normalquestionUpload(NormalUpdateQuestionVO normalUpdateQuestionVO) throws Exception;
+	void normalquestionUpdate(NormalUpdateQuestionVO normalUpdateQuestionVO) throws Exception;
 	ResponseEntity<ByteArrayResource> downloadImg(int no) throws Exception;
+	void questionDelete(int no);
 }
