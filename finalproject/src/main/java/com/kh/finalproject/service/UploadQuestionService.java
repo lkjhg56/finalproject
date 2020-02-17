@@ -18,4 +18,5 @@ public interface UploadQuestionService {
 	ResponseEntity<ByteArrayResource> downloadImg(int question_no) throws Exception;
 	List<UploadQuestionDto> multiQuestion(int wantQuestion);
 	List<UserQuestionResultDto> checkMulti(ExamResultVO examResultVO);
+	void insert_multi(List<UserQuestionResultDto> list, UserQuestionResultDto userQuestionResultDto);
 }

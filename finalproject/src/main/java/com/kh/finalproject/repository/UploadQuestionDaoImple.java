@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 
 @Repository
@@ -64,18 +65,12 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public void updateFile(UploadQuestionFileDto uploadQuestionFileDto) {		
 		sqlSession.update("question.updateFile",uploadQuestionFileDto);
 	}
-	
-
-	
-	
-
-	public UploadQuestionDto getOne() {		
-		return null;
+	//session의 id로 사용자 번호 조회
+	@Override
+	public int getUserNo(String id) {
+		return sqlSession.selectOne("question.getNo",id);
 	}
-	//리스트 조회를 위한 것
-
 	//전체 리스트 조회를 위한 것
-
 	@Override
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");
@@ -118,6 +113,11 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public void insert_result(UserQuestionResultDto userQuestionResultDto) {
 		sqlSession.insert("question.insert_result",userQuestionResultDto);		
 	}
+	//사용자가 해결한 다중 문제 결과를 DB에 저장
+	@Override
+	public void insert_multi_result(UserQuestionMultiResultDto userQuestionMultiResultDto) {
+		sqlSession.insert("question.insert_multi_result",userQuestionMultiResultDto);
+	}
 	//사용자가 한 문제에 대해 해결한 순위 조회
 	@Override
 	public int userPriority(int question_no, int result_no) {
@@ -137,6 +137,5 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public void givePointforSolving(int user_no) {
 		sqlSession.insert("grade_point.userQuestionSolve", user_no);
 	}
-	
 
 }

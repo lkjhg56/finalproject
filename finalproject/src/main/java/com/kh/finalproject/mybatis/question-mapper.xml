@@ -66,7 +66,7 @@
  		)
  	</insert>
  	
- 	<!-- 사용자 문제 해결 결과 저장 -->
+ 	<!-- 단일 사용자 문제 해결 결과 저장 -->
  	<insert id="insert_result" parameterType="userQuestionResultDto">
  		insert into question_result values(
  			#{result_no},
@@ -78,6 +78,21 @@
 			#{question_no}
  		)
  	</insert>
+ 	
+ 	<!-- 다중 사용자 문제 해결 결과 저장 -->
+ 	<insert id="insert_multi_result" parameterType="userQuestionMultiResultDto">
+ 		insert into question_multi_result values(
+ 			question_multi_result_seq.nextval,
+			#{user_no},
+			#{total_question},
+			#{correct_count},
+			#{incorrect_count},
+			#{sum_score},
+			#{result_time},
+			sysdate
+ 		)
+ 	</insert>
+ 	
  	<!-- test_question 업로드 -->
  	<insert id="uploadtestquestion" parameterType="testQuestionDto">
  		insert into test_question values(
@@ -260,25 +275,6 @@ update solution set
  	 <delete id="deleteFile">
  	 	delete from question_file where question_file_no=#{question_file_no}
  	 </delete>
-
- 	 <select id="userResultTrue" resultType="int">
- 	 	select count(tried_user) from question_result where  question_no=#{question_no} and result=1
- 	 </select>
- 	 <select id="userResultFalse" resultType="int">
- 	 	select count(tried_user) from question_result where question_no=#{question_no} and result=0
- 	 </select>
- 	 <select id="userPriority" parameterType="userQuestionResultDto" resultType="int">
-		select * from(
-			select rownum,e.* from(
-				select * from question_result)e
-		)where question_no=#{question_no} and result_no=#{result_no}
-	 </select>
-	 
-	 
-	 
-	 
-	 
-
  	 <delete id="deleteResult">
  	 	delete from question_result where question_no=#{question_no}
  	 </delete>

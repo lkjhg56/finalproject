@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.TestQuestionDto;
-import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
@@ -64,13 +64,11 @@ public class UploadQuestionController {
 	public String multi2(@ModelAttribute ExamResultVO examResultVO,
 			@ModelAttribute UserQuestionResultDto dto, Model model) {	
 		//문제를 푼 시간
-		model.addAttribute("time",dto);		
+		model.addAttribute("time",dto);
 		//각 문제에 대한 번호, 결과값을 비교하는 서비스
 		List<UserQuestionResultDto> list = uploadQuestionService.checkMulti(examResultVO);		
-		//다음은 결과값(본 시험의 총점, 정답률, 문제 개수 등)을 취합하여 DB내에 test_result 테이블을 생성하여 insert해줘야함.
-		//UserQuestionResultDto dto_list = list.get(i); 이용해야함
-		
 		model.addAttribute("list", list);
+		uploadQuestionService.insert_multi(list,dto);
 		return "question/multi_result";
 	}
 	//문제 업로드

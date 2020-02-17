@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.entity.UsersDto;
 import com.kh.finalproject.repository.UploadQuestionDao;
@@ -229,20 +230,18 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	//다중문제 해결한 결과값 출력 R
 	@Override
 	public List<UserQuestionResultDto> checkMulti(ExamResultVO examResultVO) {
-
 		List<UserQuestionResultDto> list = new ArrayList<>();
 		for(ExamResultVO vo : examResultVO.getQuestion()) {
 			list.add(UserQuestionResultDto.builder()
-					.question_no(vo.getNo())
-					.question_answer(vo.getAnswer())
-					.tried_user(vo.getId())
+					.question_no(vo.getNo())//문제 번호
+					.question_answer(vo.getAnswer())//사용자가 적은 답
+					.tried_user(vo.getId())//수험자
 					.build());			
 		}		
-		//정답여부, 정답률을 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
+		//정답여부를 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
 		for(int i = 0;i<list.size();i++ ) {
 			int answer = list.get(i).getQuestion_answer();
 			UploadQuestionDto uploadQuestionDto = uploadQuestionDao.isCorrect(list.get(i).getQuestion_no());
-			//유저가 선택한 정답
 			//정답여부 판별
 			boolean result = uploadQuestionDto.getQuestion_answer() == answer;
 			if(answer==0) {
@@ -254,5 +253,30 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}
 		}
 		return list;
+	}
+	//다중 문제 풀이 결과값 저장.
+	@Override
+	public void insert_multi(List<UserQuestionResultDto> list, UserQuestionResultDto userQuestionResultDto) {
+		//다음은 결과값(본 시험의 총점, 정답률, 문제 개수 등)을 취합하여 DB내에 question_multi_result 테이블을 생성하여 insert해줘야함.
+		int total_question = list.size();//문제 총 개수
+		int correct_count = 0;//맞은 개수
+		String result_time = userQuestionResultDto.getHour()+":"+userQuestionResultDto.getMin()+":"
+				 +userQuestionResultDto.getSec()+":"+userQuestionResultDto.getMilisec();
+		for(int i=0;i<total_question;i++) {
+			//맞은 개수를 count해줘야함.
+			boolean correct = list.get(i).getResult()==1;
+			if(correct) {
+				correct_count++;
+			}
+		}
+		UserQuestionMultiResultDto multi_dto = UserQuestionMultiResultDto.builder()
+			.user_no(uploadQuestionDao.getUserNo(list.get(0).getTried_user()))
+			.total_question(total_question)
+			.correct_count(correct_count)
+			.incorrect_count(total_question-correct_count)
+			.sum_score((100/total_question) * correct_count)//소수점 2자리까지
+			.result_time(result_time)
+			.build();
+		uploadQuestionDao.insert_multi_result(multi_dto);
 	}
 }

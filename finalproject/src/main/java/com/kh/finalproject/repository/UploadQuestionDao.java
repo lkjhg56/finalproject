@@ -2,9 +2,9 @@ package com.kh.finalproject.repository;
 
 import java.util.List;
 
-import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 
 public interface UploadQuestionDao {
@@ -15,7 +15,7 @@ public interface UploadQuestionDao {
 	List<UploadQuestionDto> getList();
 	void fileUpload(UploadQuestionFileDto uploadQuestionFileDto);
 	String makeDispositionString(UploadQuestionFileDto uploadQuestionFileDto) throws Exception;
-	
+	int getUserNo(String id);
 	void updateQustion(UploadQuestionDto uploadQuestionDto);
 	void updateFile(UploadQuestionFileDto uploadQuestionFileDto);
 	UploadQuestionFileDto getFile(int question_no);
@@ -28,5 +28,5 @@ public interface UploadQuestionDao {
 	int userPriority(int question_no, int result_no);
 	UploadQuestionDto isCorrect(int question_no);
 	void givePointforSolving(int user_no);
-	UploadQuestionDto getOne();
+	void insert_multi_result(UserQuestionMultiResultDto userQuestionMultiResultDto);
 }
