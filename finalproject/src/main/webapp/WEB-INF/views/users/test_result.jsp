@@ -17,8 +17,18 @@
 				<th>test_date</th>
 			</tr>
 		</thead>
-		
+	<!-- 시험 내역이 없을 때 -->
 		<tbody align="center">
+		</tbody>
+
+	
+	<!-- 시험 내역이 있을 때 -->
+		<tbody align="center">
+			<c:if test="${empty test_result}">
+				<tr>
+					<td rowspan="3" align="center">시험 내역이 없습니다.</td>
+				</tr>
+			</c:if>	
 			<c:forEach var="test_result" items="${test_result}">
 				<tr>
 					<td>${test_result.rn}</td>
