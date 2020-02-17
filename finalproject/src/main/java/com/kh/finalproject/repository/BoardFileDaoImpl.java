@@ -2,6 +2,8 @@ package com.kh.finalproject.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -31,16 +33,10 @@ public class BoardFileDaoImpl implements BoardFileDao{
 		return sqlSession.selectOne("board.filegetSequence");
 	}
 
-	@Override
-	public BoardFileDto getFile(int board_file_no) {
-		return sqlSession.selectOne("board.get", board_file_no);
-	}
-	
-private File directory = new File("D:/upload/boardfile");
-	
-	@PostConstruct//생성하면서 실행할 메소드(준비메소드)
-	public void init() {
-		directory.mkdirs();
+	private File directory = new File("D:/upload/boardfile");		
+		@PostConstruct//생성하면서 실행할 메소드(준비메소드)
+		public void init() {
+			directory.mkdirs();
 	}
 
 	@Override
@@ -59,7 +55,38 @@ private File directory = new File("D:/upload/boardfile");
 		return data;
 	}
 	
-	
+	@Override
+	public BoardFileDto getFile(int board_file_no) {
+		return sqlSession.selectOne("board.getFileOne",board_file_no);		
+	}
+
+	@Override
+	public String makeDispositionString(BoardFileDto boardfileDto) throws UnsupportedEncodingException {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("attachment;");
+		buffer.append("filename=");
+		buffer.append("\"");
+		buffer.append(URLEncoder.encode(boardfileDto.getBoard_file_upload_name(), "UTF-8"));
+		buffer.append("\"");
+		return buffer.toString();
+	}
+
+	@Override
+	public BoardFileDto getFileNo(int board_no) {
+		return sqlSession.selectOne("board.getFileNO", board_no);
+	}
+
+	@Override
+	public void editFile(BoardFileDto boardfileDto) {
+		sqlSession.update("board.editFile", boardfileDto);
+		
+	}
+
+	@Override
+	public void deleteFile(int board_file_no) {
+		sqlSession.delete("board.deletefile", board_file_no);		
+	}
+
 	
 
 

@@ -12,5 +12,5 @@ public class GradePointDto {
 	private int users_no;
 	private int get_point;
 	private String get_date,point_type;
-	
+	private int rn;
 }

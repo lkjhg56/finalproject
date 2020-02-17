@@ -18,17 +18,76 @@ public class GradePointServiceImpl implements GradePointService{
 	@Autowired
 	private HttpServletRequest req;
 	
-	@Override
-	public void givePoint(GradePointDto pointDto,UsersDto usersDto) {
-		
 
+	//회원가입 포인트 부여
+	@Override
+	public void giveJoinPoint(GradePointDto pointDto, UsersDto usersDto) {
+		
+		String id = req.getParameter("id");
+		usersDto.setId(id);
+		 
+		int users_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(users_no);
+		
+		sqlSession.insert("grade_point.giveJoinPoint", pointDto);
+		sqlSession.update("users.change_5point", usersDto);
+	}
+
+	//출석체크 포인트 부여
+	@Override
+	public void giveCheckPoint(GradePointDto pointDto, UsersDto usersDto) {
+		
 		String id = (String) req.getSession().getAttribute("id");
 		usersDto.setId(id);
 		 
 		int users_no = sqlSession.selectOne("users.get_users_no", id);
 		pointDto.setUsers_no(users_no);
 		
-		sqlSession.insert("grade_point.givePoint", pointDto);
-		sqlSession.update("users.change_point", usersDto);
+		sqlSession.insert("grade_point.giveCheckPoint", pointDto);
+		sqlSession.update("users.change_1point", usersDto);
 	}
+
+	//문제업로드 포인트 부여
+	@Override
+	public void giveQuestionUploadPoint(GradePointDto pointDto,UsersDto usersDto) {
+		
+		String id = (String) req.getSession().getAttribute("id");
+		usersDto.setId(id);
+		
+		int users_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(users_no);
+		
+		sqlSession.insert("grade_point.giveQuestionUploadPoint", pointDto);
+		sqlSession.update("users.change_5point", usersDto);
+	}
+	
+	//문제 풀기 포인트 부여
+	@Override
+	public void giveQuestionSolvePoint(GradePointDto pointDto, UsersDto usersDto) {
+		String id = (String) req.getSession().getAttribute("id");
+		usersDto.setId(id);
+		 
+		int users_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(users_no);
+		
+		sqlSession.insert("grade_point.giveQuestionSolvePoint", pointDto);
+		sqlSession.update("users.change_3point", usersDto);
+	}
+
+	//답변 채택 포인트 부여
+	@Override
+	public void giveAnswerPoint(GradePointDto pointDto, UsersDto usersDto) {
+		
+		String id = req.getParameter("board_reply_writer");
+		usersDto.setId(id);
+		 
+		int users_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(users_no);
+		
+		sqlSession.insert("grade_point.giveAnswerPoint", pointDto);
+		sqlSession.update("users.change_3point", usersDto);
+		
+	}
+	
+	//해설 작성 포인트 부여
 }

@@ -71,7 +71,7 @@ function loadEditor(){
 <div align="center">    
 	<h1>게시글 등록</h1>
 
-	<form action="regist" method="post" enctype="multipart/form-data" required>
+	<form action="regist" method="post" enctype="multipart/form-data">
 		<input id="writer" type="hidden" name="board_writer" value="${id}">
 	
 	<table border="1" width="70%">

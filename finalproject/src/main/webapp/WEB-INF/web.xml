@@ -41,6 +41,8 @@
 		<url-pattern>/users/change</url-pattern>
 		<url-pattern>/users/test_result</url-pattern>
 		<url-pattern>/users/test_result_search</url-pattern>
+		<url-pattern>/board/edit</url-pattern>
+		<url-pattern>/board/regist</url-pattern>
 	</filter-mapping>
 	
 	

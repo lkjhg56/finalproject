@@ -2,5 +2,6 @@
     pageEncoding="UTF-8"%>
 <h1>point 부여 테스트</h1>
 <form action="test_point" method="post">
+	<input type="hidden" name="board_reply_writer" value="test1">
 	<input type="submit" value="포인트 주기">
 </form>

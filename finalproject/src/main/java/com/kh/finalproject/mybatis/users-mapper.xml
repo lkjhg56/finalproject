@@ -77,10 +77,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 포인트 업데이트 -->
-	<update id="change_point" parameterType="users">
-		update users set grade_point=grade_point+50 where user_no=(select user_no from users where id=#{id})
+
+	<!-- 1 포인트 -->
+	<update id="change_1point" parameterType="users">
+		update users set grade_point=grade_point+1 where user_no=(select user_no from users where id=#{id})
 	</update>
 	
+	<!-- 3 포인트 -->
+	<update id="change_3point" parameterType="users">
+		update users set grade_point=grade_point+3 where user_no=(select user_no from users where id=#{id})
+	</update>
+	
+	<!-- 5 포인트 -->
+	<update id="change_5point" parameterType="users">
+		update users set grade_point=grade_point+5 where user_no=(select user_no from users where id=#{id})
+	</update>
+
 	<!-- users_no 뽑아 오기 -->
 	<select id="get_users_no" parameterType="users" resultType="integer">
 		select user_no from users where id=#{id}

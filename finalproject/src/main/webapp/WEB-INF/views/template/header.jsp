@@ -50,6 +50,7 @@ function islogin(id){
 		width : 100;
 		height: 30
 	}
+	
 
 </style>
 </head>
@@ -131,7 +132,7 @@ function islogin(id){
   </header>
   
 
-  
+ 
   
   	<div class= "forfooter">
 

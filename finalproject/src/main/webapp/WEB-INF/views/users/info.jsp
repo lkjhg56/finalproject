@@ -61,6 +61,7 @@
 </table>
 <a href="${context}/users/change">정보 수정하기</a><br>
 <a href="${context}/users/test_result">내가 본 시험 내역</a><br>
+<a href="${context}/users/my_grade_point">나의 포인트 내역</a><br>
 <a href="${context}/users/grade_point_rank">등급 포인트 랭킹</a><br>
 <a href="${context}/users/test_point">포인트 줘보기 test</a><br>
 <a id="bye" href="${context}/users/bye">탈퇴하기</a><br>

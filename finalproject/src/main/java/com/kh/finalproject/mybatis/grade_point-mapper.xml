@@ -7,23 +7,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="grade_point">
 	
 	<!-- 포인트를 주는 기능 -->
-	<insert id="givePoint" parameterType="grade_pointDto">
+	<!-- 회원가입 포인트 -->
+	<insert id="giveJoinPoint" parameterType="grade_pointDto">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
+		values(point_no_seq.nextval,#{users_no}, 5, '회원가입')
+	</insert>
+	
+	<!-- 문제업로드 포인트 -->
+	<insert id="giveQuestionUploadPoint" parameterType="grade_pointDto">
+		insert into grade_point(point_no, users_no, get_point, point_type) 
+		values(point_no_seq.nextval,#{users_no}, 5, '문제 업로드')
+	</insert>
+	
+	<!-- 문제풀기 포인트 -->
+	<insert id="giveQuestionSolvePoint" parameterType="grade_pointDto">
+		insert into grade_point(point_no, users_no, get_point, point_type) 
+		values(point_no_seq.nextval,#{users_no}, 3, '문제 풀기')
+	</insert>
+	
+	<!-- 출석체크 포인트 -->
+	<insert id="giveCheckPoint" parameterType="grade_pointDto">
+		insert into grade_point(point_no, users_no, get_point, point_type) 
+		values(point_no_seq.nextval,#{users_no}, 1, '출석체크')
+	</insert>
+	
+	<!-- 답변채택 포인트 -->
+	<insert id="giveAnswerPoint" parameterType="grade_pointDto">
+		insert into grade_point(point_no, users_no, get_point, point_type) 
+		values(point_no_seq.nextval,#{users_no}, 3, '답변채택')
+	</insert>
+	
+	<!-- 나의 포인트 내역 조회 (추후 네비 추가)-->
+	<select id="my_grade_point" resultType="grade_pointDto" parameterType="String">
+    	select rownum rn, A.* from (
+        	select * from grade_point where users_no=(select user_no from users where id=#{id}) order by get_date desc)A
 		values(point_no_seq.nextval,#{users_no}, 50, '문제 업로드')
-	</insert>
-	<!-- 유저 문제 해결시 3 point 적립 -->
-	<insert id="userQuestionSolve" parameterType="grade_pointDto">
-		insert into grade_point values(
-			point_no_seq.nextval,
-			#{users_no},
-			3,
-			'유저 문제 해결',
-			sysdate
-			)
-	</insert>
-	<select id="checkPointAll" resultType="grade_pointDto">
-		select * from grade_point order by desc
 	</select>
+	
 </mapper>
 
 
