@@ -29,38 +29,6 @@
 }
 
 
-.for_aside{
-	 content:"";
-    display:block;
-    clear:both;
-    flex-wrap:wrap-reverse;
-}
-
-.section_area{
-	 float:left;
-    width:70%;
-}
-.aside_area{
-	 float:left;
-    width:30%;
-    min-height:600px;
-}
-
-
-.member_info1{
-	width : 100%;
-	height: 120px;
-	 background-color: #c3c7c4;
-	  padding-left: 15px;
-     padding-top: 15px;
-	 
-}
-.aside_link{
-	width:100%;
-	height:120px;
-	 background-color: #c3c7c4;
-}
-
 </style>
 
    <div class="container">
@@ -93,12 +61,9 @@
 	 			</div>
 	 		<div class ="aside_area">
 	 			
-	 				<div class= "member_info1">
-	 						<h6>${id}님</h6>
-	 						<h6>레벨 : 5   포인트 : 100</h6>
-	 						<h6>토큰:100  <a href="${pageContext.request.contextPath }/pay/list">충전</a></h6>
+	 				<div id = "member_zone" class= "member_info1">
+	 					
 	 				</div>
-	 				<hr>
 	 				<div	class = "aside_link">
 	 					
 	 				</div>

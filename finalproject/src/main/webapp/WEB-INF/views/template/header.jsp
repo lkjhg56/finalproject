@@ -12,10 +12,9 @@
 
 <script>
 
-function islogin(id){
+function islogin(id, path){
 	
 	if(id.length<1){
-			console.log("asd");
 			$(".logined").hide();
 			$(".nolgoin").show();
 	}else{
@@ -23,10 +22,99 @@ function islogin(id){
 			$(".logined").show();
 
 	}
-}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/main/search",
+		type : "post",
+		data :{id:id},
+		success:function(resp){
+			console.log(resp.is_premium)
+		
+			console.log(resp.id==null)
+			var premium = "";
+			if(resp.ispremium==0){
+				premium += '무료회원'
+			}else{
+				premium += '유료회원'
+			}
+			
+			var htmls = "";
+			if(resp.id == null){
+				htmls += '<h6>로그인해 주세요</h6>'
+				htmls += '<a href="'+path+'/users/login"><button type="button" class="btn btn-primary btn-block">login</button></a>'
+			}else{
+				htmls += '<h6>'+resp.id+'님    '+'<a href="'+path+'/users/logout">logout</a></h6>'
+				htmls += '<h6> 등급 : '+resp.grade+'</h6>'
+				if(premium=='무료회원'){
+				htmls += '<h6>'+premium+' </h6>'
+			
+				}else{
+				htmls += '<h6>'+premium+'</h6>'
+				}
+				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
+			}
+			
+			$("#member_zone").html(htmls);
+		}
+})
+
+
+
+	
+};
+
+
 	
 </script>
 
+
+<style>
+
+
+.for_aside{
+	 content:"";
+    display:block;
+    clear:both;
+    flex-wrap:wrap-reverse;
+}
+
+.section_area{
+	 float:left;
+    width:70%;
+}
+.aside_area{
+	 float:left;
+    width:30%;
+    min-height:600px;
+}
+
+.member_info{
+	 border-spacing: 15px;
+    background-color: #AAA5A4;
+    width:100%;
+    border: 1px solid black;
+   
+}
+
+.member_info1{
+	width : 100%;
+	height: 150px;
+	 background-color: #edf0ee;
+	  padding-left: 15px;
+     padding-top: 20px;
+     padding-right : 15px;
+      border: 4px solid #d4d9d6;
+	 
+}
+
+.aside_link{
+	width:100%;
+	height:600px;
+	  border: 4px solid #f2f5f3;
+}
+
+
+</style>
 
 
 <!DOCTYPE html>
@@ -54,7 +142,7 @@ function islogin(id){
 
 </style>
 </head>
-<body onload="islogin('${id}')">
+<body onload="islogin('${id}', '${pageContext.request.contextPath}')">
 <main>
 
 <!-- 운영자 페이지 넣어야 함. -->
