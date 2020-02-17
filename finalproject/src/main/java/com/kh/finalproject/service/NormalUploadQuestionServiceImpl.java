@@ -212,46 +212,66 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 		
 	NormalUploadQuestionDao.updateQustion(normalUpdateQuestionVO);
 		
-//
-//			//question_file 테이블 변경	
-//			List<UploadQuestionFileDto> list = new ArrayList<>();
-//			for(MultipartFile mf : updateQuestionVO.getFile()) {
-//				if(!mf.isEmpty()) {
-//					list.add(UploadQuestionFileDto.builder()
-//							.file_save_name(UUID.randomUUID().toString())
-//							.file_upload_name(mf.getOriginalFilename())
-//							.file_type(mf.getContentType())
-//							.file_size(mf.getSize())
-//							.question_no(updateQuestionVO.getQuestion_no())
-//							.build());
-//				}
-//			}		
-//			//변경된 파일을 다시 저장.	
-//			String Path="D:/upload/normalquestion_image";
-//			File dir = new File(Path);
-//			dir.mkdir();
-//
-//			for(int i=0;i<list.size();i++) {				
-//					MultipartFile mf = updateQuestionVO.getFile().get(i);
-//					if(!mf.isEmpty()) {
-//					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
-//					UploadQuestionFileDto delete = uploadQuestionDao.getFile(updateQuestionVO.getQuestion_no());
-//					String filepath = "D:/upload/question_image/"+delete.getFile_save_name();		
-//					File file = new File(filepath);
-//					file.delete();
-//					/*******************************************************/
-//					UploadQuestionFileDto dto = list.get(i);
-//					uploadQuestionDao.updateFile(dto);
-//					File target = new File(dir, dto.getFile_save_name());
-//					mf.transferTo(target);
-//					}
-//			}
+
+			//test_question_file 테이블 변경	
+	List<UploadTestQuestionFileDto> list = new ArrayList<>();
+			for(MultipartFile mf : normalUpdateQuestionVO.getFile()) {
+				if(!mf.isEmpty()) {
+					list.add(UploadTestQuestionFileDto.builder()
+							.file_save_name(UUID.randomUUID().toString())
+							.file_upload_name(mf.getOriginalFilename())
+							.file_type(mf.getContentType())
+							.file_size(mf.getSize())
+							.test_question_no(normalUpdateQuestionVO.getNo())
+							.build()); 
+				}
+			}		
+			//변경된 파일을 다시 저장.	
+			String Path="D:/upload/normalquestion_image";
+			File dir = new File(Path);
+			dir.mkdir();
+
+			for(int i=0;i<list.size();i++) {				
+					MultipartFile mf = normalUpdateQuestionVO.getFile().get(i);
+					if(!mf.isEmpty()) {
+					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
+						UploadTestQuestionFileDto	 delete = 
+							NormalUploadQuestionDao.getFile(normalUpdateQuestionVO.getNo());
+							
+					String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();		
+					File file = new File(filepath);
+					file.delete();
+					/*******************************************************/
+					UploadTestQuestionFileDto dto = list.get(i);
+					NormalUploadQuestionDao.updateFile(dto);
+					File target = new File(dir, dto.getFile_save_name());
+					mf.transferTo(target);
+					}
+			}
 		
 	}
 
 	@Override
 	public void questionDelete(int no) {
-
+		//파일여부
+		//no로 파일 구하기
+		
+		
+		
+		UploadTestQuestionFileDto	 delete = 
+				NormalUploadQuestionDao.getFile(no);
+		
+	if(delete!=null) {
+		
+		String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();
+		File file = new File(filepath);
+		file.delete();
+		
+	}	
+		
+	
+		
+		NormalUploadQuestionDao.fileDelete2(no);
 	}
 	
 
