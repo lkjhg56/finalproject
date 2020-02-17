@@ -26,4 +26,6 @@ public class UploadQuestionDto {
 	private String category_name;
 /*************************************************/
 	private String id;
+/*************************************************/
+	private int correct_ratio;
 }

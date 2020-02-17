@@ -24,9 +24,11 @@ public interface UploadQuestionDao {
 	int question_true(int question_no);
 	int question_false(int question_no);
 	UploadQuestionDto question_all(int question_no);
+	List<UploadQuestionDto> question_user_all();
 	void insert_result(UserQuestionResultDto userQuestionResultDto);
 	int userPriority(int question_no, int result_no);
 	UploadQuestionDto isCorrect(int question_no);
 	void givePointforSolving(int user_no);
 	void insert_multi_result(UserQuestionMultiResultDto userQuestionMultiResultDto);
+	void correct_ratio(int question_no);
 }

@@ -2,16 +2,13 @@ package com.kh.finalproject.repository;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionMultiResultDto;
@@ -108,6 +105,10 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public UploadQuestionDto question_all(int question_no) {		
 		return sqlSession.selectOne("question.getTotal", question_no);
 	}
+	@Override
+	public List<UploadQuestionDto> question_user_all() {
+		return sqlSession.selectList("question.getTotal2");
+	}
 	//사용자가 해결한 문제 결과를 DB에 저장
 	@Override
 	public void insert_result(UserQuestionResultDto userQuestionResultDto) {
@@ -137,5 +138,13 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public void givePointforSolving(int user_no) {
 		sqlSession.insert("grade_point.userQuestionSolve", user_no);
 	}
-
+	//정답률 계산
+	@Override
+	public void correct_ratio(int question_no) {
+		UploadQuestionDto uploadQuestionDto = UploadQuestionDto.builder()
+			.question_no(question_no)
+			.correct_ratio(sqlSession.selectOne("question.correctRatio",question_no))					
+			.build();
+		sqlSession.selectOne("question.updateRatio",uploadQuestionDto);
+	}
 }

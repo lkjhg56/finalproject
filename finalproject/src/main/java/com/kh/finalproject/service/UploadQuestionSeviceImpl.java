@@ -157,7 +157,9 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
 							 +updateQuestionVO.getSec()+":"+updateQuestionVO.getMilisec();
 		int question_result_no=uploadQuestionDao.questionResultSequece();
-		 System.out.println(updateQuestionVO.getId()); 
+		//정답률 업데이트
+		uploadQuestionDao.correct_ratio(updateQuestionVO.getQuestion_no());
+			
 		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
 				.hour(updateQuestionVO.getHour())
 				.min(updateQuestionVO.getMin())
@@ -177,8 +179,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
 		if(result) {
 			userQuestionResultDto.setResult(1);
-			UsersDto usersDto = usersDao.getInfo(updateQuestionVO.getId());
-			uploadQuestionDao.givePointforSolving(usersDto.getUser_no());
+//			UsersDto usersDto = usersDao.getInfo(updateQuestionVO.getId());
+//			uploadQuestionDao.givePointforSolving(usersDto.getUser_no());
 		}else {
 			userQuestionResultDto.setResult(0);
 		}

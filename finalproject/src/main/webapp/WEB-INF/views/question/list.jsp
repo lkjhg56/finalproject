@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
 <h1>문제 목록</h1>
+<div class="container">
 <table border="1">
 	<tr>
 		<th>No.</th>
@@ -20,12 +21,13 @@
 		<td>${question.question_title}</td>
 		<td>${question.question_no}</td>
 		<td>${question.question_no}</td>
-		<td>${question.question_no}</td>
+		<td>${question.correct_ratio}%</td>
 		<td><a href="content?question_no=${question.question_no}">확인</a></td>
 		<td><a href="solve?question_no=${question.question_no}">풀기</a></td>
 		<td>${question.id}</td>
 	</tr>
 </c:forEach>
 </table>
+</div>
 <a href="${pageContext.request.contextPath}/question/multi">랜덤문제 풀기</a>
 <jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>

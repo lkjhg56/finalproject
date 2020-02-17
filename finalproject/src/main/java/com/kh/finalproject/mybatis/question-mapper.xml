@@ -45,9 +45,11 @@
  			#{answer2},
  			#{answer3},
  			#{answer4},
- 			#{answer5}
+ 			#{answer5},
+ 			0
  			)
  	</insert>
+ 	
  	<insert id="upload_sub" parameterType="uploadQuestionDto">
  		insert into user_custom_question values(
  			#{user_custom_question_no},
@@ -64,8 +66,7 @@
 		#{file_size},
 		#{question_no}
  		)
- 	</insert>
- 	
+ 	</insert> 	
  	<!-- 단일 사용자 문제 해결 결과 저장 -->
  	<insert id="insert_result" parameterType="userQuestionResultDto">
  		insert into question_result values(
@@ -123,21 +124,35 @@
  	select * from test_question where no=#{no}
  	</select>
  	
-
- 		<select id="getContent2" parameterType="int" resultType="normalUpdateQuestionVO">
-     select T.*,S.solution_no,s.solution 
-from test_question T inner join solution S
-on t.no=S.question_no where t.no=#{no}
+ 	<select id="getContent2" parameterType="int" resultType="normalUpdateQuestionVO">
+	     select T.*,S.solution_no,s.solution 
+			from test_question T inner join solution S
+			on t.no=S.question_no where t.no=#{no}
  	</select>
- 	
- 	
+ 	<!-- 정답률 계산 -->
+ 	<!-- 문제 등록 후 최초 오답이 날 경우 분자가 0이 되어  DB에서 에러가 발생함. -->
+ 	<!-- 하기 case when을 이용하여 예외처리를 해줌. -->
+	<select id="correctRatio" parameterType="int" resultType="int">
+		select 
+           	  case when B=0 then 0
+                   when B>0 then B / A * 100
+	          end ccmt
+		from (select 
+			(select count(result) from question_result where question_no=#{question_no})A,
+			(select count(result) from question_result where question_no=#{question_no} and result=1)B
+		from dual)
+	</select> 	
+	<update id="updateRatio" parameterType="uploadQuestionDto">
+		update question set 
+			correct_ratio=#{correct_ratio} 
+		where question_no=#{question_no}
+	</update>
  	<!-- 
  	문제 수정
  	* 관리자만 question_premium 변경 가능하도록 해야함.
  	 -->
 
  	<!-- 유저 문제 수정 -->
-
  	<update id="updateQuestion" parameterType="uploadQuestionDto">
  		update question set 
  			question_title=#{question_title},
@@ -203,7 +218,7 @@ on t.no=S.question_no where t.no=#{no}
 		on q.user_custom_question_no = e.user_custom_question_no
 		where question_no=#{question_no}
  	 </select>
- 	  	 <select id="getTotal2" resultType="uploadQuestionDto">
+ 	 <select id="getTotal2" resultType="uploadQuestionDto">
  	 	select * from 
 			question q
 			left outer join 
@@ -316,5 +331,4 @@ update solution set
  	#{user_no}
  	)	
  	</insert>
-
  </mapper>

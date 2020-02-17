@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.TestQuestionDto;
-import com.kh.finalproject.entity.UserQuestionMultiResultDto;
+import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
@@ -80,7 +80,7 @@ public class UploadQuestionController {
 	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO, HttpSession session, Model model) throws Exception {
 		updateQuestionVO.setUser_no(sqlSession.selectOne("question.getNo", (String)session.getAttribute("id")));
 		uploadQuestionService.questionUpload(updateQuestionVO);
-		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
+		model.addAttribute("list",uploadQuestionDao.question_user_all());
 		return "question/list";
 	}	
 	//파일 다운로드(미리보기)
@@ -91,7 +91,7 @@ public class UploadQuestionController {
 	//문제 수정
 	@GetMapping("/update")
 	public String update(@RequestParam int question_no, Model model) {
-		model.addAttribute("questionDto",sqlSession.selectOne("question.getTotal", question_no));
+		model.addAttribute("questionDto",uploadQuestionDao.question_all(question_no));
 		return "question/update";
 	}
 	@PostMapping("/update")
@@ -99,25 +99,25 @@ public class UploadQuestionController {
 		uploadQuestionService.questionUpdate(updateQuestionVO);
 		model.addAttribute("questionDto",updateQuestionVO);
 		return "question/content";
-	}
-	
+	}	
 	//문제 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam int question_no, @RequestParam int user_custom_question_no, Model model) {
 		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
-		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
+		model.addAttribute("list",uploadQuestionDao.question_user_all());
 		return "question/list";
 	}
-
+	//문제 전체 리스트 호출(Users 테이블과 조인됨)
 	@GetMapping("/list")
 	public String list(Model model) {
-		model.addAttribute("list",sqlSession.selectList("question.getTotal2"));
+		//정답률 계산하여 출력해줘야함.
+		model.addAttribute("list",uploadQuestionDao.question_user_all());
 		return "question/list";
 	}
 	//문제 정보 호출
 	@GetMapping("/content")
 	public String content(@RequestParam int question_no, Model model) {
-		model.addAttribute("questionDto",sqlSession.selectOne("question.getTotal", question_no));
+		model.addAttribute("questionDto", uploadQuestionDao.question_all(question_no));
 		return "question/content";
 	}
 	//일반문제만들기
