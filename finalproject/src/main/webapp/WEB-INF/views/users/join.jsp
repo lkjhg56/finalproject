@@ -162,78 +162,78 @@
 		});
 	});
 	
-	//이메일 인증
-	$(function(){
-//		.validate-form은 처음에 숨기고 이메일 전송시만 표시
-	$(".validate").hide();
-	$(".join-form").hide();
-	$(".go_join").hide();
+// 	//이메일 인증
+// 	$(function(){
+// //		.validate-form은 처음에 숨기고 이메일 전송시만 표시
+// 	$(".validate").hide();
+// 	$(".join-form").hide();
+// 	$(".go_join").hide();
 	
-//		.email-form이 전송되면 send 주소로 비동기 신호를 전송(ajax)
-	$(".email").submit(function(e){
-		e.preventDefault();
+// //		.email-form이 전송되면 send 주소로 비동기 신호를 전송(ajax)
+// 	$(".email").submit(function(e){
+// 		e.preventDefault();
 		
-		//var url = $(this).attr("action"); 
-		var method = $(this).attr("method");
-		var data = $(this).serialize();
+// 		//var url = $(this).attr("action"); 
+// 		var method = $(this).attr("method");
+// 		var data = $(this).serialize();
 		
-		var email = $("input[name=email]").val();
+// 		var email = $("input[name=email]").val();
 		
-		if(email == ""){
-			window.alert("이메일을 입력해주세요.");
-			$("input[name=email]").focus();
-			$(".email").find("input[type=submit]").val("인증번호 보내기");
-		}
+// 		if(email == ""){
+// 			window.alert("이메일을 입력해주세요.");
+// 			$("input[name=email]").focus();
+// 			$(".email").find("input[type=submit]").val("인증번호 보내기");
+// 		}
 		
-		else{
-			$(this).find("input[type=submit]").prop("disabled", true);
-			$(this).find("input[type=submit]").val("인증번호 발송중...");
+// 		else{
+// 			$(this).find("input[type=submit]").prop("disabled", true);
+// 			$(this).find("input[type=submit]").val("인증번호 발송중...");
 			
-			$.ajax({
-				url:"${pageContext.request.contextPath}/users/send",
-				type:"get",
-				data:data,
-				success:function(resp){
-					//console.log(resp);
-					if(resp == "success"){
-						$(".email").find("input[type=submit]").val("인증번호 발송완료");
-						$(".validate").show();
-					}
-				}
-			});
-		}
-	});
-//		validate-form이 전송되면 /validate로 비동기 요청을 전송
-	$(".validate").submit(function(e){
-		e.preventDefault();
-		//var url = $(this).attr("action"); 
-		var method = $(this).attr("method");
-		var data = $(this).serialize();
+// 			$.ajax({
+// 				url:"${pageContext.request.contextPath}/users/send",
+// 				type:"get",
+// 				data:data,
+// 				success:function(resp){
+// 					//console.log(resp);
+// 					if(resp == "success"){
+// 						$(".email").find("input[type=submit]").val("인증번호 발송완료");
+// 						$(".validate").show();
+// 					}
+// 				}
+// 			});
+// 		}
+// 	});
+// //		validate-form이 전송되면 /validate로 비동기 요청을 전송
+// 	$(".validate").submit(function(e){
+// 		e.preventDefault();
+// 		//var url = $(this).attr("action"); 
+// 		var method = $(this).attr("method");
+// 		var data = $(this).serialize();
 		
-		$.ajax({
-			url:"${pageContext.request.contextPath}/users/validate",
-			type:"get",
-			data:data,
-			success:function(resp){
-				if(resp == "success"){
-					window.alert("인증이 완료되었습니다.");
-					$(".email").hide();
-					$(".validate").hide();
-					$(".join-form").show();
-				}
-				else{
-					window.alert("인증 실패! 다시 시도해주세요");
-					window.location.reload();
-				}
-			}
-		});
-	});
-});
+// 		$.ajax({
+// 			url:"${pageContext.request.contextPath}/users/validate",
+// 			type:"get",
+// 			data:data,
+// 			success:function(resp){
+// 				if(resp == "success"){
+// 					window.alert("인증이 완료되었습니다.");
+// 					$(".email").hide();
+// 					$(".validate").hide();
+// 					$(".join-form").show();
+// 				}
+// 				else{
+// 					window.alert("인증 실패! 다시 시도해주세요");
+// 					window.location.reload();
+// 				}
+// 			}
+// 		});
+// 	});
+// });
 	
 </script>
 
 <h1>회원가입</h1>
-<form class="email" action="send" method="post">
+<form class="email" action="send" method="post" >
 	<h2>본인 확인을 위한 이메일인증을 해주세요.</h2>
 	<input type="text" name="email" placeholder="이메일 입력">
 	<input type="submit" value="인증번호 보내기">
@@ -245,9 +245,11 @@
 	<div class="finish_cert"></div>
 </form>
 
-<form class="join-form" action="join" method="post">
+<form class="join-form" action="join" method="post" enctype="Multipart/form-data">
 
 	이름 : <input type="text" name="name" maxlength="7" required><br><br>
+<!-- 	프로필 사진을 올려주세요.<br> -->
+<!-- 	<input type="file" name="member_profile" multiple accept="image/*"><br><br> -->
 	아이디 : <input type="text" name="id" maxlength="20" required>
 	<input type="button" class="id_check_btn" value="아이디 중복 검사">
 	<div class="id">

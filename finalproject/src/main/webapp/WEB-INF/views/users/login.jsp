@@ -44,7 +44,7 @@ h1 {
 		<div id="loginbox">
 		ID : <input type="text" name="id" required><br><br>
 		PW : <input type="password" name="pw" required><br><br>
-		<a href="join.jsp"><span class="join">회원가입하기</span></a>
+		<a href="join"><span class="join">회원가입하기</span></a>
 		<input class="login_btn" type="submit" value="Login">
 		</div>
 	</form>
