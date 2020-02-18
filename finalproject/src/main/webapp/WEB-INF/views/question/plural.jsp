@@ -22,6 +22,7 @@
            if(disno != i+1){
                $(checkbox2[i]).hide();
                $(checked3).show();
+               $(".test").show();
            }
        }
           if(disno===answer){
