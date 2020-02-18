@@ -60,4 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			update users set point = #{point} where id = #{id}
 	</update>
 	
+	<select id = "paylist" parameterType = "String" resultType = "PayListDto">
+			select * from paylist where partner_user_id = #{order_id}
+	</select>
+	
 	</mapper>

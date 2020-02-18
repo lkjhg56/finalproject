@@ -29,5 +29,6 @@
 		<typeAlias type="com.kh.finalproject.entity.BoardReplyDto" alias="boardReplyDto"/>
 		<typeAlias type="com.kh.finalproject.entity.SolutionDto" alias="solutionDto"/>
 		<typeAlias type="com.kh.finalproject.vo.NormalUpdateQuestionVO" alias="normalUpdateQuestionVO"/>
+		<typeAlias type="com.kh.finalproject.payentity.PayListDto" alias = "PayListDto"/>
 	</typeAliases>
 </configuration>

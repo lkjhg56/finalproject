@@ -21,6 +21,7 @@ public class TestQuestionDto {
 	private String dis1, dis2, dis3, dis4, dis5;
 	private int rate;
 	private int lim_hour, lim_min;
+	private int rno, end;
 
 	
 }
