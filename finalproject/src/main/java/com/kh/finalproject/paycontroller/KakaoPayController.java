@@ -1,6 +1,7 @@
 package com.kh.finalproject.paycontroller;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalproject.payentity.PayListDto;
 import com.kh.finalproject.payservice.PayService;
 import com.kh.finalproject.payvo.KakaoPayReadyVO;
 import com.kh.finalproject.payvo.KakaoPaySuccessReadyVO;
@@ -84,7 +86,7 @@ public class KakaoPayController {
 		log.info("tempvoid={}", tempVo.getId());
 		log.info("temppoint={}", tempVo.getPoint());
 		sqlSession.update("pay.updatePoint", tempVo);
-		
+		log.info("idtest={}", vo.getPartner_order_id());
 		
 		KakaoPaySuccessReadyVO data = KakaoPaySuccessReadyVO.builder()
 																									.cid("TC0ONETIME")
@@ -97,6 +99,16 @@ public class KakaoPayController {
 		log.info("result = {}", result);
 		int newPoint = sqlSession.selectOne("pay.getPoint", id);
 		
+		String order_id = vo.getPartner_user_id();
+		log.info("idcheck={}", order_id);
+		List<PayListDto> listDto = sqlSession.selectList("paylist", order_id);
+		
+		for(PayListDto dto : listDto) {
+			log.info("dtocheck={}", dto.getItem_name());
+		}
+		
+		
+		model.addAttribute("paylist", listDto);
 		model.addAttribute("result", result);
 		model.addAttribute("point", newPoint);
 		model.addAttribute("token", token);
