@@ -83,19 +83,6 @@ public class BoardController {
 	public String edit(@ModelAttribute BoardDto boardDto,
 									@RequestParam (required = false) List<MultipartFile> board_file) throws IllegalStateException, IOException {
 		
-		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no());
-		
-		if(!dto.isEmpty()) {
-			for(int i = 0; i < dto.size(); i ++) {
-				int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기			
-				boardfileDao.deleteFile(board_file_no);
-				BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
-				String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();
-				File file = new File(filepath);
-				file.delete();
-			}
-		}
-		
 		boardfileService.editWithFile(boardDto, board_file);
 		
 		int no = boardDto.getBoard_no(); //게시글 번호 구해서 리다이렉트에 사용
@@ -107,47 +94,89 @@ public class BoardController {
 	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int board_no) {
-		boardDao.delete(board_no);
-		
-		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);
-		for(int i = 0; i < dto.size(); i ++) {
-			int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기			
-			boardfileDao.deleteFile(board_file_no);
-			BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
-			String filepath = "D:/upload/question_image/"+delete.getBoard_file_save_name();
-			File file = new File(filepath);
-			file.delete();
-		}
+//		System.out.println("@@@@@"+board_no);
+		//실제파일 삭제
+		boardfileService.deleteRealfile(board_no);
+		//DB에서 게시글 삭제
+		boardDao.delete(board_no); 
 		
 		return "redirect:list";
 	}
-	
+
 	
 /////////////////게시글 상세 조회///////////////////
 	@GetMapping("/content")
 	public String content(@RequestParam int board_no,
-										Model model) throws Exception {
+										Model model,
+										HttpServletRequest request) throws Exception {
 		boardDao.get(board_no);
 		model.addAttribute("boardDto", boardDao.get(board_no));
-		boardDao.getReplyList(board_no);
-		model.addAttribute("boardReplyDto", boardDao.getReplyList(board_no));
 		
-		List<BoardFileDto> list = new ArrayList<>();
+		List<BoardFileDto> filelist = new ArrayList<>();
 		
 		//파일정보도 리스트로 담아서 첨부
 		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);
-		for(int i = 0; i < dto.size(); i ++) {
-			System.out.println("board_file_no = "+dto.get(i).getBoard_file_no());
-		}
+//		for(int i = 0; i < dto.size(); i ++) {
+//			System.out.println("board_file_no = "+dto.get(i).getBoard_file_no());
+//		}
 		
 		for(int i = 0; i < dto.size(); i ++) {
 			int board_file_no = dto.get(i).getBoard_file_no();
 			boardfileDto = boardfileDao.getFile(board_file_no);
-			System.out.println("파일정보 = "+boardfileDto);		
-			list.add(boardfileDto);
+//			System.out.println("파일정보 = "+boardfileDto);		
+			filelist.add(boardfileDto);
 		}
 		
-		model.addAttribute("list", list);
+		model.addAttribute("filelist", filelist);
+		
+		//페이지 크기
+		int pagesize = 10;
+		//네비게이터 크기
+		int navsize = 3;
+		
+		//페이징 추가
+		int pno;
+		try{
+			pno = Integer.parseInt(request.getParameter("pno"));
+			if(pno <= 0) throw new Exception(); //음수를 입력하면 예외를 발생시킨다
+		}
+		catch(Exception e){
+			pno = 1;
+		}
+			
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+			System.out.println("start = " + start + " , finish = " + finish);
+		
+	//**************************************************************************************
+	//			 		하단 네비게이터 계산하기
+	//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
+	//**************************************************************************************
+		int count = boardDao.boardReplyCount(board_no); //전체글 개수를 구하는 메소드 
+		System.out.println("!!!"+count);
+		
+		int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
+		System.out.println(pagecount);
+		
+		int startBlock = (pno -1) / navsize * navsize + 1;
+		int finishBlock = startBlock + (navsize -1);
+		
+		//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
+		if(finishBlock > pagecount){
+			finishBlock = pagecount;
+		}
+		
+		Map<String, Integer> param = new HashMap<>();
+		param.put("start", start);
+		param.put("finish", finish);
+		param.put("board_no", board_no);		
+		model.addAttribute("boardReplyDto", boardDao.getReplyList(param));
+		
+		request.setAttribute("pno", pno);
+		request.setAttribute("count", count);
+		request.setAttribute("pagesize", pagesize);
+		request.setAttribute("navsize", navsize);
+		request.setAttribute("board_no", board_no);
 		
 		return "board/content";
 	}
@@ -163,7 +192,7 @@ public class BoardController {
 ////////////////////전체 목록 조회///////////////////
 	@GetMapping("/list")
 	public String list(@RequestParam(defaultValue = "전체") String board_category, Model model, HttpServletRequest request) {
-		System.out.println(board_category);
+//		System.out.println(board_category);
 		
 		if(board_category.equals("전체")) {
 			//페이지 크기
@@ -223,7 +252,7 @@ public class BoardController {
 			int pagesize = 10;
 				
 			//네비게이터 크기
-			int navsize = 3;
+			int navsize = 10;
 			
 			//페이징 추가
 			int pno;

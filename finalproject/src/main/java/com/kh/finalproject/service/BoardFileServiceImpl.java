@@ -22,8 +22,11 @@ import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.repository.BoardFileDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service
+@Slf4j
 public class BoardFileServiceImpl implements BoardFileService{
 	
 	@Autowired
@@ -104,49 +107,99 @@ public class BoardFileServiceImpl implements BoardFileService{
 		//게시글 수정
 		boardDao.edit(boardDto);
 		
-		
-		List<BoardFileDto> list = new ArrayList<>();
-		
-		for(MultipartFile mf : board_file) { //올린 파일 개수만큼 반복
-			if(!board_file.isEmpty()) {
-				list.add(BoardFileDto.builder()
-													.board_file_upload_name(mf.getOriginalFilename())
-													.board_file_size(mf.getSize())
-													.board_origin_content_no(boardDto.getBoard_no())
-													.board_file_save_name(UUID.randomUUID().toString())
-													.board_file_type(mf.getContentType())
-													.build());
-			}
+		//1. 기존파일 정보를 불러온다
+		//2. 신규파일 유무를 확인한다(board_file 안에 비어있는 객체가 1개 존재)
+		//3. 기존파일과 신규파일 유무에 따라 각기 다른 처리를 수행한다
+//		System.out.println("board_file@@ = "+board_file);
+		if(board_file.get(0).isEmpty()) {//신규 업로드 파일이 없다면 더이상 아무것도 하지 말아라
+			return;
 		}
-		//변경된 파일을 다시 저장.	
-		String Path="D:/upload/board_files";
-		File dir = new File(Path);
-		dir.mkdir();
 		
-		for(int i = 0; i < list.size(); i++) {	
-			MultipartFile mf = board_file.get(i);//하드디스크에 저장할 실제 파일 객체
+		//신규 파일이 있는 경우 기존 파일을 먼저 삭제 후 신규 파일을 추가(등록과 동일)
+		//(1)기존 파일 모두 삭제하기
+		List<BoardFileDto> delete = boardfileDao.getFileNo(boardDto.getBoard_no()); //파일 정보 list형태로 가져오기
+		
+		//반복문으로 파일 삭제 실행
+		for(int i = 0; i < delete.size(); i++) {
+			//DB에 저장된 파일 정보 삭제
+			int board_no = delete.get(i).getBoard_origin_content_no();
+			boardfileDao.deleteFile(board_no);
 			
-			if(!mf.isEmpty()) {
-				//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
-				List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no());
-				int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기				
-				System.out.println("board_file_no = "+board_file_no);
-				
-				BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 실제 파일 정보 가져옴
-				String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();	
-				System.out.println("filepath = "+filepath);
-				
-				File file = new File(filepath);
-				file.delete();
-				/*******************************************************/
-				BoardFileDto boardfiledto = list.get(i);
-				boardfileDao.editFile(boardfiledto);
-				File target = new File(dir, boardfiledto.getBoard_file_save_name());
-				mf.transferTo(target);
+			//실제 파일 삭제
+			String filepath = "D:/upload/board_files/" + delete.get(i).getBoard_file_save_name();
+			System.out.println("filepath = "+filepath);					
+			File file = new File(filepath);
+			file.delete();				
+		}
+		
+			//파일 재등록
+			//DB에 등록할 파일 정보 설정
+			List<BoardFileDto> list = new ArrayList<>();			
+			for(MultipartFile mf : board_file) { //올린 파일 개수만큼 반복
+					list.add(BoardFileDto.builder()
+														.board_file_upload_name(mf.getOriginalFilename())
+														.board_file_size(mf.getSize())
+														.board_origin_content_no(boardDto.getBoard_no())
+														.board_file_save_name(UUID.randomUUID().toString())
+														.board_file_type(mf.getContentType())
+														.build());
 				}
-	
 			
-		}
+			//파일 저장(물리저장)			
+			File dir = new File("D:/upload/board_files");
+			dir.mkdirs();
+				
+				for(int i = 0; i < list.size(); i++) {	
+					BoardFileDto dto = list.get(i);//DB에 저장할 파일의 정보 객체
+					MultipartFile file = board_file.get(i);//하드디스크에 저장할 실제 파일 객체
+					
+					File target = new File(dir, dto.getBoard_file_save_name()); //파일을 새로 생성하고 save_name을 가져와 그 이름으로
+					file.transferTo(target); //실제파일저장
+					
+					boardfileDao.fileUpload(dto); //DB저장
+				}
+		
+		
+//		List<BoardFileDto> list = new ArrayList<>();
+//		
+//		for(MultipartFile mf : board_file) { //올린 파일 개수만큼 반복
+//			if(!board_file.isEmpty()) {
+//				list.add(BoardFileDto.builder()
+//													.board_file_upload_name(mf.getOriginalFilename())
+//													.board_file_size(mf.getSize())
+//													.board_origin_content_no(boardDto.getBoard_no())
+//													.board_file_save_name(UUID.randomUUID().toString())
+//													.board_file_type(mf.getContentType())
+//													.build());
+//			}
+//		}
+//		//변경된 파일을 다시 저장.	
+//		String Path="C:/upload/board_files";
+//		File dir = new File(Path);
+//		dir.mkdir();
+//		
+//		for(int i = 0; i < list.size(); i++) {	
+//			MultipartFile mf = board_file.get(i);//하드디스크에 저장할 실제 파일 객체
+//			
+//			if(!mf.isEmpty()) {
+//				//삭제. 기존 파일은 DB내에서 board_no를 이용하여 찾아서 파일 정보를 불러와서 DB삭제, 실제삭제 한다.			
+//				List<BoardFileDto> delete = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no()); //지울 실제 파일 정보 가져옴
+//				
+//				for(int j = 0; j < delete.size(); j++) {	
+//					String filepath = "C:/upload/board_files/"+delete.get(j).getBoard_file_save_name();
+//					System.out.println("filepath = "+filepath);					
+//					File file = new File(filepath);
+//					file.delete();					
+//				}
+//				
+//				/*******************************************************/
+//				BoardFileDto boardfiledto = list.get(i);
+//				boardfileDao.editFile(boardfiledto);
+//				File target = new File(dir, boardfiledto.getBoard_file_save_name());
+//				mf.transferTo(target);
+//			}	
+//			
+//		}
 	}
 	
 //	public void deleteFile2(int board_file_no) {	
@@ -203,6 +256,25 @@ public class BoardFileServiceImpl implements BoardFileService{
 				
 	}
 
+	
+	
+	@Override
+	public void deleteRealfile(int board_no) {
+			//삭제. 기존 파일은 DB내에서 board_no를 이용하여 찾아서 파일 정보를 불러와서 DB삭제, 실제삭제 한다.			
+			List<BoardFileDto> delete = boardfileDao.getFileNo(board_no);//지울 실제 파일 정보 가져옴
+//			for(int i = 0; i < delete.size(); i ++) {
+//				log.info("board_file_no{} = ", delete.get(i).getBoard_file_no());
+//			}			
+			
+			if(!delete.isEmpty()) {			
+			for(int i = 0; i < delete.size(); i++) {	
+				String filepath = "D:/upload/board_files/"+delete.get(i).getBoard_file_save_name();
+				System.out.println("filepath = "+filepath);					
+				File file = new File(filepath);
+				file.delete();					
+			}		
+		}
+	}
 
 }
 		

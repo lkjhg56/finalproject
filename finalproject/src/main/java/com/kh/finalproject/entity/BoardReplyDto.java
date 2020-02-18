@@ -17,5 +17,5 @@ public class BoardReplyDto {
 	private String board_reply_wdate;
 	private String board_reply_writer;
 	private int board_reply_origin;
-
+	private int groupno, superno, depth;
 }
