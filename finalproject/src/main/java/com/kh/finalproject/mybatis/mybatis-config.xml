@@ -18,6 +18,7 @@
 		<typeAlias type = "com.kh.finalproject.entity.RcorrectDto" alias = "rcorrectDto"/> 
 		<typeAlias type="com.kh.finalproject.entity.BoardDto" alias="boardDto"/>
 		<typeAlias type="com.kh.finalproject.entity.UsersDto" alias="users"/>
+		<typeAlias type="com.kh.finalproject.entity.UserFileDto" alias="userFileDto"/>
 		<typeAlias type="com.kh.finalproject.entity.BoardFileDto" alias="boardfileDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.ResultDto" alias = "resultDto"/>
 		<typeAlias type = "com.kh.finalproject.vo.SetScoreVO" alias = "scoreVO"/>

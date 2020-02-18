@@ -36,7 +36,7 @@ public class GmailService implements EmailService{
 		
 		message.setSubject("[Q master] 인증을 위한 이메일입니다.");
 		
-		message.setText("인증번호 " + cert + "입니다.");
+		message.setText("인증번호는 " + cert + "입니다.");
 		
 		sender.send(message);
 		return "success";
