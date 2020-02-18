@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.GradePointDao;
 import com.kh.finalproject.repository.ResultDao;
 import com.kh.finalproject.repository.UsersDao;
 import com.kh.finalproject.service.GradePointService;
@@ -45,6 +46,9 @@ public class UsersController {
 	
 	@Autowired
 	private GradePointService pointService;
+	
+	@Autowired
+	private GradePointDao gradePointDao;
 	
 	//회원 가입
 	@GetMapping("users/join")
@@ -278,9 +282,14 @@ public class UsersController {
 	 }
 	 @PostMapping("users/test_point")
 	 public String givePoint(@ModelAttribute UsersDto usersDto,@ModelAttribute GradePointDto pointDto) {
+		 
+		 //출석체크 포인트
 //		 pointService.giveCheckPoint(pointDto,usersDto);
+		 //문제 업로드 포인트
 //		 pointService.giveQuestionUploadPoint(pointDto,usersDto);
+		 //문제 풀기 포인트
 //		 pointService.giveQuestionSolvePoint(pointDto,usersDto);
+		 //답변 채택 포인트
 		 pointService.giveAnswerPoint(pointDto,usersDto);
 		 return "redirect:info";
 	 }
@@ -291,9 +300,40 @@ public class UsersController {
 //		 return "users/my_grade_point";
 //	 }
 	 @GetMapping("users/my_grade_point")
-	 public String my_grade_point(Model model,HttpSession session) {
-		 String id = (String) session.getAttribute("id");
-		 model.addAttribute("grade_point", sqlSession.selectList("grade_point.my_grade_point", id));
-		 return "users/my_grade_point";
+	 public String my_grade_point(Model model,HttpSession session,HttpServletRequest req) {
+		 
+		int pagesize = 4;
+		int navsize = 2;
+			
+		int pno;
+		try{
+			pno = Integer.parseInt(req.getParameter("pno"));
+			if(pno <= 0) throw new Exception();
+		}
+		catch(Exception e){
+			pno = 1;
+		}
+		
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+		
+		String id = (String) session.getAttribute("id");
+		
+		int count = sqlSession.selectOne("grade_point.getCount", id);
+		
+		Map<String, String> total = new HashMap<>();
+		total.put("id", id);
+		total.put("start", String.valueOf(start));
+		total.put("finish", String.valueOf(finish));
+		
+		model.addAttribute("my_grade_point", gradePointDao.get_pointList(total));
+		
+		req.setAttribute("pno", pno);
+		req.setAttribute("count", count);
+		req.setAttribute("pagesize", pagesize);
+		req.setAttribute("navsize", navsize);
+		
+		return "users/my_grade_point";
+		 
 	 }
 }

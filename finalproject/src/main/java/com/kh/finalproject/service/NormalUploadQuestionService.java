@@ -11,4 +11,5 @@ public interface NormalUploadQuestionService {
 	void normalquestionUpdate(NormalUpdateQuestionVO normalUpdateQuestionVO) throws Exception;
 	ResponseEntity<ByteArrayResource> downloadImg(int no) throws Exception;
 	void questionDelete(int no);
+	
 }

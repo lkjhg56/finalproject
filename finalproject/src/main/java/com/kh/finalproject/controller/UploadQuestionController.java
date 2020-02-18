@@ -145,12 +145,15 @@ public class UploadQuestionController {
 	
 	//일반문제 목록
 	@GetMapping("/normallist")
-	public String normallist(Model model) {
+	public String normallist(@RequestParam int no, String csname,String category_no,  Model model) {
 
-		
-		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal");
+		TestQuestionDto dto=TestQuestionDto.builder()
+				.csname(csname)
+				.category_no(category_no)
+				.build();
+		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal3",dto);
 		model.addAttribute("list",list2);
-		
+
 		return "question/normallist";
 	}
 	
@@ -159,8 +162,8 @@ public class UploadQuestionController {
 	public String normalcontent(@RequestParam int no, Model model) {
 	
 		
-		TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent",no);
-		model.addAttribute("questionDto",testQuestionDto);
+		NormalUpdateQuestionVO normalUpdateQuestionVO=sqlSession.selectOne("question.getContent2", no);
+		model.addAttribute("questionDto",normalUpdateQuestionVO);
 		return "question/normalcontent";
 	}	
 	//일반문제 파일 미리보기
@@ -194,5 +197,21 @@ public class UploadQuestionController {
 		return "question/normalcontent";
 	}
 	
+	
+	//일반 문제 삭제
+	@GetMapping("/normaldelete")
+	public String delete2(@RequestParam int no, String csname,String category_no,  Model model) {
+		
+		normalUploadQuestionService.questionDelete(no);
+		TestQuestionDto dto=TestQuestionDto.builder()
+				.csname(csname)
+				.category_no(category_no)
+				.build();
+		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal3",dto);
+		model.addAttribute("list",list2);
+
+		return "question/normallist";
+	}
+
 
 }

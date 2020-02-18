@@ -61,23 +61,59 @@
 
 <h1>정보 수정</h1>
 
-이름 : ${users.name}<br><br> 
-아이디 : ${users.id}<br><br> 
-<form action="pw/input" method="get">
-비밀번호 : <input type="submit" value="비밀번호 변경하기">
-</form> 
-이메일 : ${users.email}<br><br> 
-point : ${users.point} <br><br>
-grade_point : ${users.grade_point} <br><br>
-가입일 : ${users.join_date}<br><br>
 <form action="change" method="post">
-전화번호 : <input type="text" name="phone" value=" ${users.phone}" required><br><br>
-주소 : <br>
-	<input type="text" id="postcode" name="postcode" value=" ${users.postcode}" required> 
-	<input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br> 
-	<input type="text" id="address" name="address" value=" ${users.address}" required><br> 
-	<input type="text" id="detailAddress" name="detailAddress" value=" ${users.detailAddress}" onfocus="loadMap()" required> 
-	<input type="text" id="extraAddress" name="extraAddress" value=" ${users.extraAddress}" ><br><br>
+<table class="table" border="1">
+  <tr>
+    <th>이름</th>
+    <td>${users.name}</td>
+  </tr>
+  <tr>
+    <th>아이디</th>
+    <td>${users.id}</td>
+  </tr>
+  <tr>
+    <th>비밀번호</th>
+    <td>
+		<a href="pw/input"><input type="button" value="비밀번호 변경하기"></a>
+	</td>
+  </tr>
+  <tr>
+    <th>이메일</th>
+    <td>${users.email}</td>
+  </tr>
+  <tr>
+    <th>전화번호</th>
+    <td>
+		<input type="text" name="phone" value="${users.phone}" required>
+    </td>
+  </tr>
+  <tr>
+    <th>주소</th>
+    <td>
+		<input type="text" id="postcode" name="postcode" value="${users.postcode}" required> 
+		<input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br> 
+		<input type="text" id="address" name="address" value="${users.address}" required><br> 
+		<input type="text" id="detailAddress" name="detailAddress" value="${users.detailAddress}" onfocus="loadMap()" required> 
+		<input type="text" id="extraAddress" name="extraAddress" value="${users.extraAddress}" ><br>
+	</td>
+  </tr>
+  <tr>
+    <th>포인트</th>
+    <td>${users.point}</td>
+  </tr>
+  <tr>
+    <th>등급 포인트</th>
+    <td>${users.grade_point}</td>
+  </tr>
+  <tr>
+    <th>등급</th>
+    <td>${users.grade}</td>
+  </tr>
+  <tr>
+    <th>가입일</th>
+    <td>${users.join_date}</td>
+  </tr>
+</table>
 	<input type="submit" value="수정하기"> 
 </form>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

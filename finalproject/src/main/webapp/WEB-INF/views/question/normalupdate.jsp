@@ -21,17 +21,18 @@ function previewImage(target){
 <form action="normalupdate" method="post" enctype="multipart/form-data">
 
 	<input type="hidden" name="no" value="${questionDto.no}">
-<input type="text" name="question" value="${questionDto.question}" required><br><br>
-<input type="text" name="answer" value="${questionDto.answer}" required><br><br>
+	<input type="hidden" name="csname" value="${questionDto.csname} ">
+문제 제목: <input type="text" name="question" value="${questionDto.question}" required><br><br>
+문제 정답: <input type="text" name="answer" value="${questionDto.answer}" required><br><br>
 
 
-	<%-- <img id="preview" src="qimage?no=${questionDto.no}" width="120" height="120"><br><br>
-	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br> --%>
-	<input type="text" name="dis1" value="${questionDto.dis1}" required><br><br>
-	<input type="text" name="dis2" value="${questionDto.dis2}" required><br><br>
-	<input type="text" name="dis3" value="${questionDto.dis3}" required><br><br>
-	<input type="text" name="dis4" value="${questionDto.dis4}" required><br><br>
-	<input type="text" name="dis5" value="${questionDto.dis5}" required><br><br>
+	 <img id="preview" src="qimage?no=${questionDto.no}" width="120" height="120"><br><br>
+	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>
+문제 보기 1:	<input type="text" name="dis1" value="${questionDto.dis1}" required><br><br>
+문제 보기 2:		<input type="text" name="dis2" value="${questionDto.dis2}" required><br><br>
+문제 보기 3:		<input type="text" name="dis3" value="${questionDto.dis3}" required><br><br>
+	문제 보기 4:	<input type="text" name="dis4" value="${questionDto.dis4}" required><br><br>
+	문제 보기 5:	<input type="text" name="dis5" value="${questionDto.dis5}" required><br><br>
 	
 해설	  <input type="text" name="solution" value="${questionDto.solution}" required><br><br>  
 	<c:if test="${grade=='관리자'}">
