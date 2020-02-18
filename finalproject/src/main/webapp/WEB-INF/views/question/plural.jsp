@@ -152,6 +152,25 @@
 		
     	
 	}
+   
+   $(function(){
+	 var a = $(".session_ques").text()
+	 console.log(a);
+	   $.ajax({
+		  url : "${pageContext.request.contextPath}/question2/queup",
+		  type : "get",
+		  data : {
+			  session_ques:a,
+		  },success: function(){
+			  console.log("success");
+		  },erorr :  function(){
+			  console.log("fail");
+			  
+		  }
+		   
+	   })
+	   
+   })
 </script>
    
    
@@ -203,6 +222,7 @@ main{
 .plural-pic{
 	 float:left;
    width:25%;
+   
 }
 .plural-textarea{
 	float:left;
@@ -220,7 +240,7 @@ main{
             <div class = "jumbotron">
                 <h1>${csname}</h1>
 
-                <h3>${session}</h3>
+                <h3 class = "session_ques">${session}</h3>
  						<div class="timer-wrap">
 
        							 <i class = "time">${hour}:${min}:0</i>
@@ -267,8 +287,8 @@ main{
 	   					 <div class = "plural-pic" >
 	   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}+pic"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}+pic');"  width="400" height="250" >
 	   					</div> 							  
-      </div>
-  </c:forEach>
+      		</div>
+  		</c:forEach>
    	</div>  		
 
   

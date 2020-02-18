@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.payvo.RateVO;
 import com.kh.finalproject.repository.TestDao;
+import com.kh.finalproject.vo.SetScoreVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -102,6 +104,20 @@ public class RestController {
 
 		return null;
 
+	}
+	@GetMapping("queup")
+	public String queup(@RequestParam  String session_ques, HttpSession session) {
+		
+		log.info("checkcheck");
+		int rno = (int) session.getAttribute("rno");
+		log.info("test={}", rno);
+		SetScoreVO result = SetScoreVO.builder()
+													.rno(rno)
+													.session_ques(session_ques)
+													.build();
+				
+		sqlSession.update("quesup", result);
+		return null;
 	}
 	
 	
