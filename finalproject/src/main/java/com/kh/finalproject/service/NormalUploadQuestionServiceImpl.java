@@ -63,6 +63,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 								.dis4(normalUpdateQuestionVO.getDis4())
 								.dis5(normalUpdateQuestionVO.getDis5())
 								.rate(0)
+							///문제당시간
 								.build();
 
 						

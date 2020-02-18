@@ -21,7 +21,8 @@
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();
-               $(checked3).show();
+             
+           
            }
        }
           if(disno===answer){
