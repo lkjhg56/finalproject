@@ -17,7 +17,7 @@
 </script>
 <h1>회원 정보</h1>
 
-<table class="info" border="1">
+<table class="table" border="1">
   <tr>
     <th>이름</th>
     <td>${users.name}</td>
@@ -35,12 +35,12 @@
     <td>${users.email}</td>
   </tr>
   <tr>
-    <th>주소</th>
-    <td>${users.postcode} ${users.address} ${users.detailAddress} ${users.extraAddress}</td>
-  </tr>
-  <tr>
     <th>전화번호</th>
     <td>${users.phone}</td>
+  </tr>
+  <tr>
+    <th>주소</th>
+    <td>${users.postcode} ${users.address} ${users.detailAddress} ${users.extraAddress}</td>
   </tr>
   <tr>
     <th>포인트</th>

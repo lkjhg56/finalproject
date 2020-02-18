@@ -38,10 +38,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 나의 포인트 내역 조회 (추후 네비 추가)-->
-	<select id="my_grade_point" resultType="grade_pointDto" parameterType="String">
-    	select rownum rn, A.* from (
-        	select * from grade_point where users_no=(select user_no from users where id=#{id}) order by get_date desc)A
-		values(point_no_seq.nextval,#{users_no}, 50, '문제 업로드')
+	<select id="my_grade_point" resultType="grade_pointDto" parameterType="map">
+    	select * from (
+    		select rownum rn, A.* from (
+        		select * from grade_point where users_no=(
+        		select user_no from users where id=#{id}
+        	) order by get_date desc)A
+        ) where rn between #{start} and #{finish}	
+	</select>
+	
+	<!-- 포인트 내역 개수 조회 -->
+	<select id="getCount" resultType="int">
+		select count(*) from grade_point 
+		where users_no=(select user_no from users where id=#{id})
 	</select>
 	
 </mapper>
