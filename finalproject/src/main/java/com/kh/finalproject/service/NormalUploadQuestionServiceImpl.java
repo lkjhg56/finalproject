@@ -212,44 +212,96 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 				.build();
 		
 	NormalUploadQuestionDao.updateQustion(normalUpdateQuestionVO);
-		
-
-			//test_question_file 테이블 변경	
+	UploadTestQuestionFileDto fileo=	NormalUploadQuestionDao.getFile(testQuestionDto.getNo());
+	
+if(fileo==null) {
+//	2. 파일 업로드(문제 사진)
+//	**********************************************************************/
+//	(1)DB에 등록
+//	VO에서 받아온 내용을 DTO에 옮긴다.
 	List<UploadTestQuestionFileDto> list = new ArrayList<>();
-			for(MultipartFile mf : normalUpdateQuestionVO.getFile()) {
-				if(!mf.isEmpty()) {
-					list.add(UploadTestQuestionFileDto.builder()
-							.file_save_name(UUID.randomUUID().toString())
-							.file_upload_name(mf.getOriginalFilename())
-							.file_type(mf.getContentType())
-							.file_size(mf.getSize())
-							.test_question_no(normalUpdateQuestionVO.getNo())
-							.build()); 
-				}
-			}		
-			//변경된 파일을 다시 저장.	
-			String Path="D:/upload/normalquestion_image";
-			File dir = new File(Path);
-			dir.mkdir();
-
-			for(int i=0;i<list.size();i++) {				
-					MultipartFile mf = normalUpdateQuestionVO.getFile().get(i);
-					if(!mf.isEmpty()) {
-					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
-						UploadTestQuestionFileDto	 delete = 
-							NormalUploadQuestionDao.getFile(normalUpdateQuestionVO.getNo());
-							
-					String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();		
-					File file = new File(filepath);
-					file.delete();
-					/*******************************************************/
-					UploadTestQuestionFileDto dto = list.get(i);
-					NormalUploadQuestionDao.updateFile(dto);
-					File target = new File(dir, dto.getFile_save_name());
-					mf.transferTo(target);
-					}
-			}
+for(MultipartFile mf : normalUpdateQuestionVO.getFile()) {
+		list.add(
+				UploadTestQuestionFileDto.builder()
+				.file_save_name(UUID.randomUUID().toString())
+				.file_upload_name(mf.getOriginalFilename())
+				.file_type(mf.getContentType())
+				.file_size(mf.getSize())
+				.test_question_no(normalUpdateQuestionVO.getNo())
+				.build()
+				
+				);
+	}		
+	//새 디렉토리 생성
+	File dir = new File("D:/upload/normalquestion_image");
+	dir.mkdir();
+	
+	for(int i=0;i<list.size();i++) {
+		MultipartFile mf = normalUpdateQuestionVO.getFile().get(i);
+	UploadTestQuestionFileDto uploadTestQuestionFileDto = list.get(i);
+	
+	
+	
+	if(!uploadTestQuestionFileDto.getFile_upload_name().isEmpty()) {
 		
+		NormalUploadQuestionDao.fileUpload(uploadTestQuestionFileDto);
+		File target = new File(dir, uploadTestQuestionFileDto.getFile_save_name());
+		mf.transferTo(target);
+	}
+	}
+
+	
+	
+	
+}
+else {
+	//test_question_file 테이블 변경	
+	List<UploadTestQuestionFileDto> list = new ArrayList<>();
+	for(MultipartFile mf : normalUpdateQuestionVO.getFile()) {
+		if(!mf.isEmpty()) {
+			list.add(UploadTestQuestionFileDto.builder()
+					.file_save_name(UUID.randomUUID().toString())
+					.file_upload_name(mf.getOriginalFilename())
+					.file_type(mf.getContentType())
+					.file_size(mf.getSize())
+					.test_question_no(normalUpdateQuestionVO.getNo())
+					.build()); 
+		}
+	}		
+	//변경된 파일을 다시 저장.	
+	String Path="D:/upload/normalquestion_image";
+	File dir = new File(Path);
+	dir.mkdir();
+
+	for(int i=0;i<list.size();i++) {				
+		MultipartFile mf = normalUpdateQuestionVO.getFile().get(i);
+		
+		if(!mf.isEmpty()) {
+			//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
+			UploadTestQuestionFileDto	 delete = 
+					NormalUploadQuestionDao.getFile(normalUpdateQuestionVO.getNo());
+			
+			
+			
+			if(delete!=null) {	
+				String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();		
+				File file = new File(filepath);
+				file.delete();
+				
+				UploadTestQuestionFileDto dto = list.get(i);
+				NormalUploadQuestionDao.updateFile(dto);
+				File target = new File(dir, dto.getFile_save_name());
+				mf.transferTo(target);
+			}
+			/*******************************************************/
+		}
+}
+
+	
+}
+
+	
+	
 	}
 
 	@Override
