@@ -1,5 +1,6 @@
 package com.kh.finalproject.repository;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -46,16 +47,30 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectOne("board.getSequence");
 	}
 
+	//게시글 내용 수정
 	@Override
 	public void edit(BoardDto boardDto) {
 		sqlSession.update("board.edit", boardDto);
 		
 	}
 
+	//게시글 삭제
 	@Override
 	public void delete(int board_no) {
 		sqlSession.delete("board.delete", board_no);
 		
+		//실제로 저장된 첨부 파일들 삭제
+				List<BoardFileDto> delete = sqlSession.selectList("board.getFileNO", board_no); //파일 정보 list형태로 가져오기
+				
+				//반복문으로 파일 삭제 실행
+				for(int i = 0; i < delete.size(); i++) {
+					
+					//실제 파일 삭제
+					String filepath = "D:/upload/board_files/" + delete.get(i).getBoard_file_save_name();
+					System.out.println("filepath = "+filepath);					
+					File file = new File(filepath);
+					file.delete();				
+				}			
 	}
 
 	@Override
@@ -63,9 +78,10 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectList("board.search", param);
 	}
 
+////////////////////////댓글///////////////////////////////////
 	@Override
-	public List<BoardReplyDto> getReplyList(int board_reply_origin) {		
-		return sqlSession.selectList("board.ReplyList", board_reply_origin);
+	public List<BoardReplyDto> getReplyList(Map<String, Integer> param) {		
+		return sqlSession.selectList("board.ReplyList", param);
 	}
 
 	@Override
@@ -91,7 +107,7 @@ public class BoardDaoImpl implements BoardDao{
 		sqlSession.update("board.calculate", board_reply_origin);
 		
 	}
-
+//////////////////////네비게이터//////////////////////////
 	@Override
 	public int boardCount() {		
 		return sqlSession.selectOne("board.boardCount");
@@ -107,6 +123,11 @@ public class BoardDaoImpl implements BoardDao{
 	public int boardSearchCount(Map<String, String> param) {
 		return sqlSession.selectOne("board.boardSearchCount", param);
 
+	}
+
+	@Override
+	public int boardReplyCount(int board_no) {
+		return sqlSession.selectOne("board.boardReplyCount", board_no);
 	}
 
 	
