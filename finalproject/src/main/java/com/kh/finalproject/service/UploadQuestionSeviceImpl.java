@@ -56,37 +56,38 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.build();
 
 		uploadQuestionDao.upload(uploadQuestionDto);
-		
+		//파일 없을 경우		
 		//2. 파일 업로드(문제 사진)
 		/**********************************************************************/
-		//(1)DB에 등록
-		//VO에서 받아온 내용을 DTO에 옮긴다.
-		List<UploadQuestionFileDto> list = new ArrayList<>();
-		for(MultipartFile mf : updateQuestionVO.getFile()) {
-			list.add(UploadQuestionFileDto.builder()
-				.file_save_name(UUID.randomUUID().toString())
-				.file_upload_name(mf.getOriginalFilename())
-				.file_type(mf.getContentType())
-				.file_size(mf.getSize())
-				.question_no(seq)
-				.build());
-		}		
-		//새 디렉토리 생성
-		File dir = new File("D:/upload/question_image");
-		dir.mkdir();
-		
-		for(int i=0;i<list.size();i++) {
-			MultipartFile mf = updateQuestionVO.getFile().get(i);
-			UploadQuestionFileDto dto = list.get(i);
-			uploadQuestionDao.fileUpload(dto);
-			File target = new File(dir, dto.getFile_save_name());
-			mf.transferTo(target);
+		if(!updateQuestionVO.getFile().get(0).isEmpty()) {
+			//(1)DB에 등록
+			//VO에서 받아온 내용을 DTO에 옮긴다.
+			List<UploadQuestionFileDto> list = new ArrayList<>();
+			for(MultipartFile mf : updateQuestionVO.getFile()) {
+				list.add(UploadQuestionFileDto.builder()
+						.file_save_name(UUID.randomUUID().toString())
+						.file_upload_name(mf.getOriginalFilename())
+						.file_type(mf.getContentType())
+						.file_size(mf.getSize())
+						.question_no(seq)
+						.build());
+			}		
+			//새 디렉토리 생성
+			File dir = new File("D:/upload/question_image");
+			dir.mkdir();
+			
+			for(int i=0;i<list.size();i++) {
+				MultipartFile mf = updateQuestionVO.getFile().get(i);
+				UploadQuestionFileDto dto = list.get(i);
+				uploadQuestionDao.fileUpload(dto);
+				File target = new File(dir, dto.getFile_save_name());
+				mf.transferTo(target);
+			}
 		}
 	}
 	//문제 수정 U
 	@Override
 	public void questionUpdate(UpdateQuestionVO updateQuestionVO) throws Exception {
-
 		//question 테이블 변경
 		UploadQuestionDto uploadQuestionDto = UploadQuestionDto.builder()
 				.category_name(updateQuestionVO.getCategory_name())//user_custom_question 테이블
@@ -104,7 +105,13 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.user_custom_question_no(updateQuestionVO.getUser_custom_question_no())
 				.build();
 		uploadQuestionDao.updateQustion(uploadQuestionDto);
-
+		
+//		System.out.println(updateQuestionVO.getFile().get(0).isEmpty());//true
+//		System.out.println("비어있나? : "+updateQuestionVO.getFile().isEmpty());//false
+//		System.out.println(updateQuestionVO.getFile().get(0).getOriginalFilename());//
+//		System.out.println(updateQuestionVO.getFile().get(0).getContentType());//application/octet-stream
+//		System.out.println(updateQuestionVO.getFile().get(0).getSize());//0
+		if(!updateQuestionVO.getFile().get(0).isEmpty()) {
 			//question_file 테이블 변경	
 			List<UploadQuestionFileDto> list = new ArrayList<>();
 			for(MultipartFile mf : updateQuestionVO.getFile()) {
@@ -122,10 +129,10 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			String Path="D:/upload/question_image";
 			File dir = new File(Path);
 			dir.mkdir();
-
+			
 			for(int i=0;i<list.size();i++) {				
-					MultipartFile mf = updateQuestionVO.getFile().get(i);
-					if(!mf.isEmpty()) {
+				MultipartFile mf = updateQuestionVO.getFile().get(i);
+				if(!mf.isEmpty()) {
 					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
 					UploadQuestionFileDto delete = uploadQuestionDao.getFile(updateQuestionVO.getQuestion_no());
 					String filepath = "D:/upload/question_image/"+delete.getFile_save_name();		
@@ -136,22 +143,50 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 					uploadQuestionDao.updateFile(dto);
 					File target = new File(dir, dto.getFile_save_name());
 					mf.transferTo(target);
-					}
+				}
 			}
 			
+		}else {
+			List<UploadQuestionFileDto> list = new ArrayList<>();
+			for(MultipartFile mf : updateQuestionVO.getFile()) {
+				list.add(UploadQuestionFileDto.builder()
+						.file_save_name(UUID.randomUUID().toString())
+						.file_upload_name(mf.getOriginalFilename())
+						.file_type(mf.getContentType())
+						.file_size(mf.getSize())
+						.question_no(updateQuestionVO.getQuestion_no())
+						.build());
+			}		
+			//새 디렉토리 생성
+			File dir = new File("D:/upload/question_image");
+			dir.mkdir();
+			
+			for(int i=0;i<list.size();i++) {
+				MultipartFile mf = updateQuestionVO.getFile().get(i);
+				UploadQuestionFileDto dto = list.get(i);
+				uploadQuestionDao.fileUpload(dto);
+				File target = new File(dir, dto.getFile_save_name());
+				mf.transferTo(target);
+			}
+		}
+		
 	}
 	//문제 삭제 D
 	@Override
 	public void questionDelete(int question_no, int user_custom_question_no) {
+		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);			
 		UploadQuestionFileDto delete = uploadQuestionDao.getFile(question_no);
-		String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
-		File file = new File(filepath);
-		file.delete();
-		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);
+		if(delete != null) {
+			String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
+			File file = new File(filepath);
+			file.delete();
+		}
 	}
 	//단일 문제 해결 R
 	@Override
 	public UserQuestionResultDto questionSolve(UpdateQuestionVO updateQuestionVO) {
+		//조회수 증가 기능.
+		uploadQuestionDao.update_read_count(updateQuestionVO.getQuestion_no());
 		UploadQuestionDto uploadQuestionDto = uploadQuestionDao.question_all(updateQuestionVO.getQuestion_no());
 		String time=uploadQuestionDao.timeCheck();
 		String result_time = updateQuestionVO.getHour()+":"+updateQuestionVO.getMin()+":"
@@ -191,8 +226,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	}
 	//저장된 이미지 호출 R
 	@Override
-	public ResponseEntity<ByteArrayResource> downloadImg(int question_no) throws Exception {
-		UploadQuestionFileDto uploadQuestionFileDto = uploadQuestionDao.getFile(question_no);
+	public ResponseEntity<ByteArrayResource> downloadImg(int question_file_no) throws Exception {
+		UploadQuestionFileDto uploadQuestionFileDto = uploadQuestionDao.getFile3(question_file_no);
 		File directory = new File("D:/upload/question_image");
 		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
 		
@@ -201,11 +236,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			return ResponseEntity.notFound().build();
 		}
 		byte[] data = FileUtils.readFileToByteArray(file);
-
 		ByteArrayResource resource = new ByteArrayResource(data);
-		
 		return ResponseEntity.ok()
-//				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
 				.contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.contentLength(uploadQuestionFileDto.getFile_size())
 				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
@@ -216,8 +248,9 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	//저장된 문제 여러개 호출 및 랜덤으로 출제 R
 	@Override
 	public List<UploadQuestionDto> multiQuestion(int wantQuestion) {
+
 		Random r = new Random();
-		List<UploadQuestionDto> list = uploadQuestionDao.getList();
+		List<UploadQuestionDto> list = uploadQuestionDao.getListWithImage();
 		List<UploadQuestionDto> choice_list = new ArrayList<>();
 		while(choice_list.size()<wantQuestion) {
 			UploadQuestionDto uploadQuestionDto = list.get(r.nextInt(list.size()));
@@ -227,6 +260,13 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				uploadQuestionDto =list.get(r.nextInt(list.size()));
 			}
 		}
+//		확인용
+		for(int i = 0 ;i<choice_list.size();i++) {
+			for(int j = 0;j<choice_list.get(i).getFiles().size();j++) {
+				System.out.println("choice_list.get("+i+").getFiles().get("+j+").getQuestion_file_no() : "+choice_list.get(i).getFiles().get(j).getQuestion_file_no());				
+			}
+		}
+
 		return choice_list;
 	}
 	//다중문제 해결한 결과값 출력 R
@@ -258,7 +298,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	}
 	//다중 문제 풀이 결과값 저장.
 	@Override
-	public void insert_multi(List<UserQuestionResultDto> list, UserQuestionResultDto userQuestionResultDto) {
+	public UserQuestionMultiResultDto insert_multi(List<UserQuestionResultDto> list, UserQuestionResultDto userQuestionResultDto) {
 		//다음은 결과값(본 시험의 총점, 정답률, 문제 개수 등)을 취합하여 DB내에 question_multi_result 테이블을 생성하여 insert해줘야함.
 		int total_question = list.size();//문제 총 개수
 		int correct_count = 0;//맞은 개수
@@ -280,5 +320,6 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			.result_time(result_time)
 			.build();
 		uploadQuestionDao.insert_multi_result(multi_dto);
+		return multi_dto;
 	}
 }

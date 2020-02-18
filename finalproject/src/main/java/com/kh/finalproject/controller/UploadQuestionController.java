@@ -1,5 +1,6 @@
 package com.kh.finalproject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
@@ -44,6 +47,8 @@ public class UploadQuestionController {
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
 		model.addAttribute("questionDto",uploadQuestionDao.question_all(question_no));
+		List<UploadQuestionFileDto> image = uploadQuestionDao.getFile2(question_no);
+		model.addAttribute("image",image);
 		return "question/solve";
 	}
 	@PostMapping("/solve")
@@ -53,11 +58,20 @@ public class UploadQuestionController {
 	}
 	//문제 풀기(여러문제 한페이지당 최대 4문제)
 	@GetMapping("/multi")
-	public String multi(Model model) {
+	public String multi(@RequestParam int wantQuestion, Model model) {
 		//향후 원하는 문제개수를 받을 수 있도록 해야함.
-		int wantQuestion=10;
+		List<UploadQuestionDto> list = uploadQuestionService.multiQuestion(wantQuestion);
 		model.addAttribute("count",wantQuestion);
-		model.addAttribute("list", uploadQuestionService.multiQuestion(wantQuestion));
+		model.addAttribute("list", list);
+		
+//		for(int i =0;i<list.size();i++) {
+//			int question_no = list.get(i).getQuestion_no();
+//			//한 파일에 대한 이미지 묶음.한 문제에 여러 이미지가 존재할 수 있으므로 list로 받음.
+//			List<UploadQuestionFileDto> file_list=uploadQuestionDao.getFile2(question_no);
+//			//question_no와 question_file_no을 이용하여 짝지어준다.
+//			image.addAll(file_list);
+//		}
+//		model.addAttribute("image",image);
 		return "question/multi";
 	}
 	@PostMapping("/multi")
@@ -68,7 +82,8 @@ public class UploadQuestionController {
 		//각 문제에 대한 번호, 결과값을 비교하는 서비스
 		List<UserQuestionResultDto> list = uploadQuestionService.checkMulti(examResultVO);		
 		model.addAttribute("list", list);
-		uploadQuestionService.insert_multi(list,dto);
+		UserQuestionMultiResultDto multi_dto = uploadQuestionService.insert_multi(list,dto);
+		model.addAttribute("multi", multi_dto);
 		return "question/multi_result";
 	}
 	//문제 업로드
@@ -80,13 +95,22 @@ public class UploadQuestionController {
 	public String upload2(@ModelAttribute UpdateQuestionVO updateQuestionVO, HttpSession session, Model model) throws Exception {
 		updateQuestionVO.setUser_no(sqlSession.selectOne("question.getNo", (String)session.getAttribute("id")));
 		uploadQuestionService.questionUpload(updateQuestionVO);
-		model.addAttribute("list",uploadQuestionDao.question_user_all());
-		return "question/list";
+		return "redirect:list";
 	}	
 	//파일 다운로드(미리보기)
 	@GetMapping("/image")
-	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_no) throws Exception{
-			return uploadQuestionService.downloadImg(question_no);					
+	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_file_no) throws Exception{
+		return uploadQuestionService.downloadImg(question_file_no);					
+	}
+	//문제 정보 호출
+	@GetMapping("/content")
+	public String content(@RequestParam int question_no, Model model) {
+		//이미지 리스트로 불러옴
+		model.addAttribute("questionDto", uploadQuestionDao.question_all(question_no));
+		List<UploadQuestionFileDto> image = uploadQuestionDao.getFile2(question_no);
+		model.addAttribute("image",image);
+		
+		return "question/content";
 	}
 	//문제 수정
 	@GetMapping("/update")
@@ -97,15 +121,13 @@ public class UploadQuestionController {
 	@PostMapping("/update")
 	public String update2(@ModelAttribute UpdateQuestionVO updateQuestionVO, Model model) throws Exception {		
 		uploadQuestionService.questionUpdate(updateQuestionVO);
-		model.addAttribute("questionDto",updateQuestionVO);
-		return "question/content";
+		return "redirect:content?question_no="+updateQuestionVO.getQuestion_no();
 	}	
 	//문제 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam int question_no, @RequestParam int user_custom_question_no, Model model) {
 		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
-		model.addAttribute("list",uploadQuestionDao.question_user_all());
-		return "question/list";
+		return "redirect:list";
 	}
 	//문제 전체 리스트 호출(Users 테이블과 조인됨)
 	@GetMapping("/list")
@@ -114,19 +136,11 @@ public class UploadQuestionController {
 		model.addAttribute("list",uploadQuestionDao.question_user_all());
 		return "question/list";
 	}
-	//문제 정보 호출
-	@GetMapping("/content")
-	public String content(@RequestParam int question_no, Model model) {
-		model.addAttribute("questionDto", uploadQuestionDao.question_all(question_no));
-		return "question/content";
-	}
 	//일반문제만들기
 	@GetMapping("/normalupload")
 	public String normalupload() {
 		return "question/normalupload";
 	}
-	
-	
 	@PostMapping("/normalupload")
 	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session,Model model) throws Exception {
 		

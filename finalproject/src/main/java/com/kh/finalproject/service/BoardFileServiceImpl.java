@@ -103,6 +103,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 		
 		//게시글 수정
 		boardDao.edit(boardDto);
+		//기존 파일 삭제
 		
 		
 		List<BoardFileDto> list = new ArrayList<>();
@@ -110,12 +111,12 @@ public class BoardFileServiceImpl implements BoardFileService{
 		for(MultipartFile mf : board_file) { //올린 파일 개수만큼 반복
 			if(!board_file.isEmpty()) {
 				list.add(BoardFileDto.builder()
-													.board_file_upload_name(mf.getOriginalFilename())
-													.board_file_size(mf.getSize())
-													.board_origin_content_no(boardDto.getBoard_no())
-													.board_file_save_name(UUID.randomUUID().toString())
-													.board_file_type(mf.getContentType())
-													.build());
+				.board_file_upload_name(mf.getOriginalFilename())
+				.board_file_size(mf.getSize())
+				.board_origin_content_no(boardDto.getBoard_no())
+				.board_file_save_name(UUID.randomUUID().toString())
+				.board_file_type(mf.getContentType())
+				.build());
 			}
 		}
 		//변경된 파일을 다시 저장.	
@@ -123,41 +124,31 @@ public class BoardFileServiceImpl implements BoardFileService{
 		File dir = new File(Path);
 		dir.mkdir();
 		
-		for(int i = 0; i < list.size(); i++) {	
-			MultipartFile mf = board_file.get(i);//하드디스크에 저장할 실제 파일 객체
+//		for(int i = 0; i < list.size(); i++) {	
+//			MultipartFile mf = board_file.get(i);//하드디스크에 저장할 실제 파일 객체
 			
-			if(!mf.isEmpty()) {
-				//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
-				List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no());
-				int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기				
-				System.out.println("board_file_no = "+board_file_no);
-				
-				BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 실제 파일 정보 가져옴
-				String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();	
-				System.out.println("filepath = "+filepath);
-				
-				File file = new File(filepath);
-				file.delete();
+//			if(!mf.isEmpty()) {
+//				//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
+//				List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no());
+//				int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기				
+//				System.out.println("board_file_no = "+board_file_no);
+//				
+//				BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 실제 파일 정보 가져옴
+//				String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();	
+//				System.out.println("filepath = "+filepath);
+//				
+//				File file = new File(filepath);
+//				file.delete();
 				/*******************************************************/
-				BoardFileDto boardfiledto = list.get(i);
-				boardfileDao.editFile(boardfiledto);
-				File target = new File(dir, boardfiledto.getBoard_file_save_name());
-				mf.transferTo(target);
-				}
-	
-			
-		}
+//				BoardFileDto boardfiledto = list.get(i);
+//				boardfileDao.editFile(boardfiledto);
+//				File target = new File(dir, boardfiledto.getBoard_file_save_name());
+//				mf.transferTo(target);
+//				}
+//	
+//			
+//		}
 	}
-	
-//	public void deleteFile2(int board_file_no) {	
-//		boardDao.delete(board_no);	//데이터베이스에서 지움
-//		boardfileDao.deleteFile(board_file_no);
-//		BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
-//		String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();
-//		File file = new File(filepath);
-//		file.delete();
-//	}
-	
 
 	@Override
 	public void regist(BoardDto boardDto) {
@@ -179,17 +170,17 @@ public class BoardFileServiceImpl implements BoardFileService{
 		System.out.println(dto);
 		System.out.println("저장명 = " +dto.getBoard_file_save_name());
 		
-
-		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
-		//실제 파일을 읽어들인다. (폴더, 파일명)
+//
+//		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
+//		//실제 파일을 읽어들인다. (폴더, 파일명)
 		File dir = new File("D:/upload/board_files");	
 		File file = new File(dir, String.valueOf(dto.getBoard_file_save_name()));
 		
 		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환
 		System.out.println("data = "+ data);
-		
-		
-		//헤더 설정 및 전송
+//		
+//		
+//		//헤더 설정 및 전송
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
 		//읽어들인 내용을 사용자에게 전송한다.

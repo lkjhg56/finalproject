@@ -19,6 +19,7 @@ public interface UploadQuestionDao {
 	void updateQustion(UploadQuestionDto uploadQuestionDto);
 	void updateFile(UploadQuestionFileDto uploadQuestionFileDto);
 	UploadQuestionFileDto getFile(int question_no);
+	List<UploadQuestionFileDto> getFile2(int question_no);
 	void fileDelete2(int question_no,int user_custom_question_no);
 	String timeCheck();
 	int question_true(int question_no);
@@ -31,4 +32,7 @@ public interface UploadQuestionDao {
 	void givePointforSolving(int user_no);
 	void insert_multi_result(UserQuestionMultiResultDto userQuestionMultiResultDto);
 	void correct_ratio(int question_no);
+	void update_read_count(int question_no);
+	UploadQuestionFileDto getFile3(int question_file_no);
+	List<UploadQuestionDto> getListWithImage();
 }

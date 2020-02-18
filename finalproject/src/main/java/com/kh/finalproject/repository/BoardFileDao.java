@@ -2,6 +2,7 @@ package com.kh.finalproject.repository;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,4 +32,8 @@ public interface BoardFileDao {
 		
 	//파일 삭제
 		void deleteFile(int board_file_no);
+
+		List<BoardFileDto> getFileList(int board_origin_content_no);
+
+		List<BoardFileDto> getFile2(int board_file_no);
 }

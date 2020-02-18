@@ -72,10 +72,24 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");
 	}
-	//문제 파일 조회
+	@Override
+	public List<UploadQuestionDto> getListWithImage() {
+		return sqlSession.selectList("question.getListWithImage");
+	}
+	//문제 파일 조회(question_no)
 	@Override
 	public UploadQuestionFileDto getFile(int question_no) {
 		return sqlSession.selectOne("question.getFile",question_no);		
+	}
+	//문제 파일 조회(question_file_no)
+	@Override
+	public UploadQuestionFileDto getFile3(int question_file_no) {
+		return sqlSession.selectOne("question.getFile2",question_file_no);		
+	}
+	//문제 파일 조회(리스트)
+	@Override
+	public List<UploadQuestionFileDto> getFile2(int question_no) {
+		return sqlSession.selectList("question.getFile",question_no);	
 	}
 	//문제 삭제(하나의 question table 삭제 시 file, result가 날아가도록 함.)
 	//user_custom_question은 별도로 지워줘야함.
@@ -147,4 +161,12 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 			.build();
 		sqlSession.selectOne("question.updateRatio",uploadQuestionDto);
 	}
-}
+	//조회수 증가
+	@Override
+	public void update_read_count(int question_no) {
+		sqlSession.update("question.upReadCount",question_no);
+		
+	}
+
+	}
+

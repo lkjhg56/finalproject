@@ -83,11 +83,11 @@ public class BoardController {
 	public String edit(@ModelAttribute BoardDto boardDto,
 									@RequestParam (required = false) List<MultipartFile> board_file) throws IllegalStateException, IOException {
 		
-		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no());
-		
+		List<BoardFileDto> dto = boardfileDao.getFileList(boardDto.getBoard_no());
+	
 		if(!dto.isEmpty()) {
-			for(int i = 0; i < dto.size(); i ++) {
-				int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기			
+			for(int i = 0; i < dto.size(); i ++) {				
+				int board_file_no = dto.get(i).getBoard_origin_content_no();	//file_no받아오기			
 				boardfileDao.deleteFile(board_file_no);
 				BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
 				String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();
@@ -106,23 +106,23 @@ public class BoardController {
 ///////////////글 삭제(본인글, 관리자만)/////////////
 	
 	@GetMapping("/delete")
-	public String delete(@RequestParam int board_no) {
-		boardDao.delete(board_no);
-		
-		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);
-		for(int i = 0; i < dto.size(); i ++) {
-			int board_file_no = dto.get(i).getBoard_file_no();	//file_no받아오기			
-			boardfileDao.deleteFile(board_file_no);
-			BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
-			String filepath = "D:/upload/question_image/"+delete.getBoard_file_save_name();
-			File file = new File(filepath);
-			file.delete();
+	public String delete(@ModelAttribute BoardDto boardDto, @ModelAttribute BoardFileDto BoardFileDto) {
+		List<BoardFileDto> dto = boardfileDao.getFileList(boardDto.getBoard_no());
+//		System.out.println(dto.get(0).getBoard_origin_content_no());
+		if(!dto.isEmpty()) {
+			for(int i = 0; i < dto.size(); i ++) {				
+				int board_file_no = dto.get(i).getBoard_origin_content_no();//181	
+				List<BoardFileDto> delete = boardfileDao.getFile2(board_file_no); //지울 파일의 실체 가져옴
+				String filepath = "D:/upload/board_files/"+delete.get(i).getBoard_file_save_name();
+				File file = new File(filepath);
+				file.delete();
+				boardfileDao.deleteFile(board_file_no);
+			}
 		}
-		
 		return "redirect:list";
 	}
 	
-	
+
 /////////////////게시글 상세 조회///////////////////
 	@GetMapping("/content")
 	public String content(@RequestParam int board_no,
@@ -135,11 +135,7 @@ public class BoardController {
 		List<BoardFileDto> list = new ArrayList<>();
 		
 		//파일정보도 리스트로 담아서 첨부
-		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);
-		for(int i = 0; i < dto.size(); i ++) {
-			System.out.println("board_file_no = "+dto.get(i).getBoard_file_no());
-		}
-		
+		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);		
 		for(int i = 0; i < dto.size(); i ++) {
 			int board_file_no = dto.get(i).getBoard_file_no();
 			boardfileDto = boardfileDao.getFile(board_file_no);

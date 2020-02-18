@@ -3,11 +3,37 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
-<%-- ${list} --%>
-수험 시간 : <c:if test="${time.hour!=0}">${time.hour}시간</c:if> ${time.min}분 ${time.sec}초<br>
+<script>
+	$(function(){
+		$(".multi").hide();
+		$(".result").hide();
+		
+		$(".detail").click(function(){
+			$(".multi").show();
+			$(".result").show();
+			$(".detail").hide();
+			$(".single").hide();
+		});
+		
+		$(".result").click(function(){
+			$(".multi").hide();
+			$(".result").hide();
+			$(".detail").show();
+			$(".single").show();
+		});
+		
+	});
+</script>
+
+<div>수험 시간 : <c:if test="${time.hour!=0}">${time.hour}시간</c:if> ${time.min}분 ${time.sec}초</div><br>
+<!-- 결과, 상세 버튼 -->
+<button class="result">결과페이지</button><button class="detail">상세페이지</button>
+
 <!-- 결과 페이지 -->
 <div class="container single">
 
+총 문제수 / 정답율 :&nbsp; ${multi.total_question}/${multi.correct_count}<br>
+점수 : ${multi.sum_score}
 </div>
 <!-- 상세 페이지 -->
 <div class="container result-wrapper multi">

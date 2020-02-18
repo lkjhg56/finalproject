@@ -49,8 +49,7 @@ public class GradePointServiceImpl implements GradePointService{
 
 	//문제업로드 포인트 부여
 	@Override
-	public void giveQuestionUploadPoint(GradePointDto pointDto,UsersDto usersDto) {
-		
+	public void giveQuestionUploadPoint(GradePointDto pointDto,UsersDto usersDto) {		
 		String id = (String) req.getSession().getAttribute("id");
 		usersDto.setId(id);
 		
@@ -70,7 +69,7 @@ public class GradePointServiceImpl implements GradePointService{
 		int users_no = sqlSession.selectOne("users.get_users_no", id);
 		pointDto.setUsers_no(users_no);
 		
-		sqlSession.insert("grade_point.giveQuestionSolvePoint", pointDto);
+		sqlSession.insert("grade_point.giveQuestionSolvePoint", pointDto);//users_no만 필요함.
 		sqlSession.update("users.change_3point", usersDto);
 	}
 
