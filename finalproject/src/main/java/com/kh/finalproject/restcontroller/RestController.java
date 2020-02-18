@@ -100,14 +100,10 @@ public class RestController {
 
 			session.setAttribute("no", 0);
 
- 
-
-		
-
 		return null;
 
 	}
-
+	
 	
 	
 }
