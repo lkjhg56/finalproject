@@ -92,6 +92,8 @@ public String category2(@RequestParam String categoryname, String session, Strin
 					dto.setDis5(qlist.getDis5());
 					dto.setQuestion(qlist.getQuestion());
 					dto.setRate(qlist.getRate());
+					dto.setLim_min(2);
+					dto.setLim_hour(0);
 				question.add(dto);
 					
 					
@@ -172,6 +174,9 @@ public String category2(@RequestParam String categoryname, String session, Strin
 					dto.setDis4(tdto.getDis4());
 					dto.setDis5(tdto.getDis5());
 					dto.setQuestion(tdto.getQuestion());
+					
+					dto.setLim_min(1);
+					dto.setLim_hour(0);
 				}
 			
 			model.addAttribute("clist", dto);
@@ -209,6 +214,8 @@ public String category2(@RequestParam String categoryname, String session, Strin
 					dto.setDis4(qlist.getDis4());
 					dto.setDis5(qlist.getDis5());
 					dto.setQuestion(qlist.getQuestion());
+					dto.setLim_min(2);
+					dto.setLim_hour(0);
 					question.add(dto);
 					
 				}
@@ -250,7 +257,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 
 				List<TestQuestionDto> answerList = sqlSession.selectList("getQuesNum", testQuestionDto);
 				List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
-
+	
 				model.addAttribute("rCorrectDto", rCorrectDto);
 				model.addAttribute("answerList", answerList);
 				model.addAttribute("score",  testDao.getScore(rno, session, categoryname));
@@ -283,6 +290,8 @@ public String category2(@RequestParam String categoryname, String session, Strin
 					dto.setDis4(tdto.getDis4());
 					dto.setDis5(tdto.getDis5());
 					dto.setQuestion(tdto.getQuestion());
+					dto.setLim_min(2);
+					dto.setLim_hour(0);
 				}
 			
 			model.addAttribute("clist", dto);
@@ -311,6 +320,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 
 
 		List<TestQuestionDto> answerList = sqlSession.selectList("getQuesNum", testQuestionDto);
+	
 		List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
 
 		model.addAttribute("rCorrectDto", rCorrectDto);

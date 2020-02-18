@@ -94,7 +94,8 @@
  			#{dis3},
  			#{dis4},
  			#{dis5},
- 			#{rate}
+ 			#{rate},
+ 			#{lim_min}
  			)
  	</insert>
  	
