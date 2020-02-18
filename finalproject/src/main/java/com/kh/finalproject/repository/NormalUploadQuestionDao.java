@@ -27,4 +27,6 @@ public interface NormalUploadQuestionDao {
 	
 	void updateQustion(NormalUpdateQuestionVO normalUpdateQuestionVO);
 	void updateFile(UploadTestQuestionFileDto uploadTestQuestionFileDto);
+	
+	void fileDelete2(int no);
 }

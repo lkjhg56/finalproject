@@ -8,21 +8,22 @@
    <script>
 
    
-   function save(quesno, disno, answer){
+   function save(quesno, disno, answer,id){
 
-	   opener.location.reload();
+	//   opener.location.reload();
 
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
 
-
+       var checked3= document.getElementById(id);
        if (checked.checked==true){
            console.log("체크됨")
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();
+               $(checked3).show();
            }
        }
           if(disno===answer){
@@ -185,25 +186,25 @@ main{
    
 
 
-   <div class = "container">
+
 
    	
-<div class = "plural-wrap">
+
    		<h2>${clist.question}</h2>
   <!-- 이미지 파일 조건 -->
   	
-<div class = "plural-pic" ><img id="preview" src="qimage?no=${clist.no}"  class="test" name = "${clist.no}"  onload="file('${clist.no}');"  width="120" height="120"></div><br><br>
-  			<div class = "plural-question" >
+  			
    	
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}');">${clist.dis1}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}2" onclick="save('${clist.no}', '2', '${clist.answer}');">${clist.dis2}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}3" onclick="save('${clist.no}', '3', '${clist.answer}');">${clist.dis3}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}4" onclick="save('${clist.no}', '4', '${clist.answer}');">${clist.dis4}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}5" onclick="save('${clist.no}', '5', '${clist.answer}');">${clist.dis5}</h4>
-   </div>
-  </div>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}','preview');">${clist.dis1}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}2" onclick="save('${clist.no}', '2', '${clist.answer}','preview');">${clist.dis2}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}3" onclick="save('${clist.no}', '3', '${clist.answer}','preview');">${clist.dis3}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}4" onclick="save('${clist.no}', '4', '${clist.answer}','preview');">${clist.dis4}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}5" onclick="save('${clist.no}', '5', '${clist.answer}','preview');">${clist.dis5}</h4>
+  
+<div class = "plural-pic" ><img id="preview" src="qimage?no=${clist.no}"  class="test" name = "${clist.no}"  onload="file('${clist.no}');"  width="120" height="120"></div><br><br>
+ 
 
-   </div>
+
  
    
    <form action = "${pageContext.request.contextPath}/question/oneresult"  > 

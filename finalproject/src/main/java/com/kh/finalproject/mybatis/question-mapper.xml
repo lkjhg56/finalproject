@@ -103,6 +103,14 @@
  	   select * from test_question where category_no=#{category_no} and csname=#{csname} order by no asc
  	</select>
  	
+ 	<select id="getNormal2"  resultType="testQuestionDto">
+ 	   select * from test_question order by no asc
+ 	</select>
+ 	
+ 	 	<select id="getNormal3"  parameterType="testQuestionDto" resultType="testQuestionDto">
+ 	   select * from test_question where category_no=#{category_no} and csname=#{csname} order by no asc
+ 	</select>
+ 	
  	<!-- 일반 문제 상세보기 -->
  	<select id="getContent" resultType="testQuestionDto" parameterType="int">
  	select * from test_question where no=#{no}
@@ -144,6 +152,18 @@ on t.no=S.question_no where t.no=#{no}
 			file_type=#{file_type},
 			file_size=#{file_size}
  		where question_no=#{question_no}			
+ 	</update>
+ 	
+ 	
+ 	<update id="updateTestFile" parameterType="uploadTestQuestionFileDto">
+ 	
+ 	   
+        	update test_question_file set 
+			file_upload_name=#{file_upload_name},
+			file_save_name=#{file_save_name},
+			file_type=#{file_type},
+			file_size=#{file_size}
+ 		where test_question_no=#{test_question_no}	
  	</update>
  	<update id="updateCustom" parameterType="uploadQuestionDto">
  		update user_custom_question set 
@@ -301,5 +321,12 @@ update solution set
  	#{user_no}
  	)	
  	</insert>
+
+
+<!-- 일반문제 삭제 -->
+
+ <delete id="deleteTestQuestion">
+ 	 delete from test_question where no=#{no}
+ 	 </delete>
 
  </mapper>

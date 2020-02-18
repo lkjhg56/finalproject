@@ -9,18 +9,19 @@
    
    
    
-   function save(quesno, disno, answer){
+   function save(quesno, disno, answer,id){
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
-
+       var checked3= document.getElementById(id);
 
        if (checked.checked==true){
            console.log("체크됨")
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();
+               $(checked3).show();
            }
        }
           if(disno===answer){
@@ -252,17 +253,17 @@ main{
    							<h2>${qlist.question}</h2><h6>${qlist.rate}%</h6>
 
  
-   							<h4><input class = "ans" type="checkbox"  name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}');">${qlist.dis1}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}');">${qlist.dis2}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}');">${qlist.dis3}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}');">${qlist.dis4}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}');">${qlist.dis5}</h4>
+   							<h4><input class = "ans" type="checkbox"  name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}','preview');">${qlist.dis1}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}','preview');">${qlist.dis2}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}','preview');">${qlist.dis3}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}','preview');">${qlist.dis4}</h4>
+   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}','preview');">${qlist.dis5}</h4>
 								<br>
    								<br>
    								<br>
    					</div>
    					 <div class = "plural-pic" >
-   									<img class = "test ${qlist.no}"  name = "${qlist.no}"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}');"  width="400" height="250" >
+   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}');"  width="400" height="250" >
    					</div> 							  
       </div>
    	</div>  		
