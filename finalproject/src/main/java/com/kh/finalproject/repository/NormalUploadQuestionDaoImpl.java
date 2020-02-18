@@ -103,6 +103,11 @@ private SqlSession sqlSession;
 		sqlSession.delete("question.deleteTestQuestion",no);
 		
 	}
+	@Override
+	public void onlyfileDelete(int no) {
+		sqlSession.delete("question.deleteTestQFile",no);
+		
+	}
 	
 	
 }

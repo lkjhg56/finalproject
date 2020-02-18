@@ -22,6 +22,7 @@ function previewImage(target){
 <div>유료 여부    : ${questionDto.question_premium}</div>
 </c:if>
 <div><img id="preview" src="qimage?no=${questionDto.no}"  width="120" height="120"></div>
+
 <div>문제 보기1 : ${questionDto.dis1}</div>
 <div>문제 보기2 : ${questionDto.dis2}</div>
 <div>문제 보기3 : ${questionDto.dis3}</div>

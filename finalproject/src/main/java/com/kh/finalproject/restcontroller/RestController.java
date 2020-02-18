@@ -1,5 +1,6 @@
 package com.kh.finalproject.restcontroller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestQuestionDto;
+import com.kh.finalproject.entity.UploadTestQuestionFileDto;
 import com.kh.finalproject.payvo.RateVO;
+import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.TestDao;
 import com.kh.finalproject.vo.SetScoreVO;
 
@@ -30,6 +33,9 @@ public class RestController {
 	
 	@Autowired
 	private TestDao testDao;
+	
+	@Autowired
+	private NormalUploadQuestionDao  NormalUploadQuestionDao;
 	
 	@PostMapping("insert")
 	public String insert(@RequestParam int test_no, int correct, int answer, int iscorrect, HttpSession session) {
@@ -120,6 +126,21 @@ public class RestController {
 		return null;
 	}
 	
+	@PostMapping("deletefile")
+	public String deletefile(@RequestParam int no) {
+		UploadTestQuestionFileDto	 delete = 
+				NormalUploadQuestionDao.getFile(no);
+		
+		if(delete!=null) {
+		String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();
+		File file = new File(filepath);
+		file.delete();
+		}
+		NormalUploadQuestionDao.onlyfileDelete(no);
+		return null;
+		
+		/* "redirect:question/normalupdate"+no; */
+	}
 	
 	
 }

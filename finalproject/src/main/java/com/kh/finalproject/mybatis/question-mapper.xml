@@ -329,5 +329,11 @@ update solution set
  <delete id="deleteTestQuestion">
  	 delete from test_question where no=#{no}
  	 </delete>
+ 	 
+ 	 <delete id="deleteTestQFile">
+ 	 
+ 	 delete from test_question_file where test_question_no=#{no}
+ 	 </delete>
+ 	 
 
  </mapper>
