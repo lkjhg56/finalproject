@@ -18,4 +18,5 @@ public class ResultDto {
 	private int  cus_ques_no;
 	private String cs_no;
 	private int rn;
+	private String session_ques;
 }

@@ -305,9 +305,9 @@ public String category2(@RequestParam String categoryname, String session, Strin
 	public String result(@RequestParam String category_no, String csname, HttpSession session, Model model) {
 		int rno = (int) session.getAttribute("rno");
 		TestQuestionDto testQuestionDto = TestQuestionDto.builder()
-				.csname(csname)
-				.category_no(category_no)
-				.build();
+															.csname(csname)
+															.category_no(category_no)
+															.build();
 
 
 		List<TestQuestionDto> answerList = sqlSession.selectList("getQuesNum", testQuestionDto);
