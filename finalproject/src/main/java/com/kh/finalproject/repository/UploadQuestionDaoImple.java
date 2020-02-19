@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,16 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public int questionResultSequece() {
 		return sqlSession.selectOne("question.questionSequence");
 	}
-	
+	//전체 문제 개수 세기
+	@Override
+	public int questionCount() {
+		return sqlSession.selectOne("question.questionCount");
+	}
+	//map으로 문제 리스트 불러오기
+	@Override
+	public List<UploadQuestionDto> mapList(Map<String, Integer> param){
+		return sqlSession.selectList("question.questionNavRownum",param);
+	}
 	//문제를 DB에 업로드
 	public void upload(UploadQuestionDto uploadQuestionDto) {
 		sqlSession.insert("question.upload_sub", uploadQuestionDto);//user_costom_question 등록
@@ -146,7 +156,7 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	//사용자가 한 문제에 대해 해결한 순위 조회
 	@Override
-	public int userPriority(int question_no, int result_no) {
+	public UserQuestionResultDto userPriority(int question_no, int result_no) {
 		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
 				.question_no(question_no)
 				.result_no(result_no)

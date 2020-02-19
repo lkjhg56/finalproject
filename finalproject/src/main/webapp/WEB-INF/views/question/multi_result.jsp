@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 	$(function(){
 		$(".multi").hide();
@@ -24,7 +24,7 @@
 		
 	});
 </script>
-
+<div class="container">
 <div>수험 시간 : <c:if test="${time.hour!=0}">${time.hour}시간</c:if> ${time.min}분 ${time.sec}초</div><br>
 <!-- 결과, 상세 버튼 -->
 <button class="result">결과페이지</button><button class="detail">상세페이지</button>
@@ -66,4 +66,5 @@
 <a href="${pageContext.request.contextPath}">처음 페이지로</a>
 <a href="${pageContext.request.contextPath}/question/list">유저 문제 목록으로</a>
 </div>
-<jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>
+</div>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

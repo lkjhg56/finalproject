@@ -15,8 +15,21 @@ function previewImage(target){
     }
 }
 </script>
-
+<script>
+function deletefile(target) {
+	  $.ajax({
+	          url:"${pageContext.request.contextPath}/question/deleteFile",
+	          type:"post",
+	          data:{question_no:target},
+	          success:function(){
+	        		alert("파일이 삭제 됩니다");
+	   	     		location.reload();
+          	  }
+      });
+}
+</script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<div class="container">
 <h1>문제 수정</h1>
 <form action="update" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="question_no" value="${questionDto.question_no}">
@@ -26,9 +39,10 @@ function previewImage(target){
 	<textarea name="question_content" rows="10" cols="50">${questionDto.question_content}</textarea><br><br>
 	<c:if test="${image !=null}">
 		<c:forEach var="image" items="${image}">
-		<div><img src="image?question_file_no=${image.question_file_no}" width="120" height="120"></div>
+		<div><img id="preview" onchange="previewImage(this);" src="image?question_file_no=${image.question_file_no}" width="120" height="120"></div>
 		</c:forEach>
 	</c:if>
+	<a type="button" onclick="deletefile('${questionDto.question_no}')">삭제하기</a>
 	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>
 	<input type="text" name="answer1" value="${questionDto.answer1}" required><br><br>
 	<input type="text" name="answer2" value="${questionDto.answer2}" required><br><br>
@@ -43,4 +57,5 @@ function previewImage(target){
 	<input type="submit" value="수정하기">
 	<input type="reset" value="초기화">
 </form>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

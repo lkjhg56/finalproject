@@ -1,6 +1,7 @@
 package com.kh.finalproject.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
@@ -27,7 +28,7 @@ public interface UploadQuestionDao {
 	UploadQuestionDto question_all(int question_no);
 	List<UploadQuestionDto> question_user_all();
 	void insert_result(UserQuestionResultDto userQuestionResultDto);
-	int userPriority(int question_no, int result_no);
+	UserQuestionResultDto userPriority(int question_no, int result_no);
 	UploadQuestionDto isCorrect(int question_no);
 	void givePointforSolving(int user_no);
 	void insert_multi_result(UserQuestionMultiResultDto userQuestionMultiResultDto);
@@ -37,4 +38,6 @@ public interface UploadQuestionDao {
 	List<UploadQuestionDto> getListWithImage();
 	void deleteFile(int question_file_no);
 	List<UploadQuestionDto> getListWithImageByNumber(int question_no);
+	int questionCount();
+	List<UploadQuestionDto> mapList(Map<String, Integer> param);
 }

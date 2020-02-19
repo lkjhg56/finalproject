@@ -15,7 +15,8 @@ function previewImage(target){
     }
 }
 </script>
-<jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<div class="container">
 <h1>문제 업로드</h1>
 <form action="upload" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="user_id" value="${id}">
@@ -40,4 +41,5 @@ function previewImage(target){
 	<input type="submit" value="등록하기">
 	<input type="reset" value="초기화">
 </form>
-<jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>
+</div>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

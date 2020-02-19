@@ -74,6 +74,14 @@
 	<select id="getListWithImageByNumber" parameterType="int" resultMap="imageListWithQuestion" >
  	 	select * from question where question_no=#{question_no} order by question_no asc
  	</select>
+ 	<!-- 전체 문제 개수 -->
+ 	<select id="questionCount" resultType="int">
+ 		select count(*) from question
+ 	<!-- 네비게이터 -->	
+ 	</select>
+ 	 	<select id="questionNavRownum" parameterType="map" resultType="boardDto">
+ 		select * from(select rownum rn, A.* from(select * from question order by question_no desc)A)where rn between #{start} and #{finish}
+	</select>
  	<!-- 유저 문제 업로드 -->
  	<insert id="upload" parameterType="uploadQuestionDto">
  		insert into question values(
@@ -254,8 +262,7 @@
  	 </select>
  	 <select id="userPriority" parameterType="userQuestionResultDto" resultType="userQuestionResultDto">
 		select rownum,e.* from(
-			select * from question_result where question_no=#{question_no} and result_no=#{result_no}
-		)e order by rownum desc
+			select * from question_result where question_no=#{question_no} and result_no=#{result_no})e	
 	 </select>
 	 
 	  	<!-- 유저 문제 조회 --> 	
@@ -290,6 +297,7 @@
         		on u.user_no = ucq.user_no
         	)e
 		on q.user_custom_question_no = e.user_custom_question_no
+		order by question_no desc
  	 </select>
 
  	 <!-- 파일 불러오기 -->
