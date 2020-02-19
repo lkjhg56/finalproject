@@ -10,7 +10,11 @@
 <c:if test="${grade=='관리자'}">
 <div>유료 여부    : ${questionDto.question_premium}</div>
 </c:if>
-<div><img src="image?question_no=${questionDto.question_no}"  width="120" height="120"></div>
+<c:if test="${image != null}">
+	<c:forEach var="images" items="${image}">
+		<div><img src="image?question_file_no=${images.question_file_no}"  width="120" height="120"></div>
+	</c:forEach>
+</c:if>
 <div>문제 보기1 : ${questionDto.answer1}</div>
 <div>문제 보기2 : ${questionDto.answer2}</div>
 <div>문제 보기3 : ${questionDto.answer3}</div>

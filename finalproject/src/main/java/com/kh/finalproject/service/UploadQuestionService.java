@@ -6,6 +6,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
+import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
@@ -18,4 +19,5 @@ public interface UploadQuestionService {
 	ResponseEntity<ByteArrayResource> downloadImg(int question_no) throws Exception;
 	List<UploadQuestionDto> multiQuestion(int wantQuestion);
 	List<UserQuestionResultDto> checkMulti(ExamResultVO examResultVO);
+	UserQuestionMultiResultDto insert_multi(List<UserQuestionResultDto> list, UserQuestionResultDto userQuestionResultDto);
 }

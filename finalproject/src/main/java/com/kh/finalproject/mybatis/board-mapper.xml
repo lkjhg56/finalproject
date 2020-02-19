@@ -128,14 +128,11 @@
  	 <select id="getFileOne" parameterType="int" resultType="boardfileDto">
  	 	select * from board_file where board_file_no=#{board_file_no}
  	 </select>
- 	 
- 	 <!-- 게시글 파일 정보 가져오기 -->
+ 	 <!-- 파일 수정을 위한 게시글 파일 번호 가져오기 --> 	 
+ 	 <!-- 게시글 파일 번호 가져오기 -->
  	 <select id="getFileNO" parameterType="int" resultType="boardfileDto">
  	 	select * from board_file where board_origin_content_no = #{board_no}
  	 </select>
- 	 
- 	 
-	
 	<!-- /////////////////////////////////////////////
 								댓글 sql구문 시작
 	 //////////////////////////////////////////////-->

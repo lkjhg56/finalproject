@@ -9,46 +9,46 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import lombok.extern.slf4j.Slf4j;
-/* ÀÎÅÍ¼ÁÅÍ(Interceptor)
- * -¿äÃ»À» °¡·ÎÃ¤´Â µµ±¸
- * -ÃÑ 3±ºµ¥¸¦ °¡·ÎÃ§ ¼ö ÀÖÀ½.
- * -preHandel : DispatcherServlet µµÂø Àü
- *  return true´Â ¼ÓÇà, return false´Â Â÷´Ü
- * -postHandle : Controller ¼öÇà ÈÄ(return ¾øÀ½, Â÷´Ü ¾ÈµÊ.)
- * -afterCompletion : View »ý¼º ÈÄ (return ¾øÀ½, Â÷´Ü ¾ÈµÊ.)
+/* ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½(Interceptor)
+ * -ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+ * -ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã§ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+ * -preHandel : DispatcherServlet ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+ *  return trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, return falseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+ * -postHandle : Controller ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(return ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½.)
+ * -afterCompletion : View ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (return ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½.)
  * 
  */
 @Slf4j
 public class TestInterceptor extends HandlerInterceptorAdapter{
 
-	//
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		log.info("preHandle ½ÇÇà!");
-		log.info("handler={}",handler.getClass());
-		if(handler instanceof HandlerMethod) {
-			HandlerMethod h  = (HandlerMethod) handler;
-			log.info("method={}",h.getMethod().getName());
-			log.info("annotation={}",h.getMethodAnnotation(RequestMapping.class));
-		}
-		return true;
-	}
-
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		log.info("posthandle");
-		log.info("handler={}",handler);
-		log.info("model&view={}",modelAndView);
-	}
-
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		log.info("afterCompletion");
-		log.info("handler={}",handler);
-		log.info("exception={}",ex);
-	}
+//	//
+//	@Override
+//	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+//			throws Exception {
+//		log.info("preHandle ï¿½ï¿½ï¿½ï¿½!");
+//		log.info("handler={}",handler.getClass());
+//		if(handler instanceof HandlerMethod) {
+//			HandlerMethod h  = (HandlerMethod) handler;
+//			log.info("method={}",h.getMethod().getName());
+//			log.info("annotation={}",h.getMethodAnnotation(RequestMapping.class));
+//		}
+//		return true;
+//	}
+//
+//	@Override
+//	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+//			ModelAndView modelAndView) throws Exception {
+//		log.info("posthandle");
+//		log.info("handler={}",handler);
+//		log.info("model&view={}",modelAndView);
+//	}
+//
+//	@Override
+//	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+//			throws Exception {
+//		log.info("afterCompletion");
+//		log.info("handler={}",handler);
+//		log.info("exception={}",ex);
+//	}
 	
 }

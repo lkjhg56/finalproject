@@ -19,5 +19,6 @@ public class BoardFileDto {
 	private String board_file_upload_name, 
 							board_file_save_name, 
 							board_file_type;
+	private List<MultipartFile> file;
 
 }

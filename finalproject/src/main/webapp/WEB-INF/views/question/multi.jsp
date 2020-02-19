@@ -135,8 +135,14 @@ function pageChange(index, totalPage){
 <c:forEach var="questionDto" items="${list}" varStatus="status">
 <div class="inputDiv">
 문제 ${status.count}<br>
+정답률 : ${questionDto.correct_ratio}%<br>
 <span>문제 : ${questionDto.question_title}</span><br>
-<img class="preview" src="image?question_no=${questionDto.question_no}" width="120" height="120"><br><br>
+
+<c:if test="${questionDto.files !=null}">
+<c:forEach var="image" items="${questionDto.files}" varStatus="status">
+	<img class="preview" src="image?question_file_no=${image.question_file_no}"  width="120" height="120"><br><br>
+</c:forEach>
+</c:if>
 <span>문제 내용 : ${questionDto.question_content}</span>
 	<input type="hidden" name="question[${status.index}].id" value="${id}">  
 	<input type="hidden" name="question[${status.index}].no" value="${questionDto.question_no}"><br><br>

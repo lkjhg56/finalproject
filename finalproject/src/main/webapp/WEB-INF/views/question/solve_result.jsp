@@ -21,14 +21,13 @@
 전체 수험자 중 
 <c:choose>
 	<c:when test="${result.result==1}">
-		${result.user_priority}번째로 맞추셨습니다.<br>
+		${result.rownum}번째로 맞추셨습니다.<br>
+		3포인트가 적립됬습니다.<br>
 	</c:when>
 	<c:otherwise>
-		${result.user_priority}번째로 틀리셨습니다.<br>
+		${result.rownum}번째로 틀리셨습니다.<br>
 	</c:otherwise>
 </c:choose>
-
-??포인트가 적립됬습니다.<br>
 풀이 날짜 : ${result.solveDate}
 <div>
 <a href="${pageContext.request.contextPath}">처음 페이지로</a>
