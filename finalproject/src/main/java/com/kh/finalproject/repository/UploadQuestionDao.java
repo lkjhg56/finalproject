@@ -1,6 +1,7 @@
 package com.kh.finalproject.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
@@ -37,4 +38,6 @@ public interface UploadQuestionDao {
 	List<UploadQuestionDto> getListWithImage();
 	void deleteFile(int question_file_no);
 	List<UploadQuestionDto> getListWithImageByNumber(int question_no);
+	int questionCount();
+	List<UploadQuestionDto> mapList(Map<String, Integer> param);
 }

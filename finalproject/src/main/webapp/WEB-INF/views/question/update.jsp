@@ -29,6 +29,7 @@ function deletefile(target) {
 }
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<div class="container">
 <h1>문제 수정</h1>
 <form action="update" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="question_no" value="${questionDto.question_no}">
@@ -56,4 +57,5 @@ function deletefile(target) {
 	<input type="submit" value="수정하기">
 	<input type="reset" value="초기화">
 </form>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

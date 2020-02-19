@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<div class="container">
 
 <div>문제 번호 : ${questionDto.question_no}</div>
 <div>문제 제목 : ${questionDto.question_title}</div>
@@ -32,5 +32,6 @@
 <a href="update?question_no=${questionDto.question_no}">문제 수정</a>
 <a href="delete?question_no=${questionDto.question_no}&user_custom_question_no=${questionDto.user_custom_question_no}">문제 삭제</a>
 </c:if>
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

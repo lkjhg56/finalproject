@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<div class="container">
 문제 채점 결과 :  
 <c:choose>
 	<c:when test="${result.result==1}">
@@ -32,5 +33,6 @@
 <div>
 <a href="${pageContext.request.contextPath}">처음 페이지로</a>
 <a href="${pageContext.request.contextPath}/question/list">유저 문제 목록으로</a>
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

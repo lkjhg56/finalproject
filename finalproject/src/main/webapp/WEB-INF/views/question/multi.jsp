@@ -119,7 +119,8 @@ function pageChange(index, totalPage){
 }
 
 </script>
-<h1>여러문제 풀기</h1>
+<div class="container">
+<div>여러문제 풀기</div>
 <!-- 리스트로 받아온다. 리스트 내에는 Question_no을 포함한 문제의 DTO를 가진다. -->
 <form action="multi" method="post">
 	<input type="hidden" id="hourResult" name="hour">  
@@ -151,4 +152,5 @@ function pageChange(index, totalPage){
 </c:forEach>
 </div>
 </form>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

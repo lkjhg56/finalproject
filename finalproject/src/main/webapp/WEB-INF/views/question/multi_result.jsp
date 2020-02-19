@@ -24,7 +24,7 @@
 		
 	});
 </script>
-
+<div class="container">
 <div>수험 시간 : <c:if test="${time.hour!=0}">${time.hour}시간</c:if> ${time.min}분 ${time.sec}초</div><br>
 <!-- 결과, 상세 버튼 -->
 <button class="result">결과페이지</button><button class="detail">상세페이지</button>
@@ -65,5 +65,6 @@
 <div>
 <a href="${pageContext.request.contextPath}">처음 페이지로</a>
 <a href="${pageContext.request.contextPath}/question/list">유저 문제 목록으로</a>
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
