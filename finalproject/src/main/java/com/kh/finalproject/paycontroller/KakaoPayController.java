@@ -74,20 +74,10 @@ public class KakaoPayController {
 		int token = infovo.getToken();
 		String id = vo.getPartner_user_id();
 		int pastPoint = sqlSession.selectOne("pay.getPoint", id);
-		int newpoint = pastPoint +token;
+		int newPoint = pastPoint +token;
 		
-		
-		TempVO tempVo = TempVO.builder()
-													.id(id)
-													.point(newpoint)
-													.build();
-		
-		
-		log.info("tempvoid={}", tempVo.getId());
-		log.info("temppoint={}", tempVo.getPoint());
-		sqlSession.update("pay.updatePoint", tempVo);
-		log.info("idtest={}", vo.getPartner_order_id());
-		
+
+		int num1 =  sqlSession.selectOne("pay.getnum");
 		KakaoPaySuccessReadyVO data = KakaoPaySuccessReadyVO.builder()
 																									.cid("TC0ONETIME")
 																									.tid(tid)
@@ -95,19 +85,20 @@ public class KakaoPayController {
 																									.partner_user_id(vo.getPartner_user_id())
 																									.pg_token(pg_token)
 																									.build();
-		KakaoPaySuccessReturnVO result = payService.approve(data);
+		KakaoPaySuccessReturnVO result = payService.approve(data, num1);
 		log.info("result = {}", result);
-		int newPoint = sqlSession.selectOne("pay.getPoint", id);
+//		int newPoint = sqlSession.selectOne("pay.getPoint", id);
 		
 		String order_id = vo.getPartner_user_id();
 		log.info("idcheck={}", order_id);
 		List<PayListDto> listDto = sqlSession.selectList("paylist", order_id);
 		
+		
 		for(PayListDto dto : listDto) {
 			log.info("dtocheck={}", dto.getItem_name());
 		}
-		
-		
+		model.addAttribute("id", id);
+		model.addAttribute("payno", num1);
 		model.addAttribute("paylist", listDto);
 		model.addAttribute("result", result);
 		model.addAttribute("point", newPoint);

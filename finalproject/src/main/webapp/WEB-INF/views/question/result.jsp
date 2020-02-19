@@ -8,10 +8,12 @@
    
 <h1>끝</h1>
 <h5>점수 ${score}</h5>
+<h5>풀린 횟수 ${solved}</h5>
 <h5>이시험 평균 점수 ${average}</h5>
 <h5>상위 10% 점수 :${high10average}</h5>
 <h5>상위 25% 점수 :${high25average}</h5>
 <h5>상위 50% 점수 :${high50average}</h5>
+<h5>상위 75% 점수 :${high75average}</h5>
 <h5>순위 : ${rank} 백분위 : ${percentile}</h5>
 
 <h4>

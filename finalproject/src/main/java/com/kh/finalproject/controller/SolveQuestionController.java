@@ -331,9 +331,11 @@ public String category2(@RequestParam String categoryname, String session, Strin
 		int high10 = num/10;
 		int high25 = num/4;
 		int high50 =  num/2;
+		int high75 = num*3/4;
 		int high10average = 0;
 		int high25average = 0;
 		int high50average = 0;
+		int high75average = 0;
 		
 		testQuestionDto = TestQuestionDto.builder()
 				.csname(csname)
@@ -369,7 +371,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 		
 		}
 		total = 0;
-		if(high25<1) {
+		if(high50<1) {
 			high50average = average;
 		}else {
 			testQuestionDto = TestQuestionDto.builder()
@@ -385,6 +387,24 @@ public String category2(@RequestParam String categoryname, String session, Strin
 			high50average = total/high50;
 		
 		}
+		total = 0;
+		if(high75<1) {
+			high75average = average;
+		}else {
+			testQuestionDto = TestQuestionDto.builder()
+					.csname(csname)
+					.category_no(category_no)
+					.end(high75)
+					.rno(rno)
+					.build();
+			List<ResultDto> sum3 = sqlSession.selectList("getSum2", testQuestionDto);
+			for(ResultDto dto : sum3) {
+				total+= dto.getSumscore();
+			}
+			high75average = total/high75;
+		
+		}
+
 
 		
 		
@@ -402,10 +422,12 @@ public String category2(@RequestParam String categoryname, String session, Strin
 		model.addAttribute("answerList", answerList);
 		model.addAttribute("score",  testDao.getScore(rno, category_no, csname));
 		model.addAttribute("csname", csname);
+		model.addAttribute("solved", num);
 		model.addAttribute("average", average);
 		model.addAttribute("high10average", high10average);
 		model.addAttribute("high25average", high25average);
 		model.addAttribute("high50average", high50average);
+		model.addAttribute("high75average", high75average);
 		model.addAttribute("rank", rank);
 		model.addAttribute("percentile", percentile);
 		return "question/result";

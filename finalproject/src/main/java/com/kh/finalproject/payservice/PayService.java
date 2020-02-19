@@ -14,5 +14,6 @@ import com.kh.finalproject.payvo.PayReadyVO;
 public interface PayService{
 	PayReadyReturnVO ready(PayReadyVO vo) throws URISyntaxException;
 
-	KakaoPaySuccessReturnVO approve(KakaoPaySuccessReadyVO data) throws URISyntaxException;
+
+	KakaoPaySuccessReturnVO approve(KakaoPaySuccessReadyVO data, int num1) throws URISyntaxException;
 }
