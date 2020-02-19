@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 function previewImg(target){
 	if(target.files && target.files[0]){
@@ -151,4 +151,4 @@ function pageChange(index, totalPage){
 </c:forEach>
 </div>
 </form>
-<jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
