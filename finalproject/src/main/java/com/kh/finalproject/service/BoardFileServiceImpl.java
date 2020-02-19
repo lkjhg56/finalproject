@@ -22,8 +22,11 @@ import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.repository.BoardFileDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service
+@Slf4j
 public class BoardFileServiceImpl implements BoardFileService{
 	
 	@Autowired
@@ -104,8 +107,6 @@ public class BoardFileServiceImpl implements BoardFileService{
 		//게시글 수정
 		boardDao.edit(boardDto);
 		//기존 파일 삭제
-		
-		
 		List<BoardFileDto> list = new ArrayList<>();
 		
 		for(MultipartFile mf : board_file) { //올린 파일 개수만큼 반복
@@ -119,14 +120,8 @@ public class BoardFileServiceImpl implements BoardFileService{
 				.build());
 			}
 		}
-		//변경된 파일을 다시 저장.	
-		String Path="D:/upload/board_files";
-		File dir = new File(Path);
-		dir.mkdir();
-		
 //		for(int i = 0; i < list.size(); i++) {	
 //			MultipartFile mf = board_file.get(i);//하드디스크에 저장할 실제 파일 객체
-			
 //			if(!mf.isEmpty()) {
 //				//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
 //				List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", boardDto.getBoard_no());
@@ -194,6 +189,25 @@ public class BoardFileServiceImpl implements BoardFileService{
 				
 	}
 
+	
+	
+	@Override
+	public void deleteRealfile(int board_no) {
+			//삭제. 기존 파일은 DB내에서 board_no를 이용하여 찾아서 파일 정보를 불러와서 DB삭제, 실제삭제 한다.			
+			List<BoardFileDto> delete = boardfileDao.getFileNo(board_no);//지울 실제 파일 정보 가져옴
+//			for(int i = 0; i < delete.size(); i ++) {
+//				log.info("board_file_no{} = ", delete.get(i).getBoard_file_no());
+//			}			
+			
+			if(!delete.isEmpty()) {			
+			for(int i = 0; i < delete.size(); i++) {	
+				String filepath = "D:/upload/board_files/"+delete.get(i).getBoard_file_save_name();
+				System.out.println("filepath = "+filepath);					
+				File file = new File(filepath);
+				file.delete();					
+			}		
+		}
+	}
 
 }
 		

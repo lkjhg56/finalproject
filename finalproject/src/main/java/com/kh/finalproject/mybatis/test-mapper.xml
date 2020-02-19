@@ -72,6 +72,29 @@ where a.rownumber=#{no}
 	<update id = "sumScore" parameterType = "scoreVO">
 		update result set sumscore =#{score} where rno=#{rno}
 	</update>
+	
+	<update id = "quesup" parameterType = "scoreVO">
+		update result set session_ques =#{session_ques} where rno=#{rno}
+	</update>
+	
+ 	<select id = "getSum" parameterType = "testQuestionDto" resultType = "resultDto">
+ 		select * from result where cs_no = #{csname} and session_ques = #{category_no}
+ 	</select>
+ 	
+ 	<select id = "getSum2" parameterType = "testQuestionDto" resultType = "resultDto">
+		 		select * from(
+				    select rownum rn,A.* from (
+		    		    select * from result where cs_no = #{csname} and session_ques= #{category_no} order by sumscore desc
+				    )A
+				)where rn between 1 and #{end}
+ 	</select>
+ 	
+ 	<select id = "getRank" parameterType = "testQuestionDto" resultType = "int">
+ 		select rank from (select rno, sumscore, cs_no, session_ques,
+        rank() over (order by sumscore DESC) as rank 
+        from result where cs_no=#{csname} and session_ques=#{category_no})a where a.rno=#{rno}
+ 	
+ 	</select>
 
 
 	<select id="questionList2" parameterType="String" resultType="testQuestionDto">

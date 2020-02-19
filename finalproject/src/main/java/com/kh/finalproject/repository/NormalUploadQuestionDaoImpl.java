@@ -95,7 +95,17 @@ private SqlSession sqlSession;
 	}
 	@Override
 	public void updateFile(UploadTestQuestionFileDto uploadTestQuestionFileDto) {
-		sqlSession.update("question.updateFile",uploadTestQuestionFileDto);
+		sqlSession.update("updateTestFile",uploadTestQuestionFileDto);
+		
+	}
+	@Override
+	public void fileDelete2(int no) {
+		sqlSession.delete("question.deleteTestQuestion",no);
+		
+	}
+	@Override
+	public void onlyfileDelete(int no) {
+		sqlSession.delete("question.deleteTestQFile",no);
 		
 	}
 	

@@ -3,16 +3,18 @@
 
 <!-- 네비게이터(navigator) -->
 <!-- 
-	반드시 받아야 하는 데이터 : type, keyword, pno, count, navsize, pagesize, board_category
+	반드시 받아야 하는 데이터 : type, keyword, pno, count, navsize, pagesize, board_category, board_no
  -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:set var="board_no" value="${param.board_no}"></c:set> 
 <c:set var="board_category" value="${param.board_category}"></c:set>
 <c:set var="type" value="${param.type}"></c:set>
 <c:set var="keyword" value="${param.keyword}"></c:set> 
 <c:set var="isSearch" value="${not empty type and not empty keyword}"></c:set> 
-<<c:set var="isCategory" value="${not empty board_category}"></c:set>
+<c:set var="isCategory" value="${not empty board_category}"></c:set>
+<c:set var="isReply" value="${not empty board_no}"></c:set>
 <c:set var="pno" value="${param.pno}"></c:set> 
 <c:set var="count" value="${param.count}"></c:set> 
 <c:set var="navsize" value="${param.navsize}"></c:set> 
@@ -62,6 +64,9 @@
 					<c:when test="${isCategory}">
 						<li><a href="${uri}?board_category=${board_category}&pno=${i}">${i}</a></li>
 					</c:when>
+					<c:when test="${isReply}">
+						<li><a href="${uri}?board_no=${board_no}&pno=${i}">${i}</a></li>
+					</c:when>
 					<c:otherwise>
 						<li><a href="${uri}?pno=${i}">${i}</a></li>
 					</c:otherwise>
@@ -78,6 +83,9 @@
 			</c:when>
 			<c:when test="${isCategory}">
 				<li><a href="${uri}?board_category=${board_category}&pno=${finishBlock+1}">다음</a></li>
+			</c:when>
+			<c:when test="${isReply}">
+				<li><a href="${uri}?board_no=${board_no}&pno=${finishBlock+1}">다음</a></li>
 			</c:when>
 			<c:otherwise>
 				<li><a href="${uri}?pno=${finishBlock+1}">다음</a></li>	

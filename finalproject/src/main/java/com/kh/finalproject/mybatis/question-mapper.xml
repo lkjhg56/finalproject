@@ -154,12 +154,21 @@
  			#{dis3},
  			#{dis4},
  			#{dis5},
- 			#{rate}
+ 			#{rate},
+ 			#{lim_min}
  			)
  	</insert>
  	
  	<!-- 일반문제 목록 -->
  	<select id="getNormal"  parameterType="normalUpdateQuestionVO" resultType="testQuestionDto">
+ 	   select * from test_question where category_no=#{category_no} and csname=#{csname} order by no asc
+ 	</select>
+ 	
+ 	<select id="getNormal2"  resultType="testQuestionDto">
+ 	   select * from test_question order by no asc
+ 	</select>
+ 	
+ 	 	<select id="getNormal3"  parameterType="testQuestionDto" resultType="testQuestionDto">
  	   select * from test_question where category_no=#{category_no} and csname=#{csname} order by no asc
  	</select>
  	
@@ -217,6 +226,18 @@
 			file_type=#{file_type},
 			file_size=#{file_size}
  		where question_no=#{question_no}			
+ 	</update>
+ 	
+ 	
+ 	<update id="updateTestFile" parameterType="uploadTestQuestionFileDto">
+ 	
+ 	   
+        	update test_question_file set 
+			file_upload_name=#{file_upload_name},
+			file_save_name=#{file_save_name},
+			file_type=#{file_type},
+			file_size=#{file_size}
+ 		where test_question_no=#{test_question_no}	
  	</update>
  	<update id="updateCustom" parameterType="uploadQuestionDto">
  		update user_custom_question set 
@@ -375,6 +396,4 @@ update solution set
  	#{user_no}
  	)	
  	</insert>
- 	
- 	
  </mapper>

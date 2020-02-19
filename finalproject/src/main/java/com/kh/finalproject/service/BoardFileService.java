@@ -23,6 +23,7 @@ public interface BoardFileService {
 	//3.게시글 수정(+파일)
 	void editWithFile(BoardDto boardDto, List<MultipartFile> board_file) throws IllegalStateException, IOException;
 
-	//4.게시글 삭제
-//	void deleteFile2(int board_no, int board_file_no);
+	//4.게시글 삭제 시 실제 파일 삭제
+	void deleteRealfile(int board_no);
+	
 }

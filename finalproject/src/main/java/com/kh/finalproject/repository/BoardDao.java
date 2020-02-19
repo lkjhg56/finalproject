@@ -35,7 +35,7 @@ public interface BoardDao {
 		List<BoardDto> search(Map<String, String> param);
 		
 	//9.댓글 조회
-		List<BoardReplyDto> getReplyList(int board_reply_origin);
+		List<BoardReplyDto> getReplyList(Map<String, Integer> param);
 		
 	//10.댓글 삭제
 		void replyDelete(int board_reply_no);
@@ -57,6 +57,9 @@ public interface BoardDao {
 		
 	//16.게시판 검색별 글 개수 구하기
 		int boardSearchCount(Map<String, String> param);
+		
+	//17.댓글 개수 구하기
+		int boardReplyCount(int board_no);
 		
 	
 		

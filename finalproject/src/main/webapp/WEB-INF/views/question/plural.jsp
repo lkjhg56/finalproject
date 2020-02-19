@@ -9,18 +9,20 @@
    
    
    
-   function save(quesno, disno, answer){
+   function save(quesno, disno, answer,id){
        var test = quesno+disno
 		console.log(test+"확인")
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
-
+       var checked3= document.getElementById(id);
 
        if (checked.checked==true){
            console.log("체크됨")
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();
+             
+           
            }
        }
           if(disno===answer){
@@ -150,6 +152,25 @@
 		
     	
 	}
+   
+   $(function(){
+	 var a = $(".session_ques").text()
+	 console.log(a);
+	   $.ajax({
+		  url : "${pageContext.request.contextPath}/question2/queup",
+		  type : "get",
+		  data : {
+			  session_ques:a,
+		  },success: function(){
+			  console.log("success");
+		  },erorr :  function(){
+			  console.log("fail");
+			  
+		  }
+		   
+	   })
+	   
+   })
 </script>
    
    
@@ -164,7 +185,7 @@
 textarea {
   resize: none;
    overflow: auto;
-   width:250px;
+   width:300px;
    height:200px;
 }
 
@@ -196,15 +217,16 @@ main{
 }
 .plural-question{
 	 float:left;
-    width:50%;
+    width:40%;
 }
 .plural-pic{
 	 float:left;
-   width:20%;
+   width:25%;
+   
 }
 .plural-textarea{
 	float:left;
-	width: 30%
+	width: 35%;
 }
 
 
@@ -218,7 +240,7 @@ main{
             <div class = "jumbotron">
                 <h1>${csname}</h1>
 
-                <h3>${session}</h3>
+                <h3 class = "session_ques">${session}</h3>
  						<div class="timer-wrap">
 
        							 <i class = "time">${hour}:${min}:0</i>
@@ -241,32 +263,33 @@ main{
    			<c:forEach var="qlist" items ="${clist}"> 
 
  				<div class = "plural-wrap">
-				<div class = "plural-textarea">
-							<textarea  rows="10">
+					<div class = "plural-textarea">
 							
-							</textarea>
+								<textarea  rows="10">
+								
+								</textarea>
 					</div>
-   					<div class = "plural-question">
-   	
-
-   							<h2>${qlist.question}</h2><h6>${qlist.rate}%</h6>
-
- 
-   							<h4><input class = "ans" type="checkbox"  name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}');">${qlist.dis1}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}');">${qlist.dis2}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}');">${qlist.dis3}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}');">${qlist.dis4}</h4>
-   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}');">${qlist.dis5}</h4>
-								<br>
-   								<br>
-   								<br>
-   					</div>
-   					 <div class = "plural-pic" >
-   									<img class = "test ${qlist.no}"  name = "${qlist.no}"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}');"  width="400" height="250" >
-   					</div> 							  
-      </div>
+	   				<div class = "plural-question">
+	   	
+	
+	   							<h2>${qlist.question}</h2><h6>${qlist.rate}%</h6>
+	
+	 
+	   							<h4><input class = "ans" type="checkbox"  name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}','preview');">${qlist.dis1}</h4>
+	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}','preview');">${qlist.dis2}</h4>
+	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}','preview');">${qlist.dis3}</h4>
+	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}','preview');">${qlist.dis4}</h4>
+	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}','preview');">${qlist.dis5}</h4>
+									<br>
+	   								<br>
+	   								<br>
+	   					</div>
+	   					 <div class = "plural-pic" >
+	   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}+pic"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}+pic');"  width="400" height="250" >
+	   					</div> 							  
+      		</div>
+  		</c:forEach>
    	</div>  		
-  </c:forEach>
 
   
   

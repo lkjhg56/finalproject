@@ -32,7 +32,7 @@ public class BoardFileDaoImpl implements BoardFileDao{
 		return sqlSession.selectOne("board.filegetSequence");
 	}
 
-	private File directory = new File("D:/upload/boardfile");		
+	private File directory = new File("D:/upload/board_files");		
 		@PostConstruct//생성하면서 실행할 메소드(준비메소드)
 		public void init() {
 			directory.mkdirs();
@@ -79,20 +79,21 @@ public class BoardFileDaoImpl implements BoardFileDao{
 		return buffer.toString();
 	}
 
+	//게시글 번호로 파일 정보 가져옴
 	@Override
-	public BoardFileDto getFileNo(int board_no) {
-		return sqlSession.selectOne("board.getFileNO", board_no);
+	public List<BoardFileDto> getFileNo(int board_no) {
+		return sqlSession.selectList("board.getFileNO", board_no);
 	}
 
+	//첨부 파일 삭제
+	@Override
+	public void deleteFile(int board_no) {
+		sqlSession.delete("board.deletefile", board_no);		
+	}
 	@Override
 	public void editFile(BoardFileDto boardfileDto) {
-		sqlSession.update("board.editFile", boardfileDto);
+		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void deleteFile(int board_file_no) {
-		sqlSession.delete("board.deletefile", board_file_no);		
 	}
 
 	

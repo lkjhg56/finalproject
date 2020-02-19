@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				total_amount, status, aid
 				)
 			 values(
-			 	paylist_no_seq.nextval,
+			 	#{no},
 				#{tid},
 				#{cid},
 				to_date(#{created_at}, 'YYYY-MM-DD"T"HH24:MI:SS'),
@@ -52,12 +52,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)
 	
 	</insert>
+	<select id = "getnum" resultType = "int">
+		select paylist_no_seq.nextval from dual
+	</select>
+	<update id= "confirmup" parameterType = "int">
+		update paylist set isconfirm =1 where num=#{num}
+	</update>
+	
 	<select id = "getPoint" parameterType = "String" resultType = "int">
 	select point from users where id = #{id}
+	</select>
+	
+	<select id = "isconfirmcheck" parameterType = "int" resultType = "int">
+		select isconfirm from paylist where num =#{num}
 	</select>
 	
 	<update id="updatePoint" parameterType ="com.kh.finalproject.payvo.TempVO">
 			update users set point = #{point} where id = #{id}
 	</update>
+	
+	<select id = "paylist" parameterType = "String" resultType = "PayListDto">
+			select * from paylist where partner_user_id = #{order_id}
+	</select>
+	
+	<insert id = "revoke" parameterType = "payDto">
+			insert into paylist(
+				num, tid, cid, created_at, partner_order_id, partner_user_id, item_name, quantity,
+				total_amount, status, aid
+				)
+			 values(
+				paylist_no_seq.nextval,
+				#{tid},
+				#{cid},
+				to_date(#{created_at}, 'YYYY-MM-DD"T"HH24:MI:SS'),
+				#{partner_order_id},
+				#{partner_user_id},
+				#{item_name},
+				#{quantity},
+				#{total_amount},
+				'취소',
+				#{aid}
+			)
+	</insert>
+	
+	<select id = "get" parameterType = "int" resultType ="payDto">
+		select * from paylist where num = #{no}
+	</select>
+	
 	
 	</mapper>

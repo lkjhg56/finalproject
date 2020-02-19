@@ -154,8 +154,8 @@ $(function() {
 				<tr height="200">
 					
 						<td valign="top">
-					<c:forEach var="list"  items="${list}">
-						<div><img src="boardimg?board_file_no=${list.board_file_no}"  width="120" height="120"></div>	
+					<c:forEach var="filelist"  items="${filelist}">
+						<div><img src="boardimg?board_file_no=${filelist.board_file_no}"  width="120" height="120"></div>	
 					</c:forEach>
 							${boardDto.board_content }
 						</td>
@@ -177,7 +177,8 @@ $(function() {
 										<td>
 											<span>${boardReplyDto.board_reply_writer}</span>
 											<span>　</span>		
-											<span>${boardReplyDto.board_reply_wdate.substring(0,16)}</span>								
+											<span>${boardReplyDto.board_reply_wdate.substring(0,16)}</span>	
+											<span><a href="#" id="re">답글</a></span>							
 										</td>
 									</tr>
 									
@@ -232,15 +233,24 @@ $(function() {
 						<form id="registbtn" method="post">					
 							<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
 							<input type="hidden" name="board_reply_writer" value="${id}">					
-							<textarea class="user-input" name="board_reply_content" rows="4" cols="155" required></textarea>						
+							<textarea class="user-input" name="board_reply_content" rows="4" style="width:96.2%; text-align:left;" required></textarea>						
 							<input type="submit" value="등록">						
 						</form>					
 					</td>
 				</tr>
 			</table>	
 			
+			 <div class="row">
+	    		<!-- 네비게이터(navigator) -->    		
+	    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
+	    			<jsp:param name="pno" value="${pno}" />
+	    			<jsp:param name="count" value="${count}" />
+	    			<jsp:param name="navsize" value="${navsize}" />
+	    			<jsp:param name="pagesize" value="${pagesize}" />
+	    		</jsp:include>
+	    	</div>
 				
-			
+		<table>
 			<tr>
 				<td align="right">
 					<!-- 글쓰기 버튼은 로그인시 표시됨 -->
@@ -262,18 +272,5 @@ $(function() {
 				</td>
 			</tr>	
 		</table>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	</div>	
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
