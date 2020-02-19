@@ -31,6 +31,9 @@ function deletefile(abc) {
 	//삭제 알림창
             console.log("파일삭제");
       /*       e.preventDefault() */
+      
+      var check = $("form[name=form1]");
+      
 	  $.ajax({
               url:"${pageContext.request.contextPath}/question2/deletefile",
               type:"post",
@@ -48,7 +51,7 @@ function deletefile(abc) {
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>문제 수정</h1>
-<form action="normalupdate" method="post" enctype="multipart/form-data">
+<form action="normalupdate" method="post" enctype="multipart/form-data" name="form1">
 
 	<input type="hidden" name="no" value="${questionDto.no}">
 	<input type="hidden" name="csname" value="${questionDto.csname} ">
@@ -57,7 +60,8 @@ function deletefile(abc) {
 
  <img id="preview2" src="http://placehold.it/200x200" width="120" height="120"><br>	
 	<img id="preview" src="qimage?no=${questionDto.no}" width="120" height="120"><br><br>
-	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>
+	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br>
+		<button type="button" onclick="deletefile('${questionDto.no}')">파일 삭제하기</button><br><br>
 <a href="#"  onclick="deletefile('${questionDto.no}')">삭제하기</a>
 문제 보기 1:	<input type="text" name="dis1" value="${questionDto.dis1}" required><br><br>
 문제 보기 2:		<input type="text" name="dis2" value="${questionDto.dis2}" required><br><br>
@@ -73,7 +77,7 @@ function deletefile(abc) {
 	<input type="reset" value="초기화">
 	
 </form>
-	<button onclick="deletefile('${questionDto.no}')">파일 삭제하기</button><br>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 

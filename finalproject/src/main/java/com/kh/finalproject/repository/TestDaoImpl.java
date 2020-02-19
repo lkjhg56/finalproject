@@ -88,6 +88,7 @@ public class TestDaoImpl implements TestDao{
 	
 dto.setNo(count);
 dto.setCsname(categoryname);
+dto.setCategoryname(categoryname);
 	
 		return sqlSession.selectOne("test.questionDto", dto);
 	}
@@ -99,10 +100,11 @@ dto.setCsname(categoryname);
 	}
 
 	@Override
-	public int getDtocount(String csname, String category_no) {
+	public int getDtocount(String categoryname, String session) {
 	TestQuestionDto dto= TestQuestionDto.builder()
-			.csname(csname)
-			.category_no(category_no)
+//			.csname(categoryname)
+			.category_no(session)
+			.categoryname(categoryname)
 			.build();
 		
 		return sqlSession.selectOne("test.quescountDto", dto);
