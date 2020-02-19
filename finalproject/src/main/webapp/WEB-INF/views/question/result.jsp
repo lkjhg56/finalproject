@@ -32,6 +32,3 @@
 
 
 
-
-
-<input type = "button" value = "결과 확인" onclick="resultcheck()">

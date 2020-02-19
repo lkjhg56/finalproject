@@ -171,6 +171,15 @@
 	   })
 	   
    })
+   
+   <!-- 
+   $(function(){
+	   $.ajax({
+		 	url : "${pageContext.request.contextPath}/question2/getRank"
+		   
+	   })
+	   
+   })-->
 </script>
    
    

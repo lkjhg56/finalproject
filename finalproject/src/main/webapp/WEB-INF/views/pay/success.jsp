@@ -22,9 +22,11 @@
     				id : id,
     			},success:function(resp){
     				var htmls=""
-					htmls+=	'<h4>결제가 완료 되었습니다</h4>'
+
 					$(".beforeconfirm").hide();
-					$(".afterconfirm").show()
+					$(".afterconfirm").show();
+					htmls+=	'<h4>결제가 완료 되었습니다</h4>';
+					$(".afterconfirm").html(htmls);
     			}
     			
     			
@@ -38,9 +40,11 @@
 				num : num,
 			},success:function(resp){
 				var htmls=""
-				htmls+=	'<h4>결제가 취소 되었습니다</h4>'
+		
 				$(".beforeconfirm").hide();
-				$(".afterconfirm").show()
+				$(".afterconfirm").show();
+				htmls+=	'<h4>결제가 취소 되었습니다</h4>';
+				$(".afterconfirm").html(htmls);
 			}
 			
 			
