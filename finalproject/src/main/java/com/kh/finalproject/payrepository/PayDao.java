@@ -8,4 +8,8 @@ public interface PayDao {
 
 	void insertSuccess(PayDto payDto);
 
+	PayDto get(int no);
+
+	void insertRevoke(PayDto payDto2);
+
 }

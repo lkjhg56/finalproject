@@ -3,6 +3,9 @@ package com.kh.finalproject.payservice;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class KakaoPayService implements PayService{
+	
+	
+	@Autowired
+	SqlSession sqlSession;
 	
 	@Autowired
 	private PayDao payDao; 
@@ -85,7 +92,7 @@ public class KakaoPayService implements PayService{
 	}
 
 	@Override
-	public KakaoPaySuccessReturnVO approve(KakaoPaySuccessReadyVO data) throws URISyntaxException {
+	public KakaoPaySuccessReturnVO approve(KakaoPaySuccessReadyVO data, int num1) throws URISyntaxException {
 		
 		RestTemplate template = new RestTemplate();
 		
@@ -109,7 +116,10 @@ public class KakaoPayService implements PayService{
 		KakaoPaySuccessReturnVO returnVO = 
 				template.postForObject(uri, entity, KakaoPaySuccessReturnVO.class);
 		
+
+		
 		PayDto payDto = PayDto.builder()
+				.no(num1)
 				.aid(returnVO.getAid())
 				.cid("TC0ONETIME")
 				.tid(returnVO.getTid())
