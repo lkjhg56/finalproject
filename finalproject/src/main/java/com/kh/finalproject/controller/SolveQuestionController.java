@@ -67,7 +67,7 @@ public class SolveQuestionController {
 	
 	
 	@GetMapping("question/questcategory")
-public String category2(@RequestParam String categoryname, String session, String hour, String min, String method, HttpSession httpSession,Model model) {
+public String category2(@RequestParam String categoryname, int tno,String session, String hour, String min, String method, String category_no,HttpSession httpSession,Model model) {
 
 		if(method.equals("한번에풀기")) {
 			List<TestQuestionDto> questionDto = testDao.getQuestionList(categoryname);
@@ -113,11 +113,15 @@ public String category2(@RequestParam String categoryname, String session, Strin
 			model.addAttribute("csname", categoryname);
 			model.addAttribute("hour", hour);
 			model.addAttribute("min", min);
-
+		
 			log.info("session={}", session);
 			
 			return "question/plural";
 		}
+		
+		
+		
+		
 
 		else {
 			
@@ -127,6 +131,8 @@ public String category2(@RequestParam String categoryname, String session, Strin
 		
 			int sessioncount=(int)httpSession.getAttribute("no");
 			int dtocount=testDao.getDtocount(categoryname, session);
+			
+			
 			
 			if(dtocount<=sessioncount) {
 				httpSession.removeAttribute("no");
@@ -181,9 +187,14 @@ public String category2(@RequestParam String categoryname, String session, Strin
 			model.addAttribute("clist", dto);
 			model.addAttribute("session", session);
 			model.addAttribute("method", method);
-			model.addAttribute("csname", categoryname);
 
-	
+			
+			model.addAttribute("categoryname", categoryname);
+			
+			model.addAttribute("category_no", session);//
+			model.addAttribute("hour", hour);
+			model.addAttribute("min", min);
+			model.addAttribute("tno", tno);
 			return "question/one";
 			
 			
@@ -194,7 +205,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 
 	
 @PostMapping("question/questcategory")
-	public String category(@RequestParam String categoryname, String session, String hour, String min, String method, HttpSession httpSession,Model model) {
+	public String category(@RequestParam String categoryname,String category_no, String session, String hour, String min, String method, HttpSession httpSession,Model model) {
 
 		
 		if(method.equals("한번에풀기")) {
@@ -242,7 +253,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 			}
 		
 			int sessioncount=(int)httpSession.getAttribute("no");
-			int dtocount=testDao.getDtocount(categoryname, session);
+			int dtocount=testDao.getDtocount(categoryname, category_no);
 			
 			if(dtocount<=sessioncount) {
 				httpSession.removeAttribute("no");
@@ -272,6 +283,7 @@ public String category2(@RequestParam String categoryname, String session, Strin
 				return "question/result";
 			}
 			
+			
 			int no= (int)httpSession.getAttribute("no");
 			TestQuestionDto tdto= testDao.getDto(categoryname,no,httpSession);
 			
@@ -296,7 +308,14 @@ public String category2(@RequestParam String categoryname, String session, Strin
 			model.addAttribute("clist", dto);
 			model.addAttribute("session", session);
 			model.addAttribute("method", method);
-			model.addAttribute("csname", categoryname);
+			model.addAttribute("categoryname", categoryname);
+
+			model.addAttribute("hour", hour);
+			model.addAttribute("min", min);
+			
+		
+			
+			model.addAttribute("category_no", session);//
 	
 			return "question/one";
 			

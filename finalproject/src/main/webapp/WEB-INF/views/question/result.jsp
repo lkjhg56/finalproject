@@ -24,6 +24,8 @@
 
 <h2>입력한 답</h2>
 
+
+
 <h4>
 	<c:forEach var="rlist" items="${rCorrectDto}">
 	${rlist.correct} 

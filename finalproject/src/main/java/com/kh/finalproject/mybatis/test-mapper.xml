@@ -21,13 +21,13 @@
 	<!-- 한 문제씩 -->
 	<select id="questionDto" parameterType="testQuestionDto" resultType="testQuestionDto">
 	select * from
-(select rownum as rownumber, b.* from test_question b where csname= #{csname}) a
+(select rownum as rownumber, b.* from test_question b where csname= #{categoryname}) a
 where a.rownumber=#{no}
 	</select>
 	
 	<!-- 한문제씩 dto 개수 구하기 -->
 	<select id="quescountDto" parameterType="testQuestionDto" resultType="int">
-	select count(*) from test_question where csname=#{csname} and category_no=#{category_no}
+	select count(*) from test_question where csname=#{categoryname} and category_no=#{category_no}
 	</select>
 	
 	
@@ -58,6 +58,22 @@ where a.rownumber=#{no}
 	<delete id = "deleteAns" parameterType = "rcorrectDto" >
 		delete from rcorrect where result_no=#{result_no} and test_no =#{test_no}
 	</delete>
+
+
+<!-- test_no로 rqno구하기 -->
+
+<select id="rcorrectRqno" resultType="int" parameterType="rcorrectDto">
+
+select rqno from rcorrect where test_no=#{test_no} and result_no=#{result_no}
+</select>
+
+
+<!-- rqno로 rcorrect 삭제 -->
+
+<delete id="deleteRcorrect" parameterType="rcorrectDto" >
+delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
+
+</delete>
 
 	<!--  csname & category_no 로 문제 부르기 -->
 	<select id = "getQuesNum" parameterType = "testQuestionDto" resultType = "testQuestionDto">

@@ -168,6 +168,9 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto",normalUpdateQuestionVO);
 		return "question/normalcontent";
 	}	
+	
+	
+	
 	//일반문제 파일 미리보기
 	@GetMapping("/qimage")
 	public ResponseEntity<ByteArrayResource> previewImg2(@RequestParam int no) throws Exception{

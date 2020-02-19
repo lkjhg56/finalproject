@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.CategoryDto;
+import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.SolutionDto;
 import com.kh.finalproject.entity.TestDto;
 import com.kh.finalproject.entity.TestQuestionDto;
@@ -14,6 +15,8 @@ import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UploadTestQuestionFileDto;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Repository
 public class NormalUploadQuestionDaoImpl implements NormalUploadQuestionDao{
 
@@ -107,6 +110,16 @@ private SqlSession sqlSession;
 	public void onlyfileDelete(int no) {
 		sqlSession.delete("question.deleteTestQFile",no);
 		
+	}
+	@Override
+	public int rqno(RcorrectDto rcorrectDto) {
+		log.info("확인={}", rcorrectDto.getTest_no());
+		log.info("확인re={}", rcorrectDto.getResult_no());
+		
+		int test = sqlSession.selectOne("rcorrectRqno",rcorrectDto);
+		log.info("확인re11={}", test);
+
+		return test;
 	}
 	
 	

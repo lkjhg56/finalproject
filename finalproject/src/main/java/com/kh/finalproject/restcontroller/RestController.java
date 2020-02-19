@@ -70,6 +70,9 @@ public class RestController {
 	
 	@PostMapping("delete")
 	public String delete(@RequestParam int test_no, HttpSession session) {
+		
+		
+		
 		int result_no = (int) session.getAttribute("rno");
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
 																	.test_no(test_no)
@@ -77,6 +80,38 @@ public class RestController {
 																	.build();
 		sqlSession.delete("deleteAns", rcorrectDto);
 //		session.removeAttribute("rno");
+		log.info("확인");
+		return null;
+	}
+	
+	
+	
+	@PostMapping("delete2")
+	public String delete2(@RequestParam int test_no, HttpSession session) {
+		
+	
+		
+		
+		
+		int result_no = (int) session.getAttribute("rno");
+		log.info("gfgfgf={}", test_no);
+		log.info("gfgfgfffff={}", result_no);
+		RcorrectDto rcorrectDto = RcorrectDto.builder()
+																	.test_no(test_no-1)
+																	.result_no(result_no)
+																	.build();
+		
+		
+	int rqno=	NormalUploadQuestionDao.rqno(rcorrectDto);
+	log.info("gfgfgfffdddff={}", rqno);
+	RcorrectDto rcorrectDto2=RcorrectDto.builder()
+			.test_no(test_no)
+			.rqno(rqno-1)
+			.build();
+	
+	sqlSession.delete("deleteRcorrect", rcorrectDto2);
+//		session.removeAttribute("rno");
+		log.info("delete2확인");
 		return null;
 	}
 	
@@ -140,6 +175,17 @@ public class RestController {
 		return null;
 		
 		/* "redirect:question/normalupdate"+no; */
+	}
+	
+	
+	@PostMapping("deletesession")
+	public String deletesession(HttpSession session) {
+		
+		int no=(int)session.getAttribute("no");
+		
+		session.setAttribute("no", no-2);
+		return null;
+		
 	}
 	
 	
