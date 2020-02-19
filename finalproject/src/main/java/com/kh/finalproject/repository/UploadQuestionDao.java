@@ -35,4 +35,6 @@ public interface UploadQuestionDao {
 	void update_read_count(int question_no);
 	UploadQuestionFileDto getFile3(int question_file_no);
 	List<UploadQuestionDto> getListWithImage();
+	void deleteFile(int question_file_no);
+	List<UploadQuestionDto> getListWithImageByNumber(int question_no);
 }

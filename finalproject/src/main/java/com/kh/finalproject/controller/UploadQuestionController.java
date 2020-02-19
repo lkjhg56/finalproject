@@ -1,6 +1,5 @@
 package com.kh.finalproject.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -59,19 +58,9 @@ public class UploadQuestionController {
 	//문제 풀기(여러문제 한페이지당 최대 4문제)
 	@GetMapping("/multi")
 	public String multi(@RequestParam int wantQuestion, Model model) {
-		//향후 원하는 문제개수를 받을 수 있도록 해야함.
 		List<UploadQuestionDto> list = uploadQuestionService.multiQuestion(wantQuestion);
 		model.addAttribute("count",wantQuestion);
 		model.addAttribute("list", list);
-		
-//		for(int i =0;i<list.size();i++) {
-//			int question_no = list.get(i).getQuestion_no();
-//			//한 파일에 대한 이미지 묶음.한 문제에 여러 이미지가 존재할 수 있으므로 list로 받음.
-//			List<UploadQuestionFileDto> file_list=uploadQuestionDao.getFile2(question_no);
-//			//question_no와 question_file_no을 이용하여 짝지어준다.
-//			image.addAll(file_list);
-//		}
-//		model.addAttribute("image",image);
 		return "question/multi";
 	}
 	@PostMapping("/multi")
@@ -100,7 +89,7 @@ public class UploadQuestionController {
 	//파일 다운로드(미리보기)
 	@GetMapping("/image")
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_file_no) throws Exception{
-		return uploadQuestionService.downloadImg(question_file_no);					
+		return uploadQuestionService.downloadImg(question_file_no);
 	}
 	//문제 정보 호출
 	@GetMapping("/content")
@@ -109,12 +98,13 @@ public class UploadQuestionController {
 		model.addAttribute("questionDto", uploadQuestionDao.question_all(question_no));
 		List<UploadQuestionFileDto> image = uploadQuestionDao.getFile2(question_no);
 		model.addAttribute("image",image);
-		
 		return "question/content";
 	}
 	//문제 수정
 	@GetMapping("/update")
 	public String update(@RequestParam int question_no, Model model) {
+		List<UploadQuestionFileDto> image = uploadQuestionDao.getFile2(question_no);
+		model.addAttribute("image",image);
 		model.addAttribute("questionDto",uploadQuestionDao.question_all(question_no));
 		return "question/update";
 	}

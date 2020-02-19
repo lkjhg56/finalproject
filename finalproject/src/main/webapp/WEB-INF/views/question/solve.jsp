@@ -68,9 +68,11 @@ function previewImage(target){
 <div>카테고리 : ${questionDto.category_name}</div>
 <div>문제 제목 : ${questionDto.question_title}</div>
 <div>문제 내용 : ${questionDto.question_content}</div>
-<c:forEach var="image" items="${image}">
-<div><img src="image?question_file_no=${image.question_file_no}"  width="120" height="120"></div>
-</c:forEach>
+<c:if test="${image !=null}">
+	<c:forEach var="image" items="${image}">
+	<div><img src="image?question_file_no=${image.question_file_no}"  width="120" height="120"></div>
+	</c:forEach>
+</c:if>
 <form action="solve" method="post">
 	<input type="hidden" name="id" value="${id}">  
 	<input type="hidden" id="hourResult" name="hour">  

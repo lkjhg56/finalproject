@@ -30,6 +30,7 @@
  	<select id="categoryE" resultType="int" parameterType="normalUpdateQuestionVO">
  	select count(*) from test T inner join category C on t.tno=c.test_no where c.csname=#{csname} and t.test_category=#{test_category}
  	</select>
+ 	<!-- 문제테이블과 이미지 테이블을 합쳐서 출력 -->
 	<resultMap type="uploadQuestionDto" id="imageList">
 		<result column="question_no" property="question_no"/>
 		<result column="question_title" property="question_title"/>
@@ -49,6 +50,29 @@
 	</resultMap>
 	<select id="getListWithImage" resultMap="imageList" >
  	 	select * from question order by question_no asc
+ 	</select>
+ 	<!-- 문제테이블과 이미지 테이블을 합쳐서 출력 by question_no-->
+	<resultMap type="uploadQuestionDto" id="imageListWithQuestion">
+		<result column="question_no" property="question_no"/>
+		<result column="question_title" property="question_title"/>
+		<result column="question_content" property="question_content"/>
+		<result column="question_solution" property="question_solution"/>
+		<result column="question_answer" property="question_answer"/>
+		<result column="answer1" property="answer1"/>
+		<result column="answer2" property="answer2"/>
+		<result column="answer3" property="answer3"/>
+		<result column="answer4" property="answer4"/>
+		<result column="answer5" property="answer5"/>
+		<result column="correct_ratio" property="correct_ratio"/>
+			<collection column="question_no"
+				property="files"
+				javaType="java.util.List"
+				ofType="uploadQuestionFileDto"
+				select="getFile">
+			</collection>
+	</resultMap>
+	<select id="getListWithImageByNumber" parameterType="int" resultMap="imageListWithQuestion" >
+ 	 	select * from question where question_no=#{question_no} order by question_no asc
  	</select>
  	<!-- 유저 문제 업로드 -->
  	<insert id="upload" parameterType="uploadQuestionDto">

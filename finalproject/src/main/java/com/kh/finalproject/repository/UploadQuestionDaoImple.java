@@ -72,9 +72,15 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public List<UploadQuestionDto> getList() {
 		return sqlSession.selectList("question.getList");
 	}
+	//이미지 파일과 합쳐서 나오는 것
 	@Override
 	public List<UploadQuestionDto> getListWithImage() {
 		return sqlSession.selectList("question.getListWithImage");
+	}
+	//이미지 파일과 합쳐서 나오는 것(question_no 조건)
+	@Override
+	public List<UploadQuestionDto> getListWithImageByNumber(int question_no){
+		return sqlSession.selectList("question.getListWithImageByNumber",question_no);
 	}
 	//문제 파일 조회(question_no)
 	@Override
@@ -96,6 +102,11 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public void fileDelete2(int question_no, int user_custom_question_no) {	
 		sqlSession.delete("question.deleteUser",user_custom_question_no);
 		sqlSession.delete("question.deleteQuestion",question_no);
+	}
+	//개별 파일 삭제
+	@Override
+	public void deleteFile(int question_file_no) {
+		sqlSession.delete("question.deleteFile",question_file_no);
 	}
 	//시간 포멧 설정
 	public String timeCheck() {

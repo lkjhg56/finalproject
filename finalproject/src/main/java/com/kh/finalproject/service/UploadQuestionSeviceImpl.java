@@ -106,13 +106,9 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.build();
 		uploadQuestionDao.updateQustion(uploadQuestionDto);
 		
-//		System.out.println(updateQuestionVO.getFile().get(0).isEmpty());//true
-//		System.out.println("비어있나? : "+updateQuestionVO.getFile().isEmpty());//false
-//		System.out.println(updateQuestionVO.getFile().get(0).getOriginalFilename());//
-//		System.out.println(updateQuestionVO.getFile().get(0).getContentType());//application/octet-stream
-//		System.out.println(updateQuestionVO.getFile().get(0).getSize());//0
+		//업데이트시 이미지파일이 있는 채로 수정을 원하는 경우
 		if(!updateQuestionVO.getFile().get(0).isEmpty()) {
-			//question_file 테이블 변경	
+			//question_file 테이블 변경 전 파일 세부사항을 리스트에 옮김.(파일 개수가 몇개던 상관 없음.)
 			List<UploadQuestionFileDto> list = new ArrayList<>();
 			for(MultipartFile mf : updateQuestionVO.getFile()) {
 				if(!mf.isEmpty()) {
@@ -125,62 +121,53 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 							.build());
 				}
 			}		
-			//변경된 파일을 다시 저장.	
+			//경로에 폴더 생성
 			String Path="D:/upload/question_image";
 			File dir = new File(Path);
 			dir.mkdir();
 			
-			for(int i=0;i<list.size();i++) {				
-				MultipartFile mf = updateQuestionVO.getFile().get(i);
-				if(!mf.isEmpty()) {
-					//기존 파일의 save와 같으면 삭제하지 않고 틀리면 삭제. 기존 파일은 DB내에서 문제NO를 이용하여 검색하여 붙여야함.
-					UploadQuestionFileDto delete = uploadQuestionDao.getFile(updateQuestionVO.getQuestion_no());
-					String filepath = "D:/upload/question_image/"+delete.getFile_save_name();		
+			//파일 수정
+			//기존 DB 불러오기
+			List<UploadQuestionFileDto> delete = 
+					uploadQuestionDao.getFile2(updateQuestionVO.getQuestion_no());
+			//기존 파일 및 DB가 없는 경우 update가 아닌 새로운 data를 insert해줘야함.
+			if(!delete.isEmpty()) {
+				//기존 파일 및 DB가 있는 경우	
+				//기존 파일과 DB를 전량 삭제
+				for(int j = 0;j<delete.size();j++) {
+					String filepath = "D:/upload/question_image/"+delete.get(j).getFile_save_name();		
 					File file = new File(filepath);
+					//실제 파일 삭제
 					file.delete();
-					/*******************************************************/
-					UploadQuestionFileDto dto = list.get(i);
-					uploadQuestionDao.updateFile(dto);
-					File target = new File(dir, dto.getFile_save_name());
-					mf.transferTo(target);
-				}
-			}
-			
-		}else {
-			List<UploadQuestionFileDto> list = new ArrayList<>();
-			for(MultipartFile mf : updateQuestionVO.getFile()) {
-				list.add(UploadQuestionFileDto.builder()
-						.file_save_name(UUID.randomUUID().toString())
-						.file_upload_name(mf.getOriginalFilename())
-						.file_type(mf.getContentType())
-						.file_size(mf.getSize())
-						.question_no(updateQuestionVO.getQuestion_no())
-						.build());
-			}		
-			//새 디렉토리 생성
-			File dir = new File("D:/upload/question_image");
-			dir.mkdir();
-			
-			for(int i=0;i<list.size();i++) {
-				MultipartFile mf = updateQuestionVO.getFile().get(i);
-				UploadQuestionFileDto dto = list.get(i);
+					//DB 내용 삭제
+					uploadQuestionDao.deleteFile(delete.get(j).getQuestion_file_no());
+					}
+			}	
+			//그리고 받아온 파일과 DB를 전량 부어넣는다.
+			for(int j = 0;j<list.size();j++ ) {
+				UploadQuestionFileDto dto = list.get(j);
 				uploadQuestionDao.fileUpload(dto);
 				File target = new File(dir, dto.getFile_save_name());
-				mf.transferTo(target);
+				updateQuestionVO.getFile().get(j).transferTo(target);
 			}
 		}
-		
-	}
+	}		
+	
 	//문제 삭제 D
 	@Override
 	public void questionDelete(int question_no, int user_custom_question_no) {
-		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);			
-		UploadQuestionFileDto delete = uploadQuestionDao.getFile(question_no);
+		//삭제할 파일 정보를 불러온다.
+		//여러개가 있을경우도 있으니 리스트로 받아와야 한다.
+		List<UploadQuestionFileDto> delete = uploadQuestionDao.getFile2(question_no);
 		if(delete != null) {
-			String filepath = "D:/upload/question_image/"+delete.getFile_save_name();
-			File file = new File(filepath);
-			file.delete();
+			for(int i = 0;i<delete.size();i++) {
+				String filepath = "D:/upload/question_image/"+delete.get(i).getFile_save_name();
+				File file = new File(filepath);
+				file.delete();				
+			}
 		}
+		//데이터베이스 삭제
+		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);			
 	}
 	//단일 문제 해결 R
 	@Override
@@ -230,11 +217,10 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		UploadQuestionFileDto uploadQuestionFileDto = uploadQuestionDao.getFile3(question_file_no);
 		File directory = new File("D:/upload/question_image");
 		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
-		
 		File file = new File(directory, String.valueOf(uploadQuestionFileDto.getFile_save_name()));
-		if(!file.exists()) {
-			return ResponseEntity.notFound().build();
-		}
+//		if(!file.exists()) {
+//			return ResponseEntity.notFound().build();
+//		}
 		byte[] data = FileUtils.readFileToByteArray(file);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		return ResponseEntity.ok()
@@ -262,8 +248,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		}
 //		확인용
 		for(int i = 0 ;i<choice_list.size();i++) {
-			for(int j = 0;j<choice_list.get(i).getFiles().size();j++) {
-				System.out.println("choice_list.get("+i+").getFiles().get("+j+").getQuestion_file_no() : "+choice_list.get(i).getFiles().get(j).getQuestion_file_no());				
+			for(int j = 0;j<choice_list.get(i).getFiles().size();j++) {				
 			}
 		}
 
