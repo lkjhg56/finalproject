@@ -146,7 +146,7 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	}
 	//사용자가 한 문제에 대해 해결한 순위 조회
 	@Override
-	public int userPriority(int question_no, int result_no) {
+	public UserQuestionResultDto userPriority(int question_no, int result_no) {
 		UserQuestionResultDto userQuestionResultDto = UserQuestionResultDto.builder()
 				.question_no(question_no)
 				.result_no(result_no)

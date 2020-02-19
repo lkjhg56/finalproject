@@ -254,8 +254,7 @@
  	 </select>
  	 <select id="userPriority" parameterType="userQuestionResultDto" resultType="userQuestionResultDto">
 		select rownum,e.* from(
-			select * from question_result where question_no=#{question_no} and result_no=#{result_no}
-		)e order by rownum desc
+			select * from question_result where question_no=#{question_no} and result_no=#{result_no})e	
 	 </select>
 	 
 	  	<!-- 유저 문제 조회 --> 	

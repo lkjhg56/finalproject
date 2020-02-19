@@ -1,5 +1,6 @@
 package com.kh.finalproject.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -118,6 +119,19 @@ public class UploadQuestionController {
 	public String delete(@RequestParam int question_no, @RequestParam int user_custom_question_no, Model model) {
 		uploadQuestionService.questionDelete(question_no, user_custom_question_no);
 		return "redirect:list";
+	}
+	//이미지 파일 삭제
+	@PostMapping("/deleteFile")
+	public void deleteFile(int question_no) {
+		List<UploadQuestionFileDto> delete = uploadQuestionDao.getFile2(question_no);
+		for(int j = 0;j<delete.size();j++) {
+			String filepath = "D:/upload/question_image/"+delete.get(j).getFile_save_name();		
+			File file = new File(filepath);
+			//실제 파일 삭제
+			file.delete();
+			//DB 내용 삭제
+			uploadQuestionDao.deleteFile(delete.get(j).getQuestion_file_no());
+			}
 	}
 	//문제 전체 리스트 호출(Users 테이블과 조인됨)
 	@GetMapping("/list")

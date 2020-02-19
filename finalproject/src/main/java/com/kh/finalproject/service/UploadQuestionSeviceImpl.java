@@ -207,7 +207,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			userQuestionResultDto.setResult(0);
 		}
 		uploadQuestionDao.insert_result(userQuestionResultDto);
-		userQuestionResultDto.setUser_priority(uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no));
+		UserQuestionResultDto resultDto = uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no);
+		userQuestionResultDto.setUser_priority(resultDto.getUser_priority());
 		return userQuestionResultDto;
 		
 	}
