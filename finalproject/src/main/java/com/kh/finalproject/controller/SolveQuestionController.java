@@ -137,27 +137,125 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 			if(dtocount<=sessioncount) {
 				httpSession.removeAttribute("no");
 				
-				int rno = (int) httpSession.getAttribute("rno");
+				int rno = (int) httpSession.getAttribute("rno");//
 				TestQuestionDto testQuestionDto = TestQuestionDto.builder()
-						.csname(categoryname)
-						.category_no(session)
+																	.csname(categoryname)//
+																	.category_no(category_no)
+																	.build();
+				log.info("checking={}", categoryname+category_no);//
+				List<ResultDto> sum= sqlSession.selectList("getSum", testQuestionDto);
+				int total=0;
+				int num=0;
+				for(ResultDto dto : sum) {
+					total += dto.getSumscore();
+					num +=1;
+				}
+				log.info("total={}", total);
+				log.info("num={}", num);
+				
+				int average = total/num;
+				int high10 = num/10;
+				int high25 = num/4;
+				int high50 =  num/2;
+				int high75 = num*3/4;
+				int high10average = 0;
+				int high25average = 0;
+				int high50average = 0;
+				int high75average = 0;
+				
+				testQuestionDto = TestQuestionDto.builder()
+						.csname(categoryname)//
+						.category_no(category_no)
+						.end(high10)
+						.rno(rno)
 						.build();
+				total = 0;
+				if(high10<1) {
+					high10average=average;
+				}else {
+					List<ResultDto> sum2 = sqlSession.selectList("getSum2", testQuestionDto);
+					for(ResultDto dto : sum2) {
+						total+= dto.getSumscore();
+					}
+					high10average=total/high10;
+				}
+				total = 0;
+				if(high25<1) {
+					high25average = average;
+				}else {
+					testQuestionDto = TestQuestionDto.builder()
+							.csname(categoryname)//
+							.category_no(category_no)
+							.end(high25)
+							.rno(rno)
+							.build();
+					List<ResultDto> sum3 = sqlSession.selectList("getSum2", testQuestionDto);
+					for(ResultDto dto : sum3) {
+						total+= dto.getSumscore();
+					}
+					high25average = total/high25;
+				
+				}
+				total = 0;
+				if(high50<1) {
+					high50average = average;
+				}else {
+					testQuestionDto = TestQuestionDto.builder()
+							.csname(categoryname)
+							.category_no(category_no)
+							.end(high50)
+							.rno(rno)
+							.build();
+					List<ResultDto> sum3 = sqlSession.selectList("getSum2", testQuestionDto);
+					for(ResultDto dto : sum3) {
+						total+= dto.getSumscore();
+					}
+					high50average = total/high50;
+				
+				}
+				total = 0;
+				if(high75<1) {
+					high75average = average;
+				}else {
+					testQuestionDto = TestQuestionDto.builder()
+							.csname(categoryname)
+							.category_no(category_no)
+							.end(high75)
+							.rno(rno)
+							.build();
+					List<ResultDto> sum3 = sqlSession.selectList("getSum2", testQuestionDto);
+					for(ResultDto dto : sum3) {
+						total+= dto.getSumscore();
+					}
+					high75average = total/high75;
+				
+				}
 
 
+				
+				
 				List<TestQuestionDto> answerList = sqlSession.selectList("getQuesNum", testQuestionDto);
+			
 				List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
 
+				
+				int rank = sqlSession.selectOne("getRank", testQuestionDto);
+				
+				int percentile = rank*100/num;
+				
+				
 				model.addAttribute("rCorrectDto", rCorrectDto);
 				model.addAttribute("answerList", answerList);
-				model.addAttribute("score",  testDao.getScore(rno, session, categoryname));
-			
-								
-			
-				
-				model.addAttribute("category_no", session);
-				model.addAttribute("csname", categoryname);
-				model.addAttribute("method", method);
-				
+				model.addAttribute("score",  testDao.getScore(rno, category_no,categoryname));//
+				model.addAttribute("csname", categoryname);//
+				model.addAttribute("solved", num);
+				model.addAttribute("average", average);
+				model.addAttribute("high10average", high10average);
+				model.addAttribute("high25average", high25average);
+				model.addAttribute("high50average", high50average);
+				model.addAttribute("high75average", high75average);
+				model.addAttribute("rank", rank);
+				model.addAttribute("percentile", percentile);
 				
 				return "question/result";
 			}
@@ -195,6 +293,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 			model.addAttribute("hour", hour);
 			model.addAttribute("min", min);
 			model.addAttribute("tno", tno);
+			model.addAttribute("no", no);
 			return "question/one";
 			
 			

@@ -68,6 +68,12 @@ select rqno from rcorrect where test_no=#{test_no} and result_no=#{result_no}
 </select>
 
 
+<!-- test_no로 rcorrect 숫자 -->
+<select id="rcorrectCount" resultType="int" parameterType="rcorrectDto" >
+
+select count(*) from rcorrect where test_no=#{test_no} and result_no=#{result_no}
+</select>
+
 <!-- rqno로 rcorrect 삭제 -->
 
 <delete id="deleteRcorrect" parameterType="rcorrectDto" >

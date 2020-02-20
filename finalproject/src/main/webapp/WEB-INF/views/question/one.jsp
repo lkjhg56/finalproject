@@ -222,6 +222,10 @@ function deletesession() {
 	 
 }
 
+
+
+
+
      
  
 
@@ -332,7 +336,12 @@ main{
   	 		 		<input type="hidden" name="tno" value="${tno}">
   	 		
   	 <%-- 		<input type = "hidden" name = "categoryname" value = "${csname}"> --%>
-  	 <button type="button" onclick="rcorrectdelete('${clist.no}');">이전으로</button>
+  	 <c:if test="${no>=1}">
+  	 <button type="button" onclick="rcorrectdelete('${clist.no}');deletesession()">이전으로</button>
+  	 
+  	 </c:if>
+  	 
+  	 
    	<input type = "submit" value = "제출">
    	
    </form>
