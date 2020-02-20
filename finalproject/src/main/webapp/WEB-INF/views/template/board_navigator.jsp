@@ -54,7 +54,7 @@
     <c:forEach var="i" begin="${startBlock}" end="${finishBlock}">
     	<c:choose>
     		<c:when test="${i == pno}">
-				<li class="page-item"><a class="page-link" href="#">${i}</a></li>
+				<li class="page-item active"><a class="page-link" href="#">${i}</a></li>
 			</c:when>
 			<c:otherwise>
 				<c:choose>
