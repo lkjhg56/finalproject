@@ -47,17 +47,15 @@
 </c:forEach>
 </table>
 <!-- 네비게이션 -->
-<div class="nav">
-<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
+<jsp:include page="/WEB-INF/views/template/navigator.jsp">
 <jsp:param name="pno" value="${pno}" />
 	<jsp:param name="count" value="${count}" />
 	<jsp:param name="navsize" value="${navsize}" />
 	<jsp:param name="pagesize" value="${pagesize}" />
 	<jsp:param name="board_category" value="${board_category}"/>
 </jsp:include>
-</div>
-<a href="${pageContext.request.contextPath}/question/upload">문제 업로드</a>
-<a class="click">랜덤문제 풀기</a>
+<a href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-primary">문제 업로드</a>
+<a class="click btn btn-primary">랜덤문제 풀기</a>
 <!-- <button class="click">문제 수</button> -->
 <span class="list">문제 개수 :
 <select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)">
