@@ -28,11 +28,10 @@ function islogin(id, path){
 		type : "post",
 		data :{id:id},
 		success:function(resp){
-			console.log(resp.is_premium)
 		
 			console.log(resp.id==null)
 			var premium = "";
-			if(resp.ispremium==0){
+			if(resp.is_premium==0){
 				premium += '무료회원'
 			}else{
 				premium += '유료회원'
@@ -46,7 +45,7 @@ function islogin(id, path){
 				htmls += '<h6>'+resp.id+'님    '+'<a href="'+path+'/users/logout">logout</a></h6>'
 				htmls += '<h6> 등급 : '+resp.grade+'</h6>'
 				if(premium=='무료회원'){
-				htmls += '<h6>'+premium+' </h6>'
+				htmls += '<h6>'+premium+' <a href ="'+path+'/pay/premium">프리미엄 전환</a></h6>'
 			
 				}else{
 				htmls += '<h6>'+premium+'</h6>'
@@ -203,7 +202,7 @@ function islogin(id, path){
 
 
 <!-- 헤더  -->
-  <header class="normheader" style="background-image: url('img/contact-bg.jpg')">
+  <header class="normheader">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">

@@ -33,8 +33,8 @@
               </a>
             </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
-        </div>
+          <p class="copyright text-muted">Copyright &copy; KH2B 2020</p>
+         </div>
       </div>
     </div>
   </footer>
@@ -44,7 +44,6 @@
   <script src="${pageContext.request.contextPath}/res/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script>
 
 
 

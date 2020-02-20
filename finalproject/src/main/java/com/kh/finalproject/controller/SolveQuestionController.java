@@ -437,6 +437,9 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 		int percentile = rank*100/num;
 		
 		
+		
+		model.addAttribute("csname", csname);
+		model.addAttribute("category_no", category_no);
 		model.addAttribute("rCorrectDto", rCorrectDto);
 		model.addAttribute("answerList", answerList);
 		model.addAttribute("score",  testDao.getScore(rno, category_no, csname));

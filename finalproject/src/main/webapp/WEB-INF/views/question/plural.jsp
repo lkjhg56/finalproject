@@ -180,6 +180,13 @@
 	   })
 	   
    })-->
+   $(window).on('beforeunload', function(){
+	   var isNoSaved = true; // 각 사이트마다 저장하지 않고 나가는 상황을 조건검
+	   if(isNoSaved)
+	     return '저장하지 않은게 있어..'; // 나갈꺼냐 말꺼냐는 브라우저가 붙여줌.
+	 });
+   
+   
 </script>
    
    
@@ -264,7 +271,7 @@ main{
 
  
   
-<section>
+<section >
    
   
  
