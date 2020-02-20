@@ -40,6 +40,8 @@ public class RestController {
 	@PostMapping("insert")
 	public String insert(@RequestParam int test_no, int correct, int answer, int iscorrect, HttpSession session) {
 		int result_no = (int) session.getAttribute("rno");
+		
+		
 		log.info("testcheck ={}", test_no);
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
 																	.test_no(test_no)
@@ -48,21 +50,29 @@ public class RestController {
 																	.iscorrect(iscorrect)
 																	.answer(answer)
 																	.build();
-		sqlSession.insert("correct", rcorrectDto);
-		
-		int totalNum = sqlSession.selectOne("totalNum", test_no); 
-		int correctNum = sqlSession.selectOne("correctNum", test_no);
-		int sum = correctNum*100/totalNum;
-		log.info("total={}", totalNum);
-		log.info("correctsum={}", correctNum);
-		log.info("sumsum={}", sum);
-		
-		RateVO vo = RateVO.builder()
-										.sum(sum)
-										.test_no(test_no)
-										.build();
-		
-		sqlSession.update("rate", vo);
+	int count=	sqlSession.selectOne("rcorrectCount", rcorrectDto);
+	
+	 if(count>=0) {
+		 
+		 sqlSession.delete("deleteAns", rcorrectDto); 
+		 
+	 }
+		 
+		 sqlSession.insert("correct", rcorrectDto);
+		 
+		 int totalNum = sqlSession.selectOne("totalNum", test_no); 
+		 int correctNum = sqlSession.selectOne("correctNum", test_no);
+		 int sum = correctNum*100/totalNum;
+		 log.info("total={}", totalNum);
+		 log.info("correctsum={}", correctNum);
+		 log.info("sumsum={}", sum);
+		 
+		 RateVO vo = RateVO.builder()
+				 .sum(sum)
+				 .test_no(test_no)
+				 .build();
+		 
+		 sqlSession.update("rate", vo);
 		
 		
 		return null;
