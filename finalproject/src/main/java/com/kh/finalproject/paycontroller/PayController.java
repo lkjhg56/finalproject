@@ -18,4 +18,9 @@ public class PayController {
 		model.addAttribute("list", sqlSession.selectList("getCashList"));
 		return "pay/pointpayment";
 	}
+	
+	@GetMapping("premium")
+	public String premium() {
+		return "pay/premium";
+	}
 }

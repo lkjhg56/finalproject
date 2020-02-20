@@ -25,7 +25,6 @@ function islogin(id){
 	}else{
 		$(".nologin").hide();
 		$(".logined").show();
-		console.log(id+"로그인됨")
 	}
 }
 	
