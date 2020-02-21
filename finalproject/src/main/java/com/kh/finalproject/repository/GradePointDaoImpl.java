@@ -17,5 +17,13 @@ public class GradePointDaoImpl implements GradePointDao{
 	public List<GradePointDto> get_pointList(Map<String, String> total) {
 		return sqlSession.selectList("grade_point.my_grade_point", total);
 	}
-
+	//각 서비스 기능에서 user_no를 조회하여 해당 DAO에 값을 넘겨줘야함.
+	//문제업로드 포인트 부여
+	@Override
+	public void giveQuestionUploadPoint(int user_no) {
+		//users 테이블
+		sqlSession.update("users.change_5point", user_no);
+		//grade_point 테이블
+		sqlSession.insert("grade_point.giveQuestionUploadPoint", user_no);		
+	}
 }

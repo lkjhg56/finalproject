@@ -9,4 +9,6 @@ public interface GradePointDao {
 	
 	//포인트 내역 조회
 	List<GradePointDto> get_pointList(Map<String, String> total);
+
+	void giveQuestionUploadPoint(int user_no);
 }
