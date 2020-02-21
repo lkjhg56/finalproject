@@ -184,11 +184,8 @@ $(function(){
 </script>
  
 
-<div align="center">	
+<div class="container">	
 <h2>게시글 보기</h2>
-			
-
-				
 		<table border="1" width="70%">
 				<tr>
 					<td>
