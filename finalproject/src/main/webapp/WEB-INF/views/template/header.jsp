@@ -45,8 +45,10 @@ function islogin(id, path){
 				htmls += '<h6>'+resp.id+'님    '+'<a href="'+path+'/users/logout">logout</a></h6>'
 				htmls += '<h6> 등급 : '+resp.grade+'</h6>'
 				if(premium=='무료회원'){
-				htmls += '<h6>'+premium+' <a href ="'+path+'/pay/premium">프리미엄 전환</a></h6>'
-			
+				htmls += '<form action = "'+path+'/pay/premium">'
+				htmls += '<input type ="hidden" name = "point" value = "'+resp.point+'">'
+				htmls += '<input type ="submit" value = "프리미엄 전환">'
+				htmls += '</form>'
 				}else{
 				htmls += '<h6>'+premium+'</h6>'
 				}
