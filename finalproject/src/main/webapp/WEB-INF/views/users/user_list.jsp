@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <h1 align="center">회원 목록</h1>
 <table class="table">
 		
@@ -31,7 +32,10 @@
 							<input type="text" name="id" value="${user_list.id}" hidden>
 							<button type="submit">회원정보 보기</button>
 						</form>
-						<button type="button">강제 탈퇴</button>
+						<form action="bye" method="post">
+							<input type="text" name="id" value="${user_list.id}" hidden>
+							<button type="submit">강제 탈퇴</button>
+						</form>
 					</td>
 				</tr>
 			</c:forEach>
