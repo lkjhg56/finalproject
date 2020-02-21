@@ -138,11 +138,12 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				httpSession.removeAttribute("no");
 				
 				int rno = (int) httpSession.getAttribute("rno");//
+			
 				TestQuestionDto testQuestionDto = TestQuestionDto.builder()
-																	.csname(categoryname)//
+																	.csname(categoryname)
 																	.category_no(category_no)
 																	.build();
-				log.info("checking={}", categoryname+category_no);//
+				log.info("checking={}", categoryname+category_no);
 				List<ResultDto> sum= sqlSession.selectList("getSum", testQuestionDto);
 				int total=0;
 				int num=0;
@@ -164,11 +165,14 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				int high75average = 0;
 				
 				testQuestionDto = TestQuestionDto.builder()
-						.csname(categoryname)//
+			.csname(categoryname)
 						.category_no(category_no)
+						.categoryname(categoryname)
 						.end(high10)
 						.rno(rno)
 						.build();
+				
+				
 				total = 0;
 				if(high10<1) {
 					high10average=average;
@@ -184,7 +188,8 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 					high25average = average;
 				}else {
 					testQuestionDto = TestQuestionDto.builder()
-							.csname(categoryname)//
+							.csname(categoryname)
+							.categoryname(categoryname)
 							.category_no(category_no)
 							.end(high25)
 							.rno(rno)
@@ -202,6 +207,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				}else {
 					testQuestionDto = TestQuestionDto.builder()
 							.csname(categoryname)
+							.categoryname(categoryname)
 							.category_no(category_no)
 							.end(high50)
 							.rno(rno)
@@ -219,6 +225,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				}else {
 					testQuestionDto = TestQuestionDto.builder()
 							.csname(categoryname)
+							.categoryname(categoryname)
 							.category_no(category_no)
 							.end(high75)
 							.rno(rno)
@@ -239,15 +246,24 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
 
 				
+				
+				log.info(testQuestionDto.getCategoryname());
+				log.info(testQuestionDto.getCategory_no());
+				log.info("ddd={}",testQuestionDto.getRno());
+				
 				int rank = sqlSession.selectOne("getRank", testQuestionDto);
+//				int rank=2;
 				
 				int percentile = rank*100/num;
 				
 				
+				
+
+				model.addAttribute("category_no", category_no);
 				model.addAttribute("rCorrectDto", rCorrectDto);
 				model.addAttribute("answerList", answerList);
-				model.addAttribute("score",  testDao.getScore(rno, category_no,categoryname));//
-				model.addAttribute("csname", categoryname);//
+				model.addAttribute("score",  testDao.getScore(rno, category_no, categoryname));
+
 				model.addAttribute("solved", num);
 				model.addAttribute("average", average);
 				model.addAttribute("high10average", high10average);
@@ -256,7 +272,6 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				model.addAttribute("high75average", high75average);
 				model.addAttribute("rank", rank);
 				model.addAttribute("percentile", percentile);
-				
 				return "question/result";
 			}
 			
@@ -530,7 +545,9 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 	
 		List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
 
-		
+		log.info(testQuestionDto.getCategoryname());
+		log.info(testQuestionDto.getCategory_no());
+		log.info("dd66d={}",testQuestionDto.getRno());
 		int rank = sqlSession.selectOne("getRank", testQuestionDto);
 		
 		int percentile = rank*100/num;

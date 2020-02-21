@@ -314,7 +314,7 @@ public class UploadQuestionController {
 	@GetMapping("/normaldelete")
 	public String delete2(@RequestParam int no, String csname,String category_no,  Model model) {
 		
-		normalUploadQuestionService.questionDelete(no);
+		normalUploadQuestionService.questionDelete(no,csname);
 		TestQuestionDto dto=TestQuestionDto.builder()
 				.csname(csname)
 				.category_no(category_no)
