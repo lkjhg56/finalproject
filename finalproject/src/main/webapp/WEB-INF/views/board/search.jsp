@@ -17,38 +17,52 @@
 	
 	<table border="1" width="70%" style="text-align: center">
 			<tr>						
-				<th>번호</th>						
+				<th>No.</th>						
 				<th>카테고리</th>
 				<th width="40%">글제목</th>
+				<th>조회수</th>
 				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
     
-	<c:forEach var="search" items="${search}">
-	
-		<tr>
-				<td>
-					${search.board_no } 
+    <c:choose>
+    	<c:when test="${!empty search}">
+			<c:forEach var="search" items="${search}">		
+				<tr>
+						<td>
+							${search.board_no } 
+						</td>
+						<td>
+							${search.board_category} 
+						</td>
+						<td style="text-align: left">
+							<a href=${pageContext.request.contextPath}/board/content?board_no=${search.board_no}>${search.board_title }</a> 
+							[${search.board_replycount }] 
+						</td>
+						<td>
+							${search.board_readcount} 
+						</td>
+						<td>
+							${search.board_writer } 
+						</td>
+						<td>
+							${search.board_wdate.substring(0,16) }
+						</td>
+					</tr>	
+			</c:forEach>
+    	</c:when>
+    	<c:otherwise>
+    		<tr>
+				<td colspan="6">
+					검색 결과가 없습니다.
 				</td>
-				<td>
-					${search.board_category} 
-				</td>
-				<td style="text-align: left">
-					<a href=${pageContext.request.contextPath}/board/content?board_no=${search.board_no}>${search.board_title }</a> 
-					[${search.board_replycount }] 
-				</td>
-				<td>
-					${search.board_writer } 
-				</td>
-				<td>
-					${search.board_wdate.substring(0,16) }
-				</td>
-			</tr>	
-	</c:forEach>
+			</tr>
+    	</c:otherwise>
+    </c:choose>
 	
 	<!-- 글쓰기 버튼은 로그인시 표시됨 -->
 			<c:if test="${id != null}">					
-				<td colspan="5" style="text-align: right">
+				<td colspan="6" style="text-align: right">
 					<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
 				</td>						
 			</c:if>	

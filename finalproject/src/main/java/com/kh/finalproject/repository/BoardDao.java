@@ -66,7 +66,9 @@ public interface BoardDao {
 		
 	//19.대댓글 등록하기
 		void rereplyRegist(BoardReplyDto boardReplyDto);
-	
+		
+	//20.조회수 증가
+		void readCount(int board_no);
 		
 
 }

@@ -77,6 +77,11 @@ public class BoardDaoImpl implements BoardDao{
 	public List<BoardDto> search(Map<String, String> param) {		
 		return sqlSession.selectList("board.search", param);
 	}
+	
+	@Override
+	public void readCount(int board_no) {
+		sqlSession.update("board.readCount", board_no);		
+	}
 
 ////////////////////////댓글///////////////////////////////////
 	@Override
@@ -140,7 +145,5 @@ public class BoardDaoImpl implements BoardDao{
 	public BoardReplyDto getReply(int board_reply_no) {
 		return sqlSession.selectOne("board.getOneReply", board_reply_no);
 	}
-
-
 	
 }

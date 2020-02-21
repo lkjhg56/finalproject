@@ -17,9 +17,10 @@
 	
 	<table class="w" border="1" width="70%" style="text-align: center">
 			<tr>						
-				<th>번호</th>						
+				<th>No.</th>						
 				<th>카테고리</th>
 				<th width="40%">글제목</th>
+				<th>조회수</th>
 				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
@@ -37,6 +38,9 @@
 					[${list.board_replycount }] 
 				</td>
 				<td>
+					${list.board_readcount} 
+				</td>
+				<td>
 					${list.board_writer } 
 				</td>
 				<td>
@@ -49,7 +53,7 @@
 				<!-- 글쓰기 버튼은 로그인시 표시됨 -->
 				
 				<c:if test="${id != null}">	
-					<td colspan="5" style="text-align: right">
+					<td colspan="6" style="text-align: right">
 						<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
 					</td>						
 				</c:if>	
