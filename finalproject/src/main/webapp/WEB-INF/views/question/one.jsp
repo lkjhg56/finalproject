@@ -28,19 +28,22 @@
            
            }
        }
+           
           if(disno===answer){
                var iscorrect = 1;
            }else{
                var iscorrect = 0;
             }
       
+          
            $.ajax({
               url:"${pageContext.request.contextPath}/question2/insert",
               type:"post",
               data:{test_no:quesno, correct:disno, iscorrect:iscorrect,answer:answer},
           
             })
-        }else{
+        }
+       else{
            		for(var i=0; i<checkbox2.length; i++){
           
             	   $(checkbox2[i]).show();
@@ -175,8 +178,58 @@
         
      })
      
-console.log(clist.lim_hour)
-console.log(clist.lim_min)
+
+/* console.log(clist.lim_min)
+console.log(${clist.no}-1); */
+
+
+function rcorrectdelete(abc) {
+	 
+	
+	 $.ajax({
+     	url:"${pageContext.request.contextPath}/question2/delete2",
+    	 type:"post",
+    	 data:{test_no:abc},
+    	 
+    	 
+    	   success:function(){
+          	
+     		console.log("rcorrect빼기성공");
+     		 
+     	}
+	   })
+}
+
+function deletesession() {
+	//삭제 알림창
+            console.log("세션빼기");
+      /*       e.preventDefault() */
+      
+    
+      
+	  $.ajax({
+              url:"${pageContext.request.contextPath}/question2/deletesession",
+              type:"post",
+            
+             success:function(){
+            	
+            		 location.reload();
+            		 
+            	}
+            });
+      
+	
+	 
+}
+
+
+
+
+
+     
+ 
+
+
    </script>
   
    
@@ -273,10 +326,21 @@ main{
 
  
    
-   <form action = "${pageContext.request.contextPath}/question/oneresult"  > 
+   <form action = "${pageContext.request.contextPath}/question/questcategory"  > 
    	<input type = "hidden" name = "category_no" value = "${session}">
+   	   	<input type = "hidden" name = "session" value = "${session}">
    	<input type="hidden" name="method" value="${method}">
-  	 		<input type = "hidden" name = "csname" value = "${csname}">
+  	 		<input type = "hidden" name = "categoryname" value = "${categoryname}">
+  	 		<input type="hidden" name="hour"  value="${hour}">
+  	 		<input type="hidden" name="min" value="${min}">
+  	 		 		<input type="hidden" name="tno" value="${tno}">
+  	 		
+  	 <%-- 		<input type = "hidden" name = "categoryname" value = "${csname}"> --%>
+  	 <c:if test="${no>=1}">
+  	 <button type="button" onclick="rcorrectdelete('${clist.no}');deletesession()">이전으로</button>
+  	 
+  	 </c:if>
+  	 
   	 
    	<input type = "submit" value = "제출">
    	
