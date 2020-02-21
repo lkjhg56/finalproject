@@ -109,6 +109,14 @@
 <c:if test="${isAdmin}">
 <a href="${context}/users/user_list">회원 목록</a><br>
 </c:if>
+<c:choose>
+<c:when test="${isAdmin}">
+<a href="${pageContext.request.contextPath}/admin/main">admin page</a><br>
+</c:when>
+<c:otherwise>
+<a href="${context}/question/my_upload_list">내가 업로드한 문제</a><br>
+</c:otherwise>
+</c:choose>
 <a href="${context}/users/test_result">내가 본 시험 내역</a><br>
 <a href="${context}/users/my_grade_point">나의 포인트 내역</a><br>
 <a href="${context}/users/grade_point_rank">등급 포인트 랭킹</a><br>
