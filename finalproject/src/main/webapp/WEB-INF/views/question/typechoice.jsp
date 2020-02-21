@@ -38,7 +38,7 @@
 	
 
 	function resultSave(csname, tno, userid) {
-
+		console.log("checkcheck1")
 		$.ajax({
 			url : "${pageContext.request.contextPath}/question2/resultin",
 			type : "post",
@@ -71,21 +71,13 @@
 	}
 	
 	$(function(){
-		$.ajax({
-			url : "${pageContext.request.contextPath}/question2/rlist",
-			type : "post",
-			success : function(resp){
-				
-				
-			}
-			
-		})
+	
 		
 		$(".btn").hide();
 		
 		$("form[name=form1]").submit(function(e){
 
-			/* e.preventDefault();//기본전송 방지 */
+			e.preventDefault();
 		
 	
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
