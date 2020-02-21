@@ -20,7 +20,7 @@
 	<tr>
 		<td>${question.question_no}</td>
 		<td>${question.category_name}</td>
-		<td><a href="solve?question_no=${question.question_no}">${question.question_title}</a></td>
+		<td>${question.question_title}</td>
 		<td>${question.read_count}</td>
 		<td>${question.correct_ratio}%</td>
 		<td><a href="content?question_no=${question.question_no}">문제확인</a></td>

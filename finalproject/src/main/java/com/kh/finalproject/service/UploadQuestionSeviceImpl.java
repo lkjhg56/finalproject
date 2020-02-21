@@ -19,7 +19,7 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
-import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.GradePointDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.repository.UsersDao;
 import com.kh.finalproject.vo.ExamResultVO;
@@ -32,6 +32,9 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	private UploadQuestionDao uploadQuestionDao;
 	@Autowired
 	private UsersDao usersDao;
+	@Autowired
+	private GradePointDao gradePointDao;
+	
 	//문제 업로드 C
 	@Override
 	public void questionUpload(UpdateQuestionVO updateQuestionVO) throws Exception{
@@ -84,6 +87,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				mf.transferTo(target);
 			}
 		}
+		//point 추가
+		gradePointDao.giveQuestionUploadPoint(updateQuestionVO.getUser_no());
 	}
 	//문제 수정 U
 	@Override
@@ -206,9 +211,11 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		}else {
 			userQuestionResultDto.setResult(0);
 		}
+
 		uploadQuestionDao.insert_result(userQuestionResultDto);
 		UserQuestionResultDto resultDto = uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no);
 		userQuestionResultDto.setUser_priority(resultDto.getUser_priority());
+		
 		return userQuestionResultDto;
 		
 	}

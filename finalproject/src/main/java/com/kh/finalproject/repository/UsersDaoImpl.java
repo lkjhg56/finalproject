@@ -34,7 +34,10 @@ public class UsersDaoImpl implements UsersDao{
 	public List<UsersDto> getUserList(Map<String, Integer> total) {
 		return sqlSession.selectList("users.user_list", total);
 	}
-	
+	@Override
+	public int getUserNo(String id) {
+		return sqlSession.selectOne("users.get_users_no",id);
+	}
 	
 
 }
