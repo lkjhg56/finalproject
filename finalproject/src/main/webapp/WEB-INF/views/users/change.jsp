@@ -111,7 +111,7 @@
   </tr>
   <tr>
     <th>가입일</th>
-    <td>${users.join_date}</td>
+    <td>${users.join_date.substring(0,10)}</td>
   </tr>
 </table>
 	<input type="submit" value="수정하기"> 

@@ -19,7 +19,7 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
-import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.GradePointDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.repository.UsersDao;
 import com.kh.finalproject.vo.ExamResultVO;
@@ -32,6 +32,9 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	private UploadQuestionDao uploadQuestionDao;
 	@Autowired
 	private UsersDao usersDao;
+	@Autowired
+	private GradePointDao gradePointDao;
+	
 	//문제 업로드 C
 	@Override
 	public void questionUpload(UpdateQuestionVO updateQuestionVO) throws Exception{
@@ -84,6 +87,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				mf.transferTo(target);
 			}
 		}
+		//point 추가
+		gradePointDao.giveQuestionUploadPoint(updateQuestionVO.getUser_no());
 	}
 	//문제 수정 U
 	@Override
@@ -156,6 +161,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	//문제 삭제 D
 	@Override
 	public void questionDelete(int question_no, int user_custom_question_no) {
+		//user_custom_question_no로 유저 넘버를 받아서 삭제함.
+		gradePointDao.deleteQuestionPoint(uploadQuestionDao.getUserCustomNo(user_custom_question_no));
 		//삭제할 파일 정보를 불러온다.
 		//여러개가 있을경우도 있으니 리스트로 받아와야 한다.
 		List<UploadQuestionFileDto> delete = uploadQuestionDao.getFile2(question_no);
@@ -167,7 +174,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}
 		}
 		//데이터베이스 삭제
-		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);			
+		uploadQuestionDao.fileDelete2(question_no, user_custom_question_no);
+		//포인트 반환
 	}
 	//단일 문제 해결 R
 	@Override
@@ -201,14 +209,16 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
 		if(result) {
 			userQuestionResultDto.setResult(1);
-//			UsersDto usersDto = usersDao.getInfo(updateQuestionVO.getId());
-//			uploadQuestionDao.givePointforSolving(usersDto.getUser_no());
+			//포인트 부여(3점)
+			gradePointDao.giveQuestionSolvePoint(usersDao.getUserNo(updateQuestionVO.getId()));
 		}else {
 			userQuestionResultDto.setResult(0);
 		}
+		
 		uploadQuestionDao.insert_result(userQuestionResultDto);
 		UserQuestionResultDto resultDto = uploadQuestionDao.userPriority(updateQuestionVO.getQuestion_no(), question_result_no);
 		userQuestionResultDto.setUser_priority(resultDto.getUser_priority());
+		
 		return userQuestionResultDto;
 		
 	}

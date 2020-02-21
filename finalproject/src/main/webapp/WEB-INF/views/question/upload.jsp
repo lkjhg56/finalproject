@@ -14,6 +14,16 @@ function previewImage(target){
         reader.readAsDataURL(target.files[0]);
     }
 }
+$(function(){
+	//제출 확인 기능
+	$(".submitExam").click(function(){
+		var result = confirm("등록하시겠습니까?");
+		if(result){
+			return true;
+		}else
+			return false;
+	});	
+});
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div class="container">
@@ -23,7 +33,7 @@ function previewImage(target){
 	<input type="text" name="question_title" placeholder="제목" required><br><br>
 	<input type="text" name="category_name" placeholder="카테고리명" required><br><br>
 	<textarea name="question_content" placeholder="문제명" rows="10" cols="50"></textarea><br><br>
-	<img id="preview" src="http://placehold.it/200x200" width="120" height="120"><br>	
+	<img id="preview" src="http://placehold.it/200x200" width="35%" height="300"><br>	
 	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>
 	<input type="text" name="answer1" placeholder="선택지 1 입력" required><br><br>
 	<input type="text" name="answer2" placeholder="선택지 2 입력" required><br><br>
@@ -38,7 +48,7 @@ function previewImage(target){
 	<input type="radio" name="question_answer" value="4" required>④
 	<input type="radio" name="question_answer" value="5" required>⑤<br><br>
 	<textarea name="question_solution" placeholder="해설입력" rows="10" cols="50"></textarea><br><br>
-	<input type="submit" value="등록하기">
+	<input class="submitExam" type="submit" value="등록하기">
 	<input type="reset" value="초기화">
 </form>
 </div>

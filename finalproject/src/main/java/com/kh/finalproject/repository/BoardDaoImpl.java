@@ -77,6 +77,11 @@ public class BoardDaoImpl implements BoardDao{
 	public List<BoardDto> search(Map<String, String> param) {		
 		return sqlSession.selectList("board.search", param);
 	}
+	
+	@Override
+	public void readCount(int board_no) {
+		sqlSession.update("board.readCount", board_no);		
+	}
 
 ////////////////////////댓글///////////////////////////////////
 	@Override
@@ -107,6 +112,12 @@ public class BoardDaoImpl implements BoardDao{
 		sqlSession.update("board.calculate", board_reply_origin);
 		
 	}
+
+	@Override
+	public void rereplyRegist(BoardReplyDto boardReplyDto) {
+		sqlSession.insert("board.registRereply", boardReplyDto);		
+	}
+	
 //////////////////////네비게이터//////////////////////////
 	@Override
 	public int boardCount() {		
@@ -130,5 +141,9 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectOne("board.boardReplyCount", board_no);
 	}
 
+	@Override
+	public BoardReplyDto getReply(int board_reply_no) {
+		return sqlSession.selectOne("board.getOneReply", board_reply_no);
+	}
 	
 }

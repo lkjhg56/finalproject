@@ -27,7 +27,7 @@
 <div class="container">
 <div>수험 시간 : <c:if test="${time.hour!=0}">${time.hour}시간</c:if> ${time.min}분 ${time.sec}초</div><br>
 <!-- 결과, 상세 버튼 -->
-<button class="result">결과페이지</button><button class="detail">상세페이지</button>
+<button class="result">시험 결과</button><button class="detail">상세 결과</button>
 
 <!-- 결과 페이지 -->
 <div class="container single">
@@ -38,7 +38,7 @@
 <!-- 상세 페이지 -->
 <div class="container result-wrapper multi">
 <c:forEach var="result" items="${list}" varStatus="status">
-	<div class="result">
+	<div class="results">
 		문제 ${status.count}<br>
 		입력한 정답 :
 		<c:choose>

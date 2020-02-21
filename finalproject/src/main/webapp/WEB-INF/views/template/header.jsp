@@ -45,8 +45,10 @@ function islogin(id, path){
 				htmls += '<h6>'+resp.id+'님    '+'<a href="'+path+'/users/logout">logout</a></h6>'
 				htmls += '<h6> 등급 : '+resp.grade+'</h6>'
 				if(premium=='무료회원'){
-				htmls += '<h6>'+premium+' <a href ="'+path+'/pay/premium">프리미엄 전환</a></h6>'
-			
+				htmls += '<form action = "'+path+'/pay/premium">'
+				htmls += '<input type ="hidden" name = "point" value = "'+resp.point+'">'
+				htmls += '<input type ="submit" value = "프리미엄 전환">'
+				htmls += '</form>'
 				}else{
 				htmls += '<h6>'+premium+'</h6>'
 				}
@@ -58,9 +60,61 @@ function islogin(id, path){
 })
 
 
+	$.ajax({
+		url : "${pageContext.request.contextPath}/main/getRank",
+		type : "post",
+		success:function(resp){
+			console.log("successasdasd")
+			var rank = 1;
+			htmls = "";
+			htmls += '<div>'
+			htmls += '<div>포인트 랭킹</div>'
+			$(resp).each(function(){
+				
+				htmls += '<div>'+rank+this.name+'</div>'
+				rank += 1;
+				
+				
+				
+			})
+			htmls += '</div>'
+			
+				$.ajax({
+					url : "${pageContext.request.contextPath}/main/getRank",
+					type : "post",
+					success:function(resp){
+						console.log("success")
+						htmls += '<div>'
+						htmls+= 'test'
+						htmls +='</div>'
+					}
+					
+				})
+		
+
+			htmls+= '<div>test2</div>'
+			htmls+= '<div>test3</div>'
+			
+			
+			$(".aside_link").html(htmls);
+		}
+	})
+	
 
 	
 };
+
+
+$(".aside_link > div:gt(0)").hide();
+
+setInterval(function() { 
+$('.aside_link > div:first')
+.fadeOut(1000)
+.next()
+.fadeIn(2000)
+.end()
+.appendTo('.aside_link');
+},  4000);
 
 
 	
@@ -108,8 +162,10 @@ function islogin(id, path){
 
 .aside_link{
 	width:100%;
-	height:600px;
+	min-height:500px;
 	  border: 4px solid #f2f5f3;
+	  padding-top :10px;
+	  padding-left :10px;
 }
 
 
@@ -169,7 +225,6 @@ function islogin(id, path){
             <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/question/list">CustomQuiz</a>
           </li>
-          
 
 
           
@@ -189,7 +244,11 @@ function islogin(id, path){
             <li class="nav-item logined">
             <a class="nav-link" href="${pageContext.request.contextPath}/users/logout">Logout</a>
           </li>
-
+          <c:if test="${grade=='관리자'}">
+	          <li class="nav-item logined">
+	            <a class="nav-link" href="${pageContext.request.contextPath}/admin/main">admin page</a>
+	          </li>
+          </c:if>
           
         </ul>
       </div>

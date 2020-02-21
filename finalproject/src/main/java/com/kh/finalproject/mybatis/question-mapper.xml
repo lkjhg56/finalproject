@@ -82,6 +82,9 @@
  	 	<select id="questionNavRownum" parameterType="map" resultType="boardDto">
  		select * from(select rownum rn, A.* from(select * from question order by question_no desc)A)where rn between #{start} and #{finish}
 	</select>
+	<select id="getUserNo" parameterType="int" resultType="int">
+		select user_no from user_custom_question where user_custom_question_no=#{user_custom_question_no}
+	</select>
  	<!-- 유저 문제 업로드 -->
  	<insert id="upload" parameterType="uploadQuestionDto">
  		insert into question values(
@@ -298,6 +301,17 @@
         	)e
 		on q.user_custom_question_no = e.user_custom_question_no
 		order by question_no desc
+ 	 </select>
+ 	 <select id="getListById" parameterType="String" resultType="uploadQuestionDto">
+ 	 	select * from 
+			question q
+			inner join 
+    		(select * from users u
+         		left outer join user_custom_question ucq
+        		on u.user_no = ucq.user_no
+        	)e
+		on q.user_custom_question_no = e.user_custom_question_no
+		where id=#{id} order by question_no desc
  	 </select>
 
  	 <!-- 파일 불러오기 -->

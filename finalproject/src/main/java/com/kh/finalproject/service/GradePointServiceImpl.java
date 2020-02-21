@@ -46,33 +46,6 @@ public class GradePointServiceImpl implements GradePointService{
 		sqlSession.insert("grade_point.giveCheckPoint", pointDto);
 		sqlSession.update("users.change_1point", usersDto);
 	}
-
-	//문제업로드 포인트 부여
-	@Override
-	public void giveQuestionUploadPoint(GradePointDto pointDto,UsersDto usersDto) {		
-		String id = (String) req.getSession().getAttribute("id");
-		usersDto.setId(id);
-		
-		int users_no = sqlSession.selectOne("users.get_users_no", id);
-		pointDto.setUsers_no(users_no);
-		
-		sqlSession.insert("grade_point.giveQuestionUploadPoint", pointDto);
-		sqlSession.update("users.change_5point", usersDto);
-	}
-	
-	//문제 풀기 포인트 부여
-	@Override
-	public void giveQuestionSolvePoint(GradePointDto pointDto, UsersDto usersDto) {
-		String id = (String) req.getSession().getAttribute("id");
-		usersDto.setId(id);
-		 
-		int users_no = sqlSession.selectOne("users.get_users_no", id);
-		pointDto.setUsers_no(users_no);
-		
-		sqlSession.insert("grade_point.giveQuestionSolvePoint", pointDto);//users_no만 필요함.
-		sqlSession.update("users.change_3point", usersDto);
-	}
-
 	//답변 채택 포인트 부여
 	@Override
 	public void giveAnswerPoint(GradePointDto pointDto, UsersDto usersDto) {
@@ -87,6 +60,4 @@ public class GradePointServiceImpl implements GradePointService{
 		sqlSession.update("users.change_3point", usersDto);
 		
 	}
-	
-	//해설 작성 포인트 부여
 }

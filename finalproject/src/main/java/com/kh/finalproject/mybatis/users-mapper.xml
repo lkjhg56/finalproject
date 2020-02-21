@@ -28,30 +28,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select file_no_seq.nextval from dual
 	</select>
 	
-	<!-- 프로필 사진 -->
-	<insert id="join_file" parameterType="userFileDto">
- 		insert into user_file values(
- 		file_no_seq.nextval,
-		#{user_no}
-		#{file_upload_name},
-		#{file_save_name},
-		#{file_type},
-		#{file_size},
- 		)
- 	</insert>
-
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="users">
 		insert into 
 		users(user_no,name,id,pw,email,grade,phone,postcode,address,detailAddress,extraAddress)
 		values(
-		user_no_seq.nextval,#{name},#{id},#{pw},#{email},'일반회원',
+		#{user_no},#{name},#{id},#{pw},#{email},'일반회원',
 		#{phone},#{postcode},#{address},#{detailAddress},#{extraAddress})
 	</insert>
 	
+	<!-- 프로필 사진 -->
+	<insert id="join_file" parameterType="userFileDto">
+ 		insert into user_file values(
+ 		file_no_seq.nextval,
+		#{user_no},
+		#{file_upload_name},
+		#{file_save_name},
+		#{file_type},
+		#{file_size}
+ 		)
+ 	</insert>
+
 	<!-- 로그인 -->
 	<select id="login" parameterType="users" resultType="users">
 		select * from users where id=#{id}
+	</select>
+	
+	<!-- 로그인 체크 업데이트 -->
+	<update id="login_check" parameterType="users">
+		update users set login_check=to_date(sysdate, 'YYYY-MM-dd') where id=#{id}
+	</update>
+	
+	<!-- 오늘 날짜 뽑기 -->
+	<select id="today" resultType="String">
+		SELECT TO_CHAR(SYSDATE, 'YY/MM/dd') FROM DUAL
+	</select>
+	
+	<!-- 로그인 체크 날짜 뽑기 -->
+	<select id="login_day" parameterType="users" resultType="String">
+		select to_char(login_check, 'YY/MM/dd') from users where id=#{id}
 	</select>
 	
 	<!-- 아이디 중복 검사 -->
@@ -64,6 +79,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from users where id=#{id}
 	</select>
 	
+	<!-- 회원 목록 -->
+	<select id="user_list" parameterType="map" resultType="users">
+		select * from (
+	    	select rownum rn, A.* from (
+	        	select * from users order by user_no
+	    	)A
+		) where rn between #{start} and #{finish}
+	</select>
+	
+	<!-- 회원 목록 개수 -->
+	<select id="getUserCount" resultType="int">
+		select count(*) from users
+	</select>
+	
+	<!-- 프로필 정보 불러오기 -->
+	<select id="getFileOne" parameterType="int" resultType="userFileDto">
+		select * from user_file where user_no=#{user_no}
+	</select>
+	
+	<!-- 프로필 삭제 -->
+ 	<delete id="deleteFile" parameterType="int">
+ 		delete from user_file where user_no=#{user_no}
+ 	</delete>
+	
 	<!-- 회원 탈퇴  -->
 	<delete id="bye" parameterType="users">
 		delete users where id=#{id}
@@ -72,8 +111,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원 정보 수정 -->
 	<update id="change" parameterType="users">
 		update users set 
-		phone=#{phone},postcode=#{postcode},address=#{address},
-		detailAddress=#{detailAddress},extraAddress=#{extraAddress}
+			phone=#{phone},postcode=#{postcode},address=#{address},
+			detailAddress=#{detailAddress},extraAddress=#{extraAddress}
 		where id=#{id}
 	</update>
 	
@@ -85,33 +124,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 포인트 랭킹 조회 -->
 	<select id="grade_point_rank" resultType="users"  parameterType="map">
 		select * from (
-    	select rownum rn, A.* from (
-        	select
-			rank() over (order by grade_point desc) as rank,name ,grade_point
-			from users
-    	)A
+	    	select rownum rn, A.* from (
+	        	select
+					rank() over (order by grade_point desc) as rank,name ,grade_point
+				from users
+	    	)A
 		) where rn between #{start} and #{finish}
 	</select>
 	
 	<!-- 포인트 업데이트 -->
-
-	<!-- 1 포인트 -->
+	<!-- 출석 포인트 -->
 	<update id="change_1point" parameterType="users">
-		update users set grade_point=grade_point+1 where user_no=(select user_no from users where id=#{id})
+		update users set grade_point=grade_point+1 where id=#{id}
 	</update>
 	
 	<!-- 3 포인트 -->
-	<update id="change_3point" parameterType="users">
-		update users set grade_point=grade_point+3 where user_no=(select user_no from users where id=#{id})
+	<update id="change_3point" parameterType="int">
+		update users set grade_point=grade_point+3 where user_no=#{user_no}
 	</update>
 	
 	<!-- 5 포인트 -->
-	<update id="change_5point" parameterType="users">
-		update users set grade_point=grade_point+5 where user_no=(select user_no from users where id=#{id})
+	<update id="change_5point" parameterType="int">
+		update users set grade_point=grade_point+5 where user_no=#{user_no}
 	</update>
-
+	<!-- 문제 삭제시 5point 차감 -->
+	<update id="decreasePoint" parameterType="int">
+	<![CDATA[
+		update users set grade_point=
+		    case 
+		    when grade_point < 5 then 0
+		    when grade_point>=5 then grade_point-5 
+		    end
+		where user_no=#{user_no}
+		]]>
+	</update>
+	<update id="change_join5point" parameterType="int">
+		update users set grade_point=grade_point+5 where user_no=${user_no}
+	</update>
+	
 	<!-- users_no 뽑아 오기 -->
-	<select id="get_users_no" parameterType="users" resultType="integer">
+	<select id="get_users_no" parameterType="String" resultType="int">
 		select user_no from users where id=#{id}
 	</select>
 	
@@ -120,6 +172,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from users
 	</select>
 	
+	<!-- 프리미엄 회원 전환 -->
+	<!-- point가 얼마인지 확인 -->
+	<select id="is" parameterType="users" resultType="int">
+		select point from users where id=#{id}
+	</select>
+	<!-- is_premium -->
+	<update id="premium" parameterType="users">
+		update users set is_premium=1 where id=#{id}
+	</update>
+	<!-- point -->
+	<update id="point" parameterType="users">
+		update users set point=point-500 where id=#{id}
+	</update>
+		
 </mapper>
 
 

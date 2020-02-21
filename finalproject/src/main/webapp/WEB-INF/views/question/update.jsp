@@ -27,6 +27,16 @@ function deletefile(target) {
           	  }
       });
 }
+$(function(){
+	//제출 확인 기능
+	$(".submitExam").click(function(){
+		var result = confirm("수정하시겠습니까?");
+		if(result){
+			return true;
+		}else
+			return false;
+	});	
+});
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div class="container">
@@ -39,7 +49,7 @@ function deletefile(target) {
 	<textarea name="question_content" rows="10" cols="50">${questionDto.question_content}</textarea><br><br>
 	<c:if test="${image !=null}">
 		<c:forEach var="image" items="${image}">
-		<div><img id="preview" onchange="previewImage(this);" src="image?question_file_no=${image.question_file_no}" width="120" height="120"></div>
+		<div><img id="preview" onchange="previewImage(this);" src="image?question_file_no=${image.question_file_no}" width="35%" height="300"></div>
 		</c:forEach>
 	</c:if>
 	<a type="button" onclick="deletefile('${questionDto.question_no}')">삭제하기</a>
@@ -50,11 +60,11 @@ function deletefile(target) {
 	<input type="text" name="answer4" value="${questionDto.answer4}" required><br><br>
 	<input type="text" name="answer5" value="${questionDto.answer5}" required><br><br>
 	<input type="text" name="question_answer" value="${questionDto.question_answer}" required><br><br>
-	<input type="text" name="question_solution" value="${questionDto.question_solution}" required><br><br>
+	<textarea name="question_solution" rows="10" cols="50">${questionDto.question_solution}</textarea>
 	<c:if test="${grade=='관리자'}">
 	<input type="text" name="question_premium" value="${questionDto.question_premium}" required><br><br>
 	</c:if>
-	<input type="submit" value="수정하기">
+	<input class="submitExam" type="submit" value="수정하기">
 	<input type="reset" value="초기화">
 </form>
 </div>

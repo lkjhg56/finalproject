@@ -24,5 +24,6 @@ public class UsersDto {
 	private String extraAddress;
 	private String is_premium;
 	private int rank;
+	private int rn;
 	
 }

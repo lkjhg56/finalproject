@@ -2,6 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<script>
+$(function(){
+	$(".delete").click(function(){
+		var result = confirm("삭제하시겠습니까?");
+		if(result){
+			return true;
+		}else{
+			return false;
+		}
+	});
+});
+</script>
 <div class="container">
 
 <div>문제 번호 : ${questionDto.question_no}</div>
@@ -12,7 +24,7 @@
 </c:if>
 <c:if test="${image != null}">
 	<c:forEach var="images" items="${image}">
-		<div><img src="image?question_file_no=${images.question_file_no}"  width="120" height="120"></div>
+		<div><img src="image?question_file_no=${images.question_file_no}" width="35%" height="300"></div>
 	</c:forEach>
 </c:if>
 <div>문제 보기1 : ${questionDto.answer1}</div>
@@ -30,7 +42,7 @@
 <div>
 <c:if test="${id==questionDto.id || grade=='관리자'}">
 <a href="update?question_no=${questionDto.question_no}">문제 수정</a>
-<a href="delete?question_no=${questionDto.question_no}&user_custom_question_no=${questionDto.user_custom_question_no}">문제 삭제</a>
+<a class="delete" href="delete?question_no=${questionDto.question_no}&user_custom_question_no=${questionDto.user_custom_question_no}">문제 삭제</a>
 </c:if>
 </div>
 </div>

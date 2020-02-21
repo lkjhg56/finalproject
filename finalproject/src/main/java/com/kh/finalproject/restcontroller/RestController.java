@@ -41,7 +41,7 @@ public class RestController {
 	@PostMapping("insert")
 	public String insert(@RequestParam int test_no, int correct, int answer, int iscorrect, HttpSession session) {
 		int result_no = (int) session.getAttribute("rno");
-		
+		log.info("checkcheck");
 		
 		log.info("testcheck ={}", test_no);
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
@@ -151,7 +151,7 @@ public class RestController {
 	
 	@PostMapping("resultin")
 	public int resultin(@RequestParam String csname, int tno, String id, HttpSession session) {
-		
+		log.info("checkcheck");
 		int rno = sqlSession.selectOne("resultno");
 		
 		ResultDto resultDto = ResultDto.builder()
@@ -162,6 +162,7 @@ public class RestController {
 											.build();
 		sqlSession.insert("resultinn", resultDto);
 		session.setAttribute("rno", rno);
+	
 		return rno;
 	}
 	
@@ -183,7 +184,7 @@ public class RestController {
 	@GetMapping("queup")
 	public String queup(@RequestParam  String session_ques, HttpSession session) {
 		
-		log.info("checkcheck");
+		log.info("checkcheckasdasdasdasd");
 		int rno = (int) session.getAttribute("rno");
 		log.info("test={}", rno);
 		SetScoreVO result = SetScoreVO.builder()

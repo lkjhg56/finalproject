@@ -41,6 +41,11 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public List<UploadQuestionDto> mapList(Map<String, Integer> param){
 		return sqlSession.selectList("question.questionNavRownum",param);
 	}
+	//id로 문제 리스트 불러오기
+	@Override
+	public List<UploadQuestionDto> idList(String id){
+		return sqlSession.selectList("question.getListById",id);
+	}
 	//문제를 DB에 업로드
 	public void upload(UploadQuestionDto uploadQuestionDto) {
 		sqlSession.insert("question.upload_sub", uploadQuestionDto);//user_costom_question 등록
@@ -188,6 +193,10 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		sqlSession.update("question.upReadCount",question_no);
 		
 	}
-
+	@Override
+	public int getUserCustomNo(int user_custom_question_no) {
+		return sqlSession.selectOne("question.getUserNo",user_custom_question_no);
 	}
+
+}
 

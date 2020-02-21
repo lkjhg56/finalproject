@@ -14,17 +14,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 문제업로드 포인트 -->
-	<insert id="giveQuestionUploadPoint" parameterType="grade_pointDto">
+	<insert id="giveQuestionUploadPoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
 		values(point_no_seq.nextval,#{users_no}, 5, '문제 업로드')
 	</insert>
 	
 	<!-- 문제풀기 포인트 -->
-	<insert id="giveQuestionSolvePoint" parameterType="grade_pointDto">
+	<insert id="giveQuestionSolvePoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
 		values(point_no_seq.nextval,#{users_no}, 3, '문제 풀기')
 	</insert>
-	
+	<!-- 문제 삭제시 포인트 차감. -->
+	<insert id="deleteMinus" parameterType="int">
+		insert into grade_point(point_no,users_no,get_point,point_type) 
+		values(point_no_seq.nextval,#{users_no},-5, '문제 삭제')
+	</insert>
 	<!-- 출석체크 포인트 -->
 	<insert id="giveCheckPoint" parameterType="grade_pointDto">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
@@ -37,12 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(point_no_seq.nextval,#{users_no}, 3, '답변채택')
 	</insert>
 	
-	<!-- 나의 포인트 내역 조회 (추후 네비 추가)-->
+	<!-- 나의 포인트 내역 조회-->
 	<select id="my_grade_point" resultType="grade_pointDto" parameterType="map">
     	select * from (
     		select rownum rn, A.* from (
         		select * from grade_point where users_no=(
-        		select user_no from users where id=#{id}
+        			select user_no from users where id=#{id}
         	) order by get_date desc)A
         ) where rn between #{start} and #{finish}	
 	</select>
