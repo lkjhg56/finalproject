@@ -161,6 +161,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from users
 	</select>
 	
+	<!-- 프리미엄 회원 전환 -->
+	<!-- point가 얼마인지 확인 -->
+	<select id="is" parameterType="users" resultType="int">
+		select point from users where id=#{id}
+	</select>
+	<!-- is_premium -->
+	<update id="premium" parameterType="users">
+		update users set is_premium=1 where id=#{id}
+	</update>
+	<!-- point -->
+	<update id="point" parameterType="users">
+		update users set point=point-500 where id=#{id}
+	</update>
+		
 </mapper>
 
 
