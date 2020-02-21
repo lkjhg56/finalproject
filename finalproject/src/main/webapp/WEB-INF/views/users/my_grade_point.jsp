@@ -21,7 +21,7 @@
 					<td>${my_grade_point.rn}</td>
 					<td>${my_grade_point.point_type}</td>
 					<td>${my_grade_point.get_point}</td>
-					<td>${my_grade_point.get_date}</td>
+					<td>${my_grade_point.get_date.substring(0,16)}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

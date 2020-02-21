@@ -37,12 +37,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(point_no_seq.nextval,#{users_no}, 3, '답변채택')
 	</insert>
 	
-	<!-- 나의 포인트 내역 조회 (추후 네비 추가)-->
+	<!-- 나의 포인트 내역 조회-->
 	<select id="my_grade_point" resultType="grade_pointDto" parameterType="map">
     	select * from (
     		select rownum rn, A.* from (
         		select * from grade_point where users_no=(
-        		select user_no from users where id=#{id}
+        			select user_no from users where id=#{id}
         	) order by get_date desc)A
         ) where rn between #{start} and #{finish}	
 	</select>

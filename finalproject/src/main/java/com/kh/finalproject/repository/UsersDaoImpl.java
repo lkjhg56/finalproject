@@ -13,6 +13,14 @@ public class UsersDaoImpl implements UsersDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
+//	@Override
+//	public int getsequence() {
+//		return 0;
+//	}
+//	@Override
+//	public void regist(UsersDto usersDto) {
+//	}
+	
 	@Override
 	public List<UsersDto> getRank(Map<String, Integer> total) {
 		return sqlSession.selectList("users.grade_point_rank", total);
@@ -21,6 +29,10 @@ public class UsersDaoImpl implements UsersDao{
 	@Override
 	public UsersDto getInfo(String id) {
 		return sqlSession.selectOne("users.info", id);
+	}
+	@Override
+	public List<UsersDto> getUserList(Map<String, Integer> total) {
+		return sqlSession.selectList("users.user_list", total);
 	}
 	
 	
