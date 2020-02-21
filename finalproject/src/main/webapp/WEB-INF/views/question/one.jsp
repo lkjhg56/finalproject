@@ -183,22 +183,52 @@
 console.log(${clist.no}-1); */
 
 
-function rcorrectdelete(abc) {
+
+
 	 
-	
-	 $.ajax({
-     	url:"${pageContext.request.contextPath}/question2/delete2",
-    	 type:"post",
-    	 data:{test_no:abc},
-    	 
-    	 
-    	   success:function(){
-          	
-     		console.log("rcorrect빼기성공");
-     		 
-     	}
-	   })
-}
+	 function rcorrectdelete(abc) {
+		 
+	  var checkbox2= document.getElementsByName(abc);
+	  console.log("aa");
+		 $.ajax({
+	     	url:"${pageContext.request.contextPath}/question2/delete2",
+	    	 type:"post",
+	    	 data:{test_no:abc},
+	    	 
+	    	 
+	    	   success:function(resp){
+	          	
+	    		   
+	    		   
+	    		   
+	    		   
+	     		console.log(resp);
+	     		
+	     		
+	     		
+	     		
+	            for(var i=0; i<checkbox2.length; i++){
+	            if(i==resp-1){
+	            	 $(checkbox2[i]).checked;
+	            }
+	            else{
+	            	
+	                    $(checkbox2[i]).hide();
+	            	
+	            }
+	            
+	             
+	                  
+	                
+	              
+	            }
+	                
+	            console.log("체크");
+	     		
+	     		
+	     	}
+		   })
+	}
 
 function deletesession() {
 	//삭제 알림창
@@ -226,8 +256,79 @@ function deletesession() {
 
 
 
-     
+$(function(){
+	 var a = $(".session_ques").text()
+	 console.log(a);
+	   $.ajax({
+		  url : "${pageContext.request.contextPath}/question2/queup",
+		  type : "get",
+		  data : {
+			  session_ques:a,
+		  },success: function(){
+			  console.log("success");
+		  },erorr :  function(){
+			  console.log("fail");
+			  
+		  }
+		   
+	   })
+	   
+  })
  
+  
+  $(document).ready(function() { 
+	  
+
+	  
+	   var a = $(".asd").text();
+	  var checkbox2=$(".ans");
+		 $.ajax({
+	     	url:"${pageContext.request.contextPath}/question2/delete2",
+	    	 type:"post",
+	    	 data:{test_no:a},
+	    	 
+	    	 
+	    	   success:function(resp){
+	          	
+	    		   
+	    		   
+	    		   
+	    		   
+	     		console.log(resp+"check");
+	     		
+	     		
+	     		
+	     		if(resp!=0){
+	     			
+	     			
+	     	       for(var i=0; i<checkbox2.length; i++){
+	   	            if(i==resp){
+	   	            	 $(checkbox2[i]).checked;
+	   	            }
+	   	            else{
+	   	            	
+	   	                    $(checkbox2[i]).hide();
+	   	            	
+	   	            }
+	   	            
+	   	             
+	   	                  
+	   	                
+	   	              
+	   	            }
+	     			
+	     			
+	     		}
+	     
+	                
+	            console.log("체크");
+	     		
+	     		
+	     	}
+		   })
+	  
+  
+  });
 
 
    </script>
@@ -289,7 +390,7 @@ main{
             <div class = "jumbotron">
                 <h1>${csname}</h1>
 
-                <h3>${session}</h3>
+                <h3 class = "session_ques">${session}</h3>
  						<div class="timer-wrap">
 
        							 <i class = "time">0:${clist.lim_min}:1</i>
@@ -313,7 +414,7 @@ main{
   <!-- 이미지 파일 조건 -->
   	
   			
-<div class = "plural-pic" ><img id="preview" src="qimage?no=${clist.no}"  class="test" name = "${clist.no}+pic"  onload="file('${clist.no}+pic');"  width="120" height="120"></div><br><br>
+<div class = "plural-pic" ><img id="preview" src="qimage?no=${clist.no}"  class="test" name = "${clist.no}+pic"  onload="file('${clist.no}+pic'); "  width="120" height="120"></div><br><br>
  
    	
    		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}','preview');">${clist.dis1}</h4>
@@ -324,20 +425,23 @@ main{
   
 
 
- 
+ <div class ="asd">${clist.no}</div>
+
+   <form action = "${pageContext.request.contextPath}/question/questcategory"  method="get"> 
    
-   <form action = "${pageContext.request.contextPath}/question/questcategory"  > 
+   
    	<input type = "hidden" name = "category_no" value = "${session}">
    	   	<input type = "hidden" name = "session" value = "${session}">
    	<input type="hidden" name="method" value="${method}">
   	 		<input type = "hidden" name = "categoryname" value = "${categoryname}">
+  	 		
   	 		<input type="hidden" name="hour"  value="${hour}">
   	 		<input type="hidden" name="min" value="${min}">
   	 		 		<input type="hidden" name="tno" value="${tno}">
   	 		
   	 <%-- 		<input type = "hidden" name = "categoryname" value = "${csname}"> --%>
   	 <c:if test="${no>=1}">
-  	 <button type="button" onclick="rcorrectdelete('${clist.no}');deletesession()">이전으로</button>
+  	 <button type="button" onclick="deletesession()">이전으로</button>
   	 
   	 </c:if>
   	 

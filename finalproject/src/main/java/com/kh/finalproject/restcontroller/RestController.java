@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.ResultDto;
@@ -97,7 +98,7 @@ public class RestController {
 	
 	
 	@PostMapping("delete2")
-	public String delete2(@RequestParam int test_no, HttpSession session) {
+	public int delete2(@RequestParam int test_no, HttpSession session) {
 		
 	
 		
@@ -107,23 +108,46 @@ public class RestController {
 		log.info("gfgfgf={}", test_no);
 		log.info("gfgfgfffff={}", result_no);
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
-																	.test_no(test_no-1)
+																	.test_no(test_no)
 																	.result_no(result_no)
 																	.build();
+		log.info("checkcorrectaaaaa");
 		
 		
-	int rqno=	NormalUploadQuestionDao.rqno(rcorrectDto);
-	log.info("gfgfgfffdddff={}", rqno);
-	RcorrectDto rcorrectDto2=RcorrectDto.builder()
-			.test_no(test_no)
-			.rqno(rqno-1)
-			.build();
-	
-	sqlSession.delete("deleteRcorrect", rcorrectDto2);
+			int rqno=	NormalUploadQuestionDao.rqno(rcorrectDto);
+		log.info("checkrqno={}", rqno);
+		if(rqno!=0) {
+//			log.info("gfgfgfffdddff={}", rqno);
+//			RcorrectDto rcorrectDto2=RcorrectDto.builder()
+//					.test_no(test_no)
+//					.rqno(rqno)
+//					.build();
+//			
+//			/* sqlSession.delete("deleteRcorrect", rcorrectDto2); */
+//			log.info("dto={}",rcorrectDto2.getTest_no());
+//			log.info("dtorq={}",rcorrectDto2.getRqno());
+//			
+			int correct=	sqlSession.selectOne("selectCorrect", rcorrectDto);
+			
+			log.info("corr={}",correct);
+			
+			
 //		session.removeAttribute("rno");
-		log.info("delete2확인");
-		return null;
+			log.info("delete2확인");
+			return correct;
+		}
+		
+		else {
+			return 0;
+		}
+		
 	}
+	
+	
+	
+	
+
+	
 	
 	@PostMapping("resultin")
 	public int resultin(@RequestParam String csname, int tno, String id, HttpSession session) {

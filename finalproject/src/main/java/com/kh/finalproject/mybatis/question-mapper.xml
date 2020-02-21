@@ -313,6 +313,36 @@
 		select * from test_question_file where test_question_no=#{no}
  	 </select>
 
+
+<!-- csname으로 test_question 수 조회 -->
+<select id="csTestquestion" parameterType="String" resultType="int">
+
+  select count(*) from test_question where csname =#{csname}
+</select>
+
+
+<!-- testquestion 삭제 -->
+
+<delete id="deleteTestQuestion" parameterType="int">
+
+delete from test_question where no=#{no}
+</delete>
+
+
+<!--  -->
+
+
+
+
+<select id="countCategory" parameterType="String" resultType="int">
+
+   select count(*) from category where csname=#{csname}
+</select>
+
+<select id="selectCategoryDto" parameterType="String" resultType="categoryDto">
+ select * from category where csname=#{csname}
+
+</select>
  	 <!-- 일반문제 수정 -->
  	  	<update id="updateTestQuestion" parameterType="normalUpdateQuestionVO">
  		update test_question set 
@@ -367,7 +397,21 @@ update solution set
  	 	delete from question_result where question_no=#{question_no}
  	 </delete>
  	 
- 	<!-- test_question 업로드 --> 	 		
+ 	 <!-- csname으로 category 삭제 -->
+ 	 <delete id="deleteCategory" parameterType="String">
+ 	 
+ 	  delete from category where csname =#{csname}
+ 	 </delete>
+ 	 
+ 	 
+ 	 <!-- test_no로 test 삭제 -->
+ 	 <delete id="deleteTest" parameterType="int" >
+ 	   delete from test where tno =#{tno}
+ 	 
+ 	 </delete>
+ 	 
+ 	 
+ 	<!-- 업로드 --> 	 		
  	<insert id="uploadcategory" parameterType="categoryDto">
 	 	insert into category values(
 		 	#{category_no},

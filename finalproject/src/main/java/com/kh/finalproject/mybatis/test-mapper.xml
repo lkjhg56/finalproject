@@ -81,6 +81,14 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 
 </delete>
 
+
+<!-- correct 구하기 -->
+<select id="selectCorrect" parameterType="rcorrectDto"  resultType="int">
+ select correct from rcorrect where rqno=#{rqno} and test_no=#{test_no}
+
+</select>
+
+
 	<!--  csname & category_no 로 문제 부르기 -->
 	<select id = "getQuesNum" parameterType = "testQuestionDto" resultType = "testQuestionDto">
 			select * from test_question where csname=#{csname} and category_no=#{category_no}
