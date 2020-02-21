@@ -321,7 +321,7 @@ $(function(){
 			</table>	
 			</c:if>
 			
-			 <div class="row">
+			 <div class="container align-items-center">
 	    		<!-- 네비게이터(navigator) -->    		
 	    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
 	    			<jsp:param name="pno" value="${pno}" />

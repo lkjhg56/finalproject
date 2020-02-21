@@ -65,66 +65,47 @@ public class BoardController {
 									HttpSession session) throws IllegalStateException, IOException {		
 
 		String board_writer = (String) session.getAttribute("id");
-//		log.info(board_writer);
+		log.info(board_writer);
 		boardDto.setBoard_writer(board_writer);
-		boardfileService.registWithFile(boardDto, board_file);
+
+			boardfileService.registWithFile(boardDto, board_file);
+
 		return "redirect:list";			
 	}
 	
 	
 /////////////글 수정(본인글, 관리자만)//////////
 	@GetMapping("/edit")
-	public String edit(@RequestParam int board_no,
+		public String edit(@RequestParam int board_no,
 									Model model) {
 		boardDao.get(board_no);
 		model.addAttribute("boardDto", boardDao.get(board_no));		
 		return "board/edit";
-	}
-	
-	@PostMapping("/edit")
-	public String edit(@ModelAttribute BoardDto boardDto,
+		}
+		
+		@PostMapping("/edit")
+		public String edit(@ModelAttribute BoardDto boardDto,
 									@RequestParam (required = false) List<MultipartFile> board_file) throws IllegalStateException, IOException {
 		
-
-		List<BoardFileDto> dto = boardfileDao.getFileList(boardDto.getBoard_no());
-	
-		if(!dto.isEmpty()) {
-			for(int i = 0; i < dto.size(); i ++) {				
-				int board_file_no = dto.get(i).getBoard_origin_content_no();	//file_no받아오기			
-				boardfileDao.deleteFile(board_file_no);
-				BoardFileDto delete = boardfileDao.getFile(board_file_no); //지울 파일의 실체 가져옴
-				String filepath = "D:/upload/board_files/"+delete.getBoard_file_save_name();
-				File file = new File(filepath);
-				file.delete();
-			}
-		}
-
 		boardfileService.editWithFile(boardDto, board_file);
 		
 		int no = boardDto.getBoard_no(); //게시글 번호 구해서 리다이렉트에 사용
 		return "redirect:content?board_no="+no;		
-	}	
-	
+	}
 	
 ///////////////글 삭제(본인글, 관리자만)/////////////
 	
 	@GetMapping("/delete")
-	public String delete(@ModelAttribute BoardDto boardDto, @ModelAttribute BoardFileDto BoardFileDto) {
-		List<BoardFileDto> dto = boardfileDao.getFileList(boardDto.getBoard_no());
-//		System.out.println(dto.get(0).getBoard_origin_content_no());
-		if(!dto.isEmpty()) {
-			for(int i = 0; i < dto.size(); i ++) {				
-				int board_file_no = dto.get(i).getBoard_origin_content_no();//181	
-				List<BoardFileDto> delete = boardfileDao.getFile2(board_file_no); //지울 파일의 실체 가져옴
-				String filepath = "D:/upload/board_files/"+delete.get(i).getBoard_file_save_name();
-				File file = new File(filepath);
-				file.delete();
-				boardfileDao.deleteFile(board_file_no);
-			}
-		}
-
+		public String delete(@RequestParam int board_no) {
+		//System.out.println("@@@@@"+board_no);
+		//실제파일 삭제
+		boardfileService.deleteRealfile(board_no);
+		//DB에서 게시글 삭제
+		boardDao.delete(board_no); 
+		
 		return "redirect:list";
 	}
+
 
 /////////////////게시글 상세 조회///////////////////
 	@GetMapping("/content")
@@ -145,32 +126,25 @@ public class BoardController {
 		
 		//[2] 처리를 수행한다
 		String board_writer = (String) session.getAttribute("id");
-//		System.out.println("sessionID = "+board_writer);
-		if(board_writer != null) {
-			boolean isMine = board_writer.equals(getdto.getBoard_writer()); //사용자ID == 작성자ID 라고 물어보는것
-			boolean isFirst = memory.add(board_no); //배열에 조회한 글번호를 넣어서 처음 들어가면 true, 재조회라면 false임 
-// 		System.out.println("memory="+memory); //배열에 저장된 글번호를 조회해 확인용.
-			
-			//[3] 처리를 마치고 저장소를 다시 세션에 저장한다
-			session.setAttribute("memory", memory); //세션에 저장소가 들어간다.
-			
-			//남의 글이라면 == !isMine  조회수를 증가시킨다.
-			//처음읽는 글이라면 == isFirst
-			if(!isMine && isFirst){		
-				getdto.setBoard_readcount(getdto.getBoard_readcount()+1); //의도적으로 화면에 표시되는 조회수를 1 증가시킨다.
-				boardDao.readCount(board_no);	//조회수 증가
-			}
-			
-			model.addAttribute("boardDto", boardDao.get(board_no));			
-		}
-		else {
-			model.addAttribute("boardDto", boardDao.get(board_no));		
+		boolean isMine = board_writer.equals(getdto.getBoard_writer()); //사용자ID == 작성자ID 라고 물어보는것
+		boolean isFirst = memory.add(board_no); //배열에 조회한 글번호를 넣어서 처음 들어가면 true, 재조회라면 false임 
+ 		System.out.println("memory="+memory); //배열에 저장된 글번호를 조회해 확인용.
+		
+		//[3] 처리를 마치고 저장소를 다시 세션에 저장한다
+		session.setAttribute("memory", memory); //세션에 저장소가 들어간다.
+		
+		//남의 글이라면 == !isMine  조회수를 증가시킨다.
+		//처음읽는 글이라면 == isFirst
+		if(!isMine && isFirst){		
+			getdto.setBoard_readcount(getdto.getBoard_readcount()+1); //의도적으로 화면에 표시되는 조회수를 1 증가시킨다.
+			boardDao.readCount(board_no);	//조회수 증가
 		}
 		
+		model.addAttribute("boardDto", boardDao.get(board_no));
 		
+		List<BoardFileDto> filelist = new ArrayList<>();
 		
 		//파일정보도 리스트로 담아서 첨부
-		List<BoardFileDto> filelist = new ArrayList<>();
 		List<BoardFileDto> dto = sqlSession.selectList("board.getFileNO", board_no);		
 		for(int i = 0; i < dto.size(); i ++) {
 			int board_file_no = dto.get(i).getBoard_file_no();
@@ -198,17 +172,17 @@ public class BoardController {
 			
 		int finish = pno * pagesize;
 		int start = finish - (pagesize - 1);
-//			System.out.println("start = " + start + " , finish = " + finish);
+			System.out.println("start = " + start + " , finish = " + finish);
 		
 	//**************************************************************************************
 	//			 		하단 네비게이터 계산하기
 	//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 	//**************************************************************************************
 		int count = boardDao.boardReplyCount(board_no); //전체글 개수를 구하는 메소드 
-//		System.out.println("!!!"+count);
+		System.out.println("!!!"+count);
 		
 		int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-//		System.out.println(pagecount);
+		System.out.println(pagecount);
 		
 		int startBlock = (pno -1) / navsize * navsize + 1;
 		int finishBlock = startBlock + (navsize -1);
@@ -264,17 +238,17 @@ public class BoardController {
 				
 			int finish = pno * pagesize;
 			int start = finish - (pagesize - 1);
-//				System.out.println("start = " + start + " , finish = " + finish);
+				System.out.println("start = " + start + " , finish = " + finish);
 			
 		//**************************************************************************************
 		//			 		하단 네비게이터 계산하기
 		//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 		//**************************************************************************************
 			int count = boardDao.boardCount(); //전체글 개수를 구하는 메소드 
-//			System.out.println(count);
+			System.out.println(count);
 			
 			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-//			System.out.println(pagecount);
+			System.out.println(pagecount);
 			
 			int startBlock = (pno -1) / navsize * navsize + 1;
 			int finishBlock = startBlock + (navsize -1);
@@ -325,7 +299,7 @@ public class BoardController {
 		//		- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 		//**************************************************************************************
 			int count = boardDao.boardCategoryCount(board_category); //전체글 개수를 구하는 메소드 
-//			System.out.println("카테고리 글수 = "+count);
+			System.out.println("카테고리 글수 = "+count);
 			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
 			
 			int startBlock = (pno -1) / navsize * navsize + 1;
@@ -380,7 +354,7 @@ public class BoardController {
 				
 			int finish = pno * pagesize;
 			int start = finish - (pagesize - 1);
-//				System.out.println("start = " + start + " , finish = " + finish);
+				System.out.println("start = " + start + " , finish = " + finish);
 			
 //**************************************************************************************
 //		 		하단 네비게이터 계산하기
@@ -394,10 +368,10 @@ public class BoardController {
 				
 				
 			int count = boardDao.boardSearchCount(param); //검색결과 전체글 개수를 구하는 메소드 
-//			System.out.println(count);
+			System.out.println(count);
 			
 			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-//			System.out.println(pagecount);
+			System.out.println(pagecount);
 			
 			int startBlock = (pno -1) / navsize * navsize + 1;
 			int finishBlock = startBlock + (navsize -1);

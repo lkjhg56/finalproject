@@ -2,8 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<style>
+	input{name="board_category"}{
+		border:none;
+	}
+</style>
 
-<div align="center">    
+<div class="container">    
 
 <h1>게시글 목록</h1>
 
@@ -15,7 +20,7 @@
 		<input id="update" type="submit" name="board_category" value="업데이트"><br><br>
 	</form>
 	
-	<table class="w" border="1" width="70%" style="text-align: center">
+	<table class="table table-hover" style="text-align: center">
 			<tr>						
 				<th>No.</th>						
 				<th>카테고리</th>
@@ -54,7 +59,7 @@
 				
 				<c:if test="${id != null}">	
 					<td colspan="6" style="text-align: right">
-						<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
+						<button type="button" class="btn btn-info"><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
 					</td>						
 				</c:if>	
 			</tr>

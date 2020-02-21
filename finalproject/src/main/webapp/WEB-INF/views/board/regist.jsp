@@ -18,25 +18,21 @@
 <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
 
 <script>
-//비회원 게시글 등록 방지 
-$(function() {
-	 loadEditor();
+//카테고리 미선택 방지
+$(function(){
+	$("#boardInsert").click(function(e){
 	
-    $(".view").find("#boardInsert").click(function(e) {
-    	//this = #boardInsert
-    	
-    	var writer = $("#writer").val();
-//     	console.log(writer);
-    	
-    	if(!writer){
-    		e.preventDefault();
-	    	alert("로그인이 필요합니다.");
-	    	//페이지 이동명령(주소창 값 변경하기)
-	        location.href = "http://localhost:8080/finalproject/users/login";	    		
-    	}
-    	
-    });
+		var category = $("select[name=board_category]").val();
+		console.log(category);		
+		
+		if(category == "선택하세요"){
+			alert("카테고리를 선택하세요.");
+			$("select[name=board_category]").focus();
+			e.preventDefault();		
+		}
+	});
 });
+
 
 function loadEditor(){
     var editor = SUNEDITOR.create((document.querySelector('textarea[name=board_content]')),{
@@ -69,13 +65,13 @@ function loadEditor(){
 
 </script>
 
-<div align="center">    
+<div class="container">    
 	<h1>게시글 등록</h1>
 
 	<form action="regist" method="post" enctype="multipart/form-data">
 		<input id="writer" type="hidden" name="board_writer" value="${id}">
 	
-	<table border="1" width="70%">
+	<table  class="table table-bordered">
 		<tr>
 			<th>카테고리</th>
 			<td>
