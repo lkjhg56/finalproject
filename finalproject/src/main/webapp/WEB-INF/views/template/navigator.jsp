@@ -28,17 +28,17 @@
 
 <!-- 포워딩 구조에서는 주소 확인 명령이 달라짐 -->
 <c:set var="uri" value="${requestScope['javax.servlet.forward.request_uri']}"></c:set>
-
-<ul class="page-navigator">
+<div class="container">
+<ul class="pagination">
 
 	<!-- 이전 버튼 -->
 	<c:if test="${startBlock > 1}">
 		<c:choose>
 			<c:when test="${isSearch}">
-				<li><a href="${uri}?keyword=${keyword}&pno=${startBlock-1}">이전</a></li>
+				<li class="page-item"><a class="page-link" href="${uri}?keyword=${keyword}&pno=${startBlock-1}">이전</a></li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="${uri}?pno=${startBlock-1}">이전</a></li>
+				<li class="page-item"><a class="page-link" href="${uri}?pno=${startBlock-1}">이전</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -46,15 +46,15 @@
     <c:forEach var="i" begin="${startBlock}" end="${finishBlock}">
     	<c:choose>
     		<c:when test="${i == pno}">
-				<li class="active"><a href="#">${i}</a></li>
+				<li class="page-item active"><a class="page-link" href="#">${i}</a></li>
 			</c:when>
 			<c:otherwise>
 				<c:choose>
 					<c:when test="${isSearch}">
-						<li><a href="${uri}?keyword=${keyword}&pno=${i}">${i}</a></li>
+						<li class="page-item"><a class="page-link" href="${uri}?keyword=${keyword}&pno=${i}">${i}</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="${uri}?pno=${i}">${i}</a></li>
+						<li class="page-item"><a class="page-link" href="${uri}?pno=${i}">${i}</a></li>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
@@ -65,12 +65,12 @@
     <c:if test="${finishBlock < pageCount}">
     	<c:choose>
 			<c:when test="${isSearch}">
-				<li><a href="${uri}?keyword=${keyword}&pno=${finishBlock+1}">다음</a></li>
+				<li class="page-item"><a class="page-link" href="${uri}?keyword=${keyword}&pno=${finishBlock+1}">다음</a></li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="${uri}?pno=${finishBlock+1}">다음</a></li>	
+				<li class="page-item"><a class="page-link" href="${uri}?pno=${finishBlock+1}">다음</a></li>	
 			</c:otherwise>
 		</c:choose>
-	</c:if>
-    
-</ul>
+	</c:if>    
+	</ul>
+</div>

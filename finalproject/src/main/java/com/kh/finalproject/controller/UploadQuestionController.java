@@ -44,8 +44,6 @@ public class UploadQuestionController {
 	private UploadQuestionService uploadQuestionService;	
 	@Autowired
 	private NormalUploadQuestionService normalUploadQuestionService;
-	@Autowired
-	private NormalUploadQuestionDao normalUploadQuestionDao;
 	//문제 풀기(한문제)
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {

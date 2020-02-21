@@ -23,7 +23,7 @@ function previewImage(target){
 	<input type="text" name="question_title" placeholder="제목" required><br><br>
 	<input type="text" name="category_name" placeholder="카테고리명" required><br><br>
 	<textarea name="question_content" placeholder="문제명" rows="10" cols="50"></textarea><br><br>
-	<img id="preview" src="http://placehold.it/200x200" width="120" height="120"><br>	
+	<img id="preview" src="http://placehold.it/200x200" width="35%" height="300"><br>	
 	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br><br>
 	<input type="text" name="answer1" placeholder="선택지 1 입력" required><br><br>
 	<input type="text" name="answer2" placeholder="선택지 2 입력" required><br><br>
