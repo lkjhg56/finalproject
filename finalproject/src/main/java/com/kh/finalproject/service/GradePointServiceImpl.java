@@ -46,18 +46,6 @@ public class GradePointServiceImpl implements GradePointService{
 		sqlSession.insert("grade_point.giveCheckPoint", pointDto);
 		sqlSession.update("users.change_1point", usersDto);
 	}
-/******************************************************************************************/
-
-	
-	//문제 풀기 포인트 부여
-	@Override
-	public void giveQuestionSolvePoint(int user_no) {
-		//users 테이블
-		sqlSession.update("users.change_3point", user_no);
-		//grade_point 테이블
-		sqlSession.insert("grade_point.giveQuestionSolvePoint", user_no);	
-	}
-	/******************************************************************************************/
 	//답변 채택 포인트 부여
 	@Override
 	public void giveAnswerPoint(GradePointDto pointDto, UsersDto usersDto) {

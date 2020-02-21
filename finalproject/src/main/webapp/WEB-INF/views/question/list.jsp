@@ -28,6 +28,9 @@
 		<th>조회수</th>
 		<th>정답비율</th>
 		<th>출제자</th>
+		<c:if test="${grade=='관리자'}">
+		<th>문제 확인</th>
+		</c:if>
 	</tr>
 </thead>
 <tbody>	
@@ -39,6 +42,9 @@
 		<td>${question.read_count}</td>
 		<td>${question.correct_ratio}%</td>
 		<td>${question.id}</td>
+		<c:if test="${grade=='관리자'}">
+			<td><a href="content?question_no=${question.question_no}">확인</a></td>
+		</c:if>
 	</tr>
 </c:forEach>
 </tbody>

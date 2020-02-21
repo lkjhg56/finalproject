@@ -111,6 +111,7 @@
 <a href="${context}/users/user_list">회원 목록</a><br>
 <a href="${pageContext.request.contextPath}/question/normalupload">일반문제 업로드</a><br>
 <a href="${pageContext.request.contextPath}/question/normallist">일반문제 List</a><br>
+<a href="${pageContext.request.contextPath}/question/list">유저문제 List</a><br>
 <a href="${pageContext.request.contextPath}/admin/main">admin page</a><br>
 </c:when>
 <c:otherwise>

@@ -26,4 +26,19 @@ public class GradePointDaoImpl implements GradePointDao{
 		//grade_point 테이블
 		sqlSession.insert("grade_point.giveQuestionUploadPoint", user_no);		
 	}
+	@Override
+	public void giveQuestionSolvePoint(int user_no) {
+		//users 테이블
+		sqlSession.update("users.change_3point", user_no);
+		//grade_point 테이블
+		sqlSession.insert("grade_point.giveQuestionSolvePoint", user_no);	
+	}
+	@Override
+	public void deleteQuestionPoint(int user_no) {
+		//users 테이블
+		sqlSession.update("users.decreasePoint",user_no);
+		//grade_point 테이블
+		sqlSession.insert("grade_point.deleteMinus",user_no);
+	}
+
 }

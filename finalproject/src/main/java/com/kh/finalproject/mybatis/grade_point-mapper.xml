@@ -24,7 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into grade_point(point_no, users_no, get_point, point_type) 
 		values(point_no_seq.nextval,#{users_no}, 3, '문제 풀기')
 	</insert>
-	
+	<!-- 문제 삭제시 포인트 차감. -->
+	<insert id="deleteMinus" parameterType="int">
+		insert into grade_point(point_no,users_no,get_point,point_type) 
+		values(point_no_seq.nextval,#{users_no},-5, '문제 삭제')
+	</insert>
 	<!-- 출석체크 포인트 -->
 	<insert id="giveCheckPoint" parameterType="grade_pointDto">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
