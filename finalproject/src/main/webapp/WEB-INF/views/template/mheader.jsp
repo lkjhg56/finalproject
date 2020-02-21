@@ -99,6 +99,11 @@ function islogin(id){
             <li class="nav-item logined">
             <a class="nav-link" href="${pageContext.request.contextPath}/users/logout">Logout</a>
           </li>
+          <c:if test="${grade=='관리자'}">
+          <li class="nav-item logined">
+            <a class="nav-link" href="${pageContext.request.contextPath}/admin/main">admin page</a>
+          </li>
+          </c:if>
         </ul>
       </div>
     </div>

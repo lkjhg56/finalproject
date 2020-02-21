@@ -12,7 +12,7 @@
 </c:if>
 <c:if test="${image != null}">
 	<c:forEach var="images" items="${image}">
-		<div><img src="image?question_file_no=${images.question_file_no}"  width="120" height="120"></div>
+		<div><img src="image?question_file_no=${images.question_file_no}" width="35%" height="300"></div>
 	</c:forEach>
 </c:if>
 <div>문제 보기1 : ${questionDto.answer1}</div>
