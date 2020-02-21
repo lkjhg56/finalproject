@@ -12,12 +12,14 @@
 		<typeAlias type="com.kh.finalproject.entity.UploadQuestionDto" alias="uploadQuestionDto"/>
 		<typeAlias type="com.kh.finalproject.entity.UploadQuestionFileDto" alias="uploadQuestionFileDto"/>
 		<typeAlias type="com.kh.finalproject.entity.UserQuestionResultDto" alias="userQuestionResultDto"/>
+		<typeAlias type="com.kh.finalproject.entity.UserQuestionMultiResultDto" alias="userQuestionMultiResultDto"/>
 		<typeAlias type="com.kh.finalproject.entity.TestDto" alias = "testDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.CategoryDto" alias = "categoryDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.TestQuestionDto" alias = "testQuestionDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.RcorrectDto" alias = "rcorrectDto"/> 
 		<typeAlias type="com.kh.finalproject.entity.BoardDto" alias="boardDto"/>
 		<typeAlias type="com.kh.finalproject.entity.UsersDto" alias="users"/>
+		<typeAlias type="com.kh.finalproject.entity.UserFileDto" alias="userFileDto"/>
 		<typeAlias type="com.kh.finalproject.entity.BoardFileDto" alias="boardfileDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.ResultDto" alias = "resultDto"/>
 		<typeAlias type = "com.kh.finalproject.vo.SetScoreVO" alias = "scoreVO"/>
@@ -29,5 +31,6 @@
 		<typeAlias type="com.kh.finalproject.entity.BoardReplyDto" alias="boardReplyDto"/>
 		<typeAlias type="com.kh.finalproject.entity.SolutionDto" alias="solutionDto"/>
 		<typeAlias type="com.kh.finalproject.vo.NormalUpdateQuestionVO" alias="normalUpdateQuestionVO"/>
+		<typeAlias type="com.kh.finalproject.payentity.PayListDto" alias = "PayListDto"/>
 	</typeAliases>
 </configuration>

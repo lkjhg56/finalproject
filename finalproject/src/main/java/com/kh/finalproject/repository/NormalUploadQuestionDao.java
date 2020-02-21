@@ -1,6 +1,7 @@
 package com.kh.finalproject.repository;
 
 import com.kh.finalproject.entity.CategoryDto;
+import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.SolutionDto;
 import com.kh.finalproject.entity.TestDto;
 import com.kh.finalproject.entity.TestQuestionDto;
@@ -29,4 +30,8 @@ public interface NormalUploadQuestionDao {
 	void updateFile(UploadTestQuestionFileDto uploadTestQuestionFileDto);
 	
 	void fileDelete2(int no);
+	
+	void onlyfileDelete(int no);
+	
+	int rqno(RcorrectDto rcorrectDto);
 }

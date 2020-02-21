@@ -148,9 +148,12 @@
 								<div>
 									<form method="post" name="form1"  action="${pageContext.request.contextPath}/question/solving">
 									<input type="hidden" name="tno" value="${tno}">
-										<input type="hidden" name="hour" value="${list.lim_hour}"> <input
-											type="hidden" name="min" value="${list.lim_min}"> <input
+										<input type="hidden" name="hour" value="${list.lim_hour}"> 
+										<input
+											type="hidden" name="min" value="${list.lim_min}"> 
+											<input
 											type="hidden" name="categoryname" value="${list.csname}">
+									
 										<div>${list.csname}</div>
 										<div class= "select_area">
 												<div class = "method_area">

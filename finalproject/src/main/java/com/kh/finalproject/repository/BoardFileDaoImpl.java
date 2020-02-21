@@ -27,7 +27,6 @@ public class BoardFileDaoImpl implements BoardFileDao{
 		sqlSession.insert("board.fileUpload", boardfileDto);		
 		
 	}
-
 	@Override
 	public int getsequence() {
 		return sqlSession.selectOne("board.filegetSequence");
@@ -59,6 +58,15 @@ public class BoardFileDaoImpl implements BoardFileDao{
 	public BoardFileDto getFile(int board_file_no) {
 		return sqlSession.selectOne("board.getFileOne",board_file_no);		
 	}
+	@Override
+	public List<BoardFileDto> getFile2(int board_file_no) {
+		return sqlSession.selectList("board.getFileNO",board_file_no);		
+	}
+	// 파일 수정을 위한 게시글 파일 번호 가져오기
+	@Override
+	public List<BoardFileDto> getFileList(int board_origin_content_no) {
+		return sqlSession.selectList("board.getFileNO",board_origin_content_no);		
+	}
 
 	@Override
 	public String makeDispositionString(BoardFileDto boardfileDto) throws UnsupportedEncodingException {
@@ -81,6 +89,11 @@ public class BoardFileDaoImpl implements BoardFileDao{
 	@Override
 	public void deleteFile(int board_no) {
 		sqlSession.delete("board.deletefile", board_no);		
+	}
+	@Override
+	public void editFile(BoardFileDto boardfileDto) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

@@ -59,6 +59,7 @@
 
 <form action="edit" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="board_no" value="${boardDto.board_no}">
+	<input type="hidden" name="board_no" value="${boardFileDto.board_origin_content_no}">
 	<table border="1" width="70%">		
 			<!-- 번호는 숨김 처리로 전송 -->
 			

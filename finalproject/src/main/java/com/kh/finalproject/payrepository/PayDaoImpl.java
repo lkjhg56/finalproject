@@ -21,6 +21,18 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.insert("pay.success", payDto);
 		
 	}
+	@Override
+	public PayDto get(int num) {
+			return sqlSession.selectOne("pay.get", num);
+	}
+
+	@Override
+	public void insertRevoke(PayDto payDto2) {
+		sqlSession.insert("pay.revoke", payDto2);
+		
+	}
+
+	
 	
 
 }

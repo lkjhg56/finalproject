@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="/WEB-INF/views/template/mheader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 function previewImg(target){
 	if(target.files && target.files[0]){
@@ -63,8 +63,7 @@ function previewImg(target){
 $(function(){
 	var size = 4; //한 페이지에 출력될 문제 개수
 	var questionCount = $('.inputDiv').length; //출제된 문제 개수
-	var totalPage = Math.ceil((questionCount-1)/size); //총 페이지 개수 : 현재 3
-	//div로 size별로 묶기.
+	var totalPage = Math.ceil((questionCount-1)/size);
 	for(var i=0; i < totalPage; i++){
 		$("<div>").addClass("paging-inner").attr("data-no", i).appendTo("#paging");
 	}
@@ -120,10 +119,8 @@ function pageChange(index, totalPage){
 }
 
 </script>
-<script>
-
-</script>
-<h1>여러문제 풀기</h1>
+<div class="container">
+<div>여러문제 풀기</div>
 <!-- 리스트로 받아온다. 리스트 내에는 Question_no을 포함한 문제의 DTO를 가진다. -->
 <form action="multi" method="post">
 	<input type="hidden" id="hourResult" name="hour">  
@@ -135,8 +132,14 @@ function pageChange(index, totalPage){
 <c:forEach var="questionDto" items="${list}" varStatus="status">
 <div class="inputDiv">
 문제 ${status.count}<br>
+정답률 : ${questionDto.correct_ratio}%<br>
 <span>문제 : ${questionDto.question_title}</span><br>
-<img class="preview" src="image?question_no=${questionDto.question_no}" width="120" height="120"><br><br>
+
+<c:if test="${questionDto.files !=null}">
+<c:forEach var="image" items="${questionDto.files}">
+	<img class="preview" src="image?question_file_no=${image.question_file_no}"  width="120" height="120"><br><br>
+</c:forEach>
+</c:if>
 <span>문제 내용 : ${questionDto.question_content}</span>
 	<input type="hidden" name="question[${status.index}].id" value="${id}">  
 	<input type="hidden" name="question[${status.index}].no" value="${questionDto.question_no}"><br><br>
@@ -149,4 +152,5 @@ function pageChange(index, totalPage){
 </c:forEach>
 </div>
 </form>
-<jsp:include page="/WEB-INF/views/template/mfooter.jsp"></jsp:include>
+</div>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

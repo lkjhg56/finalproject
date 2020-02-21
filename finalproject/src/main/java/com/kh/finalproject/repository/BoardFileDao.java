@@ -26,7 +26,14 @@ public interface BoardFileDao {
 	
 	//게시글 파일 정보 가져오기(parameter : board_no)
 		List<BoardFileDto> getFileNo(int board_no);
+
+	//파일 수정
+		void editFile(BoardFileDto boardfileDto);
 		
-	//첨부 파일 삭제(parameter : board_no)
-		void deleteFile(int board_no);
+	//파일 삭제
+		void deleteFile(int board_file_no);
+
+		List<BoardFileDto> getFileList(int board_origin_content_no);
+
+		List<BoardFileDto> getFile2(int board_file_no);
 }

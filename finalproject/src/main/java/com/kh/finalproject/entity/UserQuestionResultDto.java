@@ -17,6 +17,7 @@ public class UserQuestionResultDto {
 	private int question_true;//
 	private int question_false;//
 	private int user_priority;//
+	private int rownum;
 	/*****************************************************/
 	//DB저장용
 	private int result_no;//0,1 맞았는지 틀렸는지
@@ -26,4 +27,5 @@ public class UserQuestionResultDto {
 	private int result;//0,1 맞았는지 틀렸는지
 	private int user_conclusion;//고른 답
 	private int question_no;//16자, 외래키
+	private int correct_ratio;//16자, 외래키
 }

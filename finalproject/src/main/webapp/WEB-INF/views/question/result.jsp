@@ -7,7 +7,14 @@
    <!-- 필요 정보: rno,  category no, tno-->
    
 <h1>끝</h1>
-<h1>점수 ${score}</h1>
+<h5>점수 ${score}</h5>
+<h5>풀린 횟수 ${solved}</h5>
+<h5>이시험 평균 점수 ${average}</h5>
+<h5>상위 10% 평균 :${high10average}</h5>
+<h5>상위 25% 평균 :${high25average}</h5>
+<h5>상위 50% 평균 :${high50average}</h5>
+<h5>상위 75% 평균 :${high75average}</h5>
+<h5>순위 : ${rank} 백분위 : ${percentile}</h5>
 
 <h4>
 <c:forEach var="alist" items="${answerList}">
@@ -17,6 +24,8 @@
 
 <h2>입력한 답</h2>
 
+
+
 <h4>
 	<c:forEach var="rlist" items="${rCorrectDto}">
 	${rlist.correct} 
@@ -25,6 +34,3 @@
 
 
 
-
-
-<input type = "button" value = "결과 확인" onclick="resultcheck()">
