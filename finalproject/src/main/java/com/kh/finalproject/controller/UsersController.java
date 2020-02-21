@@ -1,6 +1,8 @@
 package com.kh.finalproject.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,17 +20,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.GradePointDto;
+import com.kh.finalproject.entity.UserFileDto;
 import com.kh.finalproject.entity.UsersDto;
 import com.kh.finalproject.repository.GradePointDao;
 import com.kh.finalproject.repository.ResultDao;
+import com.kh.finalproject.repository.UserFileDao;
 import com.kh.finalproject.repository.UsersDao;
 import com.kh.finalproject.service.GradePointService;
+import com.kh.finalproject.service.UserFileService;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
-
+@Slf4j
 public class UsersController {
 	
 //	@Autowired
@@ -50,17 +60,23 @@ public class UsersController {
 	@Autowired
 	private GradePointDao gradePointDao;
 	
+	@Autowired
+	private UserFileService userFileService;
+	
+	@Autowired
+	private UserFileDto userFileDto;
+	
+	@Autowired
+	private UserFileDao userFileDao;
+	
 	//회원 가입
 	@GetMapping("users/join")
 	public String join() {
 		return "users/join";
 	}
 	@PostMapping("users/join")
-	public String join(@ModelAttribute UsersDto usersDto, @ModelAttribute GradePointDto pointDto) {
-		usersDto.setPw(encoder.encode(usersDto.getPw()));
-//		usersDao.join(usersDto);
-		sqlSession.insert("users.join", usersDto);
-		pointService.giveJoinPoint(pointDto,usersDto);
+	public String join(@ModelAttribute UsersDto usersDto, List<MultipartFile> user_file,@ModelAttribute GradePointDto pointDto) throws IllegalStateException, IOException {
+		userFileService.JoinWithFile(usersDto, user_file);
 		return "redirect:/";
 	}
 	
@@ -70,7 +86,7 @@ public class UsersController {
 		return "users/login";
 	}
 	@PostMapping("users/login")
-	public String login(@ModelAttribute UsersDto usersDto,HttpSession session){
+	public String login(@ModelAttribute UsersDto usersDto,@ModelAttribute GradePointDto pointDto,HttpSession session){
 		
 		UsersDto find = sqlSession.selectOne("users.login", usersDto);
 		
@@ -84,6 +100,25 @@ public class UsersController {
 			if(correct == true) {
 				session.setAttribute("id", find.getId());
 				session.setAttribute("grade", find.getGrade());
+				String id = (String) session.getAttribute("id");
+				
+				//user_no 뽑기
+				int user_no = sqlSession.selectOne("users.get_users_no", id);
+				pointDto.setUsers_no(user_no);
+				
+				//오늘 날짜와 마지막 로그인 체크 날짜와 비교
+				//오늘 날짜
+				String today = sqlSession.selectOne("users.today");
+				//로그인 체크 날짜
+				String login_check = sqlSession.selectOne("users.login_day", id);
+				//오늘 날짜와 마지막 로그인 날짜가 다르면 포인트 주고 업데이트
+				if(!today.equals(login_check)) {
+					sqlSession.insert("grade_point.giveCheckPoint", pointDto);
+					sqlSession.update("users.change_1point", id);
+				}
+				//로그인 체크 업데이트
+				sqlSession.update("users.login_check", id);
+				
 				return "redirect:/";
 			}
 			else {			
@@ -112,9 +147,36 @@ public class UsersController {
 	// 회원 정보
 	@GetMapping("users/info")
 	public String info(HttpSession session, Model model) {
+		
+		//회원정보 보여주기
 		String id = (String) session.getAttribute("id");
-		model.addAttribute("users", sqlSession.selectOne("users.info", id));
+		UsersDto dto = sqlSession.selectOne("users.info", id);
+		model.addAttribute("users", dto);
+		
+		//사진 보여주기
+		userFileDto = sqlSession.selectOne("users.getFileOne", dto.getUser_no());
+		model.addAttribute("userFileDto", userFileDto);
+		
 		return "users/info";
+	}
+	@PostMapping("users/info")
+	public String info(HttpSession session, Model model, @RequestParam String id) {
+		
+		//회원정보 보여주기
+		UsersDto dto = sqlSession.selectOne("users.info", id);
+		model.addAttribute("users", dto);
+		
+		//사진 보여주기
+		userFileDto = sqlSession.selectOne("users.getFileOne", dto.getUser_no());
+		model.addAttribute("userFileDto", userFileDto);
+		
+		return "users/info";
+	}
+	
+	////////////////////////////이미지 1개 보여주기//////////////////////////////
+	@GetMapping("users/userimg")
+	public ResponseEntity<ByteArrayResource> getImg(int user_no) throws Exception{
+		return userFileService.getImg(user_no);
 	}
 	
 	// 회원 탈퇴
@@ -139,6 +201,13 @@ public class UsersController {
 		 String id = (String) session.getAttribute("id");
 		 usersDto.setId(id);
 		 sqlSession.update("users.change", usersDto );
+		 return "redirect:info";
+	 }
+	 
+	 //프로필 수정
+	 @PostMapping("users/profile_edit")
+	 public String profile_edit(List<MultipartFile> user_file) throws IllegalStateException, IOException {
+		 userFileService.ProfileEdit(user_file);
 		 return "redirect:info";
 	 }
 	 
@@ -335,5 +404,39 @@ public class UsersController {
 		
 		return "users/my_grade_point";
 		 
+	 }
+	 
+	 //회원 목록
+	 @GetMapping("users/user_list")
+	 public String user_list(Model model, HttpServletRequest req) {
+		 int pagesize = 10;
+		int navsize = 3;
+		int pno;
+		try{
+			pno = Integer.parseInt(req.getParameter("pno"));
+			if(pno <= 0) throw new Exception();
+		}
+		catch(Exception e){
+			pno = 1;
+		}
+		
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+		
+		int count = sqlSession.selectOne("users.getUserCount");
+		
+		Map<String, Integer> total = new HashMap<>();
+		total.put("start", start);
+		total.put("finish", finish);
+		 
+		model.addAttribute("user_list", usersDao.getUserList(total));
+		 
+		//뷰에서 필요한 데이터를 첨부(4개)
+		req.setAttribute("pno", pno);
+		req.setAttribute("count", count);
+		req.setAttribute("pagesize", pagesize);
+		req.setAttribute("navsize", navsize);
+		
+		return "users/user_list";
 	 }
 }
