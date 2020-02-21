@@ -154,8 +154,9 @@
 	}
    
    $(function(){
+	   console.log("testest")
 	 var a = $(".session_ques").text()
-	 console.log(a);
+	 console.log(a+"check");
 	   $.ajax({
 		  url : "${pageContext.request.contextPath}/question2/queup",
 		  type : "get",
@@ -171,15 +172,7 @@
 	   })
 	   
    })
-   
-   <!-- 
-   $(function(){
-	   $.ajax({
-		 	url : "${pageContext.request.contextPath}/question2/getRank"
-		   
-	   })
-	   
-   })-->
+
    $(window).on('beforeunload', function(){
 	   var isNoSaved = true; // 각 사이트마다 저장하지 않고 나가는 상황을 조건검
 	   if(isNoSaved)

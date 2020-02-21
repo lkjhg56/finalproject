@@ -60,9 +60,61 @@ function islogin(id, path){
 })
 
 
+	$.ajax({
+		url : "${pageContext.request.contextPath}/main/getRank",
+		type : "post",
+		success:function(resp){
+			console.log("successasdasd")
+			var rank = 1;
+			htmls = "";
+			htmls += '<div>'
+			htmls += '<div>포인트 랭킹</div>'
+			$(resp).each(function(){
+				
+				htmls += '<div>'+rank+this.name+'</div>'
+				rank += 1;
+				
+				
+				
+			})
+			htmls += '</div>'
+			
+				$.ajax({
+					url : "${pageContext.request.contextPath}/main/getRank",
+					type : "post",
+					success:function(resp){
+						console.log("success")
+						htmls += '<div>'
+						htmls+= 'test'
+						htmls +='</div>'
+					}
+					
+				})
+		
+
+			htmls+= '<div>test2</div>'
+			htmls+= '<div>test3</div>'
+			
+			
+			$(".aside_link").html(htmls);
+		}
+	})
+	
 
 	
 };
+
+
+$(".aside_link > div:gt(0)").hide();
+
+setInterval(function() { 
+$('.aside_link > div:first')
+.fadeOut(1000)
+.next()
+.fadeIn(2000)
+.end()
+.appendTo('.aside_link');
+},  4000);
 
 
 	
@@ -110,8 +162,10 @@ function islogin(id, path){
 
 .aside_link{
 	width:100%;
-	height:600px;
+	min-height:500px;
 	  border: 4px solid #f2f5f3;
+	  padding-top :10px;
+	  padding-left :10px;
 }
 
 
