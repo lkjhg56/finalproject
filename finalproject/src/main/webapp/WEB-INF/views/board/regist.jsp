@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
@@ -80,10 +81,12 @@ function loadEditor(){
 			<td>
 				<select name="board_category"> <br><br>
 					<option>선택하세요</option>
-					<option>공지</option>
 					<option>자유</option>
 					<option>질문</option>
+				<c:if test="${grade == '관리자'}">	
+					<option>공지</option>
 					<option>업데이트</option>
+				</c:if>
 				</select>
 			</td>
 		</tr>

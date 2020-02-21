@@ -107,6 +107,12 @@ public class BoardDaoImpl implements BoardDao{
 		sqlSession.update("board.calculate", board_reply_origin);
 		
 	}
+
+	@Override
+	public void rereplyRegist(BoardReplyDto boardReplyDto) {
+		sqlSession.insert("board.registRereply", boardReplyDto);		
+	}
+	
 //////////////////////네비게이터//////////////////////////
 	@Override
 	public int boardCount() {		
@@ -129,6 +135,12 @@ public class BoardDaoImpl implements BoardDao{
 	public int boardReplyCount(int board_no) {
 		return sqlSession.selectOne("board.boardReplyCount", board_no);
 	}
+
+	@Override
+	public BoardReplyDto getReply(int board_reply_no) {
+		return sqlSession.selectOne("board.getOneReply", board_reply_no);
+	}
+
 
 	
 }

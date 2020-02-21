@@ -61,6 +61,11 @@ public interface BoardDao {
 	//17.댓글 개수 구하기
 		int boardReplyCount(int board_no);
 		
+	//18.댓글 정보 가져오기
+		BoardReplyDto getReply(int board_reply_no);
+		
+	//19.대댓글 등록하기
+		void rereplyRegist(BoardReplyDto boardReplyDto);
 	
 		
 

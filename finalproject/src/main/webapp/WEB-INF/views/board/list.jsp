@@ -7,15 +7,15 @@
 
 <h1>게시글 목록</h1>
 
-	<form action="list" method="get">
+	<form id="fo" action="list" method="get">
 		<input type="submit" name="board_category" value="전체">
-		<input type="submit" name="board_category" value="공지">
 		<input type="submit" name="board_category" value="자유">
 		<input type="submit" name="board_category" value="질문">
-		<input type="submit" name="board_category" value="업데이트"><br><br>
+		<input id="notice" type="submit" name="board_category" value="공지">
+		<input id="update" type="submit" name="board_category" value="업데이트"><br><br>
 	</form>
 	
-	<table border="1" width="70%" style="text-align: center">
+	<table class="w" border="1" width="70%" style="text-align: center">
 			<tr>						
 				<th>번호</th>						
 				<th>카테고리</th>
@@ -45,16 +45,18 @@
 			</tr>	
 			
 		</c:forEach>
-			
-			<!-- 글쓰기 버튼은 로그인시 표시됨 -->
-			<c:if test="${id != null}">				
-				<td colspan="5" style="text-align: right">
-					<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
-				</td>						
-			</c:if>	
+			<tr id="write2">
+				<!-- 글쓰기 버튼은 로그인시 표시됨 -->
+				
+				<c:if test="${id != null}">	
+					<td colspan="5" style="text-align: right">
+						<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
+					</td>						
+				</c:if>	
+			</tr>
 	</table>
 	
-	  <div class="row">
+	  <div class="row2"  align="center">
     		<!-- 네비게이터(navigator) -->    		
     		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
     			<jsp:param name="pno" value="${pno}" />
