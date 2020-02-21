@@ -39,7 +39,7 @@ function deletefile(target) {
 	<textarea name="question_content" rows="10" cols="50">${questionDto.question_content}</textarea><br><br>
 	<c:if test="${image !=null}">
 		<c:forEach var="image" items="${image}">
-		<div><img id="preview" onchange="previewImage(this);" src="image?question_file_no=${image.question_file_no}" width="120" height="120"></div>
+		<div><img id="preview" onchange="previewImage(this);" src="image?question_file_no=${image.question_file_no}" width="35%" height="300"></div>
 		</c:forEach>
 	</c:if>
 	<a type="button" onclick="deletefile('${questionDto.question_no}')">삭제하기</a>
