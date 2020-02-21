@@ -25,7 +25,6 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
-import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.service.UploadQuestionService;
@@ -139,7 +138,7 @@ public class UploadQuestionController {
 	public String list(Model model, HttpServletRequest request) {
 		//정답률 계산하여 출력해줘야함.
 		model.addAttribute("list",uploadQuestionDao.question_user_all());
-		//네비게이터...
+		//네비게이터
 		//페이지 크기
 		int pageSize = 15;
 		//네비게이터 크기
@@ -183,6 +182,57 @@ public class UploadQuestionController {
 		request.setAttribute("navsize", navSize);
 		return "question/list";
 	}
+//	//사용자가 업로드한 문제 리스트
+//	@GetMapping("/my_upload_list")
+//	public String my_upload_list(Model model, HttpServletRequest request) {
+//		//사용자 ID를 세션에서 가져와 리스트를 뽑아준다.
+//		String id = (String) request.getAttribute("id");
+//		model.addAttribute("idList",uploadQuestionDao.idList(id));
+//		System.out.println("접속한 id="+id);
+//		//네비게이터
+//		//페이지 크기
+//		int pageSize = 15;
+//		//네비게이터 크기
+//		int navSize = 10;
+//		//페이지별 번호
+//		int pageNumber;
+//		//받아온 페이지 번호가 음수일 경우 예외를 발생시켜 catch에서 처리해준다.
+//		try {
+//			pageNumber=Integer.parseInt(request.getParameter("pageNumber"));
+//			if(pageNumber<=0) {
+//				//pageNumber가 0보다 작을 경우 catch로 처리한다.
+//				throw new Exception();
+//			}
+//		}catch(Exception e) {
+//			pageNumber=1;
+//		}
+//		//데이터 행이 150개가 있다면?
+//		int finish = pageNumber * pageSize;
+//		int start = finish - (pageSize-1);
+//		/*****************************************************/
+//		//	하단 네비게이터 계산하기
+//		/*****************************************************/
+//		//전체 등록되어 있는 문제 개수를 구함.
+//		int count = uploadQuestionDao.questionCount();
+//		//전체 페이지 수
+//		int pageCount=(count+pageSize)/pageSize;
+//		
+//		int startBlock = (pageNumber-1) / navSize * navSize+1;
+//		int finishBlock = startBlock +(navSize-1);
+//		
+//		if(finishBlock>pageCount) {
+//			finishBlock=pageCount;
+//		}
+//		Map<String, Integer> param = new HashMap<>();
+//		param.put("start", start);
+//		param.put("finish",finish);
+//		model.addAttribute("nav", uploadQuestionDao.mapList(param));
+//		request.setAttribute("pno", pageNumber);
+//		request.setAttribute("count", count);
+//		request.setAttribute("pagesize", pageSize);
+//		request.setAttribute("navsize", navSize);
+//		return "question/my_upload_list";
+//	}
 	//일반문제만들기
 	@GetMapping("/normalupload")
 	public String normalupload() {

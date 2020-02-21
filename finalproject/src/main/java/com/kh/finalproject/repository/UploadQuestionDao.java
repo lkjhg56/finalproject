@@ -40,4 +40,5 @@ public interface UploadQuestionDao {
 	List<UploadQuestionDto> getListWithImageByNumber(int question_no);
 	int questionCount();
 	List<UploadQuestionDto> mapList(Map<String, Integer> param);
+	List<UploadQuestionDto> idList(String id);
 }
