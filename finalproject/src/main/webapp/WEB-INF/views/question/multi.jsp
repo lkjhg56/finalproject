@@ -74,7 +74,7 @@ $(function(){
 		
 	$("<div>").addClass("next").appendTo(".paging-inner");		
 	$("<div>").addClass("prev").appendTo(".paging-inner");
-	$("<input>").attr("type","submit").attr("value","제출하기").appendTo(".paging-inner");
+	$("<input>").attr("type","submit").attr("value","제출하기").addClass("submitExam").appendTo(".paging-inner");
 
 	//버튼 모양 추가
 	$(".next").html("<button type='button'>다음</button>");
@@ -96,7 +96,14 @@ $(function(){
 		var no = div.data("no");
 		pageChange(no - 1, totalPage);
 	});
-
+	//제출 확인 기능
+	$(".submitExam").click(function(){
+		var result = confirm("제출하시겠습니까?");
+		if(result){
+			$(this).form.submit();
+		}else
+			return false;
+	});
 });
 
 //페이지 출력 기능	
@@ -137,7 +144,7 @@ function pageChange(index, totalPage){
 
 <c:if test="${questionDto.files !=null}">
 <c:forEach var="image" items="${questionDto.files}">
-	<img class="preview" src="image?question_file_no=${image.question_file_no}"  width="120" height="120"><br><br>
+	<img class="preview" src="image?question_file_no=${image.question_file_no}" width="35%" height="300"><br><br>
 </c:forEach>
 </c:if>
 <span>문제 내용 : ${questionDto.question_content}</span>

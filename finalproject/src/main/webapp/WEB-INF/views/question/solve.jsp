@@ -62,6 +62,18 @@ function previewImage(target){
         return i;
     }
 </script>
+<script>
+$(function(){
+	//제출 확인 기능
+	$(".submitExam").click(function(){
+		var result = confirm("제출하시겠습니까?");
+		if(result){
+			$(this).form.submit();
+		}else
+			return false;
+	});	
+});
+</script>
 <div class="container">
 <h1>문제 풀기</h1>    
 <div>문제 번호 : ${questionDto.question_no}</div>
@@ -71,7 +83,7 @@ function previewImage(target){
 <div>문제 내용 : ${questionDto.question_content}</div>
 <c:if test="${image !=null}">
 	<c:forEach var="image" items="${image}">
-	<div><img src="image?question_file_no=${image.question_file_no}"  width="120" height="120"></div>
+	<div><img src="image?question_file_no=${image.question_file_no}" width="35%" height="300"></div>
 	</c:forEach>
 </c:if>
 <form action="solve" method="post">
@@ -86,7 +98,7 @@ function previewImage(target){
 		<input id="result[2]" type="radio" name="question_answer" value="3">3. ${questionDto.answer3}<br>
 		<input id="result[3]" type="radio" name="question_answer" value="4">4. ${questionDto.answer4}<br>
 		<input id="result[4]" type="radio" name="question_answer" value="5">5. ${questionDto.answer5}<br><br>
-<input type="submit" value="제출하기">
+<input type="submit" class="submitExam" value="제출하기">
 </form>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
