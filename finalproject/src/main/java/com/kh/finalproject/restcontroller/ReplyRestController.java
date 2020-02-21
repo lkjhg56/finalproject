@@ -32,32 +32,54 @@ public class ReplyRestController {
 	@Autowired
 	private BoardDao boardDao;
 	
-
-	
 	//댓글 등록
 		@PostMapping("/insert")
-		public String insert(@RequestParam String board_reply_content, String board_reply_writer,
-														@RequestParam int board_reply_origin,
-														HttpSession session) {
-			String writer = (String) session.getAttribute("id");
+		public String insert(@RequestParam String board_reply_content, 
+										@RequestParam int board_reply_origin, 
+										@RequestParam(required = false, defaultValue = "0") int superno,
+										@RequestParam(required = false, defaultValue = "0") int groupno,
+										HttpSession session) {
+			//댓글 번호 생성
+			int no = sqlSession.selectOne("board.getReplySequence");
+			String board_reply_writer = (String) session.getAttribute("id");
 			
-			if(writer != null) {
-				int no = sqlSession.selectOne("board.getReplySequence");
-
+			//새댓글작성 (글번호와 그룹번호는 동일, 부모글 0번 , 차수 0)
+			if(superno == 0) { 
+				
 				BoardReplyDto boardReplyDto = BoardReplyDto.builder()
 										.board_reply_no(no)
 										.board_reply_content(board_reply_content)
 										.board_reply_writer(board_reply_writer)
 										.board_reply_origin(board_reply_origin)
+										.groupno(no)
 										.build();
-				sqlSession.insert("board.registReply", boardReplyDto);
-				BoardReplyDto result = sqlSession.selectOne("board.getOneReply", no);
+//				sqlSession.insert("board.registReply", boardReplyDto);
+//				BoardReplyDto result = sqlSession.selectOne("board.getOneReply", no);
+				boardDao.replyRegist(boardReplyDto);
 				
 				boardDao.replyCount(board_reply_origin);
 				return "success";		
-			}			
-			else {
-				return "fail";
+				
+			}
+			
+			//대댓글 작성
+			else {				
+				//리플 번호 주고 리플 정보 가져오기 (그룹번호는 부모 그룹 번호, superno = 부모글 번호, 차수 = 부모글 + 1)
+				BoardReplyDto target = boardDao.getReply(superno);
+				target.setBoard_reply_no(no);
+				target.setSuperno(superno);
+				target.setGroupno(groupno);
+				target.setDepth(target.getDepth()+1);
+				target.setBoard_reply_writer(board_reply_writer);
+				target.setBoard_reply_content(board_reply_content);
+				target.setBoard_reply_origin(board_reply_origin);
+				
+				boardDao.rereplyRegist(target);
+				boardDao.replyCount(board_reply_origin);
+										
+				System.out.println("대댓글등록!");
+				
+				return "success";		
 			}
 
 		}

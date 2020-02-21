@@ -18,7 +18,7 @@ $(function() {
             .hide();
           $(this)
             .parents(".view")
-            .next(".edit")
+            .siblings(".edit")
             .show();
         });	
 	
@@ -57,12 +57,12 @@ $(function() {
    		$(".edit").find("#cancel").click(function(){
    			//this = #cancel
    			
-   			$(this)
+   		$(this)
           .parents(".edit")
           .hide();
         $(this)
           .parents(".edit")
-          .prev(".view")
+          .siblings(".view")
           .show(); //나를 숨기고 내 앞줄을 보여줌   			
    		});
         	
@@ -85,18 +85,17 @@ $(function() {
             data: data,
             success: function(resp) {
             	if(resp == "success"){
-            		 console.log("성공")
+            		 console.log("댓글등록 성공")
                	  window.location.reload();
             	}
             	else{
             		alert("로그인이 필요합니다.");
             		 window.location.reload();
-            	}
-            	
+            	}          	
             	 
     	  		},
     	  	    error:function(){
-    	  		  console.log("실패")	  		
+    	  		  console.log("댓글등록 실패")	  		
               }
     	});        
     });
@@ -127,21 +126,72 @@ $(function() {
     	
     });
 });   
+
+//댓글 답글달기
+$(function(){
+	// 대댓글 입력창을 숨긴다
+    $(".reInsert").hide();
+	
+		//답글 a태그를 누르면 원본댓글 하단에 대댓글 입력창을 보여준다.
+		$(".info").find("#re").click(function() {
+	    	//this = #re
+	
+	       	  $(this)
+	            .parents(".info")
+	            .siblings(".reInsert")
+	            .show();    	
+		 });
+		
+		$(".reInsert").find("#re_finish").click(function(){
+	    //this == #re_finish
+	        
+	    //등록 버튼을 누르면 대댓글 입력창을 숨기고 입력창의 내용과 히든으로 작성자 정보를 비동기 통신으로 보내어 대댓글 insert한다	    	
+		//비동기통신을 이용하여 수정할 댓글의 no를 삭제페이지로 전달        
+        var text = $(this).parents(".reInsert").find(".re_Text").val();
+	    var superno = $(this).parents(".reInsert").find("input[name=superno]").val();
+	    var groupno = $(this).parents(".reInsert").find("input[name=groupno]").val();
+	    var origin = $(this).parents(".reInsert").find("input[name=board_reply_origin]").val();
+	   
+        console.log(superno);
+        	
+        $.ajax({
+        	url: "${pageContext.request.contextPath}/board2/insert",
+            type: "post",
+            data: {
+            	superno: superno, 
+            	groupno : groupno,
+            	board_reply_content: text, 
+				board_reply_origin : origin
+			},
+            success: function(success) {
+          	  console.log("대댓글 데이터 전송 성공")
+          	  window.location.reload();
+  	  		},
+  	  	    error:function(){
+  	  		  console.log("실패")	  		
+            }
+        	
+	        });  			
+		});
+		
+		 $(this)
+         .parents(".reInsert")
+         .hide();
+        
+});
+
     
 </script>
  
 
-<div align="center">	
+<div class="container">	
 <h2>게시글 보기</h2>
-			
-
-				
 		<table border="1" width="70%">
 				<tr>
 					<td>
 						<div>
-							<span><input type="button" value="${boardDto.board_category}">　</span>
-							<span>${boardDto.board_title }　</span>      
+							<span><input type="button" value="${boardDto.board_category}">&nbsp;</span>
+							<span>${boardDto.board_title }&nbsp;&nbsp;</span>
 							<span style="text-align: right">${boardDto.board_wdate.substring(0,16) }</span>
 						</div>
 					</td>
@@ -178,7 +228,9 @@ $(function() {
 											<span>${boardReplyDto.board_reply_writer}</span>
 											<span>　</span>		
 											<span>${boardReplyDto.board_reply_wdate.substring(0,16)}</span>	
-											<span><a href="#" id="re">답글</a></span>							
+											<c:if test="${boardReplyDto.depth < 1}">
+												<span><a href="#" id="re">답글</a></span>
+											</c:if>							
 										</td>
 									</tr>
 									
@@ -192,7 +244,17 @@ $(function() {
 											<form id="deleteform" method="post">
 												<input type="hidden" name="board_reply_no" value="${boardReplyDto.board_reply_no}">
 												<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}">
-												<div>${boardReplyDto.board_reply_content}</div>
+
+												<c:choose>
+													<c:when test="${boardReplyDto.depth > 0}">
+														<div>
+														&nbsp;&nbsp;&nbsp;&nbsp;${boardReplyDto.board_reply_content}
+														</div>
+													</c:when>
+													<c:otherwise>
+														<div>${boardReplyDto.board_reply_content}</div>
+													</c:otherwise>
+												</c:choose>
 												
 												<c:if test="${isMine or isAdmin}">	
 													<div id="a" style="text-align: right">
@@ -204,6 +266,22 @@ $(function() {
 											</form>
 										</td>						
 									</tr>	
+									
+									<!-- 대댓글 입력창 -->
+									<tr class="reInsert">
+										<td>
+											<div>			
+												<input type="hidden" name="groupno" value="${boardReplyDto.groupno}">											
+												<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}">													
+												<input type="hidden" name="superno" value="${boardReplyDto.board_reply_no}">
+												<textarea class="re_Text" name="board_reply_content" rows="4" style="width:96.2%; text-align:left;" required></textarea>					
+												<div id="a" style="text-align: right">
+													<a href="#" id="re_finish">완료</a>
+													| <a href="#" id="re_cancel">취소</a>										
+												</div>	
+											</div>
+										</td>
+									</tr>
 									
 									<!-- 댓글을 수정하는 칸 -->
 							
@@ -224,9 +302,8 @@ $(function() {
 					</div>					
 				</c:forEach>
 					
-					    
-			
 			<!-- 	댓글 등록창 -->
+			<c:if test="${id != null}">			
 			<table  border="1"   width = "70%">
 				<tr>
 					<td align="right">				
@@ -239,8 +316,9 @@ $(function() {
 					</td>
 				</tr>
 			</table>	
+			</c:if>
 			
-			 <div class="row">
+			 <div class="container align-items-center">
 	    		<!-- 네비게이터(navigator) -->    		
 	    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
 	    			<jsp:param name="pno" value="${pno}" />

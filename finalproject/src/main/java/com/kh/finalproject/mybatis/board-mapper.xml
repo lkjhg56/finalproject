@@ -32,7 +32,8 @@
  			0,
  			sysdate,
  			#{board_content},
- 			#{board_writer}
+ 			#{board_writer},
+ 			0
  		)
  	</insert>
  	
@@ -128,11 +129,17 @@
  	 <select id="getFileOne" parameterType="int" resultType="boardfileDto">
  	 	select * from board_file where board_file_no=#{board_file_no}
  	 </select>
+ 	 
  	 <!-- 파일 수정을 위한 게시글 파일 번호 가져오기 --> 	 
  	 <!-- 게시글 파일 번호 가져오기 -->
  	 <select id="getFileNO" parameterType="int" resultType="boardfileDto">
  	 	select * from board_file where board_origin_content_no = #{board_no}
  	 </select>
+ 	 
+ 	 <!-- 조회수 증가 -->
+	<update id="readCount" parameterType="int">
+		update board set board_readcount = board_readcount +1 where board_no=#{board_no}
+	</update>
 	<!-- /////////////////////////////////////////////
 								댓글 sql구문 시작
 	 //////////////////////////////////////////////-->
@@ -152,14 +159,24 @@
 	
 	<!-- 댓글 등록 구문 -->
 	<insert id="registReply" parameterType="boardReplyDto">
-<!-- 		insert into board_reply values( -->
-<!-- 			#{board_reply_no}, -->
-<!-- 			#{board_reply_content}, -->
-<!-- 			sysdate, -->
-<!-- 			#{board_reply_writer}, -->
-<!-- 			#{board_reply_origin} -->
-<!-- 		) -->
-		
+		insert into board_reply(
+				board_reply_no, 
+				board_reply_content, 
+				board_reply_writer, 
+				board_reply_origin,
+				groupno
+				)
+		 values(
+			 	#{board_reply_no},
+				#{board_reply_content},
+				#{board_reply_writer},
+				#{board_reply_origin},
+				#{groupno}	
+		)
+	</insert>
+	
+	<!-- 대댓글 등록 구문 -->
+	<insert id="registRereply" parameterType="boardReplyDto">
 		insert into board_reply(
 				board_reply_no, 
 				board_reply_content, 
@@ -168,21 +185,16 @@
 				groupno,
 				superno,
 				depth
-				)
+			)
 		 values(
-			<choose>
-				<when test="groupno == 0">
-					#{board_reply_no}, 	<!-- 새 댓글 번호 -->
-					null,
-					0
-				</when>
-				<otherwise>
-					#{groupno},
-					#{superno},
-					#{depth}+1
-				</otherwise>
-			</choose>
-		)
+			 	#{board_reply_no},
+				#{board_reply_content},
+				#{board_reply_writer},
+				#{board_reply_origin},
+				#{groupno},
+				#{superno},
+				#{depth}
+			)
 	</insert>
 	
 	<!-- 댓글 삭제 구문 -->
@@ -198,11 +210,15 @@
 	<!-- 댓글 조회 구문 -->
 	<select id="ReplyList" parameterType="map" resultType="boardReplyDto">
 	select * from(
- 		select rownum rn, A.* from(select * from board_reply 
- 			where board_reply_origin = #{board_no} order by board_reply_no asc
+ 		select rownum rn, A.* from(
+ 			select * from board_reply where board_reply_origin = #{board_no}
+ 			connect by prior board_reply_no = superno
+ 			 start with superno is null
+ 			 order siblings by groupno asc, board_reply_no asc
 		)A)
  	where rn between #{start} and #{finish}
 	</select>
+<!--  			where board_reply_origin = #{board_no} order by board_reply_no asc -->
 	
 	<!-- 댓글 한개 조회 구문 -->
 	<select id="getOneReply"  parameterType="int" resultType="boardReplyDto">
