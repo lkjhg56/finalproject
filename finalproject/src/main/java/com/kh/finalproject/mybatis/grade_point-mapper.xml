@@ -14,13 +14,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 문제업로드 포인트 -->
-	<insert id="giveQuestionUploadPoint" parameterType="grade_pointDto">
+	<insert id="giveQuestionUploadPoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
 		values(point_no_seq.nextval,#{users_no}, 5, '문제 업로드')
 	</insert>
 	
 	<!-- 문제풀기 포인트 -->
-	<insert id="giveQuestionSolvePoint" parameterType="grade_pointDto">
+	<insert id="giveQuestionSolvePoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
 		values(point_no_seq.nextval,#{users_no}, 3, '문제 풀기')
 	</insert>

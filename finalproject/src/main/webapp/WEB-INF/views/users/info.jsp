@@ -106,9 +106,19 @@
   </tr>
 </table>
 <a href="${context}/users/change">정보 수정하기</a><br>
-<c:if test="${isAdmin}">
+<c:choose>
+<c:when test="${isAdmin}">
 <a href="${context}/users/user_list">회원 목록</a><br>
-</c:if>
+<a href="${pageContext.request.contextPath}/question/normalupload">일반문제 업로드</a><br>
+<a href="${pageContext.request.contextPath}/question/normallist">일반문제 List</a><br>
+<a href="${pageContext.request.contextPath}/admin/main">admin page</a><br>
+</c:when>
+<c:otherwise>
+<a href="${pageContext.request.contextPath}/question/upload">문제 업로드</a><br>
+<a href="${context}/question/my_upload_list">내가 업로드한 문제</a><br>
+</c:otherwise>
+</c:choose>
+
 <a href="${context}/users/test_result">내가 본 시험 내역</a><br>
 <a href="${context}/users/my_grade_point">나의 포인트 내역</a><br>
 <a href="${context}/users/grade_point_rank">등급 포인트 랭킹</a><br>

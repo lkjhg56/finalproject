@@ -139,14 +139,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 3 포인트 -->
-	<update id="change_3point" parameterType="users">
-		update users set grade_point=grade_point+3 where user_no=(select user_no from users where id=#{id})
+	<update id="change_3point" parameterType="int">
+		update users set grade_point=grade_point+3 where user_no=#{user_no}
 	</update>
 	
 	<!-- 5 포인트 -->
-	<update id="change_5point" parameterType="String">
-		update users set grade_point=grade_point+5 where user_no=(select user_no from users where id=#{id ,jdbcType=VARCHAR})
+	<update id="change_5point" parameterType="int">
+		update users set grade_point=grade_point+5 where user_no=#{user_no}
 	</update>
+	
 	<update id="change_join5point" parameterType="int">
 		update users set grade_point=grade_point+5 where user_no=${user_no}
 	</update>
@@ -161,6 +162,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from users
 	</select>
 	
+	<!-- 프리미엄 회원 전환 -->
+	<!-- point가 얼마인지 확인 -->
+	<select id="is" parameterType="users" resultType="int">
+		select point from users where id=#{id}
+	</select>
+	<!-- is_premium -->
+	<update id="premium" parameterType="users">
+		update users set is_premium=1 where id=#{id}
+	</update>
+	<!-- point -->
+	<update id="point" parameterType="users">
+		update users set point=point-500 where id=#{id}
+	</update>
+		
 </mapper>
 
 

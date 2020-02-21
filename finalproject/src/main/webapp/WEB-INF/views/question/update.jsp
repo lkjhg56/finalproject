@@ -50,7 +50,7 @@ function deletefile(target) {
 	<input type="text" name="answer4" value="${questionDto.answer4}" required><br><br>
 	<input type="text" name="answer5" value="${questionDto.answer5}" required><br><br>
 	<input type="text" name="question_answer" value="${questionDto.question_answer}" required><br><br>
-	<input type="text" name="question_solution" value="${questionDto.question_solution}" required><br><br>
+	<textarea name="question_solution" rows="10" cols="50">${questionDto.question_solution}</textarea>
 	<c:if test="${grade=='관리자'}">
 	<input type="text" name="question_premium" value="${questionDto.question_premium}" required><br><br>
 	</c:if>

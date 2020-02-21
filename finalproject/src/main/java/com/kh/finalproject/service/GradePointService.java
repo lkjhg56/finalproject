@@ -10,12 +10,9 @@ public interface GradePointService {
 
 	//출석체크 포인트 부여
 	void giveCheckPoint(GradePointDto pointDto,UsersDto usersDto);
-	
-	//문제업로드 포인트 부여
-	void giveQuestionUploadPoint(GradePointDto pointDto,UsersDto usersDto);
-	
+/*******************************************************************************/	
 	//문제 풀기 포인트 부여
-	void giveQuestionSolvePoint(GradePointDto pointDto,UsersDto usersDto);
+	void giveQuestionSolvePoint(int user_no);
 	
 	//답변 채택 포인트 부여
 	void giveAnswerPoint(GradePointDto pointDto,UsersDto usersDto);
