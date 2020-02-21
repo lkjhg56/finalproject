@@ -82,6 +82,9 @@
  	 	<select id="questionNavRownum" parameterType="map" resultType="boardDto">
  		select * from(select rownum rn, A.* from(select * from question order by question_no desc)A)where rn between #{start} and #{finish}
 	</select>
+	<select id="getUserNo" parameterType="int" resultType="int">
+		select user_no from user_custom_question where user_custom_question_no=#{user_custom_question_no}
+	</select>
  	<!-- 유저 문제 업로드 -->
  	<insert id="upload" parameterType="uploadQuestionDto">
  		insert into question values(

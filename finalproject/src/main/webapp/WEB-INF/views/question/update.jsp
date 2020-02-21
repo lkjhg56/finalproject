@@ -27,6 +27,16 @@ function deletefile(target) {
           	  }
       });
 }
+$(function(){
+	//제출 확인 기능
+	$(".submitExam").click(function(){
+		var result = confirm("수정하시겠습니까?");
+		if(result){
+			return true;
+		}else
+			return false;
+	});	
+});
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div class="container">
@@ -54,7 +64,7 @@ function deletefile(target) {
 	<c:if test="${grade=='관리자'}">
 	<input type="text" name="question_premium" value="${questionDto.question_premium}" required><br><br>
 	</c:if>
-	<input type="submit" value="수정하기">
+	<input class="submitExam" type="submit" value="수정하기">
 	<input type="reset" value="초기화">
 </form>
 </div>

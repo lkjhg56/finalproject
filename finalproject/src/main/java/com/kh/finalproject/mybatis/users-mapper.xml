@@ -147,11 +147,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="change_5point" parameterType="int">
 		update users set grade_point=grade_point+5 where user_no=#{user_no}
 	</update>
-	
+	<!-- 문제 삭제시 5point 차감 -->
+	<update id="decreasePoint" parameterType="int">
+	<![CDATA[
+		update users set grade_point=
+		    case 
+		    when grade_point < 5 then 0
+		    when grade_point>=5 then grade_point-5 
+		    end
+		where user_no=#{user_no}
+		]]>
+	</update>
 	<update id="change_join5point" parameterType="int">
 		update users set grade_point=grade_point+5 where user_no=${user_no}
 	</update>
-
+	
 	<!-- users_no 뽑아 오기 -->
 	<select id="get_users_no" parameterType="String" resultType="int">
 		select user_no from users where id=#{id}
