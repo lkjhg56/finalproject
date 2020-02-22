@@ -59,10 +59,10 @@
 	
 	<div class="container" style="text-align: right">
 		<!-- 글쓰기 버튼은 로그인시 표시됨 -->		
-		<c:if test="${id != null}">	
-			
-				<button type="button" class="btn btn-info"><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
-									
+		<c:if test="${id != null}">				
+			<button type="button" class="btn btn-secondary">
+				<a href=${pageContext.request.contextPath}/board/regist>글쓰기</a>
+			</button>						
 		</c:if>	
 	</div>
 	

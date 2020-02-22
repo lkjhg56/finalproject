@@ -54,13 +54,13 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div align="center">    
+<div class="container">    
 <h1>게시글 수정</h1>
 
 <form action="edit" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="board_no" value="${boardDto.board_no}">
 	<input type="hidden" name="board_no" value="${boardFileDto.board_origin_content_no}">
-	<table border="1" width="70%">		
+	<table class="table table-bordered">		
 			<!-- 번호는 숨김 처리로 전송 -->
 			
 			<tr>

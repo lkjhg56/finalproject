@@ -41,7 +41,6 @@ $(function() {
 	  	  error:function(){
 	  		  console.log("실패")	  		
           }
-
         });
         $(this)
           .parents(".edit")
@@ -67,9 +66,7 @@ $(function() {
    		});
         	
 });   
-
 	
-
     
  // 댓글 등록   
  $(function() {
@@ -126,7 +123,6 @@ $(function() {
     	
     });
 });   
-
 //댓글 답글달기
 $(function(){
 	// 대댓글 입력창을 숨긴다
@@ -179,14 +175,13 @@ $(function(){
          .hide();
         
 });
-
     
 </script>
  
 
 <div class="container">	
 <h2>게시글 보기</h2>
-		<table border="1" width="70%">
+		<table class="table table-bordered">
 				<tr>
 					<td>
 						<div>
@@ -221,7 +216,7 @@ $(function(){
 			<!-- 댓글 목록을 보여주는 칸 -->
 				<c:forEach var="boardReplyDto" items="${boardReplyDto}">
 					<div class="replystart">
-						<table  border="1"   width = "70%">
+						<table  class="table table-bordered">
 						
 									<tr class="info">
 										<td>
@@ -304,7 +299,7 @@ $(function(){
 					
 			<!-- 	댓글 등록창 -->
 			<c:if test="${id != null}">			
-			<table  border="1"   width = "70%">
+			<table  class="table table-bordered">
 				<tr>
 					<td align="right">				
 						<form id="registbtn" method="post">					
@@ -318,7 +313,7 @@ $(function(){
 			</table>	
 			</c:if>
 			
-			 <div class="container align-items-center">
+			 <div class="container" style="text-align: center">
 	    		<!-- 네비게이터(navigator) -->    		
 	    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
 	    			<jsp:param name="pno" value="${pno}" />
@@ -328,7 +323,7 @@ $(function(){
 	    		</jsp:include>
 	    	</div>
 				
-		<table>
+		<table class="table table-bordered">
 			<tr>
 				<td align="right">
 					<!-- 글쓰기 버튼은 로그인시 표시됨 -->
