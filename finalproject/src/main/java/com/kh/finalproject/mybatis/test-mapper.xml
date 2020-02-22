@@ -84,7 +84,7 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 
 <!-- correct 구하기 -->
 <select id="selectCorrect" parameterType="rcorrectDto"  resultType="int">
- select correct from rcorrect where rqno=#{rqno} and test_no=#{test_no}
+ select correct from rcorrect where result_no=#{result_no} and test_no=#{test_no}
 
 </select>
 
