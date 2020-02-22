@@ -25,6 +25,7 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
+import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
 import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.service.UploadQuestionService;
@@ -43,6 +44,9 @@ public class UploadQuestionController {
 	private UploadQuestionService uploadQuestionService;	
 	@Autowired
 	private NormalUploadQuestionService normalUploadQuestionService;
+	
+	@Autowired
+	private NormalUploadQuestionDao NormalUploadQuestionDao;
 	//문제 풀기(한문제)
 	@GetMapping("/solve")
 	public String solve(@RequestParam int question_no, Model model) {
@@ -266,13 +270,79 @@ public class UploadQuestionController {
 		return "question/normallist";
 	}
 	
+	
+	
+	//일반문제 전체목록
+	
+	@GetMapping("/normallist2")
+		public String normallist2( Model model,HttpServletRequest request) {
+
+			
+			List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal2");
+			model.addAttribute("list2",list2);
+
+			//네비게이터
+			//페이지 크기
+			int pageSize = 10;
+			//네비게이터 크기
+			int navSize = 10;
+			//페이지별 번호
+			int pageNumber;
+			//받아온 페이지 번호가 음수일 경우 예외를 발생시켜 catch에서 처리해준다.
+			try {
+				pageNumber=Integer.parseInt(request.getParameter("pno"));
+				if(pageNumber<=0) {
+					//pageNumber가 0보다 작을 경우 catch로 처리한다.
+					throw new Exception();
+				}
+			}catch(Exception e) {
+				pageNumber=1;
+			}
+		
+			int finish = pageNumber * pageSize;
+			int start = finish - (pageSize - 1);
+			/*****************************************************/
+			//	하단 네비게이터 계산하기
+			/*****************************************************/
+			//전체 등록되어 있는 문제 개수를 구함.
+			int count = NormalUploadQuestionDao.questionCount();
+			//전체 페이지 수
+			int pageCount=(count+pageSize)/pageSize;
+			
+			int startBlock = (pageNumber-1) / navSize * navSize+1;
+			int finishBlock = startBlock +(navSize-1);
+			
+			if(finishBlock>pageCount) {
+				finishBlock=pageCount;
+			}
+			Map<String, Integer> param = new HashMap<>();
+			param.put("start", start);
+			param.put("finish",finish);
+			model.addAttribute("list", NormalUploadQuestionDao.mapList(param));
+			request.setAttribute("pno", pageNumber);
+			request.setAttribute("count", count);
+			request.setAttribute("pagesize", pageSize);
+			request.setAttribute("navsize", navSize);
+			
+			
+			
+			return "question/normallist";
+		
+	}
+	
 	//일반문제 상세보기
 	@GetMapping("/normalcontent")
 	public String normalcontent(@RequestParam int no, Model model) {
 	
 		
-		NormalUpdateQuestionVO normalUpdateQuestionVO=sqlSession.selectOne("question.getContent2", no);
-		model.addAttribute("questionDto",normalUpdateQuestionVO);
+//		NormalUpdateQuestionVO normalUpdateQuestionVO=sqlSession.selectOne("question.getContent2", no);
+//		model.addAttribute("questionDto2",normalUpdateQuestionVO);
+		
+		
+		TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent", no);
+		model.addAttribute("questionDto", testQuestionDto);
+		
+		
 		return "question/normalcontent";
 	}	
 	
