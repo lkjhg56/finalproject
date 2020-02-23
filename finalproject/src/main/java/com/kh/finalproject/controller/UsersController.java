@@ -69,6 +69,12 @@ public class UsersController {
 	@Autowired
 	private UserFileDao userFileDao;
 	
+	@Autowired
+	private UsersDto usersDto;
+	
+	@Autowired
+	private GradePointDto pointDto;
+	
 	//회원 가입
 	@GetMapping("users/join")
 	public String join() {
@@ -100,6 +106,7 @@ public class UsersController {
 			if(correct == true) {
 				session.setAttribute("id", find.getId());
 				session.setAttribute("grade", find.getGrade());
+				
 				String id = (String) session.getAttribute("id");
 				
 				//user_no 뽑기
@@ -360,13 +367,15 @@ public class UsersController {
 	 public String givePoint(@ModelAttribute UsersDto usersDto,@ModelAttribute GradePointDto pointDto) {
 		 
 		 //출석체크 포인트
-//		 pointService.giveCheckPoint(pointDto,usersDto);
+//		 pointService.giveCheckPoint(usersDto,pointDto);
 		 //문제 업로드 포인트
-//		 pointService.giveQuestionUploadPoint(pointDto,usersDto);
+//		 pointService.giveQuestionUploadPoint(usersDto,pointDto);
 		 //문제 풀기 포인트
-//		 pointService.giveQuestionSolvePoint(pointDto,usersDto);
+//		 pointService.giveQuestionSolvePoint(usersDto,pointDto);
+		 //문제 삭제 포인트
+		 pointService.deleteQuestionPoint(usersDto, pointDto);
 		 //답변 채택 포인트
-		 pointService.giveAnswerPoint(pointDto,usersDto);
+//		 pointService.giveAnswerPoint(usersDto,pointDto);
 		 return "redirect:info";
 	 }
 	 
