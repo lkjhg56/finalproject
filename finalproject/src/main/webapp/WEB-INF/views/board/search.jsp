@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
 
-<div align="center">    
+<div class="container">    
 
 <h1>게시글 목록</h1>
 
@@ -15,7 +15,8 @@
 		<input type="submit" name="board_category" value="업데이트"><br><br>
 	</form>
 	
-	<table border="1" width="70%" style="text-align: center">
+	<table class="table table-hover" style="text-align: center">
+		<thead>
 			<tr>						
 				<th>No.</th>						
 				<th>카테고리</th>
@@ -24,52 +25,55 @@
 				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
+		</thead>
     
-    <c:choose>
-    	<c:when test="${!empty search}">
-			<c:forEach var="search" items="${search}">		
-				<tr>
-						<td>
-							${search.board_no } 
-						</td>
-						<td>
-							${search.board_category} 
-						</td>
-						<td style="text-align: left">
-							<a href=${pageContext.request.contextPath}/board/content?board_no=${search.board_no}>${search.board_title }</a> 
-							[${search.board_replycount }] 
-						</td>
-						<td>
-							${search.board_readcount} 
-						</td>
-						<td>
-							${search.board_writer } 
-						</td>
-						<td>
-							${search.board_wdate.substring(0,16) }
-						</td>
-					</tr>	
-			</c:forEach>
-    	</c:when>
-    	<c:otherwise>
-    		<tr>
-				<td colspan="6">
-					검색 결과가 없습니다.
-				</td>
-			</tr>
-    	</c:otherwise>
-    </c:choose>
-	
-	<!-- 글쓰기 버튼은 로그인시 표시됨 -->
-			<c:if test="${id != null}">					
-				<td colspan="6" style="text-align: right">
-					<button><a href=${pageContext.request.contextPath}/board/regist>글쓰기</a></button>
-				</td>						
-			</c:if>	
+	    <c:choose>
+	    	<c:when test="${!empty search}">
+				<c:forEach var="search" items="${search}">		
+					<tr>
+							<td>
+								${search.board_no } 
+							</td>
+							<td>
+								${search.board_category} 
+							</td>
+							<td style="text-align: left">
+								<a href=${pageContext.request.contextPath}/board/content?board_no=${search.board_no}>${search.board_title }</a> 
+								[${search.board_replycount }] 
+							</td>
+							<td>
+								${search.board_readcount} 
+							</td>
+							<td>
+								${search.board_writer } 
+							</td>
+							<td>
+								${search.board_wdate.substring(0,16) }
+							</td>
+						</tr>	
+				</c:forEach>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<tr>
+					<td colspan="6">
+						검색 결과가 없습니다.
+					</td>
+				</tr>
+	    	</c:otherwise>
+	    </c:choose>
 	</table>
 	
+	<div class="container" style="text-align: right">
+		<!-- 글쓰기 버튼은 로그인시 표시됨 -->		
+		<c:if test="${id != null}">				
+			<button type="button" class="btn btn-secondary">
+				<a href=${pageContext.request.contextPath}/board/regist>글쓰기</a>
+			</button>						
+		</c:if>	
+	</div>
 	
-	<div class="row">
+	
+	<div class="container navv" style="text-align: center">
     		<!-- 네비게이터(navigator) -->    		
     		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
     			<jsp:param name="pno" value="${pno}" />
@@ -82,7 +86,7 @@
 	
 	<br><br>
 	
-	<div class="center">
+	<div style="text-align: center" class="container">
 	    	<form action="search" method="get">    	
 		    		<select name="type">
 		    			<option value="board_title">제목</option>
@@ -93,6 +97,7 @@
 				<input type="submit"  value="검색" >  
 			</form>
 	</div>
+
 	
 </div>
 
