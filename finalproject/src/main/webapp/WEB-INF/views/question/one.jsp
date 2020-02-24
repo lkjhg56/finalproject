@@ -297,13 +297,13 @@ $(function(){
 	     		console.log(resp+"check");
 	     		
 	     		
-	     		
-	     		if(resp!=0){
+	     		var a = 3;
+	     		if(resp!=10){
 	     			
 	     			
 	     	       for(var i=0; i<checkbox2.length; i++){
-	   	            if(i==resp){
-	   	            	 $(checkbox2[i]).checked;
+	   	            if(i+1==resp){
+	   	            	 $(checkbox2[i]).prop('checked', true);
 	   	            }
 	   	            else{
 	   	            	
