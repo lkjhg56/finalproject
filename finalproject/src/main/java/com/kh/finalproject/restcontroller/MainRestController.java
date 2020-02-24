@@ -37,4 +37,10 @@ public class MainRestController {
 		
 		return rank;
 	}
+	@PostMapping("gList")
+	public List<String> qlist(){
+		
+		return null;
+	}
+	
 }
