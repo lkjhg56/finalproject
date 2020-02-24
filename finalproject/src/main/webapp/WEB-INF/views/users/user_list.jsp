@@ -4,8 +4,9 @@
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<div class="container">
 <h1 align="center">회원 목록</h1>
-<table class="table">
+<table class="table table-hover">
 		
 		<thead align="center">
 			<tr>
@@ -52,5 +53,5 @@
 			<jsp:param name="pagesize" value="${pagesize}"/>
 		</jsp:include>
 	</div>
-	
+</div>	
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	

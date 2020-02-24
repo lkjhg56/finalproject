@@ -37,7 +37,8 @@ h1 {
 
 </style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<div class="backBody">
+<div class="container">
+
 <h1>로그인</h1>
 	<div id="wrap">
 	<form action="login" method="post">
@@ -48,7 +49,7 @@ h1 {
 		<input class="login_btn" type="submit" value="Login">
 		</div>
 	</form>
-</div>
+	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 id = ${id}, grade = ${grade}

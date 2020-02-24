@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
-
+<div class="container">
 <h1 align="center">나의 시험 내역</h1>
 
-<div>
+<div  style="text-align:center">
 
-	<table class="table">
+	<table class="table table-hover">
 		<thead align="center">
 			<tr>
 				<th>no</th>
@@ -26,7 +26,7 @@
 		<tbody align="center">
 			<c:if test="${empty test_result}">
 				<tr>
-					<td rowspan="3" align="center">시험 내역이 없습니다.</td>
+					<td colspan="4" align="center">시험 내역이 없습니다.</td>
 				</tr>
 			</c:if>	
 			<c:forEach var="test_result" items="${test_result}">
@@ -56,5 +56,6 @@
 		<input type="submit" value="검색">
 	</form>
 
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
