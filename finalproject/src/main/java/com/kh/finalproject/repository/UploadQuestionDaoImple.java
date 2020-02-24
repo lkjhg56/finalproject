@@ -193,6 +193,10 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 		sqlSession.update("question.upReadCount",question_no);
 		
 	}
-
+	@Override
+	public int getUserCustomNo(int user_custom_question_no) {
+		return sqlSession.selectOne("question.getUserNo",user_custom_question_no);
 	}
+
+}
 

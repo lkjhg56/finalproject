@@ -80,7 +80,7 @@ public class AdminController {
 		model.addAttribute("image",image);
 		return "question/content";
 	}
-	//관리자 유저 문제 이미지 불러오기
+	//유저 문제 이미지 불러오기
 	@GetMapping("/image")
 	public ResponseEntity<ByteArrayResource> previewImg(@RequestParam int question_file_no) throws Exception{
 		return uploadQuestionService.downloadImg(question_file_no);

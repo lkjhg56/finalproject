@@ -102,10 +102,31 @@ private SqlSession sqlSession;
 		
 	}
 	@Override
-	public void fileDelete2(int no) {
+	public void fileDelete2(int no,String csname) {
+		
 		sqlSession.delete("question.deleteTestQuestion",no);
 		
+		CategoryDto categoryDto=
+	   sqlSession.selectOne("question.selectCategoryDto",csname);
+	
+	
+	int test=	sqlSession.selectOne("question.csTestquestion", csname);
+	
+
+	
+		if(test==0) {
+			sqlSession.delete("question.deleteCategory", csname);
+			
+			int category=sqlSession.selectOne("question.countCategory", csname);
+			if( category==0) {
+				sqlSession.delete("question.deleteTest",categoryDto.getTest_no());
+			}
+			}
+		
 	}
+	
+	
+	
 	@Override
 	public void onlyfileDelete(int no) {
 		sqlSession.delete("question.deleteTestQFile",no);
@@ -116,10 +137,23 @@ private SqlSession sqlSession;
 		log.info("확인={}", rcorrectDto.getTest_no());
 		log.info("확인re={}", rcorrectDto.getResult_no());
 		
-		int test = sqlSession.selectOne("rcorrectRqno",rcorrectDto);
-		log.info("확인re11={}", test);
+		if(sqlSession.selectOne("rcorrectRqno",rcorrectDto) != null) {
+			return sqlSession.selectOne("rcorrectRqno",rcorrectDto);
+		}
+		
+		
+		else {
+			return 0;
+			
+		}
+		
 
-		return test;
+		
+		
+		
+
+	
+
 	}
 	
 	

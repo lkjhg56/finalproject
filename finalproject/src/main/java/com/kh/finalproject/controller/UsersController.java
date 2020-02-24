@@ -159,6 +159,7 @@ public class UsersController {
 		
 		return "users/info";
 	}
+	// 관리자가 회원 정보
 	@PostMapping("users/info")
 	public String info(HttpSession session, Model model, @RequestParam String id) {
 		
@@ -187,6 +188,12 @@ public class UsersController {
 		session.removeAttribute("id");
 		session.removeAttribute("grade");
 		return "redirect:/";
+	}
+	//관리자가 회원 강제 탈퇴
+	@PostMapping("users/bye")
+	public String bye(HttpSession session,@RequestParam String id) {
+		sqlSession.delete("users.bye", id);
+		return "redirect:user_list";
 	}
 	
 //	 //회원 정보 수정

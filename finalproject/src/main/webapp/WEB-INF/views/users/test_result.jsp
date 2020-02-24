@@ -34,7 +34,7 @@
 					<td>${test_result.rn}</td>
 					<td>${test_result.cs_no}</td>
 					<td>${test_result.sumscore}</td>
-					<td>${test_result.test_date}</td>
+					<td>${test_result.test_date.substring(0,16)}</td>
 				</tr>
 			</c:forEach>
 			

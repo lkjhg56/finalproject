@@ -29,7 +29,7 @@ public interface NormalUploadQuestionDao {
 	void updateQustion(NormalUpdateQuestionVO normalUpdateQuestionVO);
 	void updateFile(UploadTestQuestionFileDto uploadTestQuestionFileDto);
 	
-	void fileDelete2(int no);
+	void fileDelete2(int no,String csname);
 	
 	void onlyfileDelete(int no);
 	

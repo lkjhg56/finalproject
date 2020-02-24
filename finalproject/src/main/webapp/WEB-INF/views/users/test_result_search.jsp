@@ -26,7 +26,7 @@
 					<td>${search_result.rn}</td>
 					<td>${search_result.cs_no}</td>
 					<td>${search_result.sumscore}</td>
-					<td>${search_result.test_date}</td>
+					<td>${search_result.test_date.substring(0,16)}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

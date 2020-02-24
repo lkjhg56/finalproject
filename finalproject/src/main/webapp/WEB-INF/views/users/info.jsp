@@ -58,7 +58,7 @@
 	    <button type="button" id="profile_edit">수정하기</button>
 	    </c:if>
 	    <form class="editfile" action="profile_edit" method="post" enctype="Multipart/form-data">
-	    <input id="file" type="file" name="user_file" multiple accept="image/*">
+	    <input id="file" type="file" name="user_file" accept="image/*" required>
     	<input type="submit" id="clear" value="수정 완료">	
 	    </form>
     </td>
@@ -81,7 +81,7 @@
   </tr>
   <tr>
     <th>전화번호</th>
-<%--     <td>${users.phone.substring(0,2)}-${users.phone.substring(4,7)}-${users.phone.substring(9,11)}</td> --%>
+<%--     <td>${users.phone.substring(0,3)}-${users.phone.substring(4,8)}-${users.phone.substring(9,13)}</td> --%>
     <td>${users.phone}</td>
   </tr>
   <tr>
@@ -111,6 +111,7 @@
 <a href="${context}/users/user_list">회원 목록</a><br>
 <a href="${pageContext.request.contextPath}/question/normalupload">일반문제 업로드</a><br>
 <a href="${pageContext.request.contextPath}/question/normallist">일반문제 List</a><br>
+<a href="${pageContext.request.contextPath}/question/list">유저문제 List</a><br>
 <a href="${pageContext.request.contextPath}/admin/main">admin page</a><br>
 </c:when>
 <c:otherwise>

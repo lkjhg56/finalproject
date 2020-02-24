@@ -305,7 +305,7 @@ else {
 	}
 
 	@Override
-	public void questionDelete(int no) {
+	public void questionDelete(int no,String csname) {
 		//파일여부
 		//no로 파일 구하기
 		
@@ -324,7 +324,7 @@ else {
 		
 	
 		
-		NormalUploadQuestionDao.fileDelete2(no);
+		NormalUploadQuestionDao.fileDelete2(no,csname);
 	}
 	
 
