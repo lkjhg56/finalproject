@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
 
-<div align="center">    
+<div class="container">    
 
 <h1>게시글 목록</h1>
 
@@ -73,7 +73,7 @@
 	</div>
 	
 	
-	<div class="row">
+	<div class="container navv" style="text-align: center">
     		<!-- 네비게이터(navigator) -->    		
     		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
     			<jsp:param name="pno" value="${pno}" />
@@ -86,7 +86,7 @@
 	
 	<br><br>
 	
-	<div class="center">
+	<div style="text-align: center" class="container">
 	    	<form action="search" method="get">    	
 		    		<select name="type">
 		    			<option value="board_title">제목</option>
@@ -97,6 +97,7 @@
 				<input type="submit"  value="검색" >  
 			</form>
 	</div>
+
 	
 </div>
 

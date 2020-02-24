@@ -3,6 +3,50 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<style>
+	.far{
+		color : #118FCB;
+		font-size : 20px;
+	}
+	
+	.btn{
+		color : black;
+	}
+	
+	.btn-primary:hover{
+		color : black;
+	}
+	
+	.btn-primary {
+	  background-color: white;
+	  border-color: #dee2e6;
+	}
+	
+	.btn-primary a{
+		color: black;
+		text-decoration:none;
+	}
+	
+	
+	.flex-wrap{
+            display: flex;
+            flex-direction: row;           /* 줄 안에 배치 */
+        }
+        @media screen and (max-width:640px){
+            .flex-wrap{
+             flex-direction: column;   /* 칸 안에 배치 */    
+             }
+        }
+        .item1{
+            flex-grow: 9;                   /* 줄에서 남은 공간을 차지하는 비율 */
+            height: 100px;                 /* 1개만 높이가 있어도 나머지가 같은 높이로 설정된다. */
+        }
+        .item2{
+            flex-grow: 1;
+        }
+	
+</style>
 <script>
 $(function() {
 		
@@ -179,13 +223,13 @@ $(function(){
 </script>
  
 
-<div class="container">	
-<h2>게시글 보기</h2>
+<div class="container"  style="border: 1px solid #dee2e6 !important; padding-top: 15px;">	
+<!-- <h2>게시글 보기</h2> -->
 		<table class="table table-bordered">
 				<tr>
 					<td>
 						<div>
-							<span><input type="button" value="${boardDto.board_category}">&nbsp;</span>
+							<span>[${boardDto.board_category}]&nbsp;</span>
 							<span>${boardDto.board_title }&nbsp;&nbsp;</span>
 							<span style="text-align: right">${boardDto.board_wdate.substring(0,16) }</span>
 						</div>
@@ -207,7 +251,7 @@ $(function(){
 				</tr>
 				<tr>
 					<td>
-						댓글수 ${boardDto.board_replycount}
+						<span>댓글수 ${boardDto.board_replycount}</span>&nbsp; | &nbsp;<span>조회수 ${boardDto.board_readcount}</span>
 					</td>
 				</tr>
 		</table>
@@ -223,7 +267,7 @@ $(function(){
 											<span>${boardReplyDto.board_reply_writer}</span>
 											<span>　</span>		
 											<span>${boardReplyDto.board_reply_wdate.substring(0,16)}</span>	
-											<c:if test="${boardReplyDto.depth < 1}">
+											<c:if test="${boardReplyDto.depth < 1 && id != null}">
 												<span><a href="#" id="re">답글</a></span>
 											</c:if>							
 										</td>
@@ -243,7 +287,9 @@ $(function(){
 												<c:choose>
 													<c:when test="${boardReplyDto.depth > 0}">
 														<div>
-														&nbsp;&nbsp;&nbsp;&nbsp;${boardReplyDto.board_reply_content}
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														<i class="far fa-hand-point-right"></i>
+														&nbsp;&nbsp;&nbsp;${boardReplyDto.board_reply_content}
 														</div>
 													</c:when>
 													<c:otherwise>
@@ -265,12 +311,12 @@ $(function(){
 									<!-- 대댓글 입력창 -->
 									<tr class="reInsert">
 										<td>
-											<div>			
+											<div class="flex-wrap">			
 												<input type="hidden" name="groupno" value="${boardReplyDto.groupno}">											
 												<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}">													
 												<input type="hidden" name="superno" value="${boardReplyDto.board_reply_no}">
-												<textarea class="re_Text" name="board_reply_content" rows="4" style="width:96.2%; text-align:left;" required></textarea>					
-												<div id="a" style="text-align: right">
+												<textarea class="re_Text item1" name="board_reply_content" rows="4"  required></textarea>					
+												<div class="item2"  id="a" style="text-align: center; line-height:100px;">
 													<a href="#" id="re_finish">완료</a>
 													| <a href="#" id="re_cancel">취소</a>										
 												</div>	
@@ -302,34 +348,42 @@ $(function(){
 			<table  class="table table-bordered">
 				<tr>
 					<td align="right">				
-						<form id="registbtn" method="post">					
-							<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
-							<input type="hidden" name="board_reply_writer" value="${id}">					
-							<textarea class="user-input" name="board_reply_content" rows="4" style="width:96.2%; text-align:left;" required></textarea>						
-							<input type="submit" value="등록">						
+						<form id="registbtn" method="post">
+							<div class="flex-wrap">
+								<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
+								<input type="hidden" name="board_reply_writer" value="${id}">												
+								<textarea class="user-input item1" name="board_reply_content" rows="4" required></textarea>						
+								<input class="btn btn-primary item2"   type="submit" value="등록">								
+							</div>					
+							
+							<c:if test="${!empty boardReplyDto}">
+								 <div class="container navv" style="text-align: center">
+						    		<!-- 네비게이터(navigator) 댓글이 있으면 표시 -->    		
+						    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
+						    			<jsp:param name="pno" value="${pno}" />
+						    			<jsp:param name="count" value="${count}" />
+						    			<jsp:param name="navsize" value="${navsize}" />
+						    			<jsp:param name="pagesize" value="${pagesize}" />
+						    		</jsp:include>
+						    	</div>					
+							</c:if>
 						</form>					
 					</td>
 				</tr>
 			</table>	
 			</c:if>
 			
-			 <div class="container" style="text-align: center">
-	    		<!-- 네비게이터(navigator) -->    		
-	    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
-	    			<jsp:param name="pno" value="${pno}" />
-	    			<jsp:param name="count" value="${count}" />
-	    			<jsp:param name="navsize" value="${navsize}" />
-	    			<jsp:param name="pagesize" value="${pagesize}" />
-	    		</jsp:include>
-	    	</div>
 				
 		<table class="table table-bordered">
 			<tr>
 				<td align="right">
 					<!-- 글쓰기 버튼은 로그인시 표시됨 -->
 					<c:if test="${id != null}">							
-						<a href="regist"><input type="button" value="글쓰기"></a>
+						<button type="button" class="btn btn-primary">
+								<a href=${pageContext.request.contextPath}/board/regist><i class="fas fa-pencil-alt"></i>글쓰기</a>
+							</button>		
 					</c:if>	
+
 				
 					<!-- 	본인글인지 여부와 관리자인지 여부 확인 -->
 					<c:set var="isMine" value="${id == boardDto.board_writer}"></c:set>
@@ -337,11 +391,11 @@ $(function(){
 					
 					<c:if test="${isMine or isAdmin}">								
 					<!-- 수정/삭제 버튼은 관리자이거나 본인글에만 표시 -->
-					<a href="edit?board_no=${boardDto.board_no}"><input type="button" value="수정"></a>
-					<a href="delete?board_no=${boardDto.board_no}"><input type="button" value="삭제"></a>
+					<a href="edit?board_no=${boardDto.board_no}"><input class="btn btn-primary" type="button" value="수정"></a>
+					<a href="delete?board_no=${boardDto.board_no}"><input class="btn btn-primary"  type="button" value="삭제"></a>
 					</c:if>
 					
-					<a href="list"><input type="button" value="목록"></a>					
+					<a href="list"><input class="btn btn-primary" type="button" value="목록"></a>					
 				</td>
 			</tr>	
 		</table>
