@@ -1,5 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<style>
+.pagination {
+  display: -ms-flexbox;
+  display: inline-flex;
+  padding-left: 0;
+  list-style: none;
+   border: none;
+}
+
+.page-link {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: none;
+  margin: 0px;
+}
+
+.page-link:hover {
+  color: black;
+  text-decoration: none;
+  background-color: white;
+  border:none;
+}
+
+.page-item.active .page-link {
+  background-color: #118FCB;
+  color: white;
+  border-color: none;
+   border: none;
+}
+
+.page-item:first-child .page-link{
+    border-top-left-radius: .0rem;
+    border-bottom-left-radius: .0rem;
+    margine : 0px, 0px, 0px, -1px;
+      border: none;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: .0rem;
+  border-bottom-right-radius: .0rem;
+    border: none;
+}
+
+.page-link:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.pagination a:hover:not(.page-item active) {background-color: none;}
+</style>
 
 <!-- 네비게이터(navigator) -->
 <!-- 
@@ -46,7 +98,7 @@
 				<li class="page-item"><a class="page-link" href="${uri}?board_category=${board_category}&pno=${startBlock-1}">이전</a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="page-item"><a class="page-link" href="${uri}?pno=${startBlock-1}">이전</a></li>
+				<li class="page-item"><a class="page-link" href="${uri}?pno=${startBlock-1}">&laquo;</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -88,7 +140,7 @@
 				<li class="page-item"><a class="page-link" href="${uri}?board_no=${board_no}&pno=${finishBlock+1}">다음</a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="page-item"><a class="page-link" href="${uri}?pno=${finishBlock+1}">다음</a></li>	
+				<li class="page-item"><a class="page-link" href="${uri}?pno=${finishBlock+1}">&raquo;</a></li>	
 			</c:otherwise>
 		</c:choose>
 	</c:if>

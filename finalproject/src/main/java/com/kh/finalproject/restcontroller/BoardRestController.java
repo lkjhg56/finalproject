@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/board2")
 @Slf4j
-public class ReplyRestController {
+public class BoardRestController {
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -120,6 +120,15 @@ public class ReplyRestController {
 		List<BoardReplyDto> ReplyDto=sqlSession.selectList("board.ReplyList", replyDto);
 				
 				return ReplyDto;
+	}
+	
+	//게시글 선택 삭제(관리자 기능)
+	@PostMapping("delete2")
+	public String deleteAdmin(@RequestParam(value="send_array[]") List send_array) {
+		log.debug( ">>> param size : " + send_array.size() );
+		
+		return "delete_success";
+		
 	}
 
 }
