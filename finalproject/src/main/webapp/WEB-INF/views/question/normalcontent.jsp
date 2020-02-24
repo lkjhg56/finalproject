@@ -30,8 +30,8 @@ function previewImage(target){
 <div>문제 보기5 : ${questionDto.dis5}</div>
 <%-- <c:if test="${grade=='관리자'}"> --%>
 <div>문제 정답 : ${questionDto.answer}</div>
-<div>문제 해설 : ${questionDto.solution}</div>
-<%-- </c:if> --%>
+<%-- <div>문제 해설 : ${questionDto.solution}</div> --%>
+
 
 <div>카테고리 : ${questionDto.csname}</div>
 <br><br>
@@ -40,6 +40,6 @@ function previewImage(target){
 <a href="normalupdate?no=${questionDto.no}">문제 수정</a><br><br>
 <a href="normaldelete?no=${questionDto.no}&csname=${questionDto.csname}&category_no=${questionDto.category_no}">문제 삭제</a><br><br>
 <a href="normallist?no=${questionDto.no}&csname=${questionDto.csname}&category_no=${questionDto.category_no}">문제 리스트로</a><br><br>
-<%-- </c:if> --%>
+
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

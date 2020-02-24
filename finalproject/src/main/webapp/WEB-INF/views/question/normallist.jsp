@@ -2,8 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<div class="container">
+
 <h1>일반 문제 목록</h1>
-<table border="1">
+<table class="table table-hover">
+
+<thead class="thead-light">
 	<tr>
 		<th>No.</th>
 		<th>종류</th>
@@ -14,6 +19,8 @@
 		
 	
 	</tr>
+	</thead>
+	<tbody>	
 <c:forEach var="question" items="${list}">
 	<tr>
 		<td>${question.no}</td>
@@ -26,5 +33,17 @@
 		
 	</tr>
 </c:forEach>
+</tbody>
 </table>
+
+
+<jsp:include page="/WEB-INF/views/template/navigator.jsp">
+<jsp:param name="pno" value="${pno}" />
+	<jsp:param name="count" value="${count}" />
+	<jsp:param name="navsize" value="${navsize}" />
+	<jsp:param name="pagesize" value="${pagesize}" />
+	<jsp:param name="board_category" value="${board_category}"/>
+</jsp:include>
+
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

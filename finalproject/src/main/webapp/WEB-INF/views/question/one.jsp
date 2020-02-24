@@ -186,49 +186,7 @@ console.log(${clist.no}-1); */
 
 
 	 
-	 function rcorrectdelete(abc) {
-		 
-	  var checkbox2= document.getElementsByName(abc);
-	  console.log("aa");
-		 $.ajax({
-	     	url:"${pageContext.request.contextPath}/question2/delete2",
-	    	 type:"post",
-	    	 data:{test_no:abc},
-	    	 
-	    	 
-	    	   success:function(resp){
-	          	
-	    		   
-	    		   
-	    		   
-	    		   
-	     		console.log(resp);
-	     		
-	     		
-	     		
-	     		
-	            for(var i=0; i<checkbox2.length; i++){
-	            if(i==resp-1){
-	            	 $(checkbox2[i]).checked;
-	            }
-	            else{
-	            	
-	                    $(checkbox2[i]).hide();
-	            	
-	            }
-	            
-	             
-	                  
-	                
-	              
-	            }
-	                
-	            console.log("체크");
-	     		
-	     		
-	     	}
-		   })
-	}
+	
 
 function deletesession() {
 	//삭제 알림창
@@ -298,13 +256,20 @@ $(function(){
 	     		
 	     		
 	     		var a = 3;
-	     		if(resp!=10){
-	     			
+
+	     		if(resp!=0){
+
+	     		
+
 	     			
 	     	       for(var i=0; i<checkbox2.length; i++){
+
+	     	    
+
 	   	            if(i+1==resp){
 	   	            	 $(checkbox2[i]).prop('checked', true);
 	   	            }
+
 	   	            else{
 	   	            	
 	   	                    $(checkbox2[i]).hide();
