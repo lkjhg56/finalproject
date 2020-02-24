@@ -50,9 +50,10 @@
 	
 	
 </script>
+<div class="container">
 <h1>회원 정보</h1>
 
-<table class="table" border="1">
+<table class="table table-hover">
   <tr>
     <th>
     	프로필<br>
@@ -68,7 +69,7 @@
     	</c:otherwise>
     </c:choose>
 	    
-	    <c:if test="${isMine}">
+	    <c:if test="${isMine && !isAdmin}">
 	    	<button type="button" id="profile_edit">수정하기</button>
 	    </c:if>
 	    <c:if test="${not empty userFileDto}">
@@ -101,7 +102,6 @@
   </tr>
   <tr>
     <th>전화번호</th>
-<%--     <td>${users.phone.substring(0,3)}-${users.phone.substring(4,8)}-${users.phone.substring(9,13)}</td> --%>
     <td>${fn:replace(users.phone, ",", "-") }</td>
   </tr>
   <tr>
@@ -112,7 +112,9 @@
     <th>포인트</th>
     <td>
     	${users.point}
-    	<a href="${context}/pay/list"><button>충전하기</button></a>
+    	<c:if test="${isMine && !isAdmin}">
+    		<a href="${context}/pay/list"><button>충전하기</button></a>
+    	</c:if>
     </td>
   </tr>
   <tr>
@@ -149,4 +151,5 @@
 <a href="${context}/users/test_point">포인트 줘보기 test</a><br>
 <a id="bye" href="${context}/users/bye">탈퇴하기</a><br>
 <a href="${context}/users/logout">로그아웃</a><br>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
