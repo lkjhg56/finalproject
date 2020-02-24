@@ -45,7 +45,17 @@
 		<url-pattern>/board/regist</url-pattern>
 	</filter-mapping>
 	
-	
+	<!-- 
+		관리자 필터
+	 -->
+	<filter>
+		<filter-name>adminFilter</filter-name>
+		<filter-class>com.kh.finalproject.filter.AdminFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>adminFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
 	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>

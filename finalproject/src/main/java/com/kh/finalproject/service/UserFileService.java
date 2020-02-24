@@ -20,4 +20,7 @@ public interface UserFileService {
 	//프로필 수정
 	void ProfileEdit(List<MultipartFile> user_file) throws IllegalStateException, IOException;
 
+	//프로필 삭제 (기본 이미지)
+	void ProfileDelete(int user_no);
+
 }

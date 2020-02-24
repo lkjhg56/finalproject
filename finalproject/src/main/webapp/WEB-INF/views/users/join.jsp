@@ -110,6 +110,18 @@
 		});
 	});
 	
+	//기본이미지 선택
+	$(document).ready(function(){
+	    $("#basic").change(function(){
+	        if($("#basic").is(":checked")){
+	        	$("#file").hide();
+	        }
+	        else{
+	        	$("#file").show();
+	        }
+	    });
+	});
+	
 	//비밀번호 형식 검사
 // 	$(function(){
 		
@@ -249,7 +261,9 @@
 
 	이름 : <input type="text" name="name" maxlength="7" required><br><br>
 	프로필 사진을 올려주세요.<br>
-	<input type="file" name="user_file"  accept="image/*" required><br><br>
+	<input type="checkbox" id="basic">기본이미지 선택하기<br>
+	<input type="file" name="user_file" id="file"  accept="image/*">
+	<br><br>
 	아이디 : <input type="text" name="id" maxlength="20" required>
 	<input type="button" class="id_check_btn" value="아이디 중복 검사">
 	<div class="id">

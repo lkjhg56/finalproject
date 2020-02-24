@@ -1,5 +1,7 @@
 package com.kh.finalproject.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -120,8 +122,7 @@ public class UsersController {
 				String login_check = sqlSession.selectOne("users.login_day", id);
 				//오늘 날짜와 마지막 로그인 날짜가 다르면 포인트 주고 업데이트
 				if(!today.equals(login_check)) {
-					sqlSession.insert("grade_point.giveCheckPoint", pointDto);
-					sqlSession.update("users.change_1point", id);
+					gradePointDao.giveCheckPoint(user_no);
 				}
 				//로그인 체크 업데이트
 				sqlSession.update("users.login_check", id);
@@ -222,6 +223,15 @@ public class UsersController {
 	 @PostMapping("users/profile_edit")
 	 public String profile_edit(List<MultipartFile> user_file) throws IllegalStateException, IOException {
 		 userFileService.ProfileEdit(user_file);
+		 return "redirect:info";
+	 }
+	 
+	 //프로필 수정
+	 @PostMapping("users/profile_delete")
+	 public String profile_delete(HttpSession session) throws IllegalStateException, IOException {
+		 String id = (String) session.getAttribute("id");
+		 int user_no = sqlSession.selectOne("users.get_users_no", id);
+		 userFileService.ProfileDelete(user_no);
 		 return "redirect:info";
 	 }
 	 
