@@ -116,7 +116,7 @@ public class RestController {
 		
 			int rqno=	NormalUploadQuestionDao.rqno(rcorrectDto);
 		log.info("checkrqno={}", rqno);
-		
+
 		int correct;
 		if(rqno!=0) {
 			
@@ -132,12 +132,14 @@ public class RestController {
 //			log.info("dtorq={}",rcorrectDto2.getRqno());
 //			
 
+
 			if(sqlSession.selectOne("selectCorrect", rcorrectDto)!=null) {
 				correct=sqlSession.selectOne("test.selectCorrect", rcorrectDto);
 			}
 			else {
 				correct=0;
 			}
+
 
 			
 			log.info("corr={}",correct);
@@ -146,13 +148,18 @@ public class RestController {
 //		session.removeAttribute("rno");
 			log.info("delete2확인");
 			return correct;
+			
+			
 		}
 		
 		
 		
 		else {
-			return 0;
+		  return 0;
 		}
+		
+		
+	
 		
 	}
 	

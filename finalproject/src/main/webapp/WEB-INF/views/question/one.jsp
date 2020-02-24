@@ -256,12 +256,20 @@ $(function(){
 	     		
 	     		
 	     		var a = 3;
+
 	     		if(resp!=0){
+
+	     		
+
 	     			
 	     	       for(var i=0; i<checkbox2.length; i++){
-	     	    	  if(i+1==resp){
-		   	            	 $(checkbox2[i]).prop('checked', true);
-		   	            }
+
+	     	    
+
+	   	            if(i+1==resp){
+	   	            	 $(checkbox2[i]).prop('checked', true);
+	   	            }
+
 	   	            else{
 	   	            	
 	   	                    $(checkbox2[i]).hide();
