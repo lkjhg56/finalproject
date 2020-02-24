@@ -77,7 +77,7 @@
 		
 		$("form[name=form1]").submit(function(e){
 
-			e.preventDefault();
+		
 		
 	
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환

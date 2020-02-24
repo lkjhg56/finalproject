@@ -238,5 +238,9 @@
 		select count(*) from board_reply where board_reply_origin = #{board_no}
 	</select>
 	
+	
+	
+	
+	
 		
  </mapper>

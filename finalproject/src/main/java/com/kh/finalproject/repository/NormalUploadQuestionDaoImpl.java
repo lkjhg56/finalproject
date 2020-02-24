@@ -166,6 +166,11 @@ private SqlSession sqlSession;
 	public List<TestQuestionDto> mapList(Map<String, Integer> param) {
 		return sqlSession.selectList("question.testquestionNavRownum",param);
 	}
+	@Override
+	public List<TestQuestionDto> mapList2( Map<String, String> param2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

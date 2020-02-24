@@ -41,4 +41,6 @@ public interface NormalUploadQuestionDao {
 	int questionCount();
 	
 	List<TestQuestionDto> mapList(Map<String, Integer> param);
+	
+	List<TestQuestionDto> mapList2(Map<String, String> param2);
 }
