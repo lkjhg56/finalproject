@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UserFileDto;
 import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.GradePointDao;
 import com.kh.finalproject.repository.UserFileDao;
 import com.kh.finalproject.repository.UsersDao;
 
@@ -45,6 +46,9 @@ public class UserFileServiceImpl implements UserFileService{
 	private GradePointService pointService;
 	
 	@Autowired
+	private GradePointDao gradePointDao;
+	
+	@Autowired
 	private HttpServletRequest req;
 	
 	@Autowired
@@ -59,6 +63,8 @@ public class UserFileServiceImpl implements UserFileService{
 		usersDto.setPw(encoder.encode(usersDto.getPw()));
 		usersDto.setUser_no(user_no);
 		sqlSession.insert("users.join", usersDto);
+		
+		if(!user_file.get(0).isEmpty()) {
 		
 		//파일등록
 		List<UserFileDto> list = new ArrayList<>();
@@ -77,7 +83,7 @@ public class UserFileServiceImpl implements UserFileService{
 		}
 		
 		//파일 저장(물리)			
-		File dir = new File("D:/upload/gy");
+		File dir = new File("C:/kh/gy");
 		dir.mkdirs();
 			
 			for(int i = 0; i < list.size(); i++) {	
@@ -90,16 +96,14 @@ public class UserFileServiceImpl implements UserFileService{
 				userFileDao.fileUpload(userFileDto); //DB저장
 			}
 			
+		}
 		//회원 가입 포인트
 		String id = req.getParameter("id");
 		usersDto.setId(id);
-		 
-//		int users_no = sqlSession.selectOne("users.get_users_no", id);
+
 		pointDto.setUsers_no(user_no);
-		
-		sqlSession.insert("grade_point.giveJoinPoint", pointDto);
-		sqlSession.update("users.change_join5point", user_no);
-			
+
+		gradePointDao.giveJoinPoint(user_no);
 			
 	}
 	
@@ -108,18 +112,13 @@ public class UserFileServiceImpl implements UserFileService{
 		
 		//board_file_no에 대한 파일정보를 가져온다
 		UserFileDto dto = userFileDao.getFile(user_no);
-		System.out.println(dto);
-		System.out.println("저장명 = " +dto.getFile_save_name());
-		
 
 		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
 		//실제 파일을 읽어들인다. (폴더, 파일명)
-		File dir = new File("D:/upload/gy");	
+		File dir = new File("C:/kh/gy");	
 		File file = new File(dir, String.valueOf(dto.getFile_save_name()));
 		
 		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환
-		System.out.println("data = "+ data);
-		
 		
 		//헤더 설정 및 전송
 		ByteArrayResource resource = new ByteArrayResource(data);
@@ -140,10 +139,7 @@ public class UserFileServiceImpl implements UserFileService{
 	public void ProfileEdit(List<MultipartFile> user_file) throws IllegalStateException, IOException {
 		
 		String id = (String) req.getSession().getAttribute("id");
-		System.out.println("id="+id);
-		 
 		int user_no = sqlSession.selectOne("users.get_users_no", id);
-		System.out.println("user_no = " + user_no);
 		
 		//파일 삭제
 		userFileDao.delete(user_no);
@@ -163,7 +159,7 @@ public class UserFileServiceImpl implements UserFileService{
 			}
 		}
 		//파일 저장(물리)			
-		File dir = new File("D:/upload/gy");
+		File dir = new File("C:/kh/gy");
 		dir.mkdirs();
 			
 			for(int i = 0; i < list.size(); i++) {	
@@ -173,9 +169,16 @@ public class UserFileServiceImpl implements UserFileService{
 				File target = new File(dir, userFileDto.getFile_save_name()); //파일을 새로 생성하고 save_name을 가져와 그 이름으로
 				file.transferTo(target); //실제파일저장
 				
-//				userFileDao.fileUpload(userFileDto); //DB저장
 				userFileDao.fileUpload(userFileDto);
 			}
+		
+	}
+	
+	//프로필 삭제 (기본이미지)
+	@Override
+	public void ProfileDelete(int user_no){
+		
+		userFileDao.delete(user_no);
 		
 	}
 }

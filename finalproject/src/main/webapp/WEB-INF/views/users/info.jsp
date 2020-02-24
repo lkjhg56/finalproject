@@ -21,11 +21,15 @@
 		
 		$("#file").hide();
 		$("#clear").hide();
+		$("#delete").hide();
+		$("#basic").hide();
 		
 		$("#profile_edit").click(function(){
 			
 			$("#file").show();
 			$("#clear").show();
+			$("#delete").show();
+			$("#basic").show();
 			$("#profile_edit").hide();
 			
 			var data = $(this).parent().find(".editfile").serialize(); 
@@ -54,13 +58,28 @@
     	프로필<br>
     </th>
     <td class="mom">
-	    <img src="userimg?user_no=${users.user_no}" id="img" width="120" height="120"><br>
+<!--     	기본이미지 -->
+    <c:choose>
+    	<c:when test="${empty userFileDto}">
+	    	<img src="userimg?user_no=101" id="img" width="120" height="120"><br>
+    	</c:when>
+    	<c:otherwise>
+	    	<img src="userimg?user_no=${users.user_no}" id="img" width="120" height="120"><br>
+    	</c:otherwise>
+    </c:choose>
+	    
 	    <c:if test="${isMine}">
-	    <button type="button" id="profile_edit">수정하기</button>
+	    	<button type="button" id="profile_edit">수정하기</button>
+	    </c:if>
+	    <c:if test="${not empty userFileDto}">
+		    <form class="editfile" action="profile_delete" method="post">
+	    		<input type="submit" id="basic" value="기본이미지로 변경">	
+		    </form>
 	    </c:if>
 	    <form class="editfile" action="profile_edit" method="post" enctype="Multipart/form-data">
-	    <input id="file" type="file" name="user_file" accept="image/*" required>
-    	<input type="submit" id="clear" value="수정 완료">	
+	    	<input id="file" type="file" name="user_file" accept="image/*" required>
+    		<input type="submit" id="clear" value="완료">	
+    		<a href="${context}/users/info"><button type="button" id="delete">취소</button></a>
 	    </form>
     </td>
   </tr>
