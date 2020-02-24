@@ -84,7 +84,17 @@
   <tr>
     <th>전화번호</th>
     <td>
-		<input type="text" name="phone" value="${users.phone}" required>
+		<select name="phone">
+				<option>${users.phone.substring(0,3)}</option>
+				<option>010</option>
+				<option>011</option>
+				<option>016</option>
+				<option>017</option>
+				<option>019</option>
+			</select>-
+			<input type="tel" name="phone" maxlength="4" value="${users.phone.substring(4,8)}" required>-
+			<input type="tel" name="phone" maxlength="4" value="${users.phone.substring(9,13)}" required>
+			<br><br>
     </td>
   </tr>
   <tr>

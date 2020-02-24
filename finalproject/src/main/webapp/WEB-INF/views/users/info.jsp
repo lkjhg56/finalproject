@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
@@ -77,12 +78,12 @@
   </tr>
   <tr>
     <th>이메일</th>
-    <td>${users.email}</td>
+    <td>${fn:replace(users.email, ",", "") }</td>
   </tr>
   <tr>
     <th>전화번호</th>
 <%--     <td>${users.phone.substring(0,3)}-${users.phone.substring(4,8)}-${users.phone.substring(9,13)}</td> --%>
-    <td>${users.phone}</td>
+    <td>${fn:replace(users.phone, ",", "-") }</td>
   </tr>
   <tr>
     <th>주소</th>
@@ -90,7 +91,10 @@
   </tr>
   <tr>
     <th>포인트</th>
-    <td>${users.point}</td>
+    <td>
+    	${users.point}
+    	<a href="${context}/pay/list"><button>충전하기</button></a>
+    </td>
   </tr>
   <tr>
     <th>등급 포인트</th>
