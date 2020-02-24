@@ -8,37 +8,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 포인트를 주는 기능 -->
 	<!-- 회원가입 포인트 -->
-	<insert id="giveJoinPoint" parameterType="grade_pointDto">
+	<insert id="giveJoinPoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
-		values(point_no_seq.nextval,#{users_no}, 5, '회원가입')
+		values(point_no_seq.nextval,#{user_no}, 5, '회원가입')
+	</insert>
+	
+	<!-- 출석체크 포인트 -->
+	<insert id="giveCheckPoint" parameterType="int">
+		insert into grade_point(point_no, users_no, get_point, point_type) 
+		values(point_no_seq.nextval,#{user_no}, 1, '출석체크')
 	</insert>
 	
 	<!-- 문제업로드 포인트 -->
 	<insert id="giveQuestionUploadPoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
-		values(point_no_seq.nextval,#{users_no}, 5, '문제 업로드')
+		values(point_no_seq.nextval,#{user_no}, 5, '문제 업로드')
 	</insert>
 	
 	<!-- 문제풀기 포인트 -->
 	<insert id="giveQuestionSolvePoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
-		values(point_no_seq.nextval,#{users_no}, 3, '문제 풀기')
+		values(point_no_seq.nextval,#{user_no}, 3, '문제 풀기')
 	</insert>
-	<!-- 문제 삭제시 포인트 차감. -->
+	
+	<!-- 문제삭제 포인트 -->
 	<insert id="deleteMinus" parameterType="int">
 		insert into grade_point(point_no,users_no,get_point,point_type) 
-		values(point_no_seq.nextval,#{users_no},-5, '문제 삭제')
-	</insert>
-	<!-- 출석체크 포인트 -->
-	<insert id="giveCheckPoint" parameterType="grade_pointDto">
-		insert into grade_point(point_no, users_no, get_point, point_type) 
-		values(point_no_seq.nextval,#{users_no}, 1, '출석체크')
+		values(point_no_seq.nextval,#{user_no},-5, '문제 삭제')
 	</insert>
 	
 	<!-- 답변채택 포인트 -->
-	<insert id="giveAnswerPoint" parameterType="grade_pointDto">
+	<insert id="giveAnswerPoint" parameterType="int">
 		insert into grade_point(point_no, users_no, get_point, point_type) 
-		values(point_no_seq.nextval,#{users_no}, 3, '답변채택')
+		values(point_no_seq.nextval,#{user_no}, 3, '답변채택')
 	</insert>
 	
 	<!-- 나의 포인트 내역 조회-->

@@ -36,7 +36,6 @@
 </tbody>
 </table>
 
-
 <jsp:include page="/WEB-INF/views/template/navigator.jsp">
 <jsp:param name="pno" value="${pno}" />
 	<jsp:param name="count" value="${count}" />
@@ -44,6 +43,8 @@
 	<jsp:param name="pagesize" value="${pagesize}" />
 	<jsp:param name="board_category" value="${board_category}"/>
 </jsp:include>
+
+
 
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -1,5 +1,8 @@
 package com.kh.finalproject.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import com.kh.finalproject.entity.CategoryDto;
 import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.SolutionDto;
@@ -34,4 +37,10 @@ public interface NormalUploadQuestionDao {
 	void onlyfileDelete(int no);
 	
 	int rqno(RcorrectDto rcorrectDto);
+	
+	int questionCount();
+	
+	List<TestQuestionDto> mapList(Map<String, Integer> param);
+	
+	List<TestQuestionDto> mapList2(Map<String, String> param2);
 }

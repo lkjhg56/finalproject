@@ -60,4 +60,6 @@ public class NormalUpdateQuestionVO {
 	private int sec;
 	private int milisec;
 	private int user_conclusion;
+	
+	private String question_premium;
 }

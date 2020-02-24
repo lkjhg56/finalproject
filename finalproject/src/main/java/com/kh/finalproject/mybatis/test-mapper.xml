@@ -84,7 +84,7 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 
 <!-- correct 구하기 -->
 <select id="selectCorrect" parameterType="rcorrectDto"  resultType="int">
- select correct from rcorrect where rqno=#{rqno} and test_no=#{test_no}
+ select correct from rcorrect where result_no=#{result_no} and test_no=#{test_no}
 
 </select>
 
@@ -136,8 +136,10 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 		
 		<!--  유저답 리스트 -->
 		<select id = "getCorrectList" parameterType = "int" resultType = "rcorrectDto">
-			select * from rcorrect where result_no = #{rno}
+		select * from rcorrect where result_no = #{rno} order by rqno
 		</select>
+
+
 
 		<select id = "totalNum" parameterType = "int" resultType = "int">
 			select count (*) from rcorrect where test_no=#{test_no}

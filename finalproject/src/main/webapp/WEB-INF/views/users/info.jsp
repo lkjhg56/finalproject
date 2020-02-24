@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
@@ -20,11 +21,15 @@
 		
 		$("#file").hide();
 		$("#clear").hide();
+		$("#delete").hide();
+		$("#basic").hide();
 		
 		$("#profile_edit").click(function(){
 			
 			$("#file").show();
 			$("#clear").show();
+			$("#delete").show();
+			$("#basic").show();
 			$("#profile_edit").hide();
 			
 			var data = $(this).parent().find(".editfile").serialize(); 
@@ -45,21 +50,37 @@
 	
 	
 </script>
+<div class="container">
 <h1>회원 정보</h1>
 
-<table class="table" border="1">
+<table class="table table-hover">
   <tr>
     <th>
     	프로필<br>
     </th>
     <td class="mom">
-	    <img src="userimg?user_no=${users.user_no}" id="img" width="120" height="120"><br>
-	    <c:if test="${isMine}">
-	    <button type="button" id="profile_edit">수정하기</button>
+<!--     	기본이미지 -->
+    <c:choose>
+    	<c:when test="${empty userFileDto}">
+	    	<img src="userimg?user_no=101" id="img" width="120" height="120"><br>
+    	</c:when>
+    	<c:otherwise>
+	    	<img src="userimg?user_no=${users.user_no}" id="img" width="120" height="120"><br>
+    	</c:otherwise>
+    </c:choose>
+	    
+	    <c:if test="${isMine && !isAdmin}">
+	    	<button type="button" id="profile_edit">수정하기</button>
+	    </c:if>
+	    <c:if test="${not empty userFileDto}">
+		    <form class="editfile" action="profile_delete" method="post">
+	    		<input type="submit" id="basic" value="기본이미지로 변경">	
+		    </form>
 	    </c:if>
 	    <form class="editfile" action="profile_edit" method="post" enctype="Multipart/form-data">
-	    <input id="file" type="file" name="user_file" accept="image/*" required>
-    	<input type="submit" id="clear" value="수정 완료">	
+	    	<input id="file" type="file" name="user_file" accept="image/*" required>
+    		<input type="submit" id="clear" value="완료">	
+    		<a href="${context}/users/info"><button type="button" id="delete">취소</button></a>
 	    </form>
     </td>
   </tr>
@@ -77,12 +98,11 @@
   </tr>
   <tr>
     <th>이메일</th>
-    <td>${users.email}</td>
+    <td>${fn:replace(users.email, ",", "") }</td>
   </tr>
   <tr>
     <th>전화번호</th>
-<%--     <td>${users.phone.substring(0,3)}-${users.phone.substring(4,8)}-${users.phone.substring(9,13)}</td> --%>
-    <td>${users.phone}</td>
+    <td>${fn:replace(users.phone, ",", "-") }</td>
   </tr>
   <tr>
     <th>주소</th>
@@ -90,7 +110,12 @@
   </tr>
   <tr>
     <th>포인트</th>
-    <td>${users.point}</td>
+    <td>
+    	${users.point}
+    	<c:if test="${isMine && !isAdmin}">
+    		<a href="${context}/pay/list"><button>충전하기</button></a>
+    	</c:if>
+    </td>
   </tr>
   <tr>
     <th>등급 포인트</th>
@@ -126,4 +151,5 @@
 <a href="${context}/users/test_point">포인트 줘보기 test</a><br>
 <a id="bye" href="${context}/users/bye">탈퇴하기</a><br>
 <a href="${context}/users/logout">로그아웃</a><br>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

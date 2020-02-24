@@ -35,6 +35,7 @@ $(function(){
 	});
 });	
 </script>
+<div class="container">
 <h1>새로운 비밀번호로 변경하세요.</h1>
 
 <form action="change" method="post">
@@ -42,7 +43,7 @@ $(function(){
 	<div class="pw">
 		<h6>8~16자 영문자, 숫자, 특수문자 조합을 사용하세요.</h6>
 	</div>
-	<input type="submit" class="change" value="비밀번호 변경하기">
-	
+	<input type="submit" class="change" value="비밀번호 변경하기">	
 </form>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

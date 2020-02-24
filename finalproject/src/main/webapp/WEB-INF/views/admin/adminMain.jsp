@@ -6,9 +6,12 @@
 
 <a href="${pageContext.request.contextPath}/admin/admin_user_question">유저 문제 목록(完)</a><br><br>
 
-일반 문제 업로드<br><br>
 
-일반 문제 수정/삭제<br><br>
+<a href="${pageContext.request.contextPath}/admin/admin_normal_question">일반 문제 목록</a><br><br>
+
+<a href="${pageContext.request.contextPath}/admin/admin_normal_upload">일반 문제 업로드</a><br><br>
+
+
 
 결제관련 기능(추가해주세요.)<br><br>
 

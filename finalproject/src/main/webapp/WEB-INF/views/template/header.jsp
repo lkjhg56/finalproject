@@ -47,12 +47,14 @@ function islogin(id, path){
 				if(premium=='무료회원'){
 				htmls += '<form action = "'+path+'/pay/premium">'
 				htmls += '<input type ="hidden" name = "point" value = "'+resp.point+'">'
-				htmls += '<input type ="submit" value = "프리미엄 전환">'
+				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
+				htmls += '<input class = "btn_1" type ="submit" value = "프리미엄 전환">'
 				htmls += '</form>'
 				}else{
+				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
 				htmls += '<h6>'+premium+'</h6>'
 				}
-				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
+				
 			}
 			
 			$("#member_zone").html(htmls);
@@ -64,7 +66,6 @@ function islogin(id, path){
 		url : "${pageContext.request.contextPath}/main/getRank",
 		type : "post",
 		success:function(resp){
-			console.log("successasdasd")
 			var rank = 1;
 			htmls = "";
 			htmls += '<div>'
@@ -99,6 +100,14 @@ function islogin(id, path){
 			$(".aside_link").html(htmls);
 		}
 	})
+	$.ajax({
+		url : "${pageContext.request.contextPath}/main/gList",
+		type : "post",
+		success:function(resp){
+			
+		}
+		
+	})
 	
 
 	
@@ -109,9 +118,9 @@ $(".aside_link > div:gt(0)").hide();
 
 setInterval(function() { 
 $('.aside_link > div:first')
-.fadeOut(1000)
+.fadeOut(10)
 .next()
-.fadeIn(2000)
+.fadeIn(1000)
 .end()
 .appendTo('.aside_link');
 },  4000);
@@ -168,6 +177,10 @@ $('.aside_link > div:first')
 	  padding-left :10px;
 }
 
+.btn_1{
+	font-size:15px;
+	
+}
 
 </style>
 

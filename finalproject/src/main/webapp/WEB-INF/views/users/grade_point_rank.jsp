@@ -3,9 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
+<div class="container">
 <h1 align="center">등급 포인트 랭킹</h1>
-	
-	<table class="table">
+<div  style="text-align:center">	
+	<table class="table table-hover">
 		
 		<thead align="center">
 			<tr>
@@ -59,7 +60,8 @@
 			<jsp:param name="pagesize" value="${pagesize}"/>
 		</jsp:include>
 	</div>
-	
+	</div>
+</div>	
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>		
 
 
