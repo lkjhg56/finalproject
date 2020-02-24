@@ -103,7 +103,7 @@ $(function(){
 			</form>
 		</div>
 		<div class="note">
-			<textarea title="연습장" rows="20" cols="40"></textarea>
+			<textarea title="연습장" rows="20" cols="40">연습장</textarea>
 		</div>
 	</div>
 </div>

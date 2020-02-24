@@ -4,22 +4,52 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
+// 	$(function(){
+// 		$(".multi").hide();
+// 		$(".result").hide();
+		
+// 		$(".detail").click(function(){
+// 			$(".multi").show();
+// 			$(".result").show();
+// 			$(".detail").hide();
+// 			$(".single").hide();
+// 		});
+		
+// 		$(".result").click(function(){
+// 			$(".multi").hide();
+// 			$(".result").hide();
+// 			$(".detail").show();
+// 			$(".single").show();
+// 		});
+		
+// 	});
 	$(function(){
 		$(".multi").hide();
-		$(".result").hide();
-		
+		$(".result").attr("disable",false);
+		$(".result").css("background-color","white");
+		$(".result").css("color","black");
+		$(".result").css("border-color","white");
 		$(".detail").click(function(){
 			$(".multi").show();
-			$(".result").show();
-			$(".detail").hide();
 			$(".single").hide();
+			$(".detail").attr("disable",true);
+			$(".result").attr("disable",false);
+			$(".result").css("background-color","white");
+			$(".result").css("color","black");
+			$(".result").css("border-color","white");
+			$(".detail").css("background-color","#118FCB");
+			$(".detail").css("color","white");
 		});
-		
 		$(".result").click(function(){
 			$(".multi").hide();
-			$(".result").hide();
-			$(".detail").show();
 			$(".single").show();
+			$(".result").attr("disable",true);
+			$(".detail").attr("disable",false);
+			$(".detail").css("background-color","white");
+			$(".detail").css("color","black");
+			$(".detail").css("border-color","white");
+			$(".result").css("background-color","#118FCB");
+			$(".result").css("color","white");
 		});
 		
 	});
@@ -27,8 +57,9 @@
 <div class="container">
 <div>수험 시간 : <c:if test="${time.hour!=0}">${time.hour}시간</c:if> ${time.min}분 ${time.sec}초</div><br>
 <!-- 결과, 상세 버튼 -->
-<button class="result">시험 결과</button><button class="detail">상세 결과</button>
-
+<div class="btn-group-lg d-flex justify-content-start">
+<button class="btn btn-primary result">시험 결과</button><button class="btn btn-primary detail">상세 결과</button>
+</div>
 <!-- 결과 페이지 -->
 <div class="container single">
 

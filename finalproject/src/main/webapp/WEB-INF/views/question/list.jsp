@@ -11,7 +11,7 @@
 		
 		$(".multiQuestion").click(function(){
 			$(".list").show();
-			$("oneQuestion").hide();
+			$(".oneQuestion").hide();
 		});
 		
 		$(".click").click(function(){
@@ -62,16 +62,20 @@
 	<jsp:param name="board_category" value="${board_category}"/>
 </jsp:include>
 </div>
-<a href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드</a>
-<a class="click btn btn-primary">랜덤문제 풀기</a>
+<div class="d-flex justify-content-between">
+	<a type="button" href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드</a>
+	<div>
+	<a class="click btn btn-primary">랜덤문제 풀기</a>
+	<span class="list">문제 개수 :
+	<select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)">
+		<c:forEach var="QuestionNumber" items="${list}" varStatus="status">
+			<option class="optionVal" value="${pageContext.request.contextPath}/question/multi?wantQuestion=${status.count}">${status.count}</option>
+		</c:forEach>
+	</select>
+	</span>
+	</div>
+</div>
 <!-- <button class="click">문제 수</button> -->
-<span class="list">문제 개수 :
-<select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)">
-	<c:forEach var="QuestionNumber" items="${list}" varStatus="status">
-		<option class="optionVal" value="${pageContext.request.contextPath}/question/multi?wantQuestion=${status.count}">${status.count}</option>
-	</c:forEach>
-</select>
-</span>
 </div>
 <!-- 모달 영역 -->
 <button type="button" class="btn doHide" data-toggle="modal" data-target="#myModal"></button>
