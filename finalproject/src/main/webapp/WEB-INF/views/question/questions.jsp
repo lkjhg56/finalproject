@@ -15,17 +15,17 @@
 .question-pic{
 	 float:left;
     width:33%;
-    height:100px;
+    height:50px;
 }
 .question-name{
 	 float:left;
     width:47%;
-    height:100px;
+    height:50px;
 }
 .question-submit{
 	 float:left;
     width:20%;
-    height:100px;
+    height:50px;
 }
 
 
