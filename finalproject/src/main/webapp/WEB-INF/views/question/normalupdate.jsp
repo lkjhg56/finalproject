@@ -40,6 +40,8 @@ function deletefile(abc) {
               data:{no:abc},
              success:function(){
             		alert("파일이 삭제 됩니다");
+            		
+            	
             	/* 	 $("#preview").load(window.location.href + "#preview"); */
             		 location.reload();
             		 

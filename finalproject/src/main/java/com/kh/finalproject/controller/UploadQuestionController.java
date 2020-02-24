@@ -33,6 +33,9 @@ import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/question")
 public class UploadQuestionController {
@@ -242,32 +245,159 @@ public class UploadQuestionController {
 	public String normalupload() {
 		return "question/normalupload";
 	}
+	
+	
 	@PostMapping("/normalupload")
-	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session,Model model) throws Exception {
+	public String normalupload2(@ModelAttribute NormalUpdateQuestionVO normalUpdateQuestionVO, HttpSession session,Model model,HttpServletRequest request) throws Exception {
 		
 //		uploadQuestionService.questionUpload(updateQuestionVO);
 		
 		normalUploadQuestionService.normalquestionUpload(normalUpdateQuestionVO);
 		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal",normalUpdateQuestionVO);
-//		model.addAttribute("vo",normalUpdateQuestionVO);
-		model.addAttribute("list",list2);
+
 		
+		 model.addAttribute("list",list2);
+	
+		
+
+		//네비게이터
+		//페이지 크기
+		int pageSize = 10;
+		//네비게이터 크기
+		int navSize = 10;
+		//페이지별 번호
+		int pageNumber;
+		//받아온 페이지 번호가 음수일 경우 예외를 발생시켜 catch에서 처리해준다.
+		try {
+			pageNumber=Integer.parseInt(request.getParameter("pno"));
+			if(pageNumber<=0) {
+				//pageNumber가 0보다 작을 경우 catch로 처리한다.
+				throw new Exception();
+			}
+		}catch(Exception e) {
+			pageNumber=1;
+		}
+	
+		int finish = pageNumber * pageSize;
+		int start = finish - (pageSize - 1);
+		/*****************************************************/
+		//	하단 네비게이터 계산하기
+		/*****************************************************/
+		//전체 등록되어 있는 문제 개수를 구함.
+		TestQuestionDto dto=TestQuestionDto.builder()
+				.csname(normalUpdateQuestionVO.getCsname())
+				.category_no(normalUpdateQuestionVO.getCategory_no())
+				.build();
+		
+		int count=sqlSession.selectOne("question.getCountNormal",dto);
+		
+		
+		//전체 페이지 수
+		int pageCount=(count+pageSize)/pageSize;
+		
+		int startBlock = (pageNumber-1) / navSize * navSize+1;
+		int finishBlock = startBlock +(navSize-1);
+		
+		if(finishBlock>pageCount) {
+			finishBlock=pageCount;
+		}
+		Map<String, String> param = new HashMap<>();
+		param.put("start", String.valueOf(start));
+		param.put("finish", String.valueOf(finish));
+		param.put("csname", normalUpdateQuestionVO.getCsname());
+		param.put("category_no",normalUpdateQuestionVO.getCategory_no());
+		
+//		model.addAttribute("list", NormalUploadQuestionDao.mapList2(param));
+		
+		
+		request.setAttribute("pno", pageNumber);
+		request.setAttribute("count", count);
+		request.setAttribute("pagesize", pageSize);
+		request.setAttribute("navsize", navSize);
+		
+
 		return "question/normallist";
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	
 	//일반문제 목록
 	@GetMapping("/normallist")
-	public String normallist(@RequestParam int no, String csname,String category_no,  Model model) {
+	public String normallist(@RequestParam  String csname,String category_no,  Model model,HttpServletRequest request) {
 
 		TestQuestionDto dto=TestQuestionDto.builder()
 				.csname(csname)
 				.category_no(category_no)
 				.build();
 		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal3",dto);
-		model.addAttribute("list",list2);
+	
+		
+		
+		/* model.addAttribute("list",list2); */
+		
+		
+		
 
-		return "question/normallist";
+		//네비게이터
+		//페이지 크기
+		int pageSize = 10;
+		//네비게이터 크기
+		int navSize = 10;
+		//페이지별 번호
+		int pageNumber;
+		//받아온 페이지 번호가 음수일 경우 예외를 발생시켜 catch에서 처리해준다.
+		try {
+			pageNumber=Integer.parseInt(request.getParameter("pno"));
+			if(pageNumber<=0) {
+				//pageNumber가 0보다 작을 경우 catch로 처리한다.
+				throw new Exception();
+			}
+		}catch(Exception e) {
+			pageNumber=1;
+		}
+	
+		int finish = pageNumber * pageSize;
+		int start = finish - (pageSize - 1);
+		/*****************************************************/
+		//	하단 네비게이터 계산하기
+		/*****************************************************/
+		//전체 등록되어 있는 문제 개수를 구함.
+		
+		
+		int count=sqlSession.selectOne("question.getCountNormal",dto);
+		
+		
+		//전체 페이지 수
+		int pageCount=(count+pageSize)/pageSize;
+		
+		int startBlock = (pageNumber-1) / navSize * navSize+1;
+		int finishBlock = startBlock +(navSize-1);
+		
+		if(finishBlock>pageCount) {
+			finishBlock=pageCount;
+		}
+		Map<String, String> param = new HashMap<>();
+		param.put("start", String.valueOf(start));
+		param.put("finish", String.valueOf(finish));
+		param.put("csname", csname);
+		param.put("category_no", category_no);
+		
+		model.addAttribute("list", NormalUploadQuestionDao.mapList2(param));
+		
+		
+		request.setAttribute("pno", pageNumber);
+		request.setAttribute("count", count);
+		request.setAttribute("pagesize", pageSize);
+		request.setAttribute("navsize", navSize);
+		
+
+		return "question/normallist2";
 	}
 	
 	
@@ -335,12 +465,14 @@ public class UploadQuestionController {
 	public String normalcontent(@RequestParam int no, Model model) {
 	
 		
-//		NormalUpdateQuestionVO normalUpdateQuestionVO=sqlSession.selectOne("question.getContent2", no);
-//		model.addAttribute("questionDto2",normalUpdateQuestionVO);
+	NormalUpdateQuestionVO normalUpdateQuestionVO=sqlSession.selectOne("question.getContent2", no);
+	model.addAttribute("questionDto",normalUpdateQuestionVO);
 		
 		
-		TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent", no);
-		model.addAttribute("questionDto", testQuestionDto);
+		/*
+		 * TestQuestionDto testQuestionDto =sqlSession.selectOne("question.getContent",
+		 * no); model.addAttribute("questionDto", testQuestionDto);
+		 */
 		
 		
 		return "question/normalcontent";
@@ -362,8 +494,9 @@ public class UploadQuestionController {
 	@GetMapping("/normalupdate")
 	public String normalupdate(@RequestParam int no, Model model) {
 //		TestQuestionDto testQuestionDto= sqlSession.selectOne("question.getContent", no);
-		
+		log.info("aaano={}",no);
 		NormalUpdateQuestionVO normalUpdateQuestionVO=sqlSession.selectOne("question.getContent2", no);
+//log.info("avab={}", normalUpdateQuestionVO.getNo());
 		model.addAttribute("questionDto",normalUpdateQuestionVO);
 		return "question/normalupdate";
 	}
