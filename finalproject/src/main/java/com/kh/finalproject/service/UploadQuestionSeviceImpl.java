@@ -204,6 +204,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.question_no(updateQuestionVO.getQuestion_no())
 				.question_true(uploadQuestionDao.question_true(updateQuestionVO.getQuestion_no()))
 				.question_false(uploadQuestionDao.question_false(updateQuestionVO.getQuestion_no()))
+				.question_solution(uploadQuestionDto.getQuestion_solution())
 				.build();
 		
 		boolean result=updateQuestionVO.getQuestion_answer()==uploadQuestionDto.getQuestion_answer();		
