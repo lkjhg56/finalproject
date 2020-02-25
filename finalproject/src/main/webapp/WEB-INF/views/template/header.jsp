@@ -29,7 +29,6 @@ function islogin(id, path){
 		data :{id:id},
 		success:function(resp){
 		
-			console.log(resp.id==null)
 			var premium = "";
 			if(resp.is_premium==0){
 				premium += '무료회원'
@@ -48,7 +47,7 @@ function islogin(id, path){
 				htmls += '<form action = "'+path+'/pay/premium">'
 				htmls += '<input type ="hidden" name = "point" value = "'+resp.point+'">'
 				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
-				htmls += '<input class = "btn_1" type ="submit" value = "프리미엄 전환">'
+				htmls += '<input class = "btn_1 btn btn-primary" type ="submit" value = "프리미엄 전환">'
 				htmls += '</form>'
 				}else{
 				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
@@ -68,62 +67,175 @@ function islogin(id, path){
 		success:function(resp){
 			var rank = 1;
 			htmls = "";
-			htmls += '<div>'
-			htmls += '<div>포인트 랭킹</div>'
+			htmls += '<div class = "text">'
+			htmls += '<div class ="init">포인트 랭킹</div>'
 			$(resp).each(function(){
 				
-				htmls += '<div>'+rank+this.name+'</div>'
+				htmls += '<div class ="init">'+rank+'.'+this.name+'</div>'
 				rank += 1;
 				
 				
 				
 			})
 			htmls += '</div>'
+			$(".mRank").html(htmls);
 			
 				$.ajax({
-					url : "${pageContext.request.contextPath}/main/getRank",
+					url : "${pageContext.request.contextPath}/main/newQList",
 					type : "post",
 					success:function(resp){
-						console.log("success")
-						htmls += '<div>'
-						htmls+= 'test'
-						htmls +='</div>'
+						var rank = 1;
+						htmls = "";
+						htmls += '<div class = "text">';
+						htmls += '<div class ="init">최신문제</div>';
+						$(resp).each(function(){
+							
+							htmls += '<div class ="init">'+rank+'.'+this.question_title+'</div>'
+							rank += 1;
+							
+							
+							
+						})
+						htmls += '</div>'
+					$(".mNewList").html(htmls);
 					}
 					
 				})
-		
+				
 
-			htmls+= '<div>test2</div>'
-			htmls+= '<div>test3</div>'
 			
 			
-			$(".aside_link").html(htmls);
+		
 		}
 	})
 	$.ajax({
 		url : "${pageContext.request.contextPath}/main/gList",
 		type : "post",
 		success:function(resp){
-			
+			var rank = 1;
+			htmls = "";
+			htmls += '<div class = "text">';
+			htmls += '<div class ="init">많이 풀린 문제</div>';
+			$(resp).each(function(){
+				
+				htmls += '<div class ="init">'+rank+'.'+this+'</div>'
+				rank += 1;
+				
+				
+				
+			})
+			htmls += '</div>'
+		$(".mFQlist").html(htmls);
 		}
 		
+		
 	})
-	
+
+
 
 	
 };
 
 
-$(".aside_link > div:gt(0)").hide();
 
-setInterval(function() { 
-$('.aside_link > div:first')
-.fadeOut(10)
-.next()
-.fadeIn(1000)
-.end()
-.appendTo('.aside_link');
-},  4000);
+
+
+
+ function dxSimpleSlider(element = '#dx-slider', auto = false, pause) {
+
+    // Get parent element
+    var $this = $(element);
+
+    // Slides container
+    var slidesCont = $this.children('.slides-container');
+    // Get all slides
+    var slides = slidesCont.children('.slide');
+
+
+
+    // Get Previous / Next links
+    var arrowsCont = $this.children('.arrows');
+    var prevSlide = arrowsCont.children('.prev');
+    var nextSlide = arrowsCont.children('.next');
+
+    // Total slides count
+    var slidesCount = slides.length;
+
+    // Set currentSlide to first child
+    var currentSlide = slides.first();
+    var currentSlideIndex = 1;
+
+    var autoPlay = null;
+
+    // Hide all slides except first and add active class to first
+    slides.not(':first').css('display', 'none');
+    currentSlide.addClass('active');
+
+    // Function responsible for fading to next slide
+    function fadeNext() {
+        currentSlide.removeClass('active').fadeOut(700);
+
+        if(currentSlideIndex == slidesCount) {
+            currentSlide = slides.first();
+            currentSlide.delay(500).addClass('active').fadeIn(700);
+            currentSlideIndex = 1;
+        } else {
+            currentSlideIndex++;
+            currentSlide = currentSlide.next();
+            currentSlide.delay(500).addClass('active').fadeIn(700);
+        }
+
+
+    }
+
+    // Function responsible for fading to previous slide
+    function fadePrev() {
+        currentSlide.removeClass('active').fadeOut(700);
+
+        if(currentSlideIndex == 1) {
+            currentSlide = slides.last();
+            currentSlide.delay(500).addClass('active').fadeIn();
+            currentSlideIndex = slidesCount;
+        } else {
+            currentSlideIndex--;
+            currentSlide = currentSlide.prev();
+            currentSlide.delay(500).addClass('active').fadeIn(700);
+        }
+
+  
+    }
+
+    // Function that starts the autoplay and resets it in case user navigated (clicked prev or next)
+    function AutoPlay() {
+        clearInterval(autoPlay);
+
+        if(auto == true)
+            autoPlay = setInterval(function() {fadeNext()}, pause);
+    }
+
+    // Detect if user clicked on arrow for next slide and fade next slide if it did
+    $(nextSlide).click(function(e) {
+        e.preventDefault();
+        fadeNext();
+        AutoPlay();
+    });
+
+    // Detect if user clicked on arrow for previous slide and fade previous slide if it did
+    $(prevSlide).click(function(e) {
+        e.preventDefault();
+        fadePrev();
+        AutoPlay();
+    });
+
+    // Start autoplay if auto is set to true
+    AutoPlay();
+
+}
+
+$(function() {
+    dxSimpleSlider('#slider', true, 8000);
+});
+
 
 
 	
@@ -175,12 +287,59 @@ $('.aside_link > div:first')
 	  border: 4px solid #f2f5f3;
 	  padding-top :10px;
 	  padding-left :10px;
+	  font-size:16px;
 }
 
 .btn_1{
 	font-size:15px;
 	
 }
+@font-face { font-family: 'CookieRunOTF-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Bold00.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+
+.init{
+	padding-top : 7px;
+	font-family:'CookieRunOTF-Bold';
+}
+
+
+
+#slider {
+            width: 90%;
+            height: 400px;
+            margin: auto;
+            position: relative;
+        }
+
+        #slider .slides-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #slider .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+
+        #slider .slide .text {
+            width: 100%;
+            height: 100%;
+            color: black;
+            text-transform: uppercase;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        #slider .slide:first-child {
+            display: block;
+        }
+
+
 
 </style>
 

@@ -84,6 +84,12 @@
 	 					</div>
 
 	 					<div	class = "aside_link">
+	 						<div class = "mRank">
+		 					</div>
+		 					<div class = "mNewList">
+		 					</div>
+		 					<div class = "mFQlist">
+	 					</div>
 	 					
 	 					</div>
 	 				

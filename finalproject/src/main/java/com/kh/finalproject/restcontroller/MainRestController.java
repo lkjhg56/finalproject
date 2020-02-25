@@ -11,14 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.TestDao;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/main")
+@Slf4j
 public class MainRestController {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private TestDao testDao;
 	
 	@PostMapping("search")
 	public UsersDto search(@RequestParam String id) {
@@ -39,8 +47,15 @@ public class MainRestController {
 	}
 	@PostMapping("gList")
 	public List<String> qlist(){
+		List<String> gList = testDao.getFrequency();
+		return gList;
+	}
+	@PostMapping("newQList")
+	public List<UploadQuestionDto> nList(){
+		List<UploadQuestionDto> nList = sqlSession.selectList("nList");
+		log.info("test123={}", nList.isEmpty());
+		return nList;
 		
-		return null;
 	}
 	
 }

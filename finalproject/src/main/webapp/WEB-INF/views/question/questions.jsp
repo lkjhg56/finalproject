@@ -46,17 +46,20 @@
       <br>
     
 	      			<c:forEach var = "test" items="${list}">
-	        			<form action = "${pageContext.request.contextPath }/question/questype">
-	        				<div class="post-preview">
 	        		
-	        						<div class = "question-float ">
-	 					   					<input type = "hidden" name ="tno" value= "${test.tno}">
-	 					   					<div class= "question-name"> <h2> ${test.test_category} </h2></div>
-	           								<div class= "question-submit"><input class="btn btn-primary"type = "submit" value = "선택"></div>	  
-							 		</div>
-	 						</div>
-	 					</form>
-	 				
+		 				 <div class="post-preview">
+					          <a href="${pageContext.request.contextPath }/question/questype?tno=${test.tno}">
+							            <h2 class="post-title">
+							            
+							            </h2>
+							            <h3 class="post-subtitle">
+							               ${test.test_category}
+							            </h3>
+					     		     </a>
+					      		   
+					            </p>
+				        </div>
+	       				 <div style = "width:80%"><hr></div>
 	 				</c:forEach>
 	 			</div>
 	 		<div class ="aside_area">
@@ -65,6 +68,16 @@
 	 					
 	 				</div>
 	 				<div	class = "aside_link">
+	 					<div id = "slider">
+	 						<div class="slides-container">
+		 							<div class = "mRank slide">
+				 					</div>
+				 					<div class = "mNewList slide">
+				 					</div>
+				 					<div class = "mFQlist slide">
+				 					</div>
+			 					</div>
+	 					</div>
 	 					
 	 				</div>
 	 				

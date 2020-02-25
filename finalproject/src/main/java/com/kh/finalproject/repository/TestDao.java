@@ -22,5 +22,6 @@ public interface TestDao {
 	int getScore(int rno, String category_no, String csname);
 	
 	int getDtocount(String csname,String category_no);
+	List<String> getFrequency();
 
 }
