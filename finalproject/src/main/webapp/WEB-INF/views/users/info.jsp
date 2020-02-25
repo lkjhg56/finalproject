@@ -123,7 +123,11 @@
   </tr>
   <tr>
     <th>등급</th>
-    <td>${users.grade}</td>
+    <td>${users.grade}
+    	<c:if test="${users.is_premium == 1}">
+    		(프리미엄)
+    	</c:if>
+    </td>
   </tr>
   <tr>
     <th>가입일</th>
