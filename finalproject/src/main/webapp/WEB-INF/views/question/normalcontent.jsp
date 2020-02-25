@@ -14,6 +14,42 @@ function previewImage(target){
         reader.readAsDataURL(target.files[0]);
     }
 }
+
+
+
+
+$(function () {
+	  $(".test").hide()
+	console.log("hide")
+	
+});
+
+
+function file(abc) {
+	console.log("show")
+	var checking = document.getElementsByName(abc);
+	console.log(checking)
+$(checking).show();
+	
+	
+}
+
+
+
+
+
+
+function deleteq() {
+	//삭제 알림창
+            console.log("문제삭제");
+      /*       e.preventDefault() */
+      
+     alert("문제가 삭제됩니다")
+
+      
+	
+	 
+}
 </script>
 
 <div class="container">
@@ -23,7 +59,7 @@ function previewImage(target){
 <c:if test="${grade=='관리자'}">
 <div>유료 여부    : ${questionDto.question_premium}</div>
 </c:if>
-<div><img id="preview" src="qimage?no=${questionDto.no}"  width="120" height="120"></div>
+<div><img id="preview" class="test" name="${questionDto.no}+pic" src="qimage?no=${questionDto.no}" width="35%" height="300" onload="file('${questionDto.no}+pic');"></div>
 
 <div>문제 보기1 : ${questionDto.dis1}</div>
 <div>문제 보기2 : ${questionDto.dis2}</div>
@@ -39,9 +75,15 @@ function previewImage(target){
 <br><br>
 <div>
 <%-- <c:if test="${grade=='관리자'}"> --%>
-<a href="normalupdate?no=${questionDto.no}">문제 수정</a><br><br>
-<a href="normaldelete?no=${questionDto.no}&csname=${questionDto.csname}">문제 삭제</a><br><br>
-<a href="admin_normal_question?csname=${questionDto.csname}&category_no=${questionDto.category_no}">문제 리스트로</a><br><br>
+<%-- <a href="normalupdate?no=${questionDto.no}">문제 수정</a><br><br> --%>
+
+<button type="button" onclick="location.href='normalupdate?no=${questionDto.no}'">문제 수정하기</button><br><br>
+
+<%-- <a href="normaldelete?no=${questionDto.no}&csname=${questionDto.csname}">문제 삭제</a><br><br> --%>
+<button type="button" onclick="location.href='normaldelete?no=${questionDto.no}&csname=${questionDto.csname}';deleteq();">문제 삭제하기</button><br><br>
+
+<%-- <a href="admin_normal_question?csname=${questionDto.csname}&category_no=${questionDto.category_no}">문제 리스트로</a><br><br> --%>
+<button type="button" onclick="location.href='admin_normal_question?csname=${questionDto.csname}&category_no=${questionDto.category_no}'">리스트로 돌아가기</button>
 
 </div>
 

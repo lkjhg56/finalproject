@@ -260,6 +260,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				
 
 				model.addAttribute("category_no", category_no);
+				
 				model.addAttribute("rCorrectDto", rCorrectDto);
 				
 				

@@ -30,6 +30,12 @@
  	<select id="categoryE" resultType="int" parameterType="normalUpdateQuestionVO">
  	select count(*) from test T inner join category C on t.tno=c.test_no where c.csname=#{csname} and t.test_category=#{test_category}
  	</select>
+ 	
+ 	<!-- 카테고리 유무 -->
+ 	<select id="testE" resultType="int" parameterType="normalUpdateQuestionVO">
+ 	 select tno from test where test_category=#{test_category}
+ 	</select>
+ 	
  	<!-- 문제테이블과 이미지 테이블을 합쳐서 출력 -->
 	<resultMap type="uploadQuestionDto" id="imageList">
 		<result column="question_no" property="question_no"/>

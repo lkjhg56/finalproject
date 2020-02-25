@@ -88,6 +88,36 @@
 		});
 	});	
 
+	
+	
+	 $(document).ready(function() { 
+		  
+			$.ajax({
+
+				url : "${pageContext.request.contextPath}/question2/newwindow",
+
+				type : "post",
+
+				data : {
+
+					
+
+				},
+
+			   success:function(){
+		          	
+	    		   
+				   console.log("세션빼기성공");
+	    		   
+	    		
+		     		
+		     	}
+
+			})
+		  
+		  
+	  
+	  });
 
 
 </script>

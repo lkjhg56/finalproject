@@ -21,7 +21,7 @@
 	<!-- 한 문제씩 -->
 	<select id="questionDto" parameterType="testQuestionDto" resultType="testQuestionDto">
 	select * from
-(select rownum as rownumber, b.* from test_question b where csname= #{categoryname}) a
+(select rownum as rownumber, b.* from test_question b where csname= #{categoryname} order by no asc) a
 where a.rownumber=#{no}
 	</select>
 	
