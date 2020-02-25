@@ -280,6 +280,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		//정답여부를 체크해준다. question_no로 원래 답을 호출하여 위 리스트내에
 		for(int i = 0;i<list.size();i++ ) {
 			int answer = list.get(i).getQuestion_answer();
+			
 			UploadQuestionDto uploadQuestionDto = uploadQuestionDao.isCorrect(list.get(i).getQuestion_no());
 			//정답여부 판별
 			boolean result = uploadQuestionDto.getQuestion_answer() == answer;
@@ -290,6 +291,10 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 			}else if(!result) {
 				list.get(i).setResult(0);
 			}
+			//해설 첨부해야함.
+			UploadQuestionDto uploadQuestionDto2 = uploadQuestionDao.question_all(list.get(i).getQuestion_no());
+			list.get(i).setQuestion_solution(uploadQuestionDto2.getQuestion_solution());
+			
 		}
 		return list;
 	}
