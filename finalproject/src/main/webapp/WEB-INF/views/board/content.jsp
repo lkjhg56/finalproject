@@ -5,29 +5,70 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <style>
+	*{
+		 font-family: 'Noto Sans';
+	     font-weight: 400;
+	      font-size: 13px;
+	}
+	
+	span{
+		padding-left:10px;
+		 padding-right:10px;
+	}
+	
+	#a{
+		 padding-right:10px;
+	}
 	.far{
 		color : #118FCB;
 		font-size : 20px;
 	}
 	
-	.btn{
-		color : black;
-	}
+	.btn23 {
+	     font-weight: 420;
+	     font-size: 13px;
+		  display: inline-block;
+		  font-weight: 400;
+		  color: #212529;
+		  text-align: center;
+		  vertical-align: middle;
+		  background-color: white;
+		  border: 1px solid black;
+		  padding: 0.375rem 0.75rem;
+		  line-height: 1.5;
+		 }
+		 
+		 .btn24 {
+	     font-weight: 420;
+	     font-size: 13px;
+		  display: inline-block;
+		  font-weight: 400;
+		  color: #212529;
+		  text-align: center;
+		  vertical-align: middle;
+		  background-color: whitesmoke;
+		  border: 1px solid #dee2e6;
+		  padding: 0.375rem 0.75rem;
+		  line-height: 1.5;
+		 }
 	
-	.btn-primary:hover{
-		color : black;
-	}
-	
-	.btn-primary {
-	  background-color: white;
-	  border-color: #dee2e6;
-	}
-	
-	.btn-primary a{
+	a{
 		color: black;
 		text-decoration:none;
 	}
 	
+	 .category-btn:hover, .category-btn:active{
+		color : #1295D3;
+		outline : none;
+	}
+	.category-btn2:hover, .category-btn2:active{
+		color : #1295D3;
+		outline : none;
+	}
+	
+	.btn-primary:active{
+		outline : none;
+	}	
 	
 	.flex-wrap{
             display: flex;
@@ -44,6 +85,14 @@
         }
         .item2{
             flex-grow: 1;
+        }
+         .item3{
+            flex-grow: 9;                   /* 줄에서 남은 공간을 차지하는 비율 */
+            height: 20px;                 /* 1개만 높이가 있어도 나머지가 같은 높이로 설정된다. */
+        }
+        .item4{
+            flex-grow: 1;
+            text-align : right;
         }
 	
 </style>
@@ -219,6 +268,39 @@ $(function(){
          .hide();
         
 });
+
+
+// 글 & 댓글 신고기능
+
+$(function(){
+	$("#report").click(function(){
+		
+		var data = $(".boardReport").serialize();
+		console.log(data);	
+		var win = window.open(
+				"${pageContext.request.contextPath}/board/report?"
+				+ data, "win", "width=450, height=500");
+		
+		document.querySelector(".boardReport").submit(e)
+		
+		e.preventDefault();		
+	});
+	
+});	
+
+$(function(){
+	$("#rereport").click(function(e){
+		e.preventDefault();		
+		var data = $(this).attr("href"); // href에 입력된 값을 가져옴
+		console.log(data);
+		
+		var win = window.open(
+				"${pageContext.request.contextPath}/board/report?report_reply_no="
+				+ data, "win", "width=450, height=500");
+		
+	});
+	
+});	
     
 </script>
  
@@ -228,16 +310,16 @@ $(function(){
 		<table class="table table-bordered">
 				<tr>
 					<td>
-						<div>
-							<span>[${boardDto.board_category}]&nbsp;</span>
-							<span>${boardDto.board_title }&nbsp;&nbsp;</span>
-							<span style="text-align: right">${boardDto.board_wdate.substring(0,16) }</span>
+						<div class="flex-wrap">
+							<span class="item3">[${boardDto.board_category}]&nbsp;${boardDto.board_title }</span>
+	
+							<span class="item4" style="text-align: right">${boardDto.board_wdate.substring(0,16) }</span>
 						</div>
 					</td>
 				</tr>	
 				<tr>
 					<td>
-						${boardDto.board_writer }
+						<span>${boardDto.board_writer }</span>
 					</td>
 				</tr>		
 				<tr height="200">
@@ -251,11 +333,16 @@ $(function(){
 				</tr>
 				<tr>
 					<td>
-						<span>댓글수 ${boardDto.board_replycount}</span>&nbsp; | &nbsp;<span>조회수 ${boardDto.board_readcount}</span>
+						<div class="flex-wrap">
+							<span class="item3">댓글수 ${boardDto.board_replycount}&nbsp; | &nbsp;조회수 ${boardDto.board_readcount}</span>
+							<span class="item4" ><a href="#" id="report">신고</a></span>
+						</div>
 					</td>
 				</tr>
-		</table>
-			
+		</table>			
+		<form action="report" class="boardReport" method="get">
+			<input type="hidden" name="report_board_no" value="${boardDto.board_no}">	
+		</form>
 			
 			<!-- 댓글 목록을 보여주는 칸 -->
 				<c:forEach var="boardReplyDto" items="${boardReplyDto}">
@@ -265,11 +352,12 @@ $(function(){
 									<tr class="info">
 										<td>
 											<span>${boardReplyDto.board_reply_writer}</span>
-											<span>　</span>		
+
 											<span>${boardReplyDto.board_reply_wdate.substring(0,16)}</span>	
 											<c:if test="${boardReplyDto.depth < 1 && id != null}">
-												<span><a href="#" id="re">답글</a></span>
-											</c:if>							
+												<a href="#" id="re">답글  |</a>
+											</c:if>											
+												<a href="${boardReplyDto.board_reply_no}" id="rereport" >신고</a>
 										</td>
 									</tr>
 									
@@ -307,6 +395,7 @@ $(function(){
 											</form>
 										</td>						
 									</tr>	
+
 									
 									<!-- 대댓글 입력창 -->
 									<tr class="reInsert">
@@ -324,8 +413,7 @@ $(function(){
 										</td>
 									</tr>
 									
-									<!-- 댓글을 수정하는 칸 -->
-							
+									<!-- 댓글을 수정하는 칸 -->							
 									<tr class="edit">
 							            <td>
 								              <form id="editform" method="post">
@@ -333,15 +421,18 @@ $(function(){
 									                <textarea name="board_reply_content" rows="2" cols="150" >${boardReplyDto.board_reply_content}</textarea>
 									                <div id="a" style="text-align: right">
 														<a href="#" id="finish">완료</a>
-														| <a href="#" id="cancel">취소</a>										
+														| <a href="#" id="cancel">취소</a>
 													</div>	
-								              </form>
+								              </form>							
 							            </td>							
 									</tr>	
 								
 						</table>
 					</div>					
 				</c:forEach>
+<!-- 				<form action="report" class="boardReplyReport"> -->
+<%-- 					<input type="hidden" name="report_reply_no" value="${boardReplyDto.board_reply_no}">	 --%>
+<!-- 				</form>			 -->
 					
 			<!-- 	댓글 등록창 -->
 			<c:if test="${id != null}">			
@@ -353,7 +444,7 @@ $(function(){
 								<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
 								<input type="hidden" name="board_reply_writer" value="${id}">												
 								<textarea class="user-input item1" name="board_reply_content" rows="4" required></textarea>						
-								<input class="btn btn-primary item2"   type="submit" value="등록">								
+								<input class="btn24 category-btn2 item2"   type="submit" value="등록">								
 							</div>					
 							
 							<c:if test="${!empty boardReplyDto}">
@@ -379,7 +470,7 @@ $(function(){
 				<td align="right">
 					<!-- 글쓰기 버튼은 로그인시 표시됨 -->
 					<c:if test="${id != null}">							
-						<button type="button" class="btn btn-primary">
+						<button type="button" class="btn23 category-btn">
 								<a href=${pageContext.request.contextPath}/board/regist><i class="fas fa-pencil-alt"></i>글쓰기</a>
 							</button>		
 					</c:if>	
@@ -391,11 +482,11 @@ $(function(){
 					
 					<c:if test="${isMine or isAdmin}">								
 					<!-- 수정/삭제 버튼은 관리자이거나 본인글에만 표시 -->
-					<a href="edit?board_no=${boardDto.board_no}"><input class="btn btn-primary" type="button" value="수정"></a>
-					<a href="delete?board_no=${boardDto.board_no}"><input class="btn btn-primary"  type="button" value="삭제"></a>
+					<a href="edit?board_no=${boardDto.board_no}"><input class="btn23 category-btn" type="button" value="수정"></a>
+					<a href="delete?board_no=${boardDto.board_no}"><input class="btn23 category-btn"  type="button" value="삭제"></a>
 					</c:if>
 					
-					<a href="list"><input class="btn btn-primary" type="button" value="목록"></a>					
+					<a href="list"><input class="btn23 category-btn" type="button" value="목록"></a>					
 				</td>
 			</tr>	
 		</table>

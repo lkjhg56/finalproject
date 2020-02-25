@@ -121,14 +121,6 @@ public class BoardRestController {
 				
 				return ReplyDto;
 	}
-	
-	//게시글 선택 삭제(관리자 기능)
-	@PostMapping("delete2")
-	public String deleteAdmin(@RequestParam(value="send_array[]") List send_array) {
-		log.debug( ">>> param size : " + send_array.size() );
-		
-		return "delete_success";
-		
-	}
+
 
 }
