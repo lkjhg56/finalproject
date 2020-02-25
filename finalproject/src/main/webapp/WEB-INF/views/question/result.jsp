@@ -6,7 +6,7 @@
    
    <!-- 필요 정보: rno,  category no, tno-->
    
-<h1>끝</h1>
+<h1>시험결과</h1>
 <h5>점수 ${score}</h5>
 <h5>풀린 횟수 ${solved}</h5>
 <h5>이시험 평균 점수 ${average}</h5>
@@ -18,7 +18,35 @@
 
 <h4>
 <c:forEach var="alist" items="${answerList}">
-	${alist.answer} 
+
+
+<%-- 	${alist.question} <br>
+	${alist.dis1}<br>
+	${alist.dis2}<br>
+	${alist.dis3}<br>
+	${alist.dis4}<br>
+	${alist.dis5}<br><br>    
+	 --%>
+	
+	
+	
+	
+			<div class = "plural-question">
+	   	
+	
+	   							<h2>${alist.question}</h2><h6>${alist.rate}%</h6>
+	
+	 								<div class = "questionin_wrap">
+			   							<div class = "questionin_box"><h4><input class = "ans" type="text" name="${alist.no}" id="${alist.no}1" ></h4></div><div class = "questionin_dis"><h4>${alist.dis1}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="text" name="${alist.no}" id="${alist.no}2" ></h4></div><div class = "questionin_dis"><h4>${alist.dis2}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="text" name="${alist.no}" id="${alist.no}3" ></h4></div><div class = "questionin_dis"><h4>${alist.dis3}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="text" name="${alist.no}" id="${alist.no}4" ></h4></div><div class = "questionin_dis"><h4>${alist.dis4}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="text" name="${alist.no}" id="${alist.no}5" ></h4></div><div class = "questionin_dis"><h4>${alist.dis5}</h4></div>
+									</div>
+									<br>
+	   								<br>
+	   								<br>
+	   					</div>    
 </c:forEach>
 </h4>
 

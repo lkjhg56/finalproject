@@ -35,7 +35,7 @@ function previewImage(target){
 	<input type="radio" name="answer" value="2" required>②
 	<input type="radio" name="answer" value="3" required>③
 	<input type="radio" name="answer" value="4" required>④
-	<input type="radio" name="answer" value="5" required>⑤<br><br>
+	<input type="radio" name="answer" value="5" >⑤<br><br>
 	<textarea name="solution" placeholder="해설입력" rows="10" cols="50"></textarea><br><br>
 	<input type="text" name="lim_min" placeholder="제한시간" required><br><br>
 	<input type="submit" value="등록하기">

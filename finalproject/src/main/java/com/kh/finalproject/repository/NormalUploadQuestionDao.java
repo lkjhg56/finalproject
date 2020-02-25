@@ -24,7 +24,7 @@ public interface NormalUploadQuestionDao {
 	void upload(TestQuestionDto testQuestionDto,CategoryDto categoryDto,TestDto testDto,SolutionDto solutionDto);
 	void fileUpload(UploadTestQuestionFileDto uploadTestQuestionFileDto);
 	void upload2(TestQuestionDto testQuestionDto,SolutionDto solutionDto);
-	
+	void upload3(CategoryDto categoryDto,TestQuestionDto testQuestionDto,SolutionDto solutionDto);
 	UploadTestQuestionFileDto getFile(int no);
 	
 	String makeDispositionString(UploadTestQuestionFileDto uploadTestQuestionFileDto) throws Exception;
@@ -43,4 +43,7 @@ public interface NormalUploadQuestionDao {
 	List<TestQuestionDto> mapList(Map<String, Integer> param);
 	
 	List<TestQuestionDto> mapList2(Map<String, String> param2);
+	
+	
+	int testExist(NormalUpdateQuestionVO normalUpdateQuestionVO);
 }

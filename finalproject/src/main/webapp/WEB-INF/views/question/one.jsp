@@ -379,7 +379,7 @@ main{
   <!-- 이미지 파일 조건 -->
   	
   			
-<div class = "plural-pic" ><img id="preview" src="qimage?no=${clist.no}"  class="test" name = "${clist.no}+pic"  onload="file('${clist.no}+pic'); "  width="120" height="120"></div><br><br>
+<div class = "plural-pic" ><img id="preview" src="qimage?no=${clist.no}"  class="test" name = "${clist.no}+pic"  onload="file('${clist.no}+pic'); "  width="20%" height="200"></div><br><br>
  
    	
    		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}','preview');">${clist.dis1}</h4>

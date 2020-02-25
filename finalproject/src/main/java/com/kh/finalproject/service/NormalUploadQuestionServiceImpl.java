@@ -42,7 +42,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 				
 				int categoryExist=NormalUploadQuestionDao.categoryExist(normalUpdateQuestionVO);
 	
-	
+	int testExist=NormalUploadQuestionDao.testExist(normalUpdateQuestionVO);
 				if(categoryExist>0) {
 					
 					
@@ -79,6 +79,48 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 					
 					NormalUploadQuestionDao.upload2(testQuestionDto, solutionDto);
 				}
+				
+				else if(testExist>0) {
+					
+					CategoryDto categoryDto =CategoryDto.builder()
+							.category_no(category_no)
+							.csname(normalUpdateQuestionVO.getCsname())
+							.test_no(testExist)
+							.lim_hour(0)
+							.lim_min(10)
+							.build();
+					
+						TestQuestionDto testQuestionDto =TestQuestionDto.builder()
+								.no(no)
+//								.test_no(normalUpdateQuestionVO.getTest_question_no())//
+								.csname(normalUpdateQuestionVO.getCsname())//수정!!
+								.category_no(normalUpdateQuestionVO.getCategory_no())
+								.question(normalUpdateQuestionVO.getQuestion())
+								.ispremium(0)
+								.answer(normalUpdateQuestionVO.getAnswer())
+								.correct(0)
+								.incorrect(0)
+								.dis1(normalUpdateQuestionVO.getDis1())
+								.dis2(normalUpdateQuestionVO.getDis2())
+								.dis3(normalUpdateQuestionVO.getDis3())
+								.dis4(normalUpdateQuestionVO.getDis4())
+								.dis5(normalUpdateQuestionVO.getDis5())
+								.rate(0)
+								.build();
+
+						
+						
+						
+						SolutionDto solutionDto =SolutionDto.builder()
+							.solution(normalUpdateQuestionVO.getSolution())
+							.question_no(no)
+							.user_no(101)
+								.build();
+						
+						NormalUploadQuestionDao.upload3(categoryDto, testQuestionDto, solutionDto);
+				}
+					
+					
 				else {
 					
 					TestDto testDto=TestDto.builder()
@@ -118,7 +160,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 						SolutionDto solutionDto =SolutionDto.builder()
 							.solution(normalUpdateQuestionVO.getSolution())
 							.question_no(no)
-							.user_no(0)
+							.user_no(101)
 								.build();
 						
 					
