@@ -373,12 +373,8 @@ public class BoardController {
 			param.put("keyword", keyword);
 				
 				
-			int count = boardDao.boardSearchCount(param); //검색결과 전체글 개수를 구하는 메소드 
-			System.out.println(count);
-			
-			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-			System.out.println(pagecount);
-			
+			int count = boardDao.boardSearchCount(param); //검색결과 전체글 개수를 구하는 메소드 			
+			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수			
 			int startBlock = (pno -1) / navsize * navsize + 1;
 			int finishBlock = startBlock + (navsize -1);
 			
