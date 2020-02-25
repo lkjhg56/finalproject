@@ -55,7 +55,8 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				.answer2(updateQuestionVO.getAnswer2())
 				.answer3(updateQuestionVO.getAnswer3())
 				.answer4(updateQuestionVO.getAnswer4())
-				.answer5(updateQuestionVO.getAnswer5())				
+				.answer5(updateQuestionVO.getAnswer5())		
+				.question_premium(updateQuestionVO.getQuestion_premium())
 				.build();
 
 		uploadQuestionDao.upload(uploadQuestionDto);
@@ -246,7 +247,6 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	//저장된 문제 여러개 호출 및 랜덤으로 출제 R
 	@Override
 	public List<UploadQuestionDto> multiQuestion(int wantQuestion) {
-
 		Random r = new Random();
 		List<UploadQuestionDto> list = uploadQuestionDao.getListWithImage();
 		List<UploadQuestionDto> choice_list = new ArrayList<>();

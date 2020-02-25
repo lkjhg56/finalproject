@@ -49,7 +49,7 @@
 			</collection>
 	</resultMap>
 	<select id="getListWithImage" resultMap="imageList" >
- 	 	select * from question order by question_no asc
+ 	 	select * from question where question_premium=0 order by question_no asc
  	</select>
  	<!-- 문제테이블과 이미지 테이블을 합쳐서 출력 by question_no-->
 	<resultMap type="uploadQuestionDto" id="imageListWithQuestion">
@@ -94,7 +94,7 @@
  			#{question_content},
  			#{question_answer},
  			#{question_solution},
- 			0,
+ 			#{question_premium},
  			#{answer1},
  			#{answer2},
  			#{answer3},

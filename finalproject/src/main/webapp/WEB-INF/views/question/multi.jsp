@@ -73,33 +73,6 @@ $(function(){
 		var dest = parseInt(index/size);
 		$("#paging").find(".paging-inner").eq(dest).append($(this));		
 	});
-	
-// 	이전/다음 버튼을 추가
-// 	처음에는 다음 버튼만 추가
-// 	마지막에는 이전 버튼만 추가
-// 	나머지는 이전/다음을 모두 추가
-// 	$(".paging-inner").each(function(i){
-// 		var len = $(".paging-inner").length;
-// 		var nextButton = $("<div>").addClass("next");
-// 		var prevButton = $("<div>").addClass("prev");
-// 		if(len == 1){
-// // 			console.log("한페이지니까 추가 안함");
-// 			return false;
-// 		}
-// 		else if(i == 0){
-// // 			console.log("처음 : 다음만 추가")
-// 			$(this).append(nextButton);
-// 		}
-// 		else if(i == $(".paging-inner").length - 1){
-// // 			console.log("마지막 : 이전만 추가")
-// 			$(this).append(prevButton);
-// 		}
-// 		else{
-// // 			console.log("이전 다음 둘다 추가");
-// 			$(this).append(prevButton);
-// 			$(this).append(nextButton);
-// 		}
-// 	});
 	$(".paging-inner").each(function(i){
 		var buttonWrapper = $("<div>").addClass("btn-wrapper d-flex justify-content-between");
 		var inputWrapper = $("<div>").addClass("btn-group btn-group-lg input-wrapper d-flex justify-content-center");
@@ -211,7 +184,7 @@ function pageChange(index, totalPage){
 						</c:otherwise>
 					</c:choose>
 					<br>
-					<span>문제 : ${questionDto.question_title}</span><br>
+					<span>${questionDto.question_title}</span><br>
 					
 					<c:if test="${questionDto.files !=null}">
 					<c:forEach var="image" items="${questionDto.files}">
@@ -219,7 +192,7 @@ function pageChange(index, totalPage){
 					</c:forEach>
 					</c:if>
 					
-					<span>문제 내용 : ${questionDto.question_content}</span>
+					<span>${questionDto.question_content}</span>
 					<input type="hidden" name="question[${status.index}].id" value="${id}">  
 					<input type="hidden" name="question[${status.index}].no" value="${questionDto.question_no}"><br><br>
 					<input type="radio" name="question[${status.index}].answer" value="1">1. ${questionDto.answer1}<br>

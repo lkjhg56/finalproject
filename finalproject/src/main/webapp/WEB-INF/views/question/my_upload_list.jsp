@@ -28,6 +28,7 @@
 </c:forEach>
 </tbody>
 </table>
+<div class="container" style="text-align: center">
 <!-- 네비게이션 -->
 <jsp:include page="/WEB-INF/views/template/navigator.jsp">
 <jsp:param name="pno" value="${pno}" />
@@ -36,6 +37,7 @@
 	<jsp:param name="pagesize" value="${pagesize}" />
 	<jsp:param name="board_category" value="${board_category}"/>
 </jsp:include>
+</div>
 <a href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드</a>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

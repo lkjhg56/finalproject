@@ -81,7 +81,7 @@ $(function(){
 	<hr>
 	<div class="d-flex justify-content-between">
 		<div>
-			<div>문제 내용 : ${questionDto.question_content}</div><br>
+			<div>${questionDto.question_content}</div><br>
 			<c:if test="${image !=null}">
 				<c:forEach var="image" items="${image}">
 					<div><img src="image?question_file_no=${image.question_file_no}" width="500	" height="300"></div>
