@@ -32,6 +32,7 @@ import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.service.UploadQuestionService;
 import com.kh.finalproject.vo.ExamResultVO;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
+import com.kh.finalproject.vo.SearchQuestionVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -184,11 +185,62 @@ public class UploadQuestionController {
 		Map<String, Integer> param = new HashMap<>();
 		param.put("start", start);
 		param.put("finish",finish);
-		model.addAttribute("list", uploadQuestionDao.mapList(param));
+		model.addAttribute("list", uploadQuestionDao.mapList(param));			
+
 		request.setAttribute("pno", pageNumber);
 		request.setAttribute("count", count);
 		request.setAttribute("pagesize", pageSize);
 		request.setAttribute("navsize", navSize);
+		return "question/list";
+	}
+	@PostMapping("/list")
+	public String list2(Model model, HttpServletRequest request, @ModelAttribute SearchQuestionVO searchQuestionVO) {
+		//네비게이터
+		//페이지 크기
+		int pageSize = 15;
+		//네비게이터 크기
+		int navSize = 10;
+		//페이지별 번호
+		int pageNumber;
+		//받아온 페이지 번호가 음수일 경우 예외를 발생시켜 catch에서 처리해준다.
+		try {
+			pageNumber=Integer.parseInt(request.getParameter("pno"));
+			if(pageNumber<=0) {
+				//pageNumber가 0보다 작을 경우 catch로 처리한다.
+				throw new Exception();
+			}
+		}catch(Exception e) {
+			pageNumber=1;
+		}
+		//데이터 행이 150개가 있다면?
+		int finish = pageNumber * pageSize;
+		int start = finish - (pageSize-1);
+		
+		/*****************************************************/
+		//	하단 네비게이터 계산하기
+		/*****************************************************/
+		Map<String, String> param = new HashMap<>();
+		param.put("start", String.valueOf(start));
+		param.put("finish",String.valueOf(finish));
+		param.put("option",searchQuestionVO.getOption());
+		param.put("keyword",searchQuestionVO.getKeyword());
+		model.addAttribute("list", uploadQuestionDao.mapSearchList(param));
+		//전체 등록되어 있는 문제 개수를 구함.
+		int count = uploadQuestionDao.mapSearchListCount(param);
+		//전체 페이지 수
+		int pageCount=(count+pageSize)/pageSize;
+		int startBlock = (pageNumber-1) / navSize * navSize+1;
+		int finishBlock = startBlock +(navSize-1);
+		if(finishBlock>pageCount) {
+			finishBlock=pageCount;
+		}
+		
+		request.setAttribute("pno", pageNumber);
+		request.setAttribute("count", count);
+		request.setAttribute("pagesize", pageSize);
+		request.setAttribute("navsize", navSize);
+		request.setAttribute("option",searchQuestionVO.getOption());
+		request.setAttribute("keyword",searchQuestionVO.getKeyword());
 		return "question/list";
 	}
 	//사용자가 업로드한 문제 리스트

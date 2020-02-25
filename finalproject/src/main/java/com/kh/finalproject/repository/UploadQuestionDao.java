@@ -7,6 +7,7 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
+import com.kh.finalproject.vo.SearchQuestionVO;
 
 public interface UploadQuestionDao {
 	void upload(UploadQuestionDto uploadQuestionDto);
@@ -44,5 +45,7 @@ public interface UploadQuestionDao {
 	int getUserCustomNo(int user_custom_question_no);
 	List<UploadQuestionDto> mapListId(Map<String, Integer> param);
 	int questionCountId(String id);
+	List<UploadQuestionDto>  mapSearchList(Map<String, String> param);
+	int mapSearchListCount(Map<String, String> param);
 
 }

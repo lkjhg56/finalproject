@@ -14,6 +14,7 @@ import com.kh.finalproject.entity.UploadQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
 import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
+import com.kh.finalproject.vo.SearchQuestionVO;
 
 @Repository
 public class UploadQuestionDaoImple implements UploadQuestionDao{
@@ -50,6 +51,16 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	@Override
 	public List<UploadQuestionDto> mapListId(Map<String, Integer> param){
 		return sqlSession.selectList("question.questionNavRownumId",param);
+	}
+	//키워드 검색
+	@Override
+	public List<UploadQuestionDto> mapSearchList(Map<String, String> param) {
+		return sqlSession.selectList("question.searchQuestion", param); 
+	}
+	//키워드 검색된 글 개수
+	@Override
+	public int mapSearchListCount(Map<String, String> param) {
+		return sqlSession.selectOne("question.searchQuestionCount", param); 
 	}
 	//id로 문제 리스트 불러오기
 	@Override
@@ -207,6 +218,5 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public int getUserCustomNo(int user_custom_question_no) {
 		return sqlSession.selectOne("question.getUserNo",user_custom_question_no);
 	}
-
 }
 
