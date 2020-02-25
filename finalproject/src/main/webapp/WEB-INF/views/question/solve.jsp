@@ -65,40 +65,46 @@ function previewImage(target){
 <script>
 $(function(){
 	//제출 확인 기능
+	$(".result").hide();
 	$(".submitExam").click(function(){
 		var result = confirm("제출하시겠습니까?");
 		if(result){
 			$(this).form.submit();
-		}else
-			return false;
-	});	
+		}else{
+			return false;			
+		}
+	});
 });
 </script>
 <div class="container">
-<h1>문제 풀기</h1>    
-<div>문제 번호 : ${questionDto.question_no}</div>
-<div>출제자 : ${questionDto.id}</div>
-<div>카테고리 : ${questionDto.category_name}</div>
-<div>문제 제목 : ${questionDto.question_title}</div>
-<div>문제 내용 : ${questionDto.question_content}</div>
-<c:if test="${image !=null}">
-	<c:forEach var="image" items="${image}">
-	<div><img src="image?question_file_no=${image.question_file_no}" width="35%" height="300"></div>
-	</c:forEach>
-</c:if>
-<form action="solve" method="post">
-	<input type="hidden" name="id" value="${id}">  
-	<input type="hidden" id="hourResult" name="hour">  
-	<input type="hidden" id="minResult" name="min">
-	<input type="hidden" id="secResult" name="sec">
-	<input type="hidden" id="milisecResult" name="milisec">
-	<input type="hidden" name="question_no" value="${questionDto.question_no}"><br><br>
-		<input id="result[0]" type="radio" name="question_answer" value="1">1. ${questionDto.answer1}<br>
-		<input id="result[1]" type="radio" name="question_answer" value="2">2. ${questionDto.answer2}<br>
-		<input id="result[2]" type="radio" name="question_answer" value="3">3. ${questionDto.answer3}<br>
-		<input id="result[3]" type="radio" name="question_answer" value="4">4. ${questionDto.answer4}<br>
-		<input id="result[4]" type="radio" name="question_answer" value="5">5. ${questionDto.answer5}<br><br>
-<input type="submit" class="submitExam" value="제출하기">
-</form>
+	<h1>${questionDto.question_title}</h1>
+	<hr>
+	<div class="d-flex justify-content-between">
+		<div>
+			<div>${questionDto.question_content}</div><br>
+			<c:if test="${image !=null}">
+				<c:forEach var="image" items="${image}">
+					<div><img src="image?question_file_no=${image.question_file_no}" width="500	" height="300"></div>
+				</c:forEach>
+			</c:if>
+			<form action="solve" method="post">
+				<input type="hidden" name="id" value="${id}">  
+				<input type="hidden" id="hourResult" name="hour">  
+				<input type="hidden" id="minResult" name="min">
+				<input type="hidden" id="secResult" name="sec">
+				<input type="hidden" id="milisecResult" name="milisec">
+				<input type="hidden" name="question_no" value="${questionDto.question_no}"><br>
+					<input id="result[0]" type="radio" name="question_answer" value="1">1. ${questionDto.answer1}<br>
+					<input id="result[1]" type="radio" name="question_answer" value="2">2. ${questionDto.answer2}<br>
+					<input id="result[2]" type="radio" name="question_answer" value="3">3. ${questionDto.answer3}<br>
+					<input id="result[3]" type="radio" name="question_answer" value="4">4. ${questionDto.answer4}<br>
+					<input id="result[4]" type="radio" name="question_answer" value="5">5. ${questionDto.answer5}<br><br>
+					<input type="submit" class="submitExam btn btn-primary" value="제출하기">
+			</form>
+		</div>
+		<div class="note">
+			<textarea title="연습장" rows="20" cols="40">연습장</textarea>
+		</div>
+	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
