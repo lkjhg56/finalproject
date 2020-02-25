@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<div class="container">
 <h1 align="center">나의 포인트 내역</h1>
-<div>
-	<table class="table">
+<div  style="text-align:center">
+	<table class="table table-hover">
 		<thead align="center">
 			<tr>
 				<th>no</th>
@@ -39,5 +39,5 @@
 	</div>
 	
 </div>
-
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

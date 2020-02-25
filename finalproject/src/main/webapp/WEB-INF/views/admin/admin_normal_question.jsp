@@ -1,35 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <div class="container">
-<div><h1>내가 업로드한 문제 목록</h1></div>
+
+<h1>일반 문제 목록</h1>
 <table class="table table-hover">
+
 <thead class="thead-light">
 	<tr>
 		<th>No.</th>
-		<th>카테고리</th>
-		<th>제목</th>
-		<th>조회수</th>
+		<th>종류</th>
+		<th>회차</th>
+		<th>문제명</th>
 		<th>정답비율</th>
-		<th>문제확인</th>
+		<th>문제 확인</th>
+		
+	
 	</tr>
-</thead>
-<tbody>	
+	</thead>
+	<tbody>	
 <c:forEach var="question" items="${list}">
 	<tr>
-		<td>${question.question_no}</td>
-		<td>${question.category_name}</td>
-		<td>${question.question_title}</td>
-		<td>${question.read_count}</td>
-		<td>${question.correct_ratio}%</td>
-		<td><a href="content?question_no=${question.question_no}">문제확인</a></td>
+		<td>${question.no}</td>
+		<td>${question.csname}</td>
+		<td>${question.category_no}</td>
+		<td>${question.question}</td>
+		<td>${question.rate}</td>
+		<td><a href="normalcontent?no=${question.no}">확인</a></td>
+	
+		
 	</tr>
 </c:forEach>
 </tbody>
 </table>
-<div class="container" style="text-align: center">
-<!-- 네비게이션 -->
+
 <jsp:include page="/WEB-INF/views/template/navigator.jsp">
 <jsp:param name="pno" value="${pno}" />
 	<jsp:param name="count" value="${count}" />
@@ -37,7 +43,8 @@
 	<jsp:param name="pagesize" value="${pagesize}" />
 	<jsp:param name="board_category" value="${board_category}"/>
 </jsp:include>
-</div>
-<a href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드</a>
+
+
+
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

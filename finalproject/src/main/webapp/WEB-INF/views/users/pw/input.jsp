@@ -34,6 +34,7 @@
 });
 	
 </script>
+<div class="container">
 <h1>비밀번호 변경을 위한 이메일 인증</h1>
 
 <form action="input" method="post">
@@ -41,4 +42,5 @@
 	<input type="submit" class="cert_email" value="인증메일 발송">
 </form>
 	<h3 id="wow">인증메일을 전송하였습니다. 이메일을 확인하세요.</h3>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

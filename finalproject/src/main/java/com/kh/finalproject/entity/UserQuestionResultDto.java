@@ -18,6 +18,7 @@ public class UserQuestionResultDto {
 	private int question_false;//
 	private int user_priority;//
 	private int rownum;
+	private String question_solution;
 	/*****************************************************/
 	//DB저장용
 	private int result_no;//0,1 맞았는지 틀렸는지

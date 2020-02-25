@@ -238,7 +238,21 @@ main{
 	width: 35%;
 }
 
-
+.questionin_wrap::after{
+		 content:"";
+    display:block;
+    clear:both;
+}
+.questionin_box{
+	 float:left;
+   width:8%;
+    margin-top: 10px;
+   
+}
+.questionin_dis{
+float:left;
+   width:92%;
+}
 
 </style>
 
@@ -283,12 +297,13 @@ main{
 	
 	   							<h2>${qlist.question}</h2><h6>${qlist.rate}%</h6>
 	
-	 
-	   							<h4><input class = "ans" type="checkbox"  name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}','preview');">${qlist.dis1}</h4>
-	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}','preview');">${qlist.dis2}</h4>
-	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}','preview');">${qlist.dis3}</h4>
-	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}','preview');">${qlist.dis4}</h4>
-	   							<h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}','preview');">${qlist.dis5}</h4>
+	 								<div class = "questionin_wrap">
+			   							<div class = "questionin_box"><h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}1" onclick="save('${qlist.no}', '1', '${qlist.answer}','preview');"></h4></div><div class = "questionin_dis"><h4>${qlist.dis1}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}2" onclick="save('${qlist.no}', '2', '${qlist.answer}','preview');"></h4></div><div class = "questionin_dis"><h4>${qlist.dis2}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}3" onclick="save('${qlist.no}', '3', '${qlist.answer}','preview');"></h4></div><div class = "questionin_dis"><h4>${qlist.dis3}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}4" onclick="save('${qlist.no}', '4', '${qlist.answer}','preview');"></h4></div><div class = "questionin_dis"><h4>${qlist.dis4}</h4></div>
+			   							<div class = "questionin_box"><h4><input class = "ans" type="checkbox" name="${qlist.no}" id="${qlist.no}5" onclick="save('${qlist.no}', '5', '${qlist.answer}','preview');"></h4></div><div class = "questionin_dis"><h4>${qlist.dis5}</h4></div>
+									</div>
 									<br>
 	   								<br>
 	   								<br>

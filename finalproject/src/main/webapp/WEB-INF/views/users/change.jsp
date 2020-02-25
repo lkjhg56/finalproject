@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
 
@@ -58,11 +59,27 @@
 		}).open();
 	}
 </script>
-
+<div class="container">
 <h1>정보 수정</h1>
 
 <form action="change" method="post">
 <table class="table" border="1">
+	<tr>
+    <th>
+    	프로필<br>
+    </th>
+    <td class="mom">
+	<!--     	기본이미지 -->
+    <c:choose>
+    	<c:when test="${empty userFileDto}">
+	    	<img src="userimg?user_no=101" id="img" width="120" height="120"><br>
+    	</c:when>
+    	<c:otherwise>
+	    	<img src="userimg?user_no=${users.user_no}" id="img" width="120" height="120"><br>
+    	</c:otherwise>
+    </c:choose>
+    </td>
+  </tr>
   <tr>
     <th>이름</th>
     <td>${users.name}</td>
@@ -79,12 +96,22 @@
   </tr>
   <tr>
     <th>이메일</th>
-    <td>${users.email}</td>
+    <td>${fn:replace(users.email, ",", "") }</td>
   </tr>
   <tr>
     <th>전화번호</th>
     <td>
-		<input type="text" name="phone" value="${users.phone}" required>
+		<select name="phone">
+				<option>${users.phone.substring(0,3)}</option>
+				<option>010</option>
+				<option>011</option>
+				<option>016</option>
+				<option>017</option>
+				<option>019</option>
+			</select>-
+			<input type="tel" name="phone" maxlength="4" value="${users.phone.substring(4,8)}" required>-
+			<input type="tel" name="phone" maxlength="4" value="${users.phone.substring(9,13)}" required>
+			<br><br>
     </td>
   </tr>
   <tr>
@@ -116,4 +143,5 @@
 </table>
 	<input type="submit" value="수정하기"> 
 </form>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

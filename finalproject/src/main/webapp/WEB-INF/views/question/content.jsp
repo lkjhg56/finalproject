@@ -14,36 +14,73 @@ $(function(){
 	});
 });
 </script>
-<div class="container">
+<style>
 
-<div>문제 번호 : ${questionDto.question_no}</div>
-<div>문제 제목 : ${questionDto.question_title}</div>
-<div>문제 내용 : ${questionDto.question_content}</div>
-<c:if test="${grade=='관리자'}">
-<div>유료 여부    : ${questionDto.question_premium}</div>
-</c:if>
-<c:if test="${image != null}">
-	<c:forEach var="images" items="${image}">
-		<div><img src="image?question_file_no=${images.question_file_no}" width="35%" height="300"></div>
-	</c:forEach>
-</c:if>
-<div>문제 보기1 : ${questionDto.answer1}</div>
-<div>문제 보기2 : ${questionDto.answer2}</div>
-<div>문제 보기3 : ${questionDto.answer3}</div>
-<div>문제 보기4 : ${questionDto.answer4}</div>
-<div>문제 보기5 : ${questionDto.answer5}</div>
-<c:if test="${id==questionDto.id || grade=='관리자'}">
-<div>문제 정답 : ${questionDto.question_answer}</div>
-<div>문제 해설 : ${questionDto.question_solution}</div>
-</c:if>
-<div>출제자 : ${questionDto.id}</div>
-<div>카테고리 : ${questionDto.category_name}</div>
-<br><br>
+	th{
+		white-space : nowrap;
+	}
+</style>
+<div class="container">
+<h4>문제 번호 : ${questionDto.question_no}</h4>	
+<table class="table">
+	<tbody>
+	<tr>
+		<th>문제 제목 </th>
+		<td>${questionDto.question_title}</td>
+	</tr>
+	<tr>
+		<th>문제 내용 </th>
+		<td>${questionDto.question_content}</td>
+	</tr>
+	<tr>
+		<th>이미지 </th>
+		<td>
+		<c:if test="${image != null}">
+			<c:forEach var="images" items="${image}">
+				<img src="image?question_file_no=${images.question_file_no}" width="500" height="300">
+			</c:forEach>
+		</c:if>
+		</td>
+	</tr>
+	<tr>
+		<th>문제 보기</th>
+		<td>
+			보기 1 : ${questionDto.answer1}<br>
+			보기 2 : ${questionDto.answer2}<br>
+			보기 3 : ${questionDto.answer3}<br>
+			보기 4 : ${questionDto.answer4}<br>
+			보기 5 : ${questionDto.answer5}
+		</td>
+	</tr>
+	<c:if test="${grade=='관리자'}">
+		<tr>
+			<th>유료 여부 </th>
+			<td>${questionDto.question_premium}</td>
+		</tr>
+	</c:if>
+	<tr>
+		<th>문제 정답 </th>
+		<td>${questionDto.question_answer}</td>
+	</tr>
+	<tr>
+		<th>문제 해설  </th>
+		<td>${questionDto.question_solution}</td>
+	</tr>
+		<tr>
+		<th>출제자  </th>
+		<td>${questionDto.id}</td>
+	</tr>
+		<tr>
+		<th>카테고리</th>
+		<td>${questionDto.category_name}</td>
+	</tr>
+	</tbody>
+</table>
 <div>
-<c:if test="${id==questionDto.id || grade=='관리자'}">
-<a href="update?question_no=${questionDto.question_no}">문제 수정</a>
-<a class="delete" href="delete?question_no=${questionDto.question_no}&user_custom_question_no=${questionDto.user_custom_question_no}">문제 삭제</a>
-</c:if>
+	<c:if test="${id==questionDto.id || grade=='관리자'}">
+		<a type="button" class="btn btn-primary" href="update?question_no=${questionDto.question_no}">문제 수정</a>
+		<a type="button" class="delete btn btn-primary" href="delete?question_no=${questionDto.question_no}&user_custom_question_no=${questionDto.user_custom_question_no}">문제 삭제</a>
+	</c:if>
 </div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

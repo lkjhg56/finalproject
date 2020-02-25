@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalproject.entity.GradePointDto;
 import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.GradePointDao;
 
 @Service
 public class GradePointServiceImpl implements GradePointService{
@@ -18,46 +19,91 @@ public class GradePointServiceImpl implements GradePointService{
 	@Autowired
 	private HttpServletRequest req;
 	
-
+	@Autowired
+	private GradePointDao gradePointDao;
+	
+	@Autowired
+	private UsersDto usersDto;
+	
+	@Autowired
+	private GradePointDto pointDto;
+	
 	//회원가입 포인트 부여
 	@Override
-	public void giveJoinPoint(GradePointDto pointDto, UsersDto usersDto) {
+	public void giveJoinPoint(UsersDto usersDto, GradePointDto pointDto) {
 		
 		String id = req.getParameter("id");
 		usersDto.setId(id);
 		 
-		int users_no = sqlSession.selectOne("users.get_users_no", id);
-		pointDto.setUsers_no(users_no);
+		int user_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(user_no);
 		
-		sqlSession.insert("grade_point.giveJoinPoint", pointDto);
-		sqlSession.update("users.change_5point", usersDto);
+		gradePointDao.giveJoinPoint(user_no);
 	}
 
 	//출석체크 포인트 부여
 	@Override
-	public void giveCheckPoint(GradePointDto pointDto, UsersDto usersDto) {
+	public void giveCheckPoint(UsersDto usersDto, GradePointDto pointDto) {
 		
 		String id = (String) req.getSession().getAttribute("id");
 		usersDto.setId(id);
 		 
-		int users_no = sqlSession.selectOne("users.get_users_no", id);
-		pointDto.setUsers_no(users_no);
+		int user_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(user_no);
 		
-		sqlSession.insert("grade_point.giveCheckPoint", pointDto);
-		sqlSession.update("users.change_1point", usersDto);
+		gradePointDao.giveCheckPoint(user_no);
 	}
+	
+	//문제업로드 포인트 부여
+	@Override
+	public void giveQuestionUploadPoint(UsersDto usersDto, GradePointDto pointDto) {
+		
+		String id = (String) req.getSession().getAttribute("id");
+		usersDto.setId(id);
+		 
+		int user_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(user_no);
+		
+		gradePointDao.giveQuestionUploadPoint(user_no);
+	}
+	
+	//문제풀기 포인트 부여
+	@Override
+	public void giveQuestionSolvePoint(UsersDto usersDto, GradePointDto pointDto) {
+		
+		String id = (String) req.getSession().getAttribute("id");
+		usersDto.setId(id);
+		 
+		int user_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(user_no);
+		
+		gradePointDao.giveQuestionSolvePoint(user_no);
+	}
+	
+	//문제삭제 포인트 차감
+	@Override
+	public void deleteQuestionPoint(UsersDto usersDto, GradePointDto pointDto) {
+		
+		String id = (String) req.getSession().getAttribute("id");
+		usersDto.setId(id);
+		 
+		int user_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(user_no);
+		
+		gradePointDao.deleteQuestionPoint(user_no);
+		
+	}
+	
 	//답변 채택 포인트 부여
 	@Override
-	public void giveAnswerPoint(GradePointDto pointDto, UsersDto usersDto) {
+	public void giveAnswerPoint(UsersDto usersDto, GradePointDto pointDto) {
 		
 		String id = req.getParameter("board_reply_writer");
 		usersDto.setId(id);
 		 
-		int users_no = sqlSession.selectOne("users.get_users_no", id);
-		pointDto.setUsers_no(users_no);
+		int user_no = sqlSession.selectOne("users.get_users_no", id);
+		pointDto.setUsers_no(user_no);
 		
-		sqlSession.insert("grade_point.giveAnswerPoint", pointDto);
-		sqlSession.update("users.change_3point", usersDto);
-		
+		gradePointDao.giveAnswerPoint(user_no);
 	}
 }

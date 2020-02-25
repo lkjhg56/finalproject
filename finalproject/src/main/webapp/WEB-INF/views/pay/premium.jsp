@@ -35,7 +35,7 @@ $(function(){
    		<div class="container">
 	   			 <div class="row">
 	     			 <div class="col-lg-8 col-md-10 mx-auto">
-	     			 <h6><a href = "${pageContext.request.contextPath}">home</a> > <a href = "#">프리미엄 결제</a>
+	     			 <h6><a href = "${pageContext.request.contextPath}">home</a> > <a href = "#">프리미엄 결제</a></h6>
 	     			 	<div class = "for_aside">
 	      					<div class="section_area">
 	      						<h1>500 토큰</h1>

@@ -4,12 +4,18 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 	$(function(){
-		//Modal창 불러오기
+		//Modal trigger button 숨기기
 		$(".doHide").hide();
-		$(".doHide").trigger("click");
+		//pno 불러오기
+		var pno = "<c:out value='${pno}'/>";
+		//첫페이지에서만 모달창 불러오기
+		if(pno==1){
+			$(".doHide").trigger("click");
+		}	
 		$(".list").hide();
 		$(".multiQuestion").click(function(){
 			$(".list").show();
+			$(".oneQuestion").hide();
 		});
 		$(".click").click(function(){
 			$(".list").show();
@@ -18,7 +24,7 @@
 	});
 </script>
 <div class="container">
-<div><h1>문제 목록</h1></div>
+<div><h1>유저 문제 목록</h1></div>
 <table class="table table-hover">
 <thead class="thead-light">
 	<tr>
@@ -52,23 +58,27 @@
 <div class="container" style="text-align: center">
 <!-- 네비게이션 -->
 <jsp:include page="/WEB-INF/views/template/navigator.jsp">
-<jsp:param name="pno" value="${pno}" />
+	<jsp:param name="pno" value="${pno}" />
 	<jsp:param name="count" value="${count}" />
 	<jsp:param name="navsize" value="${navsize}" />
 	<jsp:param name="pagesize" value="${pagesize}" />
 	<jsp:param name="board_category" value="${board_category}"/>
 </jsp:include>
 </div>
-<a href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드</a>
-<a class="click btn btn-primary">랜덤문제 풀기</a>
+<div class="d-flex justify-content-between">
+	<a type="button" href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드</a>
+	<div>
+	<a class="click btn btn-primary">랜덤문제 풀기</a>
+	<span class="list">문제 개수 :
+	<select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)">
+		<c:forEach var="QuestionNumber" items="${list}" varStatus="status">
+			<option class="optionVal" value="${pageContext.request.contextPath}/question/multi?wantQuestion=${status.count}">${status.count}</option>
+		</c:forEach>
+	</select>
+	</span>
+	</div>
+</div>
 <!-- <button class="click">문제 수</button> -->
-<span class="list">문제 개수 :
-<select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)">
-	<c:forEach var="QuestionNumber" items="${list}" varStatus="status">
-		<option class="optionVal" value="${pageContext.request.contextPath}/question/multi?wantQuestion=${status.count}">${status.count}</option>
-	</c:forEach>
-</select>
-</span>
 </div>
 <!-- 모달 영역 -->
 <button type="button" class="btn doHide" data-toggle="modal" data-target="#myModal"></button>
@@ -81,22 +91,21 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<!-- 모달 바디 -->
-			<div class="modal-body row">
-				<div class="col"><a class="btn btn-primary oneQuestion" data-dismiss="modal">한문제씩 풀기</a></div>
-				<div class="col"><a class="btn btn-primary multiQuestion">랜덤문제 풀기</a></div>
+			<div class="modal-body d-flex justify-content-between">
+				<div class="oneQuestion"><a class="btn btn-primary" data-dismiss="modal">한문제씩 풀기</a></div>
+				<div><a class="btn btn-primary multiQuestion">랜덤문제 풀기</a></div>
 
 			</div>
 			<!-- 모달 풋터 -->
-			<div class="modal-footer">
+			<div class="modal-footer d-flex justify-content-between">
 				<!-- <button class="click">문제 수</button> -->
-				<span class="list">문제 개수 :
+				<div class="list">문제 개수 :
 				<select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)">
-					<c:forEach var="QuestionNumber" items="${list}" varStatus="status">
+					<c:forEach var="QuestionNumber" items="${list}" end="20" varStatus="status">
 						<option class="optionVal" value="${pageContext.request.contextPath}/question/multi?wantQuestion=${status.count}">${status.count}</option>
 					</c:forEach>
 				</select>
-				</span>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>

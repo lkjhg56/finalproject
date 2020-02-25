@@ -49,7 +49,7 @@
 			</collection>
 	</resultMap>
 	<select id="getListWithImage" resultMap="imageList" >
- 	 	select * from question order by question_no asc
+ 	 	select * from question where question_premium=0 order by question_no asc
  	</select>
  	<!-- 문제테이블과 이미지 테이블을 합쳐서 출력 by question_no-->
 	<resultMap type="uploadQuestionDto" id="imageListWithQuestion">
@@ -77,10 +77,34 @@
  	<!-- 전체 문제 개수 -->
  	<select id="questionCount" resultType="int">
  		select count(*) from question
- 	<!-- 네비게이터 -->	
  	</select>
- 	 	<select id="questionNavRownum" parameterType="map" resultType="boardDto">
- 		select * from(select rownum rn, A.* from(select * from question order by question_no desc)A)where rn between #{start} and #{finish}
+ 	<select id="questionCountId" parameterType="String" resultType="int">
+ 	 	select count(*) from 
+			question q
+			inner join 
+    		(select * from users u
+         		left outer join user_custom_question ucq
+        		on u.user_no = ucq.user_no
+        	)e
+		on q.user_custom_question_no = e.user_custom_question_no
+		where id=#{id} order by question_no desc
+	</select>
+ 	<!-- 네비게이터 -->	
+ 	<select id="questionNavRownum" parameterType="map" resultType="UploadQuestionDto">
+ 		select * from(select rownum rn, A.* from(
+ 			select * from(
+ 				select * from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc
+ 				)T inner join users U on T.user_no = U.user_no 
+ 			)A
+ 		)where rn between #{start} and #{finish}
+	</select>
+ 	<select id="questionNavRownumId" parameterType="map" resultType="UploadQuestionDto">
+ 		select * from(select rownum rn, A.* from(
+ 			select * from(
+ 				select * from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc
+ 				)T inner join users U on T.user_no = U.user_no 
+ 			)A
+ 		)where user_no=#{user_no} and rn between #{start} and #{finish}
 	</select>
 	<select id="getUserNo" parameterType="int" resultType="int">
 		select user_no from user_custom_question where user_custom_question_no=#{user_custom_question_no}
@@ -94,7 +118,7 @@
  			#{question_content},
  			#{question_answer},
  			#{question_solution},
- 			0,
+ 			#{question_premium},
  			#{answer1},
  			#{answer2},
  			#{answer3},
@@ -182,6 +206,12 @@
  	 	<select id="getNormal3"  parameterType="testQuestionDto" resultType="testQuestionDto">
  	   select * from test_question where category_no=#{category_no} and csname=#{csname} order by no asc
  	</select>
+ 	
+ 	<!--  문제별 개수-->
+ 	<select id="getCountNormal" parameterType="testQuestionDto" resultType="int">
+ 	 select count(*) from test_question where category_no=#{category_no} and csname=#{csname} order by no asc
+ 	</select>
+ 	
  	
  	<!-- 일반 문제 상세보기 -->
  	<select id="getContent" resultType="testQuestionDto" parameterType="int">
@@ -453,7 +483,14 @@ update solution set
 		#{file_size},
 		#{test_question_no}
  		)
- 	</insert> 	
+ 	</insert> 
+ 	
+ 	
+ 	<delete id="deleteTestQFile" parameterType="int" >
+ 	delete from test_question_file where test_question_no=#{no}
+ 	</delete>
+ 	
+ 		
  	<insert id="uploadsolution" parameterType="solutionDto">
  	insert into solution values(
  	solution_seq.nextval,
@@ -462,4 +499,29 @@ update solution set
  	#{user_no}
  	)	
  	</insert>
+ 	
+ 	
+ 	
+ 	<!-- 일반 문제 전체 문제 개수 -->
+ 	<select id="testquestionCount" resultType="int">
+ 		select count(*) from test_question
+ 	
+ 	</select>
+ 	
+ 	<!-- 일반문제 네비게이터 -->
+ 	<select id="testquestionNavRownum" parameterType="map" resultType="testQuestionDto">
+ 		select * from(select rownum rn, A.* from(select * from test_question order by no desc)A)where rn between #{start} and #{finish}
+	</select>
+	
+	
+	
+	
+		<!-- 게시글 검색 구문 -->
+	<select id="search" parameterType="hashmap" resultType="testQuestionDto">		
+
+select * from(select rownum rn, A.* from(select * from test_question where category_no=#{category_no} and csname=#{csname} order by no asc )A)where rn between #{start} and #{finish}
+
+	</select>
+	
+	
  </mapper>

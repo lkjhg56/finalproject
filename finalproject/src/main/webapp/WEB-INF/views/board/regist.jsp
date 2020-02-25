@@ -71,6 +71,21 @@
 <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
 
 <script>
+//카테고리 미선택 방지
+$(function(){
+	$("#boardInsert").click(function(e){
+	
+		var category = $("select[name=board_category]").val();
+		console.log(category);		
+		
+		if(category == "선택하세요"){
+			alert("카테고리를 선택하세요.");
+			$("select[name=board_category]").focus();
+			e.preventDefault();		
+		}
+	});
+});
+
 function loadEditor(){
     var editor = SUNEDITOR.create((document.querySelector('textarea[name=board_content]')),{
         //언어 설정
@@ -87,8 +102,7 @@ function loadEditor(){
         //크기 설정
         fontSize:[
             10, 16, 32
-        ],
-        
+        ],       
     });
 
   	//중요 : 키입력시마다 값을 원래위치(textarea)에 복사
@@ -97,6 +111,7 @@ function loadEditor(){
     	content.value = editor.getContents();
     }
 }
+
 //윈도우 로딩 시 loadEditor를 실행하도록 설정(body에 onload 한 효과)
 	window.onload = loadEditor;
 
@@ -114,7 +129,6 @@ $(function(){
 		}
 	});
 });
-
 </script>
 
 <div class="row-empty"></div>
