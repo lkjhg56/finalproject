@@ -91,10 +91,20 @@
 	</select>
  	<!-- 네비게이터 -->	
  	<select id="questionNavRownum" parameterType="map" resultType="UploadQuestionDto">
- 		select * from(select rownum rn, A.* from(select * from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc)A)where rn between #{start} and #{finish}
+ 		select * from(select rownum rn, A.* from(
+ 			select * from(
+ 				select * from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc
+ 				)T inner join users U on T.user_no = U.user_no 
+ 			)A
+ 		)where rn between #{start} and #{finish}
 	</select>
  	<select id="questionNavRownumId" parameterType="map" resultType="UploadQuestionDto">
- 		select * from(select rownum rn, A.* from(select * from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc)A)where user_no=#{user_no} and rn between #{start} and #{finish}
+ 		select * from(select rownum rn, A.* from(
+ 			select * from(
+ 				select * from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc
+ 				)T inner join users U on T.user_no = U.user_no 
+ 			)A
+ 		)where user_no=#{user_no} and rn between #{start} and #{finish}
 	</select>
 	<select id="getUserNo" parameterType="int" resultType="int">
 		select user_no from user_custom_question where user_custom_question_no=#{user_custom_question_no}
