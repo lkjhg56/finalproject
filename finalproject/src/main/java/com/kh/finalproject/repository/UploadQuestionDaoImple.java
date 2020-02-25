@@ -36,10 +36,20 @@ public class UploadQuestionDaoImple implements UploadQuestionDao{
 	public int questionCount() {
 		return sqlSession.selectOne("question.questionCount");
 	}
+	//전체 문제 개수 세기(id)
+	@Override
+	public int questionCountId(String id) {
+		return sqlSession.selectOne("question.questionCountId",id);
+	}
 	//map으로 문제 리스트 불러오기
 	@Override
 	public List<UploadQuestionDto> mapList(Map<String, Integer> param){
 		return sqlSession.selectList("question.questionNavRownum",param);
+	}
+	//map으로 문제 리스트 불러오기(id)
+	@Override
+	public List<UploadQuestionDto> mapListId(Map<String, Integer> param){
+		return sqlSession.selectList("question.questionNavRownumId",param);
 	}
 	//id로 문제 리스트 불러오기
 	@Override

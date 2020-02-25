@@ -16,7 +16,7 @@
 	</tr>
 </thead>
 <tbody>	
-<c:forEach var="question" items="${idList}">
+<c:forEach var="question" items="${list}">
 	<tr>
 		<td>${question.question_no}</td>
 		<td>${question.category_name}</td>

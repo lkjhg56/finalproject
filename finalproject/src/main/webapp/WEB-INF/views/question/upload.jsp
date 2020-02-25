@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
 <script>
 //첨부파일 이미지 미리보기
 
@@ -24,6 +27,36 @@ $(function(){
 			return false;
 	});	
 });
+</script>
+<script>
+function loadEditor(){
+    var editor = SUNEDITOR.create((document.querySelector('textarea[name=question_solution]')),{
+        //언어 설정
+        lang: SUNEDITOR_LANG['ko'],
+        
+        //버튼 목록
+        buttonList:[
+            ['font', 'fontSize', 'fontColor'], 
+            ['underline', 'italic', 'paragraphStyle', 'formatBlock'],
+            ['align', 'table', 'image']
+        ],
+        //글꼴 설정
+        font:[
+            '굴림', '궁서', 'Verdana', 'Arial'
+        ],
+        //크기 설정
+        fontSize:[
+            10, 16, 32
+        ],
+        
+    });
+
+  	//중요 : 키입력시마다 값을 원래위치(textarea)에 복사
+    editor.onKeyUp = function(e){
+    	var content = document.querySelector("textarea[name=question_solution]");
+    	content.value = editor.getContents();
+    }
+}
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div class="container">
