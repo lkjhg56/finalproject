@@ -110,4 +110,13 @@ dto.setCategoryname(categoryname);
 		return sqlSession.selectOne("test.quescountDto", dto);
 	}
 
+	@Override
+	public List<String> getFrequency() {
+		List<String> getName = sqlSession.selectList("prequencyList");
+
+		
+		
+		return getName;
+	}
+
 }

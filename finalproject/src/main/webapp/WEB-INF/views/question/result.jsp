@@ -5,6 +5,7 @@
  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
    
    <!-- 필요 정보: rno,  category no, tno-->
+
    
 <h1>끝</h1>
 <h5>점수 ${score}</h5>
