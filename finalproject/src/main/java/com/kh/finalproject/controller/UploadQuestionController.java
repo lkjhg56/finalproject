@@ -27,6 +27,7 @@ import com.kh.finalproject.entity.UserQuestionMultiResultDto;
 import com.kh.finalproject.entity.UserQuestionResultDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
+import com.kh.finalproject.repository.UsersDao;
 import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.service.UploadQuestionService;
 import com.kh.finalproject.vo.ExamResultVO;
@@ -47,6 +48,8 @@ public class UploadQuestionController {
 	private UploadQuestionService uploadQuestionService;	
 	@Autowired
 	private NormalUploadQuestionService normalUploadQuestionService;
+	@Autowired
+	private UsersDao usersDao;
 	
 	@Autowired
 	private NormalUploadQuestionDao NormalUploadQuestionDao;
@@ -144,7 +147,7 @@ public class UploadQuestionController {
 	@GetMapping("/list")
 	public String list(Model model, HttpServletRequest request) {
 		//정답률 계산하여 출력해줘야함.
-		model.addAttribute("list",uploadQuestionDao.question_user_all());
+//		model.addAttribute("list",uploadQuestionDao.question_user_all());
 		//네비게이터
 		//페이지 크기
 		int pageSize = 15;
@@ -154,7 +157,7 @@ public class UploadQuestionController {
 		int pageNumber;
 		//받아온 페이지 번호가 음수일 경우 예외를 발생시켜 catch에서 처리해준다.
 		try {
-			pageNumber=Integer.parseInt(request.getParameter("pageNumber"));
+			pageNumber=Integer.parseInt(request.getParameter("pno"));
 			if(pageNumber<=0) {
 				//pageNumber가 0보다 작을 경우 catch로 처리한다.
 				throw new Exception();
@@ -165,6 +168,7 @@ public class UploadQuestionController {
 		//데이터 행이 150개가 있다면?
 		int finish = pageNumber * pageSize;
 		int start = finish - (pageSize-1);
+		
 		/*****************************************************/
 		//	하단 네비게이터 계산하기
 		/*****************************************************/
@@ -172,17 +176,15 @@ public class UploadQuestionController {
 		int count = uploadQuestionDao.questionCount();
 		//전체 페이지 수
 		int pageCount=(count+pageSize)/pageSize;
-		
 		int startBlock = (pageNumber-1) / navSize * navSize+1;
 		int finishBlock = startBlock +(navSize-1);
-		
 		if(finishBlock>pageCount) {
 			finishBlock=pageCount;
 		}
 		Map<String, Integer> param = new HashMap<>();
 		param.put("start", start);
 		param.put("finish",finish);
-		model.addAttribute("nav", uploadQuestionDao.mapList(param));
+		model.addAttribute("list", uploadQuestionDao.mapList(param));
 		request.setAttribute("pno", pageNumber);
 		request.setAttribute("count", count);
 		request.setAttribute("pagesize", pageSize);
@@ -192,10 +194,7 @@ public class UploadQuestionController {
 	//사용자가 업로드한 문제 리스트
 	@GetMapping("/my_upload_list")
 	public String my_upload_list(Model model, HttpSession session, HttpServletRequest request) {
-		//사용자 ID를 세션에서 가져와 리스트를 뽑아준다.
 		String id = (String) session.getAttribute("id");
-		System.out.println("접속한 id="+id);
-		model.addAttribute("idList",uploadQuestionDao.idList(id));
 		//네비게이터
 		//페이지 크기
 		int pageSize = 15;
@@ -205,7 +204,7 @@ public class UploadQuestionController {
 		int pageNumber;
 		//받아온 페이지 번호가 음수일 경우 예외를 발생시켜 catch에서 처리해준다.
 		try {
-			pageNumber=Integer.parseInt(request.getParameter("pageNumber"));
+			pageNumber=Integer.parseInt(request.getParameter("pno"));
 			if(pageNumber<=0) {
 				//pageNumber가 0보다 작을 경우 catch로 처리한다.
 				throw new Exception();
@@ -213,17 +212,19 @@ public class UploadQuestionController {
 		}catch(Exception e) {
 			pageNumber=1;
 		}
-		//데이터 행이 150개가 있다면?
+		
 		int finish = pageNumber * pageSize;
 		int start = finish - (pageSize-1);
+
 		/*****************************************************/
 		//	하단 네비게이터 계산하기
 		/*****************************************************/
 		//전체 등록되어 있는 문제 개수를 구함.
-		int count = uploadQuestionDao.questionCount();
+		int count = uploadQuestionDao.questionCountId(id);
+		
 		//전체 페이지 수
 		int pageCount=(count+pageSize)/pageSize;
-		
+		System.out.println(pageCount);
 		int startBlock = (pageNumber-1) / navSize * navSize+1;
 		int finishBlock = startBlock +(navSize-1);
 		
@@ -233,7 +234,10 @@ public class UploadQuestionController {
 		Map<String, Integer> param = new HashMap<>();
 		param.put("start", start);
 		param.put("finish",finish);
-		model.addAttribute("nav", uploadQuestionDao.mapList(param));
+		param.put("user_no", usersDao.getUserNo(id));
+		//사용자 ID를 세션에서 가져와 리스트를 뽑아준다.
+		model.addAttribute("list", uploadQuestionDao.mapListId(param));
+		
 		request.setAttribute("pno", pageNumber);
 		request.setAttribute("count", count);
 		request.setAttribute("pagesize", pageSize);

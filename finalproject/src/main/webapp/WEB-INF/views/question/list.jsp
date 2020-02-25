@@ -4,16 +4,19 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 	$(function(){
-		//Modal창 불러오기
+		//Modal trigger button 숨기기
 		$(".doHide").hide();
-		$(".doHide").trigger("click");
+		//pno 불러오기
+		var pno = "<c:out value='${pno}'/>";
+		//첫페이지에서만 모달창 불러오기
+		if(pno==1){
+			$(".doHide").trigger("click");
+		}	
 		$(".list").hide();
-		
 		$(".multiQuestion").click(function(){
 			$(".list").show();
 			$(".oneQuestion").hide();
 		});
-		
 		$(".click").click(function(){
 			$(".list").show();
 		});
@@ -55,7 +58,7 @@
 <div class="container" style="text-align: center">
 <!-- 네비게이션 -->
 <jsp:include page="/WEB-INF/views/template/navigator.jsp">
-<jsp:param name="pno" value="${pno}" />
+	<jsp:param name="pno" value="${pno}" />
 	<jsp:param name="count" value="${count}" />
 	<jsp:param name="navsize" value="${navsize}" />
 	<jsp:param name="pagesize" value="${pagesize}" />

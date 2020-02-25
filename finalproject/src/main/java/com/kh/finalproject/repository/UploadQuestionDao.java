@@ -42,5 +42,7 @@ public interface UploadQuestionDao {
 	List<UploadQuestionDto> mapList(Map<String, Integer> param);
 	List<UploadQuestionDto> idList(String id);
 	int getUserCustomNo(int user_custom_question_no);
+	List<UploadQuestionDto> mapListId(Map<String, Integer> param);
+	int questionCountId(String id);
 
 }

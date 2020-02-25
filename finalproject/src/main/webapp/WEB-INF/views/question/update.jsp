@@ -38,6 +38,36 @@ $(function(){
 	});	
 });
 </script>
+<script>
+function loadEditor(){
+    var editor = SUNEDITOR.create((document.querySelector('textarea[name=question_solution]')),{
+        //언어 설정
+        lang: SUNEDITOR_LANG['ko'],
+        
+        //버튼 목록
+        buttonList:[
+            ['font', 'fontSize', 'fontColor'], 
+            ['underline', 'italic', 'paragraphStyle', 'formatBlock'],
+            ['align', 'table', 'image']
+        ],
+        //글꼴 설정
+        font:[
+            '굴림', '궁서', 'Verdana', 'Arial'
+        ],
+        //크기 설정
+        fontSize:[
+            10, 16, 32
+        ],
+        
+    });
+
+  	//중요 : 키입력시마다 값을 원래위치(textarea)에 복사
+    editor.onKeyUp = function(e){
+    	var content = document.querySelector("textarea[name=question_solution]");
+    	content.value = editor.getContents();
+    }
+}
+</script>
 <style>
 .btn-danger{
 	color: white;

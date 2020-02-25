@@ -32,8 +32,6 @@ $(function(){
 		}
 	});
 });
-
-
 function loadEditor(){
     var editor = SUNEDITOR.create((document.querySelector('textarea[name=board_content]')),{
         //언어 설정
@@ -52,8 +50,7 @@ function loadEditor(){
         //크기 설정
         fontSize:[
             10, 16, 32
-        ],
-        
+        ],       
     });
 
   	//중요 : 키입력시마다 값을 원래위치(textarea)에 복사
@@ -62,7 +59,6 @@ function loadEditor(){
     	content.value = editor.getContents();
     }
 }
-
 </script>
 
 <div class="container">    
