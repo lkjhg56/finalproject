@@ -94,15 +94,34 @@ public class BoardController {
 	}
 	
 ///////////////글 삭제(본인글, 관리자만)/////////////
-	
-	@GetMapping("/delete")
+		@GetMapping("/delete")
 		public String delete(@RequestParam int board_no) {
-		//System.out.println("@@@@@"+board_no);
-		//실제파일 삭제
-		boardfileService.deleteRealfile(board_no);
-		//DB에서 게시글 삭제
-		boardDao.delete(board_no); 
 		
+		System.out.println("@@@@@"+board_no);
+		
+//		실제파일 삭제
+			boardfileService.deleteRealfile(board_no);
+//		DB에서 게시글 삭제
+			boardDao.delete(board_no); 			
+
+		return "redirect:list";
+	}	
+		
+		
+		//리스트 사이즈만큼 삭제 반복문 document.querySelector(".selectDelete").submit()
+	@GetMapping("/delete2")
+		public String delete(@RequestParam List<Integer> board_no) {
+		
+		System.out.println("@@@@@"+board_no);
+		
+		for(int i = 0; i < board_no.size(); i ++) {
+//		실제파일 삭제
+			boardfileService.deleteRealfile(board_no.get(i));
+//		DB에서 게시글 삭제
+			boardDao.delete(board_no.get(i)); 			
+		}
+		
+
 		return "redirect:list";
 	}
 
@@ -401,6 +420,41 @@ public class BoardController {
 		}
 		
 		
+////////////////////게시글 신고///////////////////////////////////////////////		
+		@GetMapping("/report")
+		public String report(@RequestParam(required = false, defaultValue = "0") int report_board_no,
+											@RequestParam(required = false, defaultValue = "0") int report_reply_no,
+											Model model) {
+			
+			System.out.println("%%board_no = "+report_board_no);
+			System.out.println("%%board_reply_no = "+report_reply_no);
+			
+			if(report_board_no == 0) { //댓글 신고일경우
+				boardDao.getReply(report_reply_no);
+				model.addAttribute("boardReplyDto", boardDao.getReply(report_reply_no));								
+			}
+			else {	//게시글 신고일경우
+				boardDao.get(report_board_no);
+				model.addAttribute("boardDto", boardDao.get(report_board_no));						
+			}			
+			
+			return "board/report";
+		}
+		
+		
+		
+		@PostMapping("/report")
+			public String report(@RequestParam(required = false, defaultValue = "0") int report_board_no,
+												@RequestParam(required = false, defaultValue = "0") int report_reply_no,
+												@RequestParam String report_board_writer,
+												HttpSession session) {
+			System.out.println("%%board_no = "+report_board_no);
+			System.out.println("%%board_reply_no = "+report_reply_no);
+			
+			String reporter = (String) session.getAttribute("id");
+			
+			return null;
+		}
 		
 }
 

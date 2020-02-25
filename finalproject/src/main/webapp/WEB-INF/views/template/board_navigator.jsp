@@ -7,12 +7,15 @@
   padding-left: 0;
   list-style: none;
    border: none;
+    font-family: 'Noto Sans';
+   font-weight: 400;
+   font-size: 12px;
 }
 
 .page-link {
   color: black;
   float: left;
-  padding: 8px 16px;
+  padding: 10px 16px;
   text-decoration: none;
   border: none;
   margin: 0px;
@@ -48,6 +51,16 @@
 .page-link:focus {
   outline: 0;
   box-shadow: none;
+}
+
+	.container nav{
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 5px; 
+    margin-bottom: -35px;
 }
 
 .pagination a:hover:not(.page-item active) {background-color: none;}

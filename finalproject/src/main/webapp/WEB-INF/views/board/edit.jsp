@@ -9,6 +9,61 @@
         width:100%;
         height:250px;
     }
+    
+    *{
+		 font-family: 'Noto Sans';
+	     font-weight: 400;
+	      font-size: 13px;
+	}
+	
+	.row-empty {
+		height: 30px;
+	}
+	
+    .btn{
+		color : black;
+	}
+	
+	.btn-primary:hover{
+		color : black;
+		background-color: #118FCB;
+	}
+	
+	.btn23 {
+      	 font-family: 'Noto Sans';
+	     font-weight: 420;
+	     font-size: 13px;
+		  display: inline-block;
+		  font-weight: 400;
+		  color: #212529;
+		  text-align: center;
+		  vertical-align: middle;
+		  background-color: white;
+		  border: 1px solid black;
+		  padding: 0.375rem 0.75rem;
+		  line-height: 1.5;
+		 }
+		 
+	 .category-btn:hover, .category-btn:active{
+		background: none;
+		color : #1295D3;
+		outline : none;
+	}
+	
+	.btn-primary a{
+		color: black;
+		text-decoration:none;
+	}
+	table tr th{
+	background-color: whitesmoke;
+	}
+	
+	#copyright{
+		font-family: 'Noto Sans';
+	    font-weight: 400;
+	    font-size: 11px;
+	    padding : 3px;
+	}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
@@ -29,9 +84,7 @@
 	        
 	        //버튼 목록
 	        buttonList:[
-	            ['font', 'fontSize', 'fontColor'], 
-	            ['underline', 'italic', 'paragraphStyle', 'formatBlock'],
-	            ['align', 'table', 'image']
+	            ['font', 'fontSize', 'fontColor','underline', 'italic','align']
 	        ],
 	        //글꼴 설정
 	        font:[
@@ -50,12 +103,17 @@
 	    	content.value = editor.getContents();
 	    }
 	}
+	
+	//윈도우 로딩 시 loadEditor를 실행하도록 설정(body에 onload 한 효과)
+   		window.onload = loadEditor;
 </script>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<div class="row-empty"></div>
+<div class="row-empty"></div>
 <div class="container">    
-<h1>게시글 수정</h1>
+<h3>게시글 수정</h3><span id="copyright">저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시글은 이용약관 및 관련법률에 의해 제재를 받으실 수 있습니다.</span><br><br>
 
 <form action="edit" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="board_no" value="${boardDto.board_no}">
@@ -99,9 +157,9 @@
 			
 			<tr>
 				<td colspan="2" align="center">			
-					<input type="submit" value="수정하기">
+					<input  class="btn23 category-btn "  type="submit" value="수정하기">
 					<a href="list">
-						<input type="button" value="목록보기">
+						<input  class="btn23 category-btn "  type="button" value="목록보기">
 					</a>			
 				</td>
 			</tr>			

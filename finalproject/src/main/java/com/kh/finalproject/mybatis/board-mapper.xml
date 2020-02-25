@@ -95,9 +95,6 @@
 			where ${type} like '%'||#{keyword}||'%' order by board_no desc
 		)A)
 	where rn between #{start} and #{finish}
-<!-- 		select * from board  -->
-<!-- 		where ${type} like '%'||#{keyword}||'%' -->
-<!-- 		order by board_no desc		 -->
 	</select>
 	
 	<!-- 게시판 시퀀스 자동발급 구문 -->
@@ -139,6 +136,33 @@
  	 <!-- 조회수 증가 -->
 	<update id="readCount" parameterType="int">
 		update board set board_readcount = board_readcount +1 where board_no=#{board_no}
+	</update>
+	
+	<!-- 신고 등록 구문 -->
+	<insert id="insertReport" parameterType="boardReportDto">
+		insert into report(
+				report_no, 
+				report_board_no, 
+				report_board_writer, 
+				report_reply_no,
+				reporter,
+				report_content,
+				report_reason
+				)
+		 values(
+			 	report_seq.nextval,
+				#{report_board_no},
+				#{report_board_writer},
+				#{report_reply_no},
+				#{reporter}	
+				#{report_content}	
+				#{report_reason}	
+		)
+	</insert>	
+	
+	<!-- 신고수 증가 구문 -->
+	<update id="calculateReport" parameterType="int">
+		update report set report_count = report_count +1 where report_no=#{report_no}
 	</update>
 	<!-- /////////////////////////////////////////////
 								댓글 sql구문 시작
