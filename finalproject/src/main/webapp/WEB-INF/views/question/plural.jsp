@@ -11,13 +11,13 @@
    
    function save(quesno, disno, answer,id){
        var test = quesno+disno
-		console.log(test+"확인")
+
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
        var checked3= document.getElementById(id);
 
        if (checked.checked==true){
-           console.log("체크됨")
+
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();
@@ -139,33 +139,33 @@
     };
     $(function () {
     	  $(".test").hide()
-    	console.log("hide")
+
     	
     });
     
     
    function file(abc) {
-    	console.log("show")
+
     	var checking = document.getElementsByName(abc);
-    	console.log(checking)
+
   	$(checking).show();
 		
     	
 	}
    
    $(function(){
-	   console.log("testest")
+
 	 var a = $(".session_ques").text()
-	 console.log(a+"check");
+
 	   $.ajax({
 		  url : "${pageContext.request.contextPath}/question2/queup",
 		  type : "get",
 		  data : {
 			  session_ques:a,
 		  },success: function(){
-			  console.log("success");
+
 		  },erorr :  function(){
-			  console.log("fail");
+	
 			  
 		  }
 		   

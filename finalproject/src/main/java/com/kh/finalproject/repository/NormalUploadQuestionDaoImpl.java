@@ -136,8 +136,7 @@ private SqlSession sqlSession;
 	}
 	@Override
 	public int rqno(RcorrectDto rcorrectDto) {
-		log.info("확인={}", rcorrectDto.getTest_no());
-		log.info("확인re={}", rcorrectDto.getResult_no());
+
 		
 		if(sqlSession.selectOne("rcorrectRqno",rcorrectDto) != null) {
 			return sqlSession.selectOne("rcorrectRqno",rcorrectDto);
