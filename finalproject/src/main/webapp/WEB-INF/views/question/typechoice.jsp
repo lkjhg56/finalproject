@@ -38,7 +38,6 @@
 	
 
 	function resultSave(csname, tno, userid) {
-		console.log("checkcheck1")
 		$.ajax({
 			url : "${pageContext.request.contextPath}/question2/resultin",
 			type : "post",
@@ -81,7 +80,7 @@
 		
 	
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
-			console.log(data);
+
 			
 			var win = window.open(
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
@@ -107,7 +106,7 @@
 			   success:function(){
 		          	
 	    		   
-				   console.log("세션빼기성공");
+
 	    		   
 	    		
 		     		

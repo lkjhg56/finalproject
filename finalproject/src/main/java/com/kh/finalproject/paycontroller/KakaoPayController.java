@@ -40,7 +40,7 @@ public class KakaoPayController {
 	
 	@PostMapping("payment")
 	public String payment(@ModelAttribute PaymentInfoVO vo, HttpSession session) throws URISyntaxException {
-		log.info("voinfo = {}", vo);
+
 		int orderNum = sqlSession.selectOne("orderNum");
 		
 		KakaoPayReadyVO readyVo = KakaoPayReadyVO.builder()
@@ -51,12 +51,11 @@ public class KakaoPayController {
 																					.tax_free_amount(vo.getTax_free_amount())
 																					.quantity(vo.getQuantity())
 																					.build();
-		log.info("ordernum = {}", readyVo.getPartner_order_id());
+
 		PayReadyReturnVO result = payService.ready(readyVo);
 		session.setAttribute("tid", result.getTid());
 		session.setAttribute("ready", readyVo);
 		session.setAttribute("product", vo);
-		log.info("tidinfo={}", result.getTid());
 		
 		
 		return "redirect:"+result.getNext_redirect_pc_url();
@@ -86,16 +85,16 @@ public class KakaoPayController {
 																									.pg_token(pg_token)
 																									.build();
 		KakaoPaySuccessReturnVO result = payService.approve(data, num1);
-		log.info("result = {}", result);
+
 //		int newPoint = sqlSession.selectOne("pay.getPoint", id);
 		
 		String order_id = vo.getPartner_user_id();
-		log.info("idcheck={}", order_id);
+
 		List<PayListDto> listDto = sqlSession.selectList("paylist", order_id);
 		
 		
 		for(PayListDto dto : listDto) {
-			log.info("dtocheck={}", dto.getItem_name());
+
 		}
 		model.addAttribute("id", id);
 		model.addAttribute("payno", num1);

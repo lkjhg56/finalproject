@@ -19,7 +19,6 @@
 function islogin(id){
 	
 	if(id.length<1){
-		console.log("asd");
 		$(".logined").hide();
 		$(".nolgoin").show();
 	}else{

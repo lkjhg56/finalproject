@@ -73,7 +73,6 @@ public class KakaoPayService implements PayService{
 	URI uri = new URI("https://kapi.kakao.com/v1/payment/ready");
 	KakaoPayReadyReturnVO returnVO = template.postForObject(uri, entity, KakaoPayReadyReturnVO.class);
 
-	log.info("확인하는중");
 	
 	PayDto payDto=PayDto.builder()
 									.cid("TC0ONETIME")
