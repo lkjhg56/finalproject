@@ -525,7 +525,6 @@ public class AdminController {
 			}
 			
 			if(board_category != null && keyword != null){
-				System.out.println("@@board_category="+board_category);
 				Map<String, String> param = new HashMap<>();
 				param.put("start", String.valueOf(start));
 				param.put("finish", String.valueOf(finish));
@@ -542,7 +541,6 @@ public class AdminController {
 				request.setAttribute("board_category", board_category);
 			
 				List<BoardReportDto> dto = boardDao.reportCategorySearch(param);
-				System.out.println("@@검색결과="+dto);
 
 				for(int i = 0; i < dto.size(); i ++) {
 					int board_no = dto.get(i).getReport_board_no();
@@ -557,7 +555,6 @@ public class AdminController {
 			}
 			
 			else {
-				System.out.println("@@@@board_category="+board_category);
 				Map<String, String> param = new HashMap<>();
 				param.put("start", String.valueOf(start));
 				param.put("finish", String.valueOf(finish));
