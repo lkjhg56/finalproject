@@ -32,7 +32,7 @@ public class BoardFileDaoImpl implements BoardFileDao{
 		return sqlSession.selectOne("board.filegetSequence");
 	}
 
-	private File directory = new File("D:/upload/board_files");		
+	private File directory = new File("D:/upload/kh2b/board_files");
 		@PostConstruct//생성하면서 실행할 메소드(준비메소드)
 		public void init() {
 			directory.mkdirs();
