@@ -22,13 +22,10 @@ public class CertDaoImpl implements CertDao{
 	@Override
 	public boolean check(String email, String cert) {
 
-		// select * from cert where email = ? and cert_no = ?
-		
 		Map<String, Object> param = new HashMap<>();
 		param.put("email", email);
 		param.put("cert_no", cert);
 		
-//		CertDto certDto = sqlSession.selectOne("cert.", ? );
 		CertDto certDto = sqlSession.selectOne("cert.check", param );
 		
 		return certDto != null;

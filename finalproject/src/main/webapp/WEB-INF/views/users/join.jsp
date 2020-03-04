@@ -176,12 +176,11 @@
 	
 	//이메일 인증
 // 	$(function(){
-// //		.validate-form은 처음에 숨기고 이메일 전송시만 표시
-// 	$(".validate").hide();
+		
+// // 	$(".validate").hide();
 // 	$(".join_box").hide();
 // 	$(".go_join").hide();
 	
-// //		.email-form이 전송되면 send 주소로 비동기 신호를 전송(ajax)
 // 	$(".email").submit(function(e){
 // 		e.preventDefault();
 		
@@ -215,7 +214,7 @@
 // 			});
 // 		}
 // 	});
-// //		validate-form이 전송되면 /validate로 비동기 요청을 전송
+ 
 // 	$(".validate").submit(function(e){
 // 		e.preventDefault();
 // 		//var url = $(this).attr("action"); 
@@ -264,6 +263,62 @@ p{
 	margin-top: 18px;
 	margin-bottom: 6px;
 }
+.cert_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: auto 232px;
+    margin-top: 10px;
+    height: 300px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+.cert_box input[name=email] {
+	font-size: 20px;
+    border: 0px;
+    outline: #efefef;
+    border-bottom: 1px solid #565960;
+    width: 290px;
+    height: 3rem;
+    padding: 15px;
+    margin-top: 20px;
+}
+.cert_box input[name=cert] {
+	font-size: 20px;
+    border: 0px;
+    outline: #efefef;
+    border-bottom: 1px solid #565960;
+    width: 290px;
+    height: 3rem;
+    padding: 15px;
+    margin-top: 15px;
+    margin-left: 0px;
+}
+#but1 {
+	font-size: 18px;
+    padding: 5px 5px;
+    height: 45px;
+    width: 165px;
+}
+#but2 {
+	font-size: 18px;
+    padding: 5px 5px;
+    height: 45px;
+    width: 165px;
+}
+#but1:hover, #but2:hover{
+	font-size: 19px;
+    padding: 5px 5px;
+    height: 45px;
+    width: 165px;
+}
+
 .join_box{
 	display: inline-block;
     width: 660px;
@@ -354,23 +409,36 @@ p{
     height: 40px;
     width: 150px;
 }
+#join:hover {
+	font-size: 19px;
+    margin: 25px 10px 0px 420px;
+    padding: 5px 10px;
+    height: 40px;
+    width: 150px;
+}
 </style>
 <div class="container">
+
 <h1>Qmaster</h1>
-<!-- <div  style="text-align:center"> -->
-<!-- <form class="email" method="get" > -->
-<!-- 	<h2>본인 확인을 위한 이메일인증을 해주세요.</h2> -->
-<!-- 	<input type="text" name="email" placeholder="이메일 입력"> -->
-<!-- 	<input type="submit" class="btn btn-primary" value="인증번호 보내기"> -->
-<!-- </form> -->
+
+<!-- <div class="cert_box"> -->
+<!-- 	<div style="text-align:center"> -->
+<!-- 		<form class="email" method="get" > -->
+<!-- 			<h3>본인 확인을 위한 이메일 인증을 해주세요!</h3> -->
+<!-- 			<input type="text" name="email" placeholder="이메일 입력"> -->
+<!-- 			<input type="submit" class="btn btn-primary" id="but1" value="인증번호 보내기"> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
+	
+<!-- 	<div style="text-align:center"> -->
+<!-- 		<form class="validate" action="validate" method="post"> -->
+<!-- 			<input type="text" name="cert" placeholder="인증번호 입력"> -->
+<!-- 			<input type="submit" class="btn btn-primary" id="but2" value="인증하기"> -->
+<!-- 			<div class="finish_cert"></div> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
 <!-- </div> -->
-<!-- <div  style="text-align:center"> -->
-<!-- <form class="validate" action="validate" method="post"> -->
-<!-- 	<input type="text" name="cert" placeholder="인증번호 입력"> -->
-<!-- 	<input type="submit" class="btn btn-primary" value="인증하기"> -->
-<!-- 	<div class="finish_cert"></div> -->
-<!-- </form> -->
-<!-- </div> -->
+
 <div class="join_box">
 <form class="join-form" action="join" method="post" enctype="Multipart/form-data">
 
@@ -394,7 +462,7 @@ p{
 		  </select>
 	
 	<p>비밀번호</p> 
-	<input type="password" name="pw" maxlength="16" placeholder="8~16자 영문자,숫자,특수조합" required>
+	<input type="password" name="pw" maxlength="16" placeholder="8~16자 영문자,숫자,특수문자" required>
 	<input type="password" name="ppww" placeholder="비밀번호 재입력" required>
 	
 	<p>전화번호</p>

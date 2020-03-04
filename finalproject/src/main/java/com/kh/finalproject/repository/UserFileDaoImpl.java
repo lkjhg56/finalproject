@@ -14,9 +14,6 @@ public class UserFileDaoImpl implements UserFileDao{
 
 	@Autowired
 	private SqlSession sqlSession;
-	
-	@Autowired
-	private HttpSession session;
 
 	@Override
 	public void fileUpload(UserFileDto userFileDto) {

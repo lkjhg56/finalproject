@@ -38,11 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
-@Slf4j
 public class UsersController {
-	
-//	@Autowired
-//	private UsersDao usersDao;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -275,7 +271,6 @@ public class UsersController {
 		
 		model.addAttribute("test_result", resultDao.getList(total));
 		
-		//뷰에서 필요한 데이터를 첨부(4개)
 		req.setAttribute("pno", pno);
 		req.setAttribute("count", count);
 		req.setAttribute("pagesize", pagesize);
@@ -325,7 +320,6 @@ public class UsersController {
 		
 		model.addAttribute("search_result", resultDao.searchList(total));
 		 
-		//뷰에서 필요한 데이터를 첨부(4개)
 		req.setAttribute("pno", pno);
 		req.setAttribute("count", count);
 		req.setAttribute("pagesize", pagesize);
@@ -359,7 +353,6 @@ public class UsersController {
 		 
 		model.addAttribute("grade_point_rank", usersDao.getRank(total));
 		 
-		//뷰에서 필요한 데이터를 첨부(4개)
 		req.setAttribute("pno", pno);
 		req.setAttribute("count", count);
 		req.setAttribute("pagesize", pagesize);
@@ -390,10 +383,6 @@ public class UsersController {
 	 }
 	 
 	 //나의 포인트 내역 조회
-//	 @GetMapping("users/my_grade_point")
-//	 public String my_grade_point() {
-//		 return "users/my_grade_point";
-//	 }
 	 @GetMapping("users/my_grade_point")
 	 public String my_grade_point(Model model,HttpSession session,HttpServletRequest req) {
 		 
@@ -457,7 +446,6 @@ public class UsersController {
 		 
 		model.addAttribute("user_list", usersDao.getUserList(total));
 		 
-		//뷰에서 필요한 데이터를 첨부(4개)
 		req.setAttribute("pno", pno);
 		req.setAttribute("count", count);
 		req.setAttribute("pagesize", pagesize);
