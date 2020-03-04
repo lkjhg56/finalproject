@@ -43,8 +43,7 @@ public class TestDaoImpl implements TestDao{
 
 	@Override
 	public int getScore(int rno, String category_no, String csname) {
-		log.info("rno={}", rno);
-		log.info("csname ={}", csname);
+
 		
 		TestQuestionDto testDto =TestQuestionDto.builder()
 												.csname(csname)
@@ -55,8 +54,7 @@ public class TestDaoImpl implements TestDao{
 		
 		int questionCount = questionList.size();
 		int correctCount = sqlSession.selectOne("test.getCorrectNum", rno);
-		log.info("questioncount={}", questionCount);
-		log.info("correctCount={}", questionCount);
+
 		
 				int score = 100/questionCount*correctCount;
 		SetScoreVO scoreVO = SetScoreVO.builder()
@@ -68,8 +66,7 @@ public class TestDaoImpl implements TestDao{
 		sqlSession.update("sumScore", scoreVO);
 		
 
-		log.info("correct ={}", correctCount);
-		log.info("score={}", score);
+
 		return score;
 		
 	}
@@ -108,6 +105,15 @@ dto.setCategoryname(categoryname);
 			.build();
 		
 		return sqlSession.selectOne("test.quescountDto", dto);
+	}
+
+	@Override
+	public List<String> getFrequency() {
+		List<String> getName = sqlSession.selectList("prequencyList");
+
+		
+		
+		return getName;
 	}
 
 }

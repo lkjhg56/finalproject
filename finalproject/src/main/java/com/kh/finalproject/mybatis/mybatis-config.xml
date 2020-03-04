@@ -13,6 +13,7 @@
 		<typeAlias type="com.kh.finalproject.entity.UploadQuestionFileDto" alias="uploadQuestionFileDto"/>
 		<typeAlias type="com.kh.finalproject.entity.UserQuestionResultDto" alias="userQuestionResultDto"/>
 		<typeAlias type="com.kh.finalproject.entity.UserQuestionMultiResultDto" alias="userQuestionMultiResultDto"/>
+		<typeAlias type="com.kh.finalproject.vo.SearchQuestionVO" alias="searchQuestionVO"/>
 		<typeAlias type="com.kh.finalproject.entity.TestDto" alias = "testDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.CategoryDto" alias = "categoryDto"/>
 		<typeAlias type = "com.kh.finalproject.entity.TestQuestionDto" alias = "testQuestionDto"/>

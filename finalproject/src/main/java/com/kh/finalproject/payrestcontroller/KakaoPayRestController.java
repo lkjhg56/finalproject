@@ -35,7 +35,7 @@ public class KakaoPayRestController {
 	
 	@PostMapping("confirm")
 	public void confirm(@RequestParam int num, int point, String id) {
-		log.info("testest={}", point);
+
 		TempVO tempVo = TempVO.builder()
 													.id(id)
 													.point(point)

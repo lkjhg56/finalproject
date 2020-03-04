@@ -47,7 +47,17 @@ $(function(){
 		 						
 		 					</div>
 		 					<div	class = "aside_link">
-		 					
+		 							<div id = "slider">
+	 						<div class="slides-container">
+		 							<div class = "mRank slide">
+				 					</div>
+				 					<div class = "mNewList slide">
+				 					</div>
+				 					<div class = "mFQlist slide">
+				 					</div>
+			 					</div>
+	 					</div>
+	 					
 		 					</div>
 		 				</div>
 		 				

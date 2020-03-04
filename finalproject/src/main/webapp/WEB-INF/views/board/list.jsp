@@ -298,7 +298,7 @@ $(function(){
     			<jsp:param name="pagesize" value="${pagesize}" />
     			<jsp:param name="board_category" value="${board_category}"/>
     		</jsp:include>
-    	</div>
+    	
 	
 	
 </div>

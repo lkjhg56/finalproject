@@ -11,13 +11,13 @@
    
    function save(quesno, disno, answer){
        var test = quesno+disno
-		console.log(test+"확인")
+
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
 
 
        if (checked.checked==true){
-           console.log("채크됨")
+ 
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();

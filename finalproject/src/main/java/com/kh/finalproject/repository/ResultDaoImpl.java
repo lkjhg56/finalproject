@@ -21,12 +21,6 @@ public class ResultDaoImpl implements ResultDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Autowired
-	private HttpSession session;
-	
-	@Autowired
-	private HttpServletRequest req;
-	
 	//시험 내역 조회
 	@Override
 	public List<ResultDto> getList(Map<String, String> total) {

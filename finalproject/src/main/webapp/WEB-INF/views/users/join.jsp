@@ -57,7 +57,7 @@
 	
 	//아이디 중복&형식 검사 
 	$(function(){
-		$(".id_check_btn").click(function(){
+		$("#id_check_btn").click(function(){
 			var id = $("input[name=id]").val();
 // 			console.log(id);
 
@@ -96,7 +96,7 @@
 							
 							if(regex.test(id)){
 								window.alert("사용 가능한 아이디입니다.");
-								$("input[name=pw]").focus();
+								$("input[name=email]").focus();
 							}
 							else{
 								 window.alert("아이디 형식을 맞춰주세요.");
@@ -140,7 +140,7 @@
 // 	});	
 	$(function(){
 		
-		$(".join").click(function(){
+		$("#join").click(function(){
 			var pw = $("input[name=pw]").val();
 			var regex = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,16}$/;
 			
@@ -157,7 +157,7 @@
 	//비밀번호 재확인
 	$(function(){
 		
-		$(".pw_check_btn").click(function(){
+		$(".join").click(function(){
 			var pw = $("input[name=pw]").val();
 			var ppww = $("input[name=ppww]").val();
 			
@@ -174,111 +174,285 @@
 		});
 	});
 	
-// 	//이메일 인증
-	$(function(){
-//		.validate-form은 처음에 숨기고 이메일 전송시만 표시
-	$(".validate").hide();
-	$(".join-form").hide();
-	$(".go_join").hide();
+	//이메일 인증
+// 	$(function(){
+		
+// // 	$(".validate").hide();
+// 	$(".join_box").hide();
+// 	$(".go_join").hide();
 	
-//		.email-form이 전송되면 send 주소로 비동기 신호를 전송(ajax)
-	$(".email").submit(function(e){
-		e.preventDefault();
+// 	$(".email").submit(function(e){
+// 		e.preventDefault();
 		
-		//var url = $(this).attr("action"); 
-		var method = $(this).attr("method");
-		var data = $(this).serialize();
+// 		//var url = $(this).attr("action"); 
+// 		var method = $(this).attr("method");
+// 		var data = $(this).serialize();
 		
-		var email = $("input[name=email]").val();
+// 		var email = $("input[name=email]").val();
 		
-		if(email == ""){
-			window.alert("이메일을 입력해주세요.");
-			$("input[name=email]").focus();
-			$(".email").find("input[type=submit]").val("인증번호 보내기");
-		}
+// 		if(email == ""){
+// 			window.alert("이메일을 입력해주세요.");
+// 			$("input[name=email]").focus();
+// 			$(".email").find("input[type=submit]").val("인증번호 보내기");
+// 		}
 		
-		else{
-			$(this).find("input[type=submit]").prop("disabled", true);
-			$(this).find("input[type=submit]").val("인증번호 발송중");
+// 		else{
+// 			$(this).find("input[type=submit]").prop("disabled", true);
+// 			$(this).find("input[type=submit]").val("인증번호 발송중");
 			
-			$.ajax({
-				url:"${pageContext.request.contextPath}/users/send",
-				type:"get",
-				data:data,
-				success:function(resp){
-					//console.log(resp);
-					if(resp == "success"){
-						$(".email").find("input[type=submit]").val("인증번호 발송완료");
-						$(".validate").show();
-					}
-				}
-			});
-		}
-	});
-//		validate-form이 전송되면 /validate로 비동기 요청을 전송
-	$(".validate").submit(function(e){
-		e.preventDefault();
-		//var url = $(this).attr("action"); 
-		var method = $(this).attr("method");
-		var data = $(this).serialize();
+// 			$.ajax({
+// 				url:"${pageContext.request.contextPath}/users/send",
+// 				type:"get",
+// 				data:data,
+// 				success:function(resp){
+// 					//console.log(resp);
+// 					if(resp == "success"){
+// 						$(".email").find("input[type=submit]").val("인증번호 발송완료");
+// 						$(".validate").show();
+// 					}
+// 				}
+// 			});
+// 		}
+// 	});
+ 
+// 	$(".validate").submit(function(e){
+// 		e.preventDefault();
+// 		//var url = $(this).attr("action"); 
+// 		var method = $(this).attr("method");
+// 		var data = $(this).serialize();
 		
-		$.ajax({
-			url:"${pageContext.request.contextPath}/users/validate",
-			type:"get",
-			data:data,
-			success:function(resp){
-				if(resp == "success"){
-					window.alert("인증이 완료되었습니다.");
-					$(".email").hide();
-					$(".validate").hide();
-					$(".join-form").show();
-				}
-				else{
-					window.alert("인증 실패! 다시 시도해주세요");
-					window.location.reload();
-				}
-			}
-		});
-	});
-});
+// 		$.ajax({
+// 			url:"${pageContext.request.contextPath}/users/validate",
+// 			type:"get",
+// 			data:data,
+// 			success:function(resp){
+// 				if(resp == "success"){
+// 					window.alert("인증이 완료되었습니다.");
+// 					$(".email").hide();
+// 					$(".validate").hide();
+// 					$(".join_box").show();
+// 				}
+// 				else{
+// 					window.alert("인증 실패! 다시 시도해주세요");
+// 					window.location.reload();
+// 				}
+// 			}
+// 		});
+// 	});
+// });
 	
 </script>
+<style>
+* {
+	font-family: binggrae;
+	box-sizing: border-box;
+}
+.container {
+    max-width: 1140px;
+    margin: auto auto;
+}
+h1 {
+	margin-top: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 62px;
+    letter-spacing: -1px;
+}
+p{
+	font-size: 18px;
+	margin-top: 18px;
+	margin-bottom: 6px;
+}
+.cert_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: auto 232px;
+    margin-top: 10px;
+    height: 300px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+.cert_box input[name=email] {
+	font-size: 20px;
+    border: 0px;
+    outline: #efefef;
+    border-bottom: 1px solid #565960;
+    width: 290px;
+    height: 3rem;
+    padding: 15px;
+    margin-top: 20px;
+}
+.cert_box input[name=cert] {
+	font-size: 20px;
+    border: 0px;
+    outline: #efefef;
+    border-bottom: 1px solid #565960;
+    width: 290px;
+    height: 3rem;
+    padding: 15px;
+    margin-top: 15px;
+    margin-left: 0px;
+}
+#but1 {
+	font-size: 18px;
+    padding: 5px 5px;
+    height: 45px;
+    width: 165px;
+}
+#but2 {
+	font-size: 18px;
+    padding: 5px 5px;
+    height: 45px;
+    width: 165px;
+}
+#but1:hover, #but2:hover{
+	font-size: 19px;
+    padding: 5px 5px;
+    height: 45px;
+    width: 165px;
+}
+
+.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 232px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+.join_box input[type=text] {
+	font-size: 18px;
+	border: 0px;
+	outline: #efefef;
+	border-bottom: 1px solid #565960;
+	width: 280px;
+	height: 2rem;
+	padding: 20px;
+
+}
+
+.join_box input[type=password] {
+	font-size: 18px;
+	border: 0px;
+	outline: #efefef;
+	border-bottom: 1px solid #565960 ;
+	width: 280px;
+	height: 2rem;
+	padding: 20px;
+
+}
+.join_box input[type=tel] {
+	font-size: 18px;
+	border: 0px;
+	outline: #efefef;
+	border-bottom: 1px solid #565960;
+	margin-left: 2px;
+	width: 150px;
+	height: 2rem;
+	padding: 20px;
+
+}
+#select1 {
+	border-bottom: 1px solid #565960 ;
+    padding: 5px;
+    padding-left: 0.5rem;
+    padding-right: 2rem;
+  	margin: 3PX;
+	font-size: 20px;
+	height: 43px;
+	width: 200px;
+	outline: #565960; 
+}
+#select2 {
+	border-bottom: 1px solid #565960 ;
+    padding: 5px;
+    padding-left: 0.5rem;
+    padding-right: 2rem;
+  	margin: 10PX;
+	font-size: 20px;
+	width: 100px;
+	outline: #565960; 
+}
+.addr>#postcode {
+	width: 280px;
+	margin-bottom: 6px;
+}
+.addr>#address {
+	width: 444px;
+}
+.addr>#detailAddress {
+	width: 280px;
+	margin: 6px 0px;
+}
+.addr>#extraAddress {
+	width: 160px;
+}
+#join {
+	font-size: 18px;
+    margin: 25px 10px 0px 420px;
+    padding: 5px 10px;
+    height: 40px;
+    width: 150px;
+}
+#join:hover {
+	font-size: 19px;
+    margin: 25px 10px 0px 420px;
+    padding: 5px 10px;
+    height: 40px;
+    width: 150px;
+}
+</style>
 <div class="container">
-<h1>회원가입</h1>
-<form class="email" method="get" >
-	<h2>본인 확인을 위한 이메일인증을 해주세요.</h2>
-	<input type="text" name="email" placeholder="이메일 입력">
-	<input type="submit" value="인증번호 보내기">
-</form>
 
-<form class="validate" action="validate" method="post">
-	<input type="text" name="cert" placeholder="인증번호 입력">
-	<input type="submit" value="인증하기">
-	<div class="finish_cert"></div>
-</form>
+<h1>Qmaster</h1>
 
+<!-- <div class="cert_box"> -->
+<!-- 	<div style="text-align:center"> -->
+<!-- 		<form class="email" method="get" > -->
+<!-- 			<h3>본인 확인을 위한 이메일 인증을 해주세요!</h3> -->
+<!-- 			<input type="text" name="email" placeholder="이메일 입력"> -->
+<!-- 			<input type="submit" class="btn btn-primary" id="but1" value="인증번호 보내기"> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
+	
+<!-- 	<div style="text-align:center"> -->
+<!-- 		<form class="validate" action="validate" method="post"> -->
+<!-- 			<input type="text" name="cert" placeholder="인증번호 입력"> -->
+<!-- 			<input type="submit" class="btn btn-primary" id="but2" value="인증하기"> -->
+<!-- 			<div class="finish_cert"></div> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
+<div class="join_box">
 <form class="join-form" action="join" method="post" enctype="Multipart/form-data">
 
-	이름 : <input type="text" name="name" maxlength="7" required><br><br>
-	프로필 사진을 올려주세요.<br>
-	<input type="checkbox" id="basic">기본이미지 선택하기<br>
-	<input type="file" name="user_file" id="file"  accept="image/*">
-	<br><br>
-	아이디 : <input type="text" name="id" maxlength="20" required>
-	<input type="button" class="id_check_btn" value="아이디 중복 검사">
-	<div class="id">
-		<h6>8~20자의 영문 소문자와 숫자만 사용 가능합니다.</h6>
-	</div>
-	<br>
-	비밀번호 : <input type="text" name="pw" maxlength="16" required><br><br>
-	<div class="pw">
-		<h6>8~16자 영문자, 숫자, 특수문자 조합을 사용하세요.</h6>
-	</div>
-	비밀번호 확인 : <input type="text" name="ppww" required>
-			   <input type="button" class="pw_check_btn" value="확인">
-	<br><br>
-	이메일 : <input type="text" name="email" required>
-		  <select name="email">
+	<p>이름</p> 
+	<input type="text" name="name" maxlength="7" required>
+	
+	
+	<p>아이디</p> 
+	<input type="text" name="id" maxlength="20" placeholder="8~20자 영소문자,숫자" required>
+	<input type="button" class="btn btn-primary" id="id_check_btn" value="아이디 중복 검사">
+	
+	<p>이메일</p>
+	<input type="text" name="email" required>
+		  <select name="email" id="select1">
 		  	<option>@naver.com</option>
 		  	<option>@daum.net</option>
 		  	<option>@nate.com</option>
@@ -286,25 +460,37 @@
 		  	<option>@hanmail.com</option>
 		  	<option>@icloud.com</option>
 		  </select>
-			<br><br>
-	전화번호 : <select name="phone">
+	
+	<p>비밀번호</p> 
+	<input type="password" name="pw" maxlength="16" placeholder="8~16자 영문자,숫자,특수문자" required>
+	<input type="password" name="ppww" placeholder="비밀번호 재입력" required>
+	
+	<p>전화번호</p>
+		<select name="phone" id="select2">
 				<option>010</option>
 				<option>011</option>
 				<option>016</option>
 				<option>017</option>
 				<option>019</option>
 			</select>-
-			<input type="tel" name="phone" maxlength="4" required>-
+			<input type="tel" name="phone" maxlength="4" required> -
 			<input type="tel" name="phone" maxlength="4" required>
-			<br><br>
-	주소 : <br><br>
+			
+	<p>주소</p>
+	<div class="addr">
 	<input type="text" id="postcode" name="postcode" placeholder="우편번호" required> 
-	<input type="button" onclick="DaumPostcode()"value="우편번호 찾기"><br> 
+	<input type="button" class="btn btn-primary" onclick="DaumPostcode()"value="우편번호 찾기"><br> 
 	<input type="text" id="address" name="address" placeholder="주소" required><br> 
 	<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소" onfocus="loadMap()" required> 
-	<input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목"><br><br>
-	<input type="submit" class="join" value="회원가입하기"> 
+	<input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목">
+	</div>
 	
+	<p>프로필 사진</p>
+	<input type="checkbox" id="basic">기본이미지 선택하기
+	<input type="file" name="user_file" id="file"  accept="image/*"><br>
+	
+	<input type="submit" class="btn btn-primary" id="join" value="회원가입하기"> 
 </form>
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

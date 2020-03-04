@@ -81,7 +81,6 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				
 					
 					dto.setNo(qlist.getNo());
-					log.info("testno 확인 {}=", qlist.getNo());
 					dto.setAnswer(qlist.getAnswer());
 					dto.setCategory_no(qlist.getCategory_no());
 					dto.setDis1(qlist.getDis1());
@@ -113,8 +112,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 			model.addAttribute("csname", categoryname);
 			model.addAttribute("hour", hour);
 			model.addAttribute("min", min);
-		
-			log.info("session={}", session);
+
 			
 			return "question/plural";
 		}
@@ -143,7 +141,6 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 																	.csname(categoryname)
 																	.category_no(category_no)
 																	.build();
-				log.info("checking={}", categoryname+category_no);
 				List<ResultDto> sum= sqlSession.selectList("getSum", testQuestionDto);
 				int total=0;
 				int num=0;
@@ -151,8 +148,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 					total += dto.getSumscore();
 					num +=1;
 				}
-				log.info("total={}", total);
-				log.info("num={}", num);
+		
 				
 				int average = total/num;
 				int high10 = num/10;
@@ -246,10 +242,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
 
 				
-				
-				log.info(testQuestionDto.getCategoryname());
-				log.info(testQuestionDto.getCategory_no());
-				log.info("ddd={}",testQuestionDto.getRno());
+	
 				
 				int rank = sqlSession.selectOne("getRank", testQuestionDto);
 //				int rank=2;
@@ -260,6 +253,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				
 
 				model.addAttribute("category_no", category_no);
+				
 				model.addAttribute("rCorrectDto", rCorrectDto);
 				
 				
@@ -331,7 +325,6 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				if(qlist.getCategory_no().equals(session)) {
 					TestQuestionDto dto = new TestQuestionDto();
 					dto.setNo(qlist.getNo());
-					log.info("testno 확인 {}=", qlist.getNo());
 					dto.setAnswer(qlist.getAnswer());
 					dto.setCategory_no(qlist.getCategory_no());
 					dto.setDis1(qlist.getDis1());
@@ -357,7 +350,6 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 			model.addAttribute("hour", hour);
 			model.addAttribute("min", min);
 
-			log.info("session={}", session);
 			
 			return "question/plural";
 		}
@@ -451,7 +443,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 															.csname(csname)
 															.category_no(category_no)
 															.build();
-		log.info("checking={}", csname+category_no);
+
 		List<ResultDto> sum= sqlSession.selectList("getSum", testQuestionDto);
 		int total=0;
 		int num=0;
@@ -459,8 +451,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 			total += dto.getSumscore();
 			num +=1;
 		}
-		log.info("total={}", total);
-		log.info("num={}", num);
+
 		
 		int average = total/num;
 		int high10 = num/10;
@@ -547,9 +538,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 	
 		List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
 
-		log.info(testQuestionDto.getCategoryname());
-		log.info(testQuestionDto.getCategory_no());
-		log.info("dd66d={}",testQuestionDto.getRno());
+		
 		int rank = sqlSession.selectOne("getRank", testQuestionDto);
 		
 		int percentile = rank*100/num;

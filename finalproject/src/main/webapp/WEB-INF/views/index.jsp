@@ -120,29 +120,7 @@
             <a href="#">Start Lecture2</a>
             </p>
         </div>
-        <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-             Lecture3
-            </h2>
-          </a>
-          <p class="post-meta">
-            <a href="#">Start Lecture3</a>
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-             Lecture4
-            </h2>
-          </a>
-          <p class="post-meta">
-            <a href="#">Start Lecture4</a>
-            </p>
-        </div>
-        <hr>
+    
         
         <hr>
         <!-- Pager -->

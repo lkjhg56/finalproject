@@ -38,7 +38,6 @@
 	
 
 	function resultSave(csname, tno, userid) {
-		console.log("checkcheck1")
 		$.ajax({
 			url : "${pageContext.request.contextPath}/question2/resultin",
 			type : "post",
@@ -81,13 +80,43 @@
 		
 	
 			var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
-			console.log(data);
+
 			
 			var win = window.open(
 					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
 		});
 	});	
 
+	
+	
+	 $(document).ready(function() { 
+		  
+			$.ajax({
+
+				url : "${pageContext.request.contextPath}/question2/newwindow",
+
+				type : "post",
+
+				data : {
+
+					
+
+				},
+
+			   success:function(){
+		          	
+	    		   
+
+	    		   
+	    		
+		     		
+		     	}
+
+			})
+		  
+		  
+	  
+	  });
 
 
 </script>
@@ -187,7 +216,16 @@
 	 						
 	 				</div>
 	 				<div	class = "aside_link">
-	 					
+	 					<div id = "slider">
+	 						<div class="slides-container">
+		 							<div class = "mRank slide">
+				 					</div>
+				 					<div class = "mNewList slide">
+				 					</div>
+				 					<div class = "mFQlist slide">
+				 					</div>
+			 					</div>
+	 					</div>
 	 				</div>
 	 				
 	 			</div>

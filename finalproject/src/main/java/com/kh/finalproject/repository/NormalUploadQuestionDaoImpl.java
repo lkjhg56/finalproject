@@ -136,8 +136,7 @@ private SqlSession sqlSession;
 	}
 	@Override
 	public int rqno(RcorrectDto rcorrectDto) {
-		log.info("확인={}", rcorrectDto.getTest_no());
-		log.info("확인re={}", rcorrectDto.getResult_no());
+
 		
 		if(sqlSession.selectOne("rcorrectRqno",rcorrectDto) != null) {
 			return sqlSession.selectOne("rcorrectRqno",rcorrectDto);
@@ -170,6 +169,19 @@ private SqlSession sqlSession;
 	public List<TestQuestionDto> mapList2( Map<String, String> param2) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public int testExist(NormalUpdateQuestionVO normalUpdateQuestionVO) {
+		return sqlSession.selectOne("question.testE",normalUpdateQuestionVO);
+	}
+	@Override
+	public void upload3(CategoryDto categoryDto, TestQuestionDto testQuestionDto, SolutionDto solutionDto) {
+sqlSession.insert("question.uploadcategory", categoryDto);// 카테고리 등록
+		
+		
+		sqlSession.insert("question.uploadtestquestion", testQuestionDto);//test_question 등록
+		sqlSession.insert("question.uploadsolution",solutionDto);
+		
 	}
 	
 	
