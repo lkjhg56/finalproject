@@ -103,4 +103,7 @@ public interface BoardDao {
 		
 	//31.댓글 검색 목록
 		List<BoardReportDto> reportRPSearch(Map<String, String> param);
+		
+	//32.신고게시글 카테고리별 목록 검색
+		List<BoardReportDto> reportCategorySearch(Map<String, String> param);
 }

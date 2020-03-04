@@ -67,8 +67,7 @@ public class BoardDaoImpl implements BoardDao{
 				for(int i = 0; i < delete.size(); i++) {
 					
 					//실제 파일 삭제
-					String filepath = "D:/upload/kh2b/board_files/" + delete.get(i).getBoard_file_save_name();
-					System.out.println("filepath = "+filepath);					
+					String filepath = "D:/upload/kh2b/board_files/" + delete.get(i).getBoard_file_save_name();				
 					File file = new File(filepath);
 					file.delete();				
 				}			
@@ -208,5 +207,10 @@ public class BoardDaoImpl implements BoardDao{
 		@Override
 		public List<BoardReportDto> reportRPSearch(Map<String, String> param) {
 			return sqlSession.selectList("board.reportRPSearch", param);
+		}
+
+		@Override
+		public List<BoardReportDto> reportCategorySearch(Map<String, String> param) {
+			return sqlSession.selectList("board.reportCategorySearch", param);
 		}
 }

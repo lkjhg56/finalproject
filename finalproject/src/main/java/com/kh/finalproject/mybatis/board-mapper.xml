@@ -222,6 +222,18 @@
 		where rn between #{start} and #{finish}
 	</select>
 	
+	<!-- 신고게시글 카테고리별 목록 검색 -->
+	<select id="reportCategorySearch" parameterType="map" resultType="boardReportDto">
+		select * from( 
+		    select rownum rn, A.* from(select * from
+		        report R
+		            inner join board B
+		                on R.report_board_no = B.board_no
+		    where board_category = #{board_category} and ${type} like '%'||#{keyword}||'%' order by report_no desc
+		    )A)
+		where rn between #{start} and #{finish}
+	</select>
+	
 	
 	<!-- 	게시글 신고관리 게시글 갯수 조회 -->
 	<select id="boardReportCount" resultType="int">

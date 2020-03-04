@@ -395,6 +395,8 @@ public class AdminController {
 			
 		}
 		
+		
+//	관리자 게시글 신고 목록,검색 조회		
 	@GetMapping("/blacklist")
 	public String blacklist(Model model, HttpServletRequest request,
 											@RequestParam(required = false, defaultValue = "0") String type,
@@ -484,8 +486,13 @@ public class AdminController {
 				
 	}
 	
+//	관리자 게시글 신고 카테고리별 목록,검색 조회		
 	@PostMapping("/blacklist")
-	public String blacklist(@RequestParam(defaultValue = "전체") String board_category, Model model, HttpServletRequest request) {
+	public String blacklist(@RequestParam(defaultValue = "전체") String board_category, 
+											@RequestParam(required = false, defaultValue = "0") String type,
+											@RequestParam(required = false, defaultValue = "0") String keyword,
+											Model model, 
+											HttpServletRequest request) {
 		//페이지 크기
 			int pagesize = 10;
 			//네비게이터 크기
@@ -517,29 +524,64 @@ public class AdminController {
 				finishBlock = pagecount;
 			}
 			
-			Map<String, String> param = new HashMap<>();
-			param.put("start", String.valueOf(start));
-			param.put("finish", String.valueOf(finish));
-			param.put("board_category", board_category);
-		
-			request.setAttribute("pno", pno);
-			request.setAttribute("count", count);
-			request.setAttribute("pagesize", pagesize);
-			request.setAttribute("navsize", navsize);
-			request.setAttribute("board_category", board_category);
-		
-			List<BoardReportDto> dto = boardDao.getReportCGList(param);
+			if(board_category != null && keyword != null){
+				System.out.println("@@board_category="+board_category);
+				Map<String, String> param = new HashMap<>();
+				param.put("start", String.valueOf(start));
+				param.put("finish", String.valueOf(finish));
+				param.put("type", type);
+				param.put("keyword", keyword);
+				param.put("board_category", board_category);
+			
+				request.setAttribute("pno", pno);
+				request.setAttribute("count", count);
+				request.setAttribute("pagesize", pagesize);
+				request.setAttribute("navsize", navsize);
+				request.setAttribute("type", type);
+				request.setAttribute("keyword", keyword);
+				request.setAttribute("board_category", board_category);
+			
+				List<BoardReportDto> dto = boardDao.reportCategorySearch(param);
+				System.out.println("@@검색결과="+dto);
 
-			for(int i = 0; i < dto.size(); i ++) {
-				int board_no = dto.get(i).getReport_board_no();
-				int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
-				dto.get(i).setReport_count(addCount);
-				
-				if(board_no !=0) {
-					model.addAttribute("list", dto);
+				for(int i = 0; i < dto.size(); i ++) {
+					int board_no = dto.get(i).getReport_board_no();
+					int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
+					dto.get(i).setReport_count(addCount);
+					
+					if(board_no !=0) {
+						model.addAttribute("list", dto);
+					}			
 				}			
-			}			
-		return "admin/blacklist";
+			return "admin/blacklist";
+			}
+			
+			else {
+				System.out.println("@@@@board_category="+board_category);
+				Map<String, String> param = new HashMap<>();
+				param.put("start", String.valueOf(start));
+				param.put("finish", String.valueOf(finish));
+				param.put("board_category", board_category);
+			
+				request.setAttribute("pno", pno);
+				request.setAttribute("count", count);
+				request.setAttribute("pagesize", pagesize);
+				request.setAttribute("navsize", navsize);
+				request.setAttribute("board_category", board_category);
+			
+				List<BoardReportDto> dto = boardDao.getReportCGList(param);
+
+				for(int i = 0; i < dto.size(); i ++) {
+					int board_no = dto.get(i).getReport_board_no();
+					int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
+					dto.get(i).setReport_count(addCount);
+					
+					if(board_no !=0) {
+						model.addAttribute("list", dto);
+					}			
+				}			
+				return "admin/blacklist";
+			}
 	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////	
@@ -579,7 +621,6 @@ public class AdminController {
 			}
 			
 			if(keyword != null) {
-//				System.out.println("%%%type="+type);
 				Map<String, String> param = new HashMap<>();
 				param.put("start", String.valueOf(start));
 				param.put("finish", String.valueOf(finish));
@@ -665,17 +706,13 @@ public class AdminController {
 		@ResponseBody
 		private String send(@RequestParam(required = false) List<Integer> board_no,
 											@RequestParam(required = false) List<Integer> board_reply_no) {	
-			System.out.println("@@@board_no="+board_no);
-			System.out.println("@@@board_reply_no="+board_reply_no);
-			
 			if(board_reply_no==null) {
 				for(int i = 0; i < board_no.size(); i ++) {
 					BoardDto dto = boardDao.get(board_no.get(i));
 					String board_writer = dto.getBoard_writer();
 			
 					UsersDto udto = usersDao.getInfo(board_writer);
-//					String email = udto.getEmail();
-					String email = "all0216@naver.com";
+					String email = udto.getEmail();
 					emailService.sendEmail(email);
 				}
 				return "success";
@@ -686,8 +723,7 @@ public class AdminController {
 					String board_reply_writer = dto.getBoard_reply_writer();
 			
 					UsersDto udto = usersDao.getInfo(board_reply_writer);
-//					String email = udto.getEmail();
-					String email = "onyou1214@gmail.com";
+					String email = udto.getEmail();
 					emailService.sendEmail(email);
 				}
 				return "success";

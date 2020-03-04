@@ -217,6 +217,17 @@ $(function(){
 		}
 	});	
 });
+
+$(function(){
+	$("#search-btn").click(function(e){
+		//this==#search-btn
+		e.preventDefault();		
+		var data = $(".category").val();
+		console.log(data);
+		
+		document.querySelector(".categoryblacklist").submit()		
+	});	
+});
 </script>
 <div class="row-empty"></div>
 <div class="row-empty"></div>
@@ -226,18 +237,21 @@ $(function(){
 		<a href="${pageContext.request.contextPath}/admin/replyblacklist">댓글 관리</a>
 		<p>게시판관리 > 게시글 관리</p>
 	</div>
+	<form action="blacklist" class="category22" method="get">
+    	<input class="category23"  type="hidden" name="board_cetegory" value="${board_category}"> 
+	</form>
 	
 	<div class="container" style="text-align: left">
 	<form action="blacklist" class="categoryblacklist" method="post">
 		<select class="category"  name="board_category"> 
 			<option>카테고리 선택</option>
-			<option>전체</option>
-			<option>자유</option>
-			<option>질문</option>
+			<option value="전체"<c:if test="${board_category=='전체'}">selected="selected"</c:if>>전체</option>
+			<option value="자유"<c:if test="${board_category=='자유'}">selected="selected"</c:if>>자유</option>
+			<option value="질문"<c:if test="${board_category=='질문'}">selected="selected"</c:if>>질문</option>
 		</select>		
 	</form>
 	<div style="text-align: right" class="container">
-	    	<form class="blaklist" action="blacklist" method="get">    	
+	    	<form class="blaklist" action="blacklist" method="get">   
 		    		<select id="selectt" name="type">
 		    			<option value="board_title">제목</option>
 		    			<option value="board_writer">작성자</option>
