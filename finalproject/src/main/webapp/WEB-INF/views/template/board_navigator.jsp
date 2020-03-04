@@ -53,15 +53,15 @@
   box-shadow: none;
 }
 
-	.container nav{
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 5px; 
-    margin-bottom: -35px;
-}
+/* 	.container nav{ */
+/*     width: 100%; */
+/*     padding-right: 0px; */
+/*     padding-left: 0px; */
+/*     margin-right: auto; */
+/*     margin-left: auto; */
+/*     padding-top: 5px;  */
+/*     margin-bottom: -35px; */
+/* } */
 
 .pagination a:hover:not(.page-item active) {background-color: none;}
 </style>

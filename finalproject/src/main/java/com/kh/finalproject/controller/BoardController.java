@@ -27,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
 import com.kh.finalproject.entity.BoardFileDto;
+import com.kh.finalproject.entity.BoardReplyDto;
+import com.kh.finalproject.entity.BoardReportDto;
 import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.repository.BoardFileDao;
 import com.kh.finalproject.service.BoardFileService;
@@ -49,6 +51,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardFileDto boardfileDto;
+	
+	@Autowired
+	private BoardReportDto boardReportDto;
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -446,14 +451,37 @@ public class BoardController {
 		@PostMapping("/report")
 			public String report(@RequestParam(required = false, defaultValue = "0") int report_board_no,
 												@RequestParam(required = false, defaultValue = "0") int report_reply_no,
-												@RequestParam String report_board_writer,
+												@RequestParam String report_reason,
 												HttpSession session) {
-			System.out.println("%%board_no = "+report_board_no);
-			System.out.println("%%board_reply_no = "+report_reply_no);
-			
+
 			String reporter = (String) session.getAttribute("id");
+
 			
-			return null;
+			if(report_board_no == 0) { //댓글 신고일경우
+				BoardReplyDto rdto = boardDao.getReply(report_reply_no);
+				boardReportDto.setReport_board_writer(rdto.getBoard_reply_writer());
+				boardReportDto.setReport_reply_no(report_reply_no);
+				boardReportDto.setReporter(reporter);
+				boardReportDto.setReport_content(rdto.getBoard_reply_content());
+				boardReportDto.setReport_count(1);
+				boardReportDto.setReport_reason(report_reason);
+				
+				boardDao.reportRegist2(boardReportDto);
+			}
+			else {	//게시글 신고일경우
+				BoardDto bdto = boardDao.get(report_board_no);
+				System.out.println("%%BoardDto = "+bdto);
+				boardReportDto.setReport_board_no(report_board_no);
+				boardReportDto.setReport_board_writer(bdto.getBoard_writer());
+				boardReportDto.setReporter(reporter);
+				boardReportDto.setReport_content(bdto.getBoard_content());
+				boardReportDto.setReport_count(1);
+				boardReportDto.setReport_reason(report_reason);
+				
+				boardDao.reportRegist(boardReportDto);			
+									
+			}									
+			return "board/report";
 		}
 		
 }

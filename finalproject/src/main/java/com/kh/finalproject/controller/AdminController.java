@@ -18,17 +18,29 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.finalproject.entity.BoardDto;
+import com.kh.finalproject.entity.BoardReplyDto;
+import com.kh.finalproject.entity.BoardReportDto;
 import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.UsersDto;
+import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.UploadQuestionDao;
+import com.kh.finalproject.repository.UsersDao;
+import com.kh.finalproject.service.BoardFileService;
+import com.kh.finalproject.service.EmailService;
 import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.service.UploadQuestionService;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/admin")
+@Slf4j
 public class AdminController {
 	
 	@Autowired
@@ -41,6 +53,18 @@ public class AdminController {
 	
 	@Autowired
 	private NormalUploadQuestionDao NormalUploadQuestionDao;
+	
+	@Autowired
+	private BoardDao boardDao;
+	
+	@Autowired
+	private UsersDao usersDao;
+	
+	@Autowired
+	private BoardFileService boardfileService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -371,5 +395,303 @@ public class AdminController {
 			
 		}
 		
+	@GetMapping("/blacklist")
+	public String blacklist(Model model, HttpServletRequest request,
+											@RequestParam(required = false, defaultValue = "0") String type,
+											@RequestParam(required = false, defaultValue = "0") String keyword) {
+		//페이지 크기
+		int pagesize = 10;
+		//네비게이터 크기
+		int navsize = 10;
+		
+		//페이징 추가
+		int pno;
+		try{
+			pno = Integer.parseInt(request.getParameter("pno"));
+			if(pno <= 0) throw new Exception(); //음수를 입력하면 예외를 발생시킨다
+		}
+		catch(Exception e){
+			pno = 1;
+		}
+			
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+	//**************************************************************************************
+	//			 		하단 네비게이터 계산하기
+	//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
+	//**************************************************************************************
+		int count = boardDao.boardReportCount(); //전체글 개수를 구하는 메소드 		
+		int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
+		int startBlock = (pno -1) / navsize * navsize + 1;
+		int finishBlock = startBlock + (navsize -1);
+		
+		//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
+		if(finishBlock > pagecount){
+			finishBlock = pagecount;
+		}
+		
+		if(keyword != null) {
+			Map<String, String> param = new HashMap<>();
+			param.put("start", String.valueOf(start));
+			param.put("finish", String.valueOf(finish));
+			param.put("type", type);
+			param.put("keyword", keyword);
+			
+			List<BoardReportDto> dto = boardDao.reportSearch(param);
+			
+			for(int i = 0; i < dto.size(); i ++) {
+				int board_no = dto.get(i).getReport_board_no();
+				int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
+				dto.get(i).setReport_count(addCount);
+
+				if(board_no !=0) {
+					model.addAttribute("list", dto);	
+				}			
+			}						
+			request.setAttribute("pno", pno);
+			request.setAttribute("count", count);
+			request.setAttribute("pagesize", pagesize);
+			request.setAttribute("navsize", navsize);
+			request.setAttribute("type", type);
+			request.setAttribute("keyword", keyword);
+			
+			return "admin/blacklist";	
+		}
+		else {
+			Map<String, String> param = new HashMap<>();
+			param.put("start", String.valueOf(start));
+			param.put("finish", String.valueOf(finish));
+			
+			List<BoardReportDto> dto = boardDao.getReportList(param);
+			
+			for(int i = 0; i < dto.size(); i ++) {
+				int board_no = dto.get(i).getReport_board_no();
+				int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
+				dto.get(i).setReport_count(addCount);
+
+				if(board_no !=0) {
+					model.addAttribute("list", dto);	
+				}			
+			}			
+			
+			request.setAttribute("pno", pno);
+			request.setAttribute("count", count);
+			request.setAttribute("pagesize", pagesize);
+			request.setAttribute("navsize", navsize);
+			
+			return "admin/blacklist";
+		}
+				
+	}
 	
-}
+	@PostMapping("/blacklist")
+	public String blacklist(@RequestParam(defaultValue = "전체") String board_category, Model model, HttpServletRequest request) {
+		//페이지 크기
+			int pagesize = 10;
+			//네비게이터 크기
+			int navsize = 10;
+			
+			//페이징 추가
+			int pno;
+			try{
+				pno = Integer.parseInt(request.getParameter("pno"));
+				if(pno <= 0) throw new Exception(); //음수를 입력하면 예외를 발생시킨다
+			}
+			catch(Exception e){
+				pno = 1;
+			}
+				
+			int finish = pno * pagesize;
+			int start = finish - (pagesize - 1);			
+		//**************************************************************************************
+		//			 		하단 네비게이터 계산하기
+		//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
+		//**************************************************************************************
+			int count = boardDao.boardCategoryCount(board_category); //전체글 개수를 구하는 메소드 		
+			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수		
+			int startBlock = (pno -1) / navsize * navsize + 1;
+			int finishBlock = startBlock + (navsize -1);
+			
+			//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
+			if(finishBlock > pagecount){
+				finishBlock = pagecount;
+			}
+			
+			Map<String, String> param = new HashMap<>();
+			param.put("start", String.valueOf(start));
+			param.put("finish", String.valueOf(finish));
+			param.put("board_category", board_category);
+		
+			request.setAttribute("pno", pno);
+			request.setAttribute("count", count);
+			request.setAttribute("pagesize", pagesize);
+			request.setAttribute("navsize", navsize);
+			request.setAttribute("board_category", board_category);
+		
+			List<BoardReportDto> dto = boardDao.getReportCGList(param);
+
+			for(int i = 0; i < dto.size(); i ++) {
+				int board_no = dto.get(i).getReport_board_no();
+				int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
+				dto.get(i).setReport_count(addCount);
+				
+				if(board_no !=0) {
+					model.addAttribute("list", dto);
+				}			
+			}			
+		return "admin/blacklist";
+	}
+	
+//////////////////////////////////////////////////////////////////////////////////////////	
+	@GetMapping("/replyblacklist")
+	public String Rblacklist(Model model, HttpServletRequest request,
+											@RequestParam(required = false, defaultValue = "0") String type,
+											@RequestParam(required = false, defaultValue = "0") String keyword) {
+		//페이지 크기
+			int pagesize = 10;
+			//네비게이터 크기
+			int navsize = 10;
+			
+			//페이징 추가
+			int pno;
+			try{
+				pno = Integer.parseInt(request.getParameter("pno"));
+				if(pno <= 0) throw new Exception(); //음수를 입력하면 예외를 발생시킨다
+			}
+			catch(Exception e){
+				pno = 1;
+			}
+				
+			int finish = pno * pagesize;
+			int start = finish - (pagesize - 1);			
+		//**************************************************************************************
+		//			 		하단 네비게이터 계산하기
+		//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
+		//**************************************************************************************
+			int count = boardDao.reportRPCount(); //신고댓글 개수를 구하는 메소드 			
+			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
+			int startBlock = (pno -1) / navsize * navsize + 1;
+			int finishBlock = startBlock + (navsize -1);
+			
+			//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
+			if(finishBlock > pagecount){
+				finishBlock = pagecount;
+			}
+			
+			if(keyword != null) {
+//				System.out.println("%%%type="+type);
+				Map<String, String> param = new HashMap<>();
+				param.put("start", String.valueOf(start));
+				param.put("finish", String.valueOf(finish));
+				param.put("type", type);
+				param.put("keyword", keyword);
+				
+				List<BoardReportDto> dto = boardDao.reportRPSearch(param);
+				
+				for(int i = 0; i < dto.size(); i ++) {
+					int board_reply_no = dto.get(i).getReport_reply_no();
+					int addCount = boardDao.reportCountAdd2(dto.get(i).getReport_reply_no());
+					dto.get(i).setReport_count(addCount);
+
+					if(board_reply_no !=0) {
+						model.addAttribute("list", dto);
+					}			
+				}			
+				
+				request.setAttribute("pno", pno);
+				request.setAttribute("count", count);
+				request.setAttribute("pagesize", pagesize);
+				request.setAttribute("navsize", navsize);
+				request.setAttribute("type", type);
+				request.setAttribute("keyword", keyword);
+		
+			return  "admin/replyblacklist";	
+			}
+			
+			else {
+				Map<String, String> param = new HashMap<>();
+				param.put("start", String.valueOf(start));
+				param.put("finish", String.valueOf(finish));
+				
+				List<BoardReportDto> dto = boardDao.getReportRPList(param);
+				
+				for(int i = 0; i < dto.size(); i ++) {
+					int board_reply_no = dto.get(i).getReport_reply_no();
+					int addCount = boardDao.reportCountAdd2(dto.get(i).getReport_reply_no());
+					dto.get(i).setReport_count(addCount);
+
+					if(board_reply_no !=0) {
+						model.addAttribute("list", dto);
+					}			
+				}			
+				
+				request.setAttribute("pno", pno);
+				request.setAttribute("count", count);
+				request.setAttribute("pagesize", pagesize);
+				request.setAttribute("navsize", navsize);
+		
+			return  "admin/replyblacklist";	
+			}
+	}
+	
+	//게시글 삭제
+	@GetMapping("/delete2")
+		public String delete(@RequestParam List<Integer> board_no) {
+		
+		for(int i = 0; i < board_no.size(); i ++) {
+//		실제파일 삭제
+			boardfileService.deleteRealfile(board_no.get(i));
+//		DB에서 게시글 삭제
+			boardDao.delete(board_no.get(i)); 			
+		}		
+		return "redirect:blacklist";
+	}
+	
+	
+	//댓글 삭제
+	@PostMapping("/delete")
+	public String deletereply(@RequestParam List<Integer> board_reply_no,
+													@RequestParam List<Integer> board_reply_origin) {
+		for(int i = 0; i < board_reply_no.size(); i ++) {
+			sqlSession.delete("board.deleteReply", board_reply_no.get(i));
+			boardDao.replyCount(board_reply_origin.get(i));			
+		}
+		
+		return "redirect:replyblacklist";
+	}
+	
+	//이메일 전송
+		@GetMapping("/send")
+		@ResponseBody
+		private String send(@RequestParam(required = false) List<Integer> board_no,
+											@RequestParam(required = false) List<Integer> board_reply_no) {	
+			System.out.println("@@@board_no="+board_no);
+			System.out.println("@@@board_reply_no="+board_reply_no);
+			
+			if(board_reply_no==null) {
+				for(int i = 0; i < board_no.size(); i ++) {
+					BoardDto dto = boardDao.get(board_no.get(i));
+					String board_writer = dto.getBoard_writer();
+			
+					UsersDto udto = usersDao.getInfo(board_writer);
+//					String email = udto.getEmail();
+					String email = "all0216@naver.com";
+					emailService.sendEmail(email);
+				}
+				return "success";
+			}
+			else {
+				for(int i = 0; i < board_reply_no.size(); i ++) {
+					BoardReplyDto dto = boardDao.getReply(board_reply_no.get(i));
+					String board_reply_writer = dto.getBoard_reply_writer();
+			
+					UsersDto udto = usersDao.getInfo(board_reply_writer);
+//					String email = udto.getEmail();
+					String email = "onyou1214@gmail.com";
+					emailService.sendEmail(email);
+				}
+				return "success";
+			}
+
+	}
+}		

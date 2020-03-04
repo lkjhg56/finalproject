@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Service
-@Slf4j
 public class BoardFileServiceImpl implements BoardFileService{
 	
 	@Autowired
@@ -73,7 +72,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 		}
 		
 		//파일 저장(물리)			
-		File dir = new File("D:/upload/board_files");
+		File dir = new File("D:/upload/kh2b/board_files");
 		dir.mkdirs();
 			
 			for(int i = 0; i < list.size(); i++) {	
@@ -125,7 +124,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 			boardfileDao.deleteFile(board_no);
 			
 			//실제 파일 삭제
-			String filepath = "D:/upload/board_files/" + delete.get(i).getBoard_file_save_name();
+			String filepath = "D:/upload/kh2b/board_files/" + delete.get(i).getBoard_file_save_name();
 			System.out.println("filepath = "+filepath);					
 			File file = new File(filepath);
 			file.delete();				
@@ -145,7 +144,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 				}
 			
 			//파일 저장(물리저장)			
-			File dir = new File("D:/upload/board_files");
+			File dir = new File("D:/upload/kh2b/board_files");
 			dir.mkdirs();
 				
 				for(int i = 0; i < list.size(); i++) {	
@@ -234,7 +233,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 
 		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
 		//실제 파일을 읽어들인다. (폴더, 파일명)
-		File dir = new File("D:/upload/board_files");	
+		File dir = new File("D:/upload/kh2b/board_files");	
 		File file = new File(dir, String.valueOf(dto.getBoard_file_save_name()));
 		
 		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환
@@ -267,7 +266,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 			
 			if(!delete.isEmpty()) {			
 			for(int i = 0; i < delete.size(); i++) {	
-				String filepath = "D:/upload/board_files/"+delete.get(i).getBoard_file_save_name();
+				String filepath = "D:/upload/kh2b/board_files/"+delete.get(i).getBoard_file_save_name();
 				System.out.println("filepath = "+filepath);					
 				File file = new File(filepath);
 				file.delete();					
