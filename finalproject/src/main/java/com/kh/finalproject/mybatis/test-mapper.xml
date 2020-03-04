@@ -98,6 +98,11 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 			select * from test_question where csname=#{csname} and category_no=#{category_no}
 	</select>
 	
+	<!-- csname category-no로 문제 개수 -->
+	
+	<select id = "getCountCorrect" parameterType = "testQuestionDto" resultType = "int">
+			select count(*) from test_question where csname=#{csname} and category_no=#{category_no}
+	</select>
 	
 	<select id = "getCorrectNum" parameterType = "int" resultType = "int">
 			select count(*) from rcorrect where result_no=#{rno} and iscorrect=1
@@ -150,7 +155,14 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 		</select>
 	
 		
+<!-- rcorrect testQ -->
 
+<select id="testRcorrect" resultType="normalUpdateQuestionVO" parameterType = "int">
+Select T.*,R.correct,r.answer,r.iscorrect
+From test_question T inner join rcorrect R
+On t.no=r.test_no where r.result_no = #{rno}
+
+</select>
 
 		<select id = "totalNum" parameterType = "int" resultType = "int">
 			select count (*) from rcorrect where test_no=#{test_no}
