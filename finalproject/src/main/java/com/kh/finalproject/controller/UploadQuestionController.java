@@ -276,7 +276,6 @@ public class UploadQuestionController {
 		
 		//전체 페이지 수
 		int pageCount=(count+pageSize)/pageSize;
-		System.out.println(pageCount);
 		int startBlock = (pageNumber-1) / navSize * navSize+1;
 		int finishBlock = startBlock +(navSize-1);
 		

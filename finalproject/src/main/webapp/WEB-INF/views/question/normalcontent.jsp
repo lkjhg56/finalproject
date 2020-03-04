@@ -20,7 +20,6 @@ function previewImage(target){
 
 $(function () {
 	  $(".test").hide()
-	console.log("hide")
 	
 });
 

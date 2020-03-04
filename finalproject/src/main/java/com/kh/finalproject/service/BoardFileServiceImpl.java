@@ -125,8 +125,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 			boardfileDao.deleteFile(board_no);
 			
 			//실제 파일 삭제
-			String filepath = "D:/upload/board_files/" + delete.get(i).getBoard_file_save_name();
-			System.out.println("filepath = "+filepath);					
+			String filepath = "D:/upload/board_files/" + delete.get(i).getBoard_file_save_name();				
 			File file = new File(filepath);
 			file.delete();				
 		}
@@ -228,8 +227,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 		
 		//board_file_no에 대한 파일정보를 가져온다
 		BoardFileDto dto = boardfileDao.getFile(board_file_no);
-		System.out.println(dto);
-		System.out.println("저장명 = " +dto.getBoard_file_save_name());
+
 		
 
 		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
@@ -238,7 +236,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 		File file = new File(dir, String.valueOf(dto.getBoard_file_save_name()));
 		
 		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환
-		System.out.println("data = "+ data);
+
 		
 		
 		//헤더 설정 및 전송
@@ -267,8 +265,7 @@ public class BoardFileServiceImpl implements BoardFileService{
 			
 			if(!delete.isEmpty()) {			
 			for(int i = 0; i < delete.size(); i++) {	
-				String filepath = "D:/upload/board_files/"+delete.get(i).getBoard_file_save_name();
-				System.out.println("filepath = "+filepath);					
+				String filepath = "D:/upload/board_files/"+delete.get(i).getBoard_file_save_name();			
 				File file = new File(filepath);
 				file.delete();					
 			}		

@@ -76,8 +76,6 @@ public class BoardRestController {
 				
 				boardDao.rereplyRegist(target);
 				boardDao.replyCount(board_reply_origin);
-										
-				System.out.println("대댓글등록!");
 				
 				return "success";		
 			}
@@ -102,7 +100,6 @@ public class BoardRestController {
 	public String replyEdit(@ModelAttribute BoardReplyDto boardReplyDto,
 											@ModelAttribute BoardDto boardDto,
 											HttpSession session) {
-		System.out.println(boardReplyDto.getBoard_reply_no());
 		boardDao.replyEdit(boardReplyDto);			
 		
 		return "success";

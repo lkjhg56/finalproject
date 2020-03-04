@@ -66,8 +66,7 @@ public class BoardDaoImpl implements BoardDao{
 				for(int i = 0; i < delete.size(); i++) {
 					
 					//실제 파일 삭제
-					String filepath = "D:/upload/board_files/" + delete.get(i).getBoard_file_save_name();
-					System.out.println("filepath = "+filepath);					
+					String filepath = "D:/upload/board_files/" + delete.get(i).getBoard_file_save_name();		
 					File file = new File(filepath);
 					file.delete();				
 				}			

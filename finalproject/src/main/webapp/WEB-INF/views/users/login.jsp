@@ -79,7 +79,7 @@ h1 {
 	<form action="login" method="post">
 		<p id="p">ID</p>
 		<input type="text" name="id" required>
-		 
+		 		
 		 <p id="p">PASSWORD</p>
 		<input type="password" name="pw" required>
 		

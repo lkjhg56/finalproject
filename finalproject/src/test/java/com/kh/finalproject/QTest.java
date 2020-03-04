@@ -32,7 +32,7 @@ public class QTest {
 	@Test
 	public void questionSequece() {
 		int s = sqlSession.selectOne("question.getNo","dlgudwn");
-		System.out.println(s);
+//		System.out.println(s);
 	}
 	
 }

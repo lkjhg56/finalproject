@@ -97,8 +97,6 @@ public class BoardController {
 		@GetMapping("/delete")
 		public String delete(@RequestParam int board_no) {
 		
-		System.out.println("@@@@@"+board_no);
-		
 //		실제파일 삭제
 			boardfileService.deleteRealfile(board_no);
 //		DB에서 게시글 삭제
@@ -111,8 +109,6 @@ public class BoardController {
 		//리스트 사이즈만큼 삭제 반복문 document.querySelector(".selectDelete").submit()
 	@GetMapping("/delete2")
 		public String delete(@RequestParam List<Integer> board_no) {
-		
-		System.out.println("@@@@@"+board_no);
 		
 		for(int i = 0; i < board_no.size(); i ++) {
 //		실제파일 삭제
@@ -197,18 +193,13 @@ public class BoardController {
 			
 		int finish = pno * pagesize;
 		int start = finish - (pagesize - 1);
-			System.out.println("start = " + start + " , finish = " + finish);
 		
 	//**************************************************************************************
 	//			 		하단 네비게이터 계산하기
 	//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 	//**************************************************************************************
 		int count = boardDao.boardReplyCount(board_no); //전체글 개수를 구하는 메소드 
-		System.out.println("!!!"+count);
-		
 		int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-		System.out.println(pagecount);
-		
 		int startBlock = (pno -1) / navsize * navsize + 1;
 		int finishBlock = startBlock + (navsize -1);
 		
@@ -263,17 +254,17 @@ public class BoardController {
 				
 			int finish = pno * pagesize;
 			int start = finish - (pagesize - 1);
-				System.out.println("start = " + start + " , finish = " + finish);
+				
 			
 		//**************************************************************************************
 		//			 		하단 네비게이터 계산하기
 		//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 		//**************************************************************************************
 			int count = boardDao.boardCount(); //전체글 개수를 구하는 메소드 
-			System.out.println(count);
+//			System.out.println(count);
 			
 			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-			System.out.println(pagecount);
+//			System.out.println(pagecount);
 			
 			int startBlock = (pno -1) / navsize * navsize + 1;
 			int finishBlock = startBlock + (navsize -1);
@@ -379,7 +370,6 @@ public class BoardController {
 				
 			int finish = pno * pagesize;
 			int start = finish - (pagesize - 1);
-				System.out.println("start = " + start + " , finish = " + finish);
 			
 //**************************************************************************************
 //		 		하단 네비게이터 계산하기
@@ -421,9 +411,7 @@ public class BoardController {
 		public String report(@RequestParam(required = false, defaultValue = "0") int report_board_no,
 											@RequestParam(required = false, defaultValue = "0") int report_reply_no,
 											Model model) {
-			
-			System.out.println("%%board_no = "+report_board_no);
-			System.out.println("%%board_reply_no = "+report_reply_no);
+
 			
 			if(report_board_no == 0) { //댓글 신고일경우
 				boardDao.getReply(report_reply_no);
@@ -444,9 +432,7 @@ public class BoardController {
 												@RequestParam(required = false, defaultValue = "0") int report_reply_no,
 												@RequestParam String report_board_writer,
 												HttpSession session) {
-			System.out.println("%%board_no = "+report_board_no);
-			System.out.println("%%board_reply_no = "+report_reply_no);
-			
+
 			String reporter = (String) session.getAttribute("id");
 			
 			return null;
