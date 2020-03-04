@@ -27,10 +27,8 @@ public class GmailService implements EmailService{
 	public String sendCertMessage(String email, String cert) {
 		
 		try {
-		// 메세지 객체 생성
 		SimpleMailMessage message = new SimpleMailMessage();
 		
-		// 정보 설정 : 대상정보, 제목, 내용
 		String[] to = {email};
 		message.setTo(to);
 		
@@ -66,7 +64,6 @@ public class GmailService implements EmailService{
 		helper.setSubject("[Q master] 비밀번호 변경 메일입니다.");
 		
 		//주소 생성
-//		String url = "http://localhost:8080/sts21/pw/change?cert="+cert+"&email="+email;
 		String url = ServletUriComponentsBuilder
 							.fromCurrentContextPath()
 							.port(8080)
@@ -76,19 +73,18 @@ public class GmailService implements EmailService{
 							.toUriString();
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<h1>비밀번호 변경을 위해 하단 링크를 누르세요.</h1>");
-		buffer.append("<h2>");
+		buffer.append("<h2>비밀번호 변경을 위해 하단 링크로 이동하세요.</h2>");
+		buffer.append("<h3>");
 		buffer.append("<a href='");
 		buffer.append(url);
 		buffer.append("'>");
-		buffer.append("이동");
+		buffer.append("www.Qmaster.com");
 		buffer.append("</a>");
-		buffer.append("</h2>");
+		buffer.append("</h3>");
 		
 		helper.setText(buffer.toString(), true);
 		
 		sender.send(message);
-		
 		
 	}
 }

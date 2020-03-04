@@ -20,69 +20,6 @@ import org.springframework.stereotype.Service;
 public class EncryptServiceImpl implements EncryptService{
 
 	@Override
-	public String ceasarEncrypt(String origin, int offset) {
-		
-		//변환 결과를 저장할 저장소
-		StringBuffer buffer = new StringBuffer();
-		
-		//글자를 반복하며 변환
-		for(int i = 0; i < origin.length(); i++) {
-			
-			//한글자 추출
-			char ch = origin.charAt(i);
-			//글자를 변조(+)
-			ch += offset;
-			//저장소에 추가
-			buffer.append(ch);
-		}
-		
-		//저장소의 글자를 반환
-		return buffer.toString();
-	}
-
-	@Override
-	public String ceasarDecrypt(String origin, int offset) {
-		
-		//변환 결과를 저장할 저장소
-		StringBuffer buffer = new StringBuffer();
-		
-		//글자를 반복하며 변환
-		for(int i = 0; i < origin.length(); i++) {
-			
-			//한글자 추출
-			char ch = origin.charAt(i);
-			//글자를 변조(+)
-			ch -= offset;
-			//저장소에 추가
-			buffer.append(ch);
-		}
-		
-		//저장소의 글자를 반환
-		return buffer.toString();
-	}
-
-	@Override
-	public String xorEncrypt(String origin, int offset) {
-		
-		//변환 결과를 저장할 저장소
-		StringBuffer buffer = new StringBuffer();
-		
-		//글자를 반복하며 변환
-		for(int i = 0; i < origin.length(); i++) {
-			
-			//한글자 추출
-			char ch = origin.charAt(i);
-			//글자를 변조(+)
-			ch ^= offset;
-			//저장소에 추가
-			buffer.append(ch);
-		}
-		
-		//저장소의 글자를 반환
-		return buffer.toString();
-	}
-
-	@Override
 	public String AES256Encrypt(String origin, String offset) throws GeneralSecurityException, UnsupportedEncodingException{
 		SecureRandom sr = new SecureRandom();
 		byte[] by = new byte[20];

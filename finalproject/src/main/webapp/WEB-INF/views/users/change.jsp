@@ -59,11 +59,60 @@
 		}).open();
 	}
 </script>
+<style>
+.container input[type=text] {
+	font-size: 18px;
+	border: 0px;
+	outline: #efefef;
+	border-bottom: 1px solid #565960;
+	width: 280px;
+	height: 2rem;
+	padding: 20px;
+
+}
+.container input[type=tel] {
+	font-size: 18px;
+	border: 0px;
+	outline: #efefef;
+	border-bottom: 1px solid #565960;
+	margin-left: 2px;
+	width: 150px;
+	height: 2rem;
+	padding: 20px;
+
+}
+.addr>#postcode {
+	width: 280px;
+	margin-bottom: 6px;
+}
+.addr>#address {
+	width: 444px;
+}
+.addr>#detailAddress {
+	width: 280px;
+	margin: 6px 0px;
+}
+.addr>#extraAddress {
+	width: 160px;
+}
+#change{
+	width: 220px;
+    height: 50px;
+    font-size: 18px;
+    margin-left: 445px;
+}
+#change:hover{
+	width: 220px;
+    height: 50px;
+    font-size: 19px;
+    margin-left: 445px;
+}
+</style>
 <div class="container">
 <h1>정보 수정</h1>
 
 <form action="change" method="post">
-<table class="table" border="1">
+<table class="table table-hover">
 	<tr>
     <th>
     	프로필<br>
@@ -91,7 +140,7 @@
   <tr>
     <th>비밀번호</th>
     <td>
-		<a href="pw/input"><input type="button" value="비밀번호 변경하기"></a>
+		<a href="pw/input"><input type="button" class="btn btn-primary" value="비밀번호 변경하기"></a>
 	</td>
   </tr>
   <tr>
@@ -117,11 +166,13 @@
   <tr>
     <th>주소</th>
     <td>
-		<input type="text" id="postcode" name="postcode" value="${users.postcode}" required> 
-		<input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br> 
-		<input type="text" id="address" name="address" value="${users.address}" required><br> 
-		<input type="text" id="detailAddress" name="detailAddress" value="${users.detailAddress}" onfocus="loadMap()" required> 
-		<input type="text" id="extraAddress" name="extraAddress" value="${users.extraAddress}" ><br>
+		<div class="addr">
+			<input type="text" id="postcode" name="postcode"  value="${users.postcode}" required> 
+			<input type="button" class="btn btn-primary" onclick="DaumPostcode()"value="우편번호 찾기"><br> 
+			<input type="text" id="address" name="address" value="${users.address}" required><br> 
+			<input type="text" id="detailAddress" name="detailAddress" value="${users.detailAddress}" onfocus="loadMap()" required> 
+			<input type="text" id="extraAddress" name="extraAddress" value="${users.extraAddress}">
+		</div>
 	</td>
   </tr>
   <tr>
@@ -141,7 +192,7 @@
     <td>${users.join_date.substring(0,10)}</td>
   </tr>
 </table>
-	<input type="submit" value="수정하기"> 
+	<input type="submit" class="btn btn-primary" id="change" value="수정하기"> 
 </form>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
