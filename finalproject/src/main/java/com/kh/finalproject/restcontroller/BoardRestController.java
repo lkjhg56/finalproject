@@ -108,7 +108,6 @@ public class BoardRestController {
 	//댓글 목록 조회
 //	@PostMapping("/list")
 	public List<BoardReplyDto> getList(@RequestParam int board_reply_origin) {
-		log.info("iscome?");
 		BoardReplyDto replyDto =BoardReplyDto.builder()
 																					.board_reply_origin(board_reply_origin)
 																					.build();

@@ -143,7 +143,7 @@ $(function(){
 		<tr>
 			<th>카테고리</th>
 			<td>
-				<select name="board_category"> <br><br>
+				<select name="board_category"> 
 					<option>선택하세요</option>
 					<option>자유</option>
 					<option>질문</option>

@@ -8,12 +8,26 @@
 	     font-weight: 400;
 	      font-size: 13px;
 	}
-	
 	.row-empty {
 		height: 30px;
 	}
+	.categoryblacklist{
+		margin-top: -50px;
+		display: inline-block;
+	}
 	
-	input[type="search"]{
+	.container .menu  a{
+	  font-size: 20px;
+	   font-weight: 550;
+	}
+	
+	p{
+		margin:0px;
+		margin-top:10px;
+		margin-bottom: 15px;
+	}
+	
+		input[type="search"]{
 	    width: 238px;
 	    height: 36px;
 	    padding: 0 50px 0 20px;
@@ -51,55 +65,7 @@
         border: none;
         border-bottom:  1px solid black;
        }
-       
-      .btn22 {
-      	 font-family: 'Noto Sans';
-	     font-weight: 420;
-	     font-size: 13px;
-	     border:none;
-		  display: inline-block;
-		  font-weight: 400;
-		  color: #212529;
-		  text-align: center;
-		  vertical-align: middle;
-		  background-color: white;
-		  border: 1px solid transparent;
-		  padding: 0.375rem 0.75rem;
-		  font-size: 1rem;
-		  line-height: 1.5;
-		  border-radius: 0.25rem;
-		 }
-       
-      .category-btn:hover, .category-btn:active{
-		background: none;
-		color : #1295D3;
-		outline : none;
-	}
-
-	
-	.btn-primary a{
-		color: white;
-		text-decoration:none;	
-		font-size: 12px;	
-	}
-	
-	#fo{
-		margin-bottom: -45px;
-		display: inline-block;
-	}
-	
-/* 	.container nav{ */
-/*     width: 100%; */
-/*     padding-right: 0px; */
-/*     padding-left: 0px; */
-/*     margin-right: auto; */
-/*     margin-left: auto; */
-/*     padding-top: 5px;  */
-/*     margin-bottom: -35px; */
-/* } */
-
-	.btn23 {
-      	 font-family: 'Noto Sans';
+       .btn23 {
 	     font-weight: 420;
 	     font-size: 13px;
 		  display: inline-block;
@@ -112,7 +78,16 @@
 		  padding: 0.375rem 0.75rem;
 		  line-height: 1.5;
 		 }
-	
+		 
+		  .menu{
+		 	margin-bottom: 8px;
+		 }
+		 
+		  .btn25{
+		 	 color: #212529;
+		 	 border: 1px solid black;
+		 	 padding: 0.2rem 0.5rem;
+		 }
 </style>
 <script>
 function kQuery(selector){
@@ -138,7 +113,6 @@ function kQuery(selector){
         },
     }; 
 }
-
 
 //id가 check-all인 대상이 체크되면 check-item의 체크상태를 변화시키고 send_array 배열에 글번호를 추가
 $(function(){    
@@ -190,117 +164,137 @@ $(function(){
 		console.log(data);
 		
 		if(!data.length){
-			alert("삭제할 게시글을 선택하세요.");
+			alert("삭제할 댓글을 선택하세요.");
 		}
 		else{
 		document.querySelector(".selectDelete").submit()
 			
 		}
-		
-
 		});	
 	});
 	
-  
+$(function(){
+	$("#email").click(function(e){
+		//this==#email
+		e.preventDefault();		
+		var data = $(".selectDelete").serialize();
+		console.log(data);
+		
+		if(!data.length){
+			alert("메일을 받을 글 작성자를 선택하세요.");
+		}
+		else{
+			$.ajax({
+				 url: "${pageContext.request.contextPath}/admin/send",
+				type:"get",
+				data:data,
+				success:function(resp){
+					//console.log(resp);
+					if(resp == "success"){
+						alert("메일전송이 완료되었습니다.");
+					}
+				}
+			});
+		 }
+			
+	});	
+});
 
 </script>
 <div class="row-empty"></div>
 <div class="row-empty"></div>
-<div class="container">    
-
-<form id="fo" action="list" method="get">
-		<input class="btn22 category-btn" type="submit" name="board_category" value="전체">
-		<input class="btn22 category-btn"  type="submit" name="board_category" value="자유">
-		<input class="btn22 category-btn"  type="submit" name="board_category" value="질문">
-		<input class="btn22 category-btn"  id="notice" type="submit" name="board_category" value="공지">
-		<input class="btn22 category-btn"  id="update" type="submit" name="board_category" value="업데이트">
-	</form>
+<div class="container">
+	<div class="container menu ff">
+		<a href="${pageContext.request.contextPath}/admin/blacklist">게시글 관리</a> | 
+		<a href="${pageContext.request.contextPath}/admin/replyblacklist">댓글 관리</a>
+		<p>게시판관리 > 댓글 관리</p>
+	</div>
 	
+	<div class="container" style="text-align: left">
+		<button class="btn23 menu" id="selectDelete">선택삭제</button>
+		<button class="btn23 menu" id="email">메일 보내기</button>
+		
 		<div style="text-align: right" class="container">
-	    	<form action="search" method="get">    	
-		    		<select id="selectt" name="type">
-		    			<option value="board_title">제목</option>
-		    			<option value="board_writer">작성자</option>
-		    			<option value="board_content">글내용</option>
-		    		</select>    		
-	    		<input type="search" name="keyword"  required>
-				<input id="search-btn" type="submit"  value="　" >
-			</form>
-	</div>	
-<hr>
-
+		    	<form class="categoryblacklist" action="replyblacklist" method="get">    	
+			    		<select id="selectt" name="type">
+			    			<option value="board_reply_writer">작성자</option>
+			    			<option value="board_reply_content">댓글내용</option>
+			    		</select>    		
+		    		<input type="search" name="keyword"  required>
+					<input id="search-btn" type="submit"  value="　" >
+				</form>
+		</div>	
+	</div>
 	
-	<form action="delete2" class="selectDelete">
+	
+	<form action="delete" class="selectDelete" method="post">
 	<table class="table table-hover" style="text-align: center">
 		<thead>
 			<tr>
-				<c:if test="${grade == '관리자'}">
-					<th><input type="checkbox" id="check-all">전체선택</th>						
-				</c:if>
+				<th><input type="checkbox" id="check-all">전체</th>						
 				<th>No.</th>						
-				<th>카테고리</th>
-				<th width="40%">글제목</th>
-				<th>조회수</th>
+				<th width="20%">댓글내용</th>
 				<th>작성자</th>
 				<th>작성일</th>
+				<th>신고사유</th>
+				<th>신고일</th>
+				<th>신고누적횟수</th>
+				<th></th>
 			</tr>
 		</thead>
 			
 		<c:forEach var="list" items="${list}">
-			<tr>
-				<c:if test="${grade == '관리자'}">
-						<td><input type="checkbox" class="check-item" name="board_no" value="${list.board_no }"></td>						
-				</c:if>
-				<td>
-					${list.board_no } 
-				</td>
-				<td>
-					${list.board_category} 
-				</td>
-				<td style="text-align: left">
-					<a href=${pageContext.request.contextPath}/board/content?board_no=${list.board_no}>${list.board_title }</a> 
-					[${list.board_replycount }] 
-				</td>
-				<td>
-					${list.board_readcount} 
-				</td>
-				<td>
-					${list.board_writer } 
-				</td>
-				<td>
-					${list.board_wdate.substring(0,16) }
-				</td>
-			</tr>				
-		</c:forEach>
+			<c:if test="${list.report_reply_no!=0}">
+				<tr>
+					<td><input type="checkbox" class="check-item" name="board_reply_no" value="${list.report_reply_no}">
+					<input type="hidden" name="board_reply_origin" value="${list.board_reply_origin }"></td>						
+					<td>
+						${list.report_no} 
+					</td>
+					<td style="text-align: left">
+						<a href=${pageContext.request.contextPath}/board/content?board_no=${list.board_reply_origin}>${list.report_content}</a> 
+					</td>
+					<td>
+						${list.report_board_writer } 
+					</td>
+					<td>
+						${list.board_reply_wdate.substring(0,16) }
+					</td>
+					<td>
+						${list.report_reason}
+					</td>
+					<td>
+						${list.report_date.substring(0,16)}
+					</td>
+					<td>
+						${list.report_count}
+					</td>
+					<c:choose>
+				<c:when test="${list.report_count >= 3}">
+					<td>
+						<button class="btn25">강제탈퇴</button>
+					</td>
+				</c:when>
+				<c:otherwise>
+					<td>
+					</td>
+				</c:otherwise>
+				</c:choose>	
+				</tr>	
+				</c:if>	
+		</c:forEach>		
 	</table>
 	</form>
-	
-	<div class="container" style="text-align: right">
-		<!-- 관리자기능 게시글 다중삭제 -->
-		<c:if test="${grade == '관리자'}">
-			<button class="btn23 category-btn" id="selectDelete">선택삭제</button>
-		</c:if>
-		
-		<!-- 글쓰기 버튼은 로그인시 표시됨 -->		
-		<c:if test="${id != null}">				
-			<button type="button" class="btn23 category-btn">
-				<a href=${pageContext.request.contextPath}/board/regist><i class="fas fa-pencil-alt"></i>글쓰기</a>
-			</button>						
-		</c:if>	
-	</div>
-	
-	  <div class="container nav" style="text-align: center;">
-    		<!-- 네비게이터(navigator) -->    		
-    		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
-    			<jsp:param name="pno" value="${pno}" />
-    			<jsp:param name="count" value="${count}" />
-    			<jsp:param name="navsize" value="${navsize}" />
-    			<jsp:param name="pagesize" value="${pagesize}" />
-    			<jsp:param name="board_category" value="${board_category}"/>
-    		</jsp:include>
-    	
-	
-	
+
+	<div class="container nav" style="text-align: center;">
+	<!--  네비게이터(navigator) -->
+   		<jsp:include page="/WEB-INF/views/template/board_navigator.jsp">
+   			<jsp:param name="pno" value="${pno}" />
+   			<jsp:param name="count" value="${count}" />
+   			<jsp:param name="navsize" value="${navsize}" />
+   			<jsp:param name="pagesize" value="${pagesize}" />
+   		</jsp:include>
+   	</div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

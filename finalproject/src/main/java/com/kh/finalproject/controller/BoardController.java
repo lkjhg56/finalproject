@@ -27,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BoardDto;
 import com.kh.finalproject.entity.BoardFileDto;
+import com.kh.finalproject.entity.BoardReplyDto;
+import com.kh.finalproject.entity.BoardReportDto;
 import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.repository.BoardFileDao;
 import com.kh.finalproject.service.BoardFileService;
@@ -51,6 +53,9 @@ public class BoardController {
 	private BoardFileDto boardfileDto;
 	
 	@Autowired
+	private BoardReportDto boardReportDto;
+	
+	@Autowired
 	private SqlSession sqlSession;
 	
 ////////////글 작성///////////////////////////
@@ -65,7 +70,6 @@ public class BoardController {
 									HttpSession session) throws IllegalStateException, IOException {		
 
 		String board_writer = (String) session.getAttribute("id");
-		log.info(board_writer);
 		boardDto.setBoard_writer(board_writer);
 
 			boardfileService.registWithFile(boardDto, board_file);
@@ -141,11 +145,10 @@ public class BoardController {
 		
 		//[2] 처리를 수행한다
 				String board_writer = (String) session.getAttribute("id");
-//				System.out.println("sessionID = "+board_writer);
+
 				if(board_writer != null) {
 					boolean isMine = board_writer.equals(getdto.getBoard_writer()); //사용자ID == 작성자ID 라고 물어보는것
 					boolean isFirst = memory.add(board_no); //배열에 조회한 글번호를 넣어서 처음 들어가면 true, 재조회라면 false임 
-//		 		System.out.println("memory="+memory); //배열에 저장된 글번호를 조회해 확인용.
 
 					//[3] 처리를 마치고 저장소를 다시 세션에 저장한다
 					session.setAttribute("memory", memory); //세션에 저장소가 들어간다.
@@ -170,7 +173,6 @@ public class BoardController {
 		for(int i = 0; i < dto.size(); i ++) {
 			int board_file_no = dto.get(i).getBoard_file_no();
 			boardfileDto = boardfileDao.getFile(board_file_no);
-//			System.out.println("파일정보 = "+boardfileDto);		
 			filelist.add(boardfileDto);
 		}
 		
@@ -193,7 +195,7 @@ public class BoardController {
 			
 		int finish = pno * pagesize;
 		int start = finish - (pagesize - 1);
-		
+
 	//**************************************************************************************
 	//			 		하단 네비게이터 계산하기
 	//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
@@ -234,7 +236,6 @@ public class BoardController {
 ////////////////////전체 목록 조회///////////////////
 	@GetMapping("/list")
 	public String list(@RequestParam(defaultValue = "전체") String board_category, Model model, HttpServletRequest request) {
-//		System.out.println(board_category);
 		
 		if(board_category.equals("전체")) {
 			//페이지 크기
@@ -253,9 +254,7 @@ public class BoardController {
 			}
 				
 			int finish = pno * pagesize;
-			int start = finish - (pagesize - 1);
-				
-			
+			int start = finish - (pagesize - 1);			
 		//**************************************************************************************
 		//			 		하단 네비게이터 계산하기
 		//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
@@ -264,7 +263,6 @@ public class BoardController {
 //			System.out.println(count);
 			
 			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-//			System.out.println(pagecount);
 			
 			int startBlock = (pno -1) / navsize * navsize + 1;
 			int finishBlock = startBlock + (navsize -1);
@@ -307,15 +305,12 @@ public class BoardController {
 			}
 				
 			int finish = pno * pagesize;
-			int start = finish - (pagesize - 1);
-			//	System.out.println("start = " + start + " , finish = " + finish);
-			
+			int start = finish - (pagesize - 1);			
 		//**************************************************************************************
 		//		하단 네비게이터 계산하기
 		//		- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 		//**************************************************************************************
 			int count = boardDao.boardCategoryCount(board_category); //전체글 개수를 구하는 메소드 
-			System.out.println("카테고리 글수 = "+count);
 			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
 			
 			int startBlock = (pno -1) / navsize * navsize + 1;
@@ -369,8 +364,7 @@ public class BoardController {
 			}
 				
 			int finish = pno * pagesize;
-			int start = finish - (pagesize - 1);
-			
+			int start = finish - (pagesize - 1);			
 //**************************************************************************************
 //		 		하단 네비게이터 계산하기
 //				- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
@@ -383,7 +377,7 @@ public class BoardController {
 				
 				
 			int count = boardDao.boardSearchCount(param); //검색결과 전체글 개수를 구하는 메소드 			
-			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수			
+			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
 			int startBlock = (pno -1) / navsize * navsize + 1;
 			int finishBlock = startBlock + (navsize -1);
 			
@@ -391,8 +385,7 @@ public class BoardController {
 			if(finishBlock > pagecount){
 				finishBlock = pagecount;
 			}
-			
-//			System.out.println("Map<String, String> param"+param);
+
 			model.addAttribute("search", boardDao.search(param));
 			
 			request.setAttribute("pno", pno);
@@ -411,8 +404,6 @@ public class BoardController {
 		public String report(@RequestParam(required = false, defaultValue = "0") int report_board_no,
 											@RequestParam(required = false, defaultValue = "0") int report_reply_no,
 											Model model) {
-
-			
 			if(report_board_no == 0) { //댓글 신고일경우
 				boardDao.getReply(report_reply_no);
 				model.addAttribute("boardReplyDto", boardDao.getReply(report_reply_no));								
@@ -430,12 +421,36 @@ public class BoardController {
 		@PostMapping("/report")
 			public String report(@RequestParam(required = false, defaultValue = "0") int report_board_no,
 												@RequestParam(required = false, defaultValue = "0") int report_reply_no,
-												@RequestParam String report_board_writer,
+												@RequestParam String report_reason,
 												HttpSession session) {
 
 			String reporter = (String) session.getAttribute("id");
+
 			
-			return null;
+			if(report_board_no == 0) { //댓글 신고일경우
+				BoardReplyDto rdto = boardDao.getReply(report_reply_no);
+				boardReportDto.setReport_board_writer(rdto.getBoard_reply_writer());
+				boardReportDto.setReport_reply_no(report_reply_no);
+				boardReportDto.setReporter(reporter);
+				boardReportDto.setReport_content(rdto.getBoard_reply_content());
+				boardReportDto.setReport_count(1);
+				boardReportDto.setReport_reason(report_reason);
+				
+				boardDao.reportRegist2(boardReportDto);
+			}
+			else {	//게시글 신고일경우
+				BoardDto bdto = boardDao.get(report_board_no);
+				boardReportDto.setReport_board_no(report_board_no);
+				boardReportDto.setReport_board_writer(bdto.getBoard_writer());
+				boardReportDto.setReporter(reporter);
+				boardReportDto.setReport_content(bdto.getBoard_content());
+				boardReportDto.setReport_count(1);
+				boardReportDto.setReport_reason(report_reason);
+				
+				boardDao.reportRegist(boardReportDto);			
+									
+			}									
+			return "board/report";
 		}
 		
 }

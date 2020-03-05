@@ -87,6 +87,47 @@ public class GmailService implements EmailService{
 		sender.send(message);
 		
 	}
+
+	@Override
+	public String sendEmail(String email) {
+		try {
+			// 메세지 객체 생성
+			MimeMessage message = sender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			
+			// 정보 설정 : 대상정보, 제목, 내용
+			String[] to = {email}; //받는사람의 이메일
+			helper.setTo(to);			
+			
+			helper.setSubject("[Q master] 게시글 처리 안내입니다.");
+			
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("<h3>");
+			buffer.append("안녕하세요? Q master 관리자입니다.");
+			buffer.append("</h3>");
+			buffer.append("<h3>");
+			buffer.append("항상 Q master를 이용해주시고 많은 관심 가져주셔서 진심으로 감사드립니다.");
+			buffer.append("</h3>");
+			buffer.append("<h3>");
+			buffer.append("회원님이 작성한 게시글에 신고가 접수되어 안내드립니다.");
+			buffer.append("</h3>");	
+			buffer.append("<h3>");
+			buffer.append("같은 게시글에 누적 신고 횟수가 3회 이상이 되면 관리자에 의해 삭제 처리 될 수 있으며, 이용제한 조치가 진행 될 수 있으니 유의하시기 바랍니다.");
+			buffer.append("</h3>");	
+			
+			helper.setText(buffer.toString(), true);
+			
+			sender.send(message);
+			
+			return "success";
+			} 
+		
+		catch(Exception e) {
+			e.printStackTrace();
+			return "fail";
+		}
+		
+	}
 }
 	
 	
