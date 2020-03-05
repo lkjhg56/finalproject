@@ -275,7 +275,7 @@ for(MultipartFile mf : normalUpdateQuestionVO.getFile()) {
 				);
 	}		
 	//새 디렉토리 생성
-	File dir = new File("D:/upload//kh2b/normalquestion_image");
+	File dir = new File("D:/upload/kh2b/normalquestion_image");
 	dir.mkdir();
 	
 	for(int i=0;i<list.size();i++) {
