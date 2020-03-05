@@ -13,13 +13,13 @@
 	//   opener.location.reload();
 
        var test = quesno+disno
-		console.log(test+"확인")
+		console.warn(test+"확인")
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
 
        var checked3= document.getElementById(id);
        if (checked.checked==true){
-           console.log("체크됨")
+           console.warn("체크됨")
            for(var i=0; i<checkbox2.length; i++){
            if(disno != i+1){
                $(checkbox2[i]).hide();
@@ -119,15 +119,15 @@
 
         $(function () {
       	  $(".test").hide()
-      	console.log("hide")
+      	console.warn("hide")
       	
       });
       
       
      function file(abc) {
-      	console.log("show")
+      	console.warn("show")
       	var checking = document.getElementsByName(abc);
-      	console.log(checking)
+      	console.warn(checking)
     	$(checking).show();
   		
       	
@@ -190,7 +190,7 @@ console.log(${clist.no}-1); */
 
 function deletesession() {
 	//삭제 알림창
-            console.log("세션빼기");
+            console.warn("세션빼기");
       /*       e.preventDefault() */
       
     
@@ -216,16 +216,16 @@ function deletesession() {
 
 $(function(){
 	 var a = $(".session_ques").text()
-	 console.log(a);
+	 console.warn(a);
 	   $.ajax({
 		  url : "${pageContext.request.contextPath}/question2/queup",
 		  type : "get",
 		  data : {
 			  session_ques:a,
 		  },success: function(){
-			  console.log("success");
+			  console.warn("success");
 		  },erorr :  function(){
-			  console.log("fail");
+			  console.warn("fail");
 			  
 		  }
 		   
@@ -252,7 +252,7 @@ $(function(){
 	    		   
 	    		   
 	    		   
-	     		console.log(resp+"check");
+	     		console.warn(resp+"check");
 	     		
 	     		
 	     		var a = 3;
@@ -286,7 +286,7 @@ $(function(){
 	     		}
 	     
 	                
-	            console.log("체크");
+	            console.warn("체크");
 	     		
 	     		
 	     	}

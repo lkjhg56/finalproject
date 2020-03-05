@@ -333,6 +333,7 @@ public class UploadQuestionController {
 			pageNumber=1;
 		}
 	
+		
 		int finish = pageNumber * pageSize;
 		int start = finish - (pageSize - 1);
 		/*****************************************************/
