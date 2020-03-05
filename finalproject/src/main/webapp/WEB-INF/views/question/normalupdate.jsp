@@ -23,13 +23,13 @@ function previewImage(target){
 
 $(function () {
 	  $("#preview2").hide()
-	console.log("hide")
+	console.warn("hide")
 	
 });
 
 function deletefile(abc) {
 	//삭제 알림창
-            console.log("파일삭제");
+            console.warn("파일삭제");
       /*       e.preventDefault() */
       
       var check = $("form[name=form1]");

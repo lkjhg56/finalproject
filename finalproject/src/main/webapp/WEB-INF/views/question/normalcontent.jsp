@@ -20,15 +20,15 @@ function previewImage(target){
 
 $(function () {
 	  $(".test").hide()
-	console.log("hide")
+	console.warn("hide")
 	
 });
 
 
 function file(abc) {
-	console.log("show")
+	console.warn("show")
 	var checking = document.getElementsByName(abc);
-	console.log(checking)
+	console.warn(checking)
 $(checking).show();
 	
 	
@@ -41,7 +41,7 @@ $(checking).show();
 
 function deleteq() {
 	//삭제 알림창
-            console.log("문제삭제");
+            console.warn("문제삭제");
       /*       e.preventDefault() */
       
      alert("문제가 삭제됩니다")
