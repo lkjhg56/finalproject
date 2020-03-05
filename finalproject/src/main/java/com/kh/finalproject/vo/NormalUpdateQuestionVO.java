@@ -62,4 +62,8 @@ public class NormalUpdateQuestionVO {
 	private int user_conclusion;
 	
 	private String question_premium;
+	
+	
+	private int rqno, result_no, test_no, cus_ques, iscorrect;
+	
 }

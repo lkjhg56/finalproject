@@ -116,4 +116,24 @@ dto.setCategoryname(categoryname);
 		return getName;
 	}
 
+	@Override
+	public int getisCorrect(int rno) {
+		int correctCount = sqlSession.selectOne("test.getCorrectNum", rno);
+		
+		
+		
+		return correctCount;
+	}
+
+	@Override
+	public int getCount(String category_no, String csname) {
+		TestQuestionDto testDto =TestQuestionDto.builder()
+				.csname(csname)
+				.category_no(category_no)
+				.build();
+		
+	int count=	sqlSession.selectOne("test.getCountCorrect", testDto);
+		return count;
+	}
+
 }

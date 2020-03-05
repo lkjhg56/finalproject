@@ -16,6 +16,8 @@ function previewImage(target){
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>일반문제 업로드</h1>
+<div class="container" >
+
 <form action="normalupload" method="post" enctype="multipart/form-data">
 
 		<input type="text" name="test_category" placeholder="카테고리" required><br><br>
@@ -41,4 +43,5 @@ function previewImage(target){
 	<input type="submit" value="등록하기">
 	<input type="reset" value="초기화">
 </form>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
