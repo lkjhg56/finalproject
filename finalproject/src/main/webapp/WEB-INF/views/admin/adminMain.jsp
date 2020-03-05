@@ -11,7 +11,7 @@
 
 <a href="${pageContext.request.contextPath}/admin/admin_normal_upload">일반 문제 업로드</a><br><br>
 
-
+<a href="${pageContext.request.contextPath}/admin/blacklist">게시판 관리</a><br><br>
 
 결제관련 기능(추가해주세요.)<br><br>
 

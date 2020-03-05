@@ -1,13 +1,11 @@
 package com.kh.finalproject.repository;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
 import com.kh.finalproject.entity.BoardDto;
-import com.kh.finalproject.entity.BoardFileDto;
 import com.kh.finalproject.entity.BoardReplyDto;
-import com.kh.finalproject.entity.UploadQuestionFileDto;
+import com.kh.finalproject.entity.BoardReportDto;
 
 public interface BoardDao {
 	//1. 등록기능
@@ -70,5 +68,42 @@ public interface BoardDao {
 	//20.조회수 증가
 		void readCount(int board_no);
 		
-
+	//21.신고 등록하기(게시글)
+		void reportRegist(BoardReportDto boardReportDto);
+		
+	//22.신고 등록하기2(댓글)
+		void reportRegist2(BoardReportDto boardReportDto);
+			
+	//23.신고게시글 목록 조회
+		List<BoardReportDto> getReportList(Map<String, String> param);
+	
+	//24.신고글 전체 개수 구하기
+		int boardReportCount();
+		
+	//25.게시판 카테고리별 글 수 구하기
+		int reportCategoryCount(String board_category);
+			
+	//26.게시판 검색 목록
+		List<BoardReportDto> reportSearch(Map<String, String> param);
+		
+	//27.신고게시글 카테고리별 목록 조회
+		List<BoardReportDto> getReportCGList(Map<String, String> param);
+		
+	//28.게시글 누적 신고횟수 구하기
+		int reportCountAdd(int report_board_no);
+		
+	//29.신고 댓글 목록 조회
+		List<BoardReportDto> getReportRPList(Map<String, String> param);
+		
+	//30.신고댓글 전체 개수 구하기
+		int reportRPCount();
+			
+	//31.댓글 누적 신고횟수 구하기
+		int reportCountAdd2(int report_reply_no);
+		
+	//31.댓글 검색 목록
+		List<BoardReportDto> reportRPSearch(Map<String, String> param);
+		
+	//32.신고게시글 카테고리별 목록 검색
+		List<BoardReportDto> reportCategorySearch(Map<String, String> param);
 }

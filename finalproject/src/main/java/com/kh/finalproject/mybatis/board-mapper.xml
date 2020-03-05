@@ -138,8 +138,32 @@
 		update board set board_readcount = board_readcount +1 where board_no=#{board_no}
 	</update>
 	
-	<!-- 신고 등록 구문 -->
+	<!-- 신고 등록 구문(글신고) -->
 	<insert id="insertReport" parameterType="boardReportDto">
+		insert into report(
+				report_no, 
+				report_board_no, 
+				report_board_writer, 	
+				report_reply_no,		
+				reporter,
+				report_content,
+				report_count,
+				report_reason
+				)
+		 values(
+			 	report_seq.nextval,
+				#{report_board_no},
+				#{report_board_writer},
+				null,
+				#{reporter},	
+				#{report_content},
+				#{report_count},
+				#{report_reason}	
+		)
+	</insert>	
+	
+	<!-- 신고 등록 구문2(댓글신고) -->
+	<insert id="insertReport2" parameterType="boardReportDto">
 		insert into report(
 				report_no, 
 				report_board_no, 
@@ -147,23 +171,93 @@
 				report_reply_no,
 				reporter,
 				report_content,
+				report_count,
 				report_reason
 				)
 		 values(
 			 	report_seq.nextval,
-				#{report_board_no},
+			 	null,
 				#{report_board_writer},
 				#{report_reply_no},
-				#{reporter}	
-				#{report_content}	
+				#{reporter},	
+				#{report_content},
+				#{report_count},
 				#{report_reason}	
 		)
 	</insert>	
 	
-	<!-- 신고수 증가 구문 -->
-	<update id="calculateReport" parameterType="int">
-		update report set report_count = report_count +1 where report_no=#{report_no}
-	</update>
+	<!-- 신고게시글 목록 조회 -->
+	<select id="reportList" resultType="boardReportDto">
+		select * from( 
+		    select rownum rn, A.* from(select * from
+			    report R
+			        inner join board B
+			            on R.report_board_no = B.board_no
+			   order by report_no desc
+			 )A)
+		where rn between #{start} and #{finish}
+	</select>
+	
+<!-- 	신고게시글 목록 검색 -->
+	<select id="reportSearch" resultType="boardReportDto">
+		select * from( 
+		    select rownum rn, A.* from(select * from
+			    report R
+			        inner join board B
+			            on R.report_board_no = B.board_no
+			   where ${type} like '%'||#{keyword}||'%' order by report_no desc
+			 )A)
+		where rn between #{start} and #{finish}
+	</select>
+	
+	<!-- 신고게시글 카테고리별 목록 조회 -->
+	<select id="reportCategoryList" parameterType="map" resultType="boardReportDto">
+		select * from( 
+		    select rownum rn, A.* from(select * from
+		        report R
+		            inner join board B
+		                on R.report_board_no = B.board_no
+		    where board_category = #{board_category} order by report_no desc
+		    )A)
+		where rn between #{start} and #{finish}
+	</select>
+	
+	<!-- 신고게시글 카테고리별 목록 검색 -->
+	<select id="reportCategorySearch" parameterType="map" resultType="boardReportDto">
+		select * from( 
+		    select rownum rn, A.* from(select * from
+		        report R
+		            inner join board B
+		                on R.report_board_no = B.board_no
+		    where board_category = #{board_category} and ${type} like '%'||#{keyword}||'%' order by report_no desc
+		    )A)
+		where rn between #{start} and #{finish}
+	</select>
+	
+	
+	<!-- 	게시글 신고관리 게시글 갯수 조회 -->
+	<select id="boardReportCount" resultType="int">
+		select count(*) from 
+			report R
+		        inner join board B
+		            on R.report_board_no = B.board_no
+	</select>
+	
+	
+	<!-- 	게시글 신고관리 게시글 카테고리별 갯수 조회  -->
+	<select id="ReportCategoryCount" resultType="int">
+		select count(*) from 
+		    report R
+		        inner join board B
+		            on R.report_board_no = B.board_no
+		where board_category = #{board_category}
+	</select>
+	
+	 <!-- 누적신고횟수 조회 -->
+	<select id="reportCountAdd" parameterType="int" resultType="int">
+		select count(*) from report where report_board_no = #{board_no}
+	</select>
+	
 	<!-- /////////////////////////////////////////////
 								댓글 sql구문 시작
 	 //////////////////////////////////////////////-->
@@ -262,9 +356,41 @@
 		select count(*) from board_reply where board_reply_origin = #{board_no}
 	</select>
 	
+	<!-- 신고댓글 목록 조회 -->
+	<select id="reportRPList" resultType="boardReportDto">
+		select * from( 
+		    select rownum rn, A.* from(select * from
+			    report R
+			        inner join board_reply B
+			             on R.report_reply_no = B.board_reply_no
+	              order by report_no desc
+			 )A)
+		where rn between #{start} and #{finish}
+	</select>
 	
+	<!-- 	게시판 신고관리 댓글 갯수 조회 -->
+	<select id="replyReportCount" resultType="int">
+		select count(*) from 
+			report R
+		        inner join board_reply B
+			             on R.report_reply_no = B.board_reply_no
+	</select>
 	
+	 <!-- 누적신고횟수 조회 -->
+	<select id="reportCountAdd2" parameterType="int" resultType="int">
+		select count(*) from report where report_reply_no = #{report_reply_no}
+	</select>
 	
-	
+	<!-- 	신고댓글 목록 검색 -->
+	<select id="reportRPSearch"  parameterType="map" resultType="boardReportDto">
+		select * from( 
+		    select rownum rn, A.* from(select * from
+			    report R
+			        inner join board_reply B
+			             on R.report_reply_no = B.board_reply_no
+			   where ${type} like '%'||#{keyword}||'%' order by report_no desc
+			 )A)
+		where rn between #{start} and #{finish}
+	</select>
 		
  </mapper>

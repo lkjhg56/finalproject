@@ -274,30 +274,43 @@ $(function(){
 
 $(function(){
 	$("#report").click(function(){
-		
-		var data = $(".boardReport").serialize();
-		console.log(data);	
-		var win = window.open(
-				"${pageContext.request.contextPath}/board/report?"
-				+ data, "win", "width=450, height=500");
-		
-		document.querySelector(".boardReport").submit(e)
-		
-		e.preventDefault();		
+		var id = $("#sessionId").val();
+		console.log(id);
+		if(id==undefined){
+			alert("로그인 후 신고해 주세요.");
+		}
+		else{
+			var data = $(".boardReport").serialize();
+			console.log(data);	
+			var win = window.open(
+					"${pageContext.request.contextPath}/board/report?"
+					+ data, "win", "width=450, height=315");
+			
+			document.querySelector(".boardReport").submit(e)
+			
+			e.preventDefault();	
+		}	
 	});
 	
 });	
 
 $(function(){
-	$("#rereport").click(function(e){
+	$(".rereport").click(function(e){
+		var id = $("#sessionId").val();
+		console.log(id);
+		if(id==undefined){
+			alert("로그인 후 신고해 주세요.");
+			e.preventDefault();
+		}
+		else{		
 		e.preventDefault();		
 		var data = $(this).attr("href"); // href에 입력된 값을 가져옴
 		console.log(data);
 		
 		var win = window.open(
 				"${pageContext.request.contextPath}/board/report?report_reply_no="
-				+ data, "win", "width=450, height=500");
-		
+				+ data, "win", "width=450, height=315");
+		}
 	});
 	
 });	
@@ -357,7 +370,7 @@ $(function(){
 											<c:if test="${boardReplyDto.depth < 1 && id != null}">
 												<a href="#" id="re">답글  |</a>
 											</c:if>											
-												<a href="${boardReplyDto.board_reply_no}" id="rereport" >신고</a>
+												<a href="${boardReplyDto.board_reply_no}" class="rereport" >신고</a>
 										</td>
 									</tr>
 									
@@ -442,7 +455,7 @@ $(function(){
 						<form id="registbtn" method="post">
 							<div class="flex-wrap">
 								<input type="hidden" name="board_reply_origin" value="${boardDto.board_no}"> <!-- board의 no를 전송 -->	
-								<input type="hidden" name="board_reply_writer" value="${id}">												
+								<input type="hidden" id="sessionId" name="board_reply_writer" value="${id}">												
 								<textarea class="user-input item1" name="board_reply_content" rows="4" required></textarea>						
 								<input class="btn24 category-btn2 item2"   type="submit" value="등록">								
 							</div>					

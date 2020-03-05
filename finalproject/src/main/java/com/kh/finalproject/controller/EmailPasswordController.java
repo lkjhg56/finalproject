@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("users/pw")
-@Slf4j
 public class EmailPasswordController {
 
 	@Autowired
@@ -58,7 +57,6 @@ public class EmailPasswordController {
 	public String change(@RequestParam String cert,@RequestParam String email,HttpServletResponse response) {
 		
 		boolean enter = certDao.check(email, cert);
-		log.info("enter = {}",enter);
 		certDao.delete(email);
 		if(!enter) {
 			response.setStatus(403);
@@ -74,5 +72,4 @@ public class EmailPasswordController {
 		sqlSession.update("users.change_pw", usersDto);
 		return "redirect:/";
 	}
-	
 }
