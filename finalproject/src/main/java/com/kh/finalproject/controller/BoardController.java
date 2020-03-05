@@ -194,15 +194,14 @@ public class BoardController {
 		}
 			
 		int finish = pno * pagesize;
-		int start = finish - (pagesize - 1);		
+		int start = finish - (pagesize - 1);
+
 	//**************************************************************************************
 	//			 		하단 네비게이터 계산하기
 	//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 	//**************************************************************************************
 		int count = boardDao.boardReplyCount(board_no); //전체글 개수를 구하는 메소드 
-		
 		int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
-		
 		int startBlock = (pno -1) / navsize * navsize + 1;
 		int finishBlock = startBlock + (navsize -1);
 		
@@ -260,7 +259,9 @@ public class BoardController {
 		//			 		하단 네비게이터 계산하기
 		//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
 		//**************************************************************************************
-			int count = boardDao.boardCount(); //전체글 개수를 구하는 메소드 			
+			int count = boardDao.boardCount(); //전체글 개수를 구하는 메소드 
+//			System.out.println(count);
+			
 			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
 			
 			int startBlock = (pno -1) / navsize * navsize + 1;

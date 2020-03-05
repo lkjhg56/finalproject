@@ -75,12 +75,12 @@
 		<!-- 검색창 -->
 		<div class="d-flex justify-content-center">
 		<form action="list" method="post">		
-			<select name="option" class="form-control">
+			<select name="option">
 				<option value="category_name">카테고리</option>
 				<option value="question_title">제목</option>
 				<option value="id">출제자</option>
 			</select>
-			<input class="form-control" type="text" name="keyword" required>
+			<input type="text" name="keyword" required>
 			<input type="submit" class="searchKeyword btn btn-secondary" value="검색">
 		</form>
 		</div>

@@ -20,15 +20,12 @@ function previewImage(target){
 
 $(function () {
 	  $(".test").hide()
-	console.warn("hide")
-	
 });
 
 
 function file(abc) {
 	console.warn("show")
 	var checking = document.getElementsByName(abc);
-	console.warn(checking)
 $(checking).show();
 	
 	

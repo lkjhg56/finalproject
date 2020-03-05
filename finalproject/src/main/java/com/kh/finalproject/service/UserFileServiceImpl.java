@@ -159,7 +159,7 @@ public class UserFileServiceImpl implements UserFileService{
 			}
 		}
 		//파일 저장(물리)			
-		File dir = new File("D:/upload/gy");
+		File dir = new File("D:/upload/kh2b");
 		dir.mkdirs();
 			
 			for(int i = 0; i < list.size(); i++) {	

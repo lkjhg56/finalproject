@@ -167,13 +167,12 @@ public class BoardFileServiceImpl implements BoardFileService{
 		
 		//board_file_no에 대한 파일정보를 가져온다
 		BoardFileDto dto = boardfileDao.getFile(board_file_no);
-
 		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
 		//실제 파일을 읽어들인다. (폴더, 파일명)
 		File dir = new File("D:/upload/kh2b/board_files");	
 		File file = new File(dir, String.valueOf(dto.getBoard_file_save_name()));
-		
-		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환		
+
+		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환
 		
 		//헤더 설정 및 전송
 		ByteArrayResource resource = new ByteArrayResource(data);
