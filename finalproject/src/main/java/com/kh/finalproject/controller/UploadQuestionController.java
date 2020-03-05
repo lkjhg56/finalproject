@@ -136,7 +136,7 @@ public class UploadQuestionController {
 	public void deleteFile(int question_no) {
 		List<UploadQuestionFileDto> delete = uploadQuestionDao.getFile2(question_no);
 		for(int j = 0;j<delete.size();j++) {
-			String filepath = "D:/upload/question_image/"+delete.get(j).getFile_save_name();		
+			String filepath = "D:/upload/kh2b/"+delete.get(j).getFile_save_name();		
 			File file = new File(filepath);
 			//실제 파일 삭제
 			file.delete();

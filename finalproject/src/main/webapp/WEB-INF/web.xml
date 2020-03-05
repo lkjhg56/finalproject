@@ -43,6 +43,10 @@
 		<url-pattern>/users/test_result_search</url-pattern>
 		<url-pattern>/board/edit</url-pattern>
 		<url-pattern>/board/regist</url-pattern>
+		<url-pattern>/question/upload</url-pattern>
+		<url-pattern>/question/update</url-pattern>
+		<url-pattern>/question/solve</url-pattern>
+		<url-pattern>/question/multi</url-pattern>
 	</filter-mapping>
 	
 	<!-- 

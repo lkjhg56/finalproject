@@ -77,7 +77,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 						.build());
 			}		
 			//새 디렉토리 생성
-			File dir = new File("D:/upload/question_image");
+			File dir = new File("D:/upload/kh2b");
 			dir.mkdir();
 			
 			for(int i=0;i<list.size();i++) {
@@ -128,7 +128,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				}
 			}		
 			//경로에 폴더 생성
-			String Path="D:/upload/question_image";
+			String Path="D:/upload/kh2b";
 			File dir = new File(Path);
 			dir.mkdir();
 			
@@ -141,7 +141,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 				//기존 파일 및 DB가 있는 경우	
 				//기존 파일과 DB를 전량 삭제
 				for(int j = 0;j<delete.size();j++) {
-					String filepath = "D:/upload/question_image/"+delete.get(j).getFile_save_name();		
+					String filepath = "D:/upload/kh2b/"+delete.get(j).getFile_save_name();		
 					File file = new File(filepath);
 					//실제 파일 삭제
 					file.delete();
@@ -169,7 +169,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 		List<UploadQuestionFileDto> delete = uploadQuestionDao.getFile2(question_no);
 		if(delete != null) {
 			for(int i = 0;i<delete.size();i++) {
-				String filepath = "D:/upload/question_image/"+delete.get(i).getFile_save_name();
+				String filepath = "D:/upload/kh2b/"+delete.get(i).getFile_save_name();
 				File file = new File(filepath);
 				file.delete();				
 			}
@@ -228,7 +228,7 @@ public class UploadQuestionSeviceImpl implements UploadQuestionService {
 	@Override
 	public ResponseEntity<ByteArrayResource> downloadImg(int question_file_no) throws Exception {
 		UploadQuestionFileDto uploadQuestionFileDto = uploadQuestionDao.getFile3(question_file_no);
-		File directory = new File("D:/upload/question_image");
+		File directory = new File("D:/upload/kh2b");
 		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
 		File file = new File(directory, String.valueOf(uploadQuestionFileDto.getFile_save_name()));
 //		if(!file.exists()) {
