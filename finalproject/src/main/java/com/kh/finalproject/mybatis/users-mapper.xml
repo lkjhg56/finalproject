@@ -20,6 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{phone},#{postcode},#{address},#{detailAddress},#{extraAddress})
 	</insert>
 	
+	<!-- 회원가입 (주소 미입력) -->
+	<insert id="join2" parameterType="users">
+		insert into 
+		users(user_no,name,id,pw,email,grade,phone)
+		values(
+		#{user_no},#{name},#{id},#{pw},#{email},'일반회원',#{phone})
+	</insert>
+	
 	<!-- 프로필 사진 -->
 	<insert id="join_file" parameterType="userFileDto">
  		insert into user_file values(
