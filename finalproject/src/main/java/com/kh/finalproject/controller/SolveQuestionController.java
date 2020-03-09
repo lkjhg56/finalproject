@@ -262,9 +262,16 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				model.addAttribute("score",  testDao.getScore(rno, category_no, categoryname));
 model.addAttribute("iscorrect", testDao.getisCorrect(rno));
 			
-
+model.addAttribute("qcount", testDao.getCount(category_no, categoryname)-testDao.getisCorrect(rno));
 
 model.addAttribute("solved", num);
+
+
+List<NormalUpdateQuestionVO> normalUpdateQuestionVO =sqlSession.selectList("getResultSolution",rno);
+
+model.addAttribute("vo", normalUpdateQuestionVO);
+
+
 				model.addAttribute("average", average);
 				model.addAttribute("high10average", high10average);
 				model.addAttribute("high25average", high25average);
@@ -539,21 +546,22 @@ model.addAttribute("solved", num);
 		}
 
 
-		
+	
 		
 		List<TestQuestionDto> answerList = sqlSession.selectList("getQuesNum", testQuestionDto);
 	
 		List<RcorrectDto> rCorrectDto = sqlSession.selectList("getCorrectList", rno);
 		
-		List<NormalUpdateQuestionVO> normalUpdateQuestionVO =sqlSession.selectList("testRcorrect", rno);
 
+	
 		
 		int rank = sqlSession.selectOne("getRank", testQuestionDto);
 		
 		int percentile = rank*100/num;
 		
+		List<NormalUpdateQuestionVO> normalUpdateQuestionVO =sqlSession.selectList("getResultSolution",rno);
 		
-		model.addAttribute("normalupdateQuestionVO", normalUpdateQuestionVO);
+		model.addAttribute("vo", normalUpdateQuestionVO);
 		model.addAttribute("csname", csname);
 		model.addAttribute("category_no", category_no);
 		model.addAttribute("rCorrectDto", rCorrectDto);
@@ -579,11 +587,7 @@ model.addAttribute("solved", num);
 	public String result2(@RequestParam String category_no, String csname, String method,HttpSession session, Model model) {
 	
 	
-		TestQuestionDto testQuestionDto = TestQuestionDto.builder()
-				.csname(csname)
-				.category_no(category_no)
-				.build();
-
+		
 
 					
 		

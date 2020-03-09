@@ -98,6 +98,10 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 			select * from test_question where csname=#{csname} and category_no=#{category_no}
 	</select>
 	
+	
+	
+	
+	
 	<!-- csname category-no로 문제 개수 -->
 	
 	<select id = "getCountCorrect" parameterType = "testQuestionDto" resultType = "int">
@@ -155,6 +159,13 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 		</select>
 	
 		
+		
+		
+		<select id="getResult" parameterType="int" resultType="resultDto">
+	select * from result where rno = #{rno} 
+	
+	</select>
+		
 <!-- rcorrect testQ -->
 
 <select id="testRcorrect" resultType="normalUpdateQuestionVO" parameterType = "int">
@@ -163,6 +174,19 @@ From test_question T inner join rcorrect R
 On t.no=r.test_no where r.result_no = #{rno}
 
 </select>
+
+
+<select id="getSolution" parameterType="testQuestionDto" resultType="normalUpdateQuestionVO">
+Select T.*,S.solution
+
+From test_question T inner join solution S
+
+On t.no=S.question_no where t.csname=#{csname} and t.category_no=#{category_no}
+
+</select>
+
+
+
 
 		<select id = "totalNum" parameterType = "int" resultType = "int">
 			select count (*) from rcorrect where test_no=#{test_no}
@@ -175,5 +199,10 @@ On t.no=r.test_no where r.result_no = #{rno}
 		<update id = "rate" parameterType = "com.kh.finalproject.payvo.RateVO">
 			update test_question set rate=#{sum} where no=#{test_no}
 		</update>
+		
+		
+		
+		
+		
 	
 </mapper>
