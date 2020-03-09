@@ -79,20 +79,24 @@
     					</div>
     		 			<div class ="aside_area">
 	 			
-	 					<div id = "member_zone" class= "member_info1">
-	 			
-	 					</div>
-
-	 					<div	class = "aside_link">
-	 						<div class = "mRank">
-		 					</div>
-		 					<div class = "mNewList">
-		 					</div>
-		 					<div class = "mFQlist">
+	 				<div id = "member_zone" class= "member_info1">
+	 					
+	 				</div>
+	 				<div	class = "aside_link">
+	 					<div id = "slider">
+	 						<div class="slides-container">
+		 							<div class = "mRank slide">
+				 					</div>
+				 					<div class = "mNewList slide">
+				 					</div>
+				 					<div class = "mFQlist slide">
+				 					</div>
+			 					</div>
 	 					</div>
 	 					
-	 					</div>
+	 				</div>
 	 				
+	 			</div>
 	 				</div>
 				</div>
 			</div>
