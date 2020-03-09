@@ -33,6 +33,16 @@ function appendResult() {
 
 
 
+<style>
+
+.btn-primary{
+color: #646E7D;
+background-color: #646E7D;
+display: inline;
+}
+
+</style>
+
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  
  
@@ -51,10 +61,10 @@ function appendResult() {
 				<form action="${pageContext.request.contextPath}/question/questype" onsubmit="appendResult()">
 
 					<input type="hidden"  name="tno" value="${tno}">
-					<input type="submit"  class="btn btn-info" value="돌아가기">
+					<input type="submit"  class="btn btn-info" value="다시풀기">
+				<a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/question/choose">목록으로</a>&nbsp;&nbsp;
 				</form>
 				
-				<a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}">처음 페이지로</a>&nbsp;&nbsp;
 <%-- <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/question/choose">문제 목록으로</a> --%>
 				
 				</div>
