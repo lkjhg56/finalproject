@@ -43,6 +43,11 @@
 		<url-pattern>/users/test_result_search</url-pattern>
 		<url-pattern>/board/edit</url-pattern>
 		<url-pattern>/board/regist</url-pattern>
+		<url-pattern>/board/delete</url-pattern>
+		<url-pattern>/board/report</url-pattern>
+		<url-pattern>/board2/insert</url-pattern>
+		<url-pattern>/board2/delete</url-pattern>
+		<url-pattern>/board2/edit2</url-pattern>
 	</filter-mapping>
 	
 	<!-- 
@@ -55,6 +60,7 @@
 	<filter-mapping>
 		<filter-name>adminFilter</filter-name>
 		<url-pattern>/admin/*</url-pattern>
+		<url-pattern>/board/delete2</url-pattern>
 	</filter-mapping>
 	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
