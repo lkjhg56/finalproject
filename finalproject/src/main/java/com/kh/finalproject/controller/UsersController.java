@@ -235,8 +235,8 @@ public class UsersController {
 	 @GetMapping("users/test_result")
 	 public String test_result(HttpServletRequest req,Model model,HttpSession session) {
 		
-		int pagesize = 4;
-		int navsize = 2;
+		int pagesize = 15;
+		int navsize = 10;
 		
 		int pno;
 		try{
@@ -282,8 +282,8 @@ public class UsersController {
 	 @GetMapping("users/test_result_search")
 	 public String test_result_search(@RequestParam String keyword,HttpServletRequest req,HttpSession session,Model model){
 		
-		int pagesize = 5;
-		int navsize = 3;
+		int pagesize = 15;
+		int navsize = 10;
 		int pno;
 		try{
 			pno = Integer.parseInt(req.getParameter("pno"));
@@ -331,8 +331,8 @@ public class UsersController {
 	 // 포인트 랭킹 조회
 	 @GetMapping("users/grade_point_rank")
 	 public String point_rank(Model model, HttpServletRequest req) {
-		int pagesize = 10;
-		int navsize = 3;
+		int pagesize = 15;
+		int navsize = 10;
 		int pno;
 		try{
 			pno = Integer.parseInt(req.getParameter("pno"));
@@ -386,8 +386,8 @@ public class UsersController {
 	 @GetMapping("users/my_grade_point")
 	 public String my_grade_point(Model model,HttpSession session,HttpServletRequest req) {
 		 
-		int pagesize = 4;
-		int navsize = 2;
+		int pagesize = 15;
+		int navsize = 10;
 			
 		int pno;
 		try{
@@ -424,8 +424,8 @@ public class UsersController {
 	 //회원 목록
 	 @GetMapping("users/user_list")
 	 public String user_list(Model model, HttpServletRequest req) {
-		 int pagesize = 10;
-		int navsize = 3;
+		 int pagesize = 15;
+		int navsize = 10;
 		int pno;
 		try{
 			pno = Integer.parseInt(req.getParameter("pno"));
