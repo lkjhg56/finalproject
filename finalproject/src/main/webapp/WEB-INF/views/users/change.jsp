@@ -227,7 +227,7 @@
   </tr>
   <tr>
     <th>이메일</th>
-    <td>${fn:replace(users.email, ",", "") }</td>
+    <td>${users.email1}${users.email2}</td>
   </tr>
   <tr>
     <th>전화번호</th>
@@ -249,10 +249,10 @@
     <th>주소</th>
     <td>
 		<div class="addr">
-			<input type="text" id="postcode" name="postcode"  value="${users.postcode}" required> 
+			<input type="text" id="postcode" name="postcode"  value="${users.postcode}" > 
 			<input type="button" class="btn btn-primary" onclick="DaumPostcode()"value="우편번호 찾기"><br> 
-			<input type="text" id="address" name="address" value="${users.address}" required><br> 
-			<input type="text" id="detailAddress" name="detailAddress" value="${users.detailAddress}" onfocus="loadMap()" required> 
+			<input type="text" id="address" name="address" value="${users.address}" ><br> 
+			<input type="text" id="detailAddress" name="detailAddress" value="${users.detailAddress}" onfocus="loadMap()" > 
 			<input type="text" id="extraAddress" name="extraAddress" value="${users.extraAddress}">
 		</div>
 	</td>
