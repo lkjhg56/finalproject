@@ -136,7 +136,7 @@ public class UploadQuestionController {
 	public void deleteFile(int question_no) {
 		List<UploadQuestionFileDto> delete = uploadQuestionDao.getFile2(question_no);
 		for(int j = 0;j<delete.size();j++) {
-			String filepath = "D:/upload/question_image/"+delete.get(j).getFile_save_name();		
+			String filepath = "D:/upload/kh2b/"+delete.get(j).getFile_save_name();		
 			File file = new File(filepath);
 			//실제 파일 삭제
 			file.delete();
@@ -276,7 +276,6 @@ public class UploadQuestionController {
 		
 		//전체 페이지 수
 		int pageCount=(count+pageSize)/pageSize;
-		System.out.println(pageCount);
 		int startBlock = (pageNumber-1) / navSize * navSize+1;
 		int finishBlock = startBlock +(navSize-1);
 		
@@ -334,6 +333,7 @@ public class UploadQuestionController {
 			pageNumber=1;
 		}
 	
+		
 		int finish = pageNumber * pageSize;
 		int start = finish - (pageSize - 1);
 		/*****************************************************/

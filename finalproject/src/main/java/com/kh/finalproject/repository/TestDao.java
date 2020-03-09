@@ -24,4 +24,8 @@ public interface TestDao {
 	int getDtocount(String csname,String category_no);
 	List<String> getFrequency();
 
+	int getisCorrect(int rno);
+	
+	
+	int getCount( String category_no, String csname);
 }

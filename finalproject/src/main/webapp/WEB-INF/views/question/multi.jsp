@@ -64,8 +64,7 @@ $(function(){
 	var size = 1; //한 페이지에 출력될 문제 개수
 	var questionCount = $('.inputDiv').length; //출제된 문제 개수
 	var totalPage = Math.floor((questionCount-1)/size);
-// 	console.log("questionCount : "+questionCount);
-// 	console.log("totalpage : "+totalPage);
+
 	for(var i=0; i <=totalPage; i++){
 		$("<div>").addClass("paging-inner").attr("data-no", i).appendTo("#paging");
 	}

@@ -5,6 +5,10 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+	
 	//카카오 주소 api
 	function DaumPostcode() {
 		new daum.Postcode({
@@ -175,71 +179,70 @@
 	});
 	
 	//이메일 인증
-// 	$(function(){
+	$(function(){
 		
-// // 	$(".validate").hide();
-// 	$(".join_box").hide();
-// 	$(".go_join").hide();
+	$(".validate").hide();
+	$(".join_box").hide();
+	$(".go_join").hide();
 	
-// 	$(".email").submit(function(e){
-// 		e.preventDefault();
+	$(".email").submit(function(e){
+		e.preventDefault();
 		
-// 		//var url = $(this).attr("action"); 
-// 		var method = $(this).attr("method");
-// 		var data = $(this).serialize();
+		//var url = $(this).attr("action"); 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
 		
-// 		var email = $("input[name=email]").val();
+		var email = $("input[name=email]").val();
 		
-// 		if(email == ""){
-// 			window.alert("이메일을 입력해주세요.");
-// 			$("input[name=email]").focus();
-// 			$(".email").find("input[type=submit]").val("인증번호 보내기");
-// 		}
+		if(email == ""){
+			window.alert("이메일을 입력해주세요.");
+			$("input[name=email]").focus();
+			$(".email").find("input[type=submit]").val("인증번호 보내기");
+		}
 		
-// 		else{
-// 			$(this).find("input[type=submit]").prop("disabled", true);
-// 			$(this).find("input[type=submit]").val("인증번호 발송중");
+		else{
+			$(this).find("input[type=submit]").prop("disabled", true);
+			$(this).find("input[type=submit]").val("인증번호 발송중");
 			
-// 			$.ajax({
-// 				url:"${pageContext.request.contextPath}/users/send",
-// 				type:"get",
-// 				data:data,
-// 				success:function(resp){
-// 					//console.log(resp);
-// 					if(resp == "success"){
-// 						$(".email").find("input[type=submit]").val("인증번호 발송완료");
-// 						$(".validate").show();
-// 					}
-// 				}
-// 			});
-// 		}
-// 	});
+			$.ajax({
+				url:"${pageContext.request.contextPath}/users/send",
+				type:"get",
+				data:data,
+				success:function(resp){
+					//console.log(resp);
+					if(resp == "success"){
+						$(".email").find("input[type=submit]").val("인증번호 발송완료");
+						$(".validate").show();
+					}
+				}
+			});
+		}
+	});
  
-// 	$(".validate").submit(function(e){
-// 		e.preventDefault();
-// 		//var url = $(this).attr("action"); 
-// 		var method = $(this).attr("method");
-// 		var data = $(this).serialize();
+	$(".validate").submit(function(e){
+		e.preventDefault();
+		//var url = $(this).attr("action"); 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
 		
-// 		$.ajax({
-// 			url:"${pageContext.request.contextPath}/users/validate",
-// 			type:"get",
-// 			data:data,
-// 			success:function(resp){
-// 				if(resp == "success"){
-// 					window.alert("인증이 완료되었습니다.");
-// 					$(".email").hide();
-// 					$(".validate").hide();
-// 					$(".join_box").show();
-// 				}
-// 				else{
-// 					window.alert("인증 실패! 다시 시도해주세요");
-// 					window.location.reload();
-// 				}
-// 			}
-// 		});
-// 	});
-// });
+		$.ajax({
+			url:"${pageContext.request.contextPath}/users/validate",
+			type:"get",
+			data:data,
+			success:function(resp){
+				if(resp == "success"){
+					window.alert("인증이 완료되었습니다.");
+					$(".cert_box").hide();
+					$(".join_box").show();
+				}
+				else{
+					window.alert("인증 실패! 다시 시도해주세요");
+					window.location.reload();
+				}
+			}
+		});
+	});
+});
 	
 </script>
 <style>
@@ -262,6 +265,13 @@ p{
 	font-size: 18px;
 	margin-top: 18px;
 	margin-bottom: 6px;
+}
+.pp{
+	font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: -20px;
+    margin-right: 10px;
+    text-align: right;
 }
 .cert_box{
 	display: inline-block;
@@ -384,6 +394,7 @@ p{
     padding-left: 0.5rem;
     padding-right: 2rem;
   	margin: 10PX;
+  	margin-left: 0px;
 	font-size: 20px;
 	width: 100px;
 	outline: #565960; 
@@ -421,36 +432,36 @@ p{
 
 <h1>Qmaster</h1>
 
-<!-- <div class="cert_box"> -->
-<!-- 	<div style="text-align:center"> -->
-<!-- 		<form class="email" method="get" > -->
-<!-- 			<h3>본인 확인을 위한 이메일 인증을 해주세요!</h3> -->
-<!-- 			<input type="text" name="email" placeholder="이메일 입력"> -->
-<!-- 			<input type="submit" class="btn btn-primary" id="but1" value="인증번호 보내기"> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
+<div class="cert_box">
+	<div style="text-align:center">
+		<form class="email" method="get" >
+			<h3>본인 확인을 위한 이메일 인증을 해주세요!</h3>
+			<input type="text" name="email" placeholder="이메일 입력">
+			<input type="submit" class="btn btn-primary" id="but1" value="인증번호 보내기">
+		</form>
+	</div>
 	
-<!-- 	<div style="text-align:center"> -->
-<!-- 		<form class="validate" action="validate" method="post"> -->
-<!-- 			<input type="text" name="cert" placeholder="인증번호 입력"> -->
-<!-- 			<input type="submit" class="btn btn-primary" id="but2" value="인증하기"> -->
-<!-- 			<div class="finish_cert"></div> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
-<!-- </div> -->
+	<div style="text-align:center">
+		<form class="validate" action="validate" method="post">
+			<input type="text" name="cert" placeholder="인증번호 입력">
+			<input type="submit" class="btn btn-primary" id="but2" value="인증하기">
+			<div class="finish_cert"></div>
+		</form>
+	</div>
+</div>
 
 <div class="join_box">
 <form class="join-form" action="join" method="post" enctype="Multipart/form-data">
-
-	<p>이름</p> 
+	<p class="pp">*은 필수 입력 항목입니다.<p>
+	<p>NAME*</p> 
 	<input type="text" name="name" maxlength="7" required>
 	
 	
-	<p>아이디</p> 
-	<input type="text" name="id" maxlength="20" placeholder="8~20자 영소문자,숫자" required>
+	<p>ID*</p> 
+	<input type="text" name="id" maxlength="20" data-toggle="tooltip" data-placement="top" title="8~20자 영소문자,숫자" required>
 	<input type="button" class="btn btn-primary" id="id_check_btn" value="아이디 중복 검사">
 	
-	<p>이메일</p>
+	<p>EMAIL*</p>
 	<input type="text" name="email" required>
 		  <select name="email" id="select1">
 		  	<option>@naver.com</option>
@@ -461,11 +472,11 @@ p{
 		  	<option>@icloud.com</option>
 		  </select>
 	
-	<p>비밀번호</p> 
-	<input type="password" name="pw" maxlength="16" placeholder="8~16자 영문자,숫자,특수문자" required>
+	<p>PASSWORD*</p> 
+	<input type="password" name="pw" maxlength="16" data-toggle="tooltip" data-placement="top" title="8~16자 영문자,숫자,특수문자" required>
 	<input type="password" name="ppww" placeholder="비밀번호 재입력" required>
 	
-	<p>전화번호</p>
+	<p>PHONE*</p>
 		<select name="phone" id="select2">
 				<option>010</option>
 				<option>011</option>
@@ -476,16 +487,16 @@ p{
 			<input type="tel" name="phone" maxlength="4" required> -
 			<input type="tel" name="phone" maxlength="4" required>
 			
-	<p>주소</p>
+	<p>ADDRESS</p>
 	<div class="addr">
-	<input type="text" id="postcode" name="postcode" placeholder="우편번호" required> 
+	<input type="text" id="postcode" name="postcode" placeholder="우편번호" > 
 	<input type="button" class="btn btn-primary" onclick="DaumPostcode()"value="우편번호 찾기"><br> 
-	<input type="text" id="address" name="address" placeholder="주소" required><br> 
-	<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소" onfocus="loadMap()" required> 
+	<input type="text" id="address" name="address" placeholder="주소" ><br> 
+	<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소" onfocus="loadMap()" > 
 	<input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목">
 	</div>
 	
-	<p>프로필 사진</p>
+	<p>PROFILE</p>
 	<input type="checkbox" id="basic">기본이미지 선택하기
 	<input type="file" name="user_file" id="file"  accept="image/*"><br>
 	

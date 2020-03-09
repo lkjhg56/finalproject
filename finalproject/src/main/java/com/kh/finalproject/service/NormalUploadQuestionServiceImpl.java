@@ -187,7 +187,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 							);
 				}		
 				//새 디렉토리 생성
-				File dir = new File("D:/upload/normalquestion_image");
+				File dir = new File("D:/upload/kh2b/normalquestion_image");
 				dir.mkdir();
 				
 				for(int i=0;i<list.size();i++) {
@@ -211,7 +211,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 		
 		
 		UploadTestQuestionFileDto uploadTestQuestionFileDto=NormalUploadQuestionDao.getFile(no);
-		File directory = new File("D:/upload/normalquestion_image");
+		File directory = new File("D:/upload/kh2b/normalquestion_image");
 		//directory의 위치에 있는 profile_no란 이름의 파일을 찾아서 불러온 뒤 반환
 		
 		File file = new File(directory, String.valueOf(uploadTestQuestionFileDto.getFile_save_name()));
@@ -275,7 +275,7 @@ for(MultipartFile mf : normalUpdateQuestionVO.getFile()) {
 				);
 	}		
 	//새 디렉토리 생성
-	File dir = new File("D:/upload/normalquestion_image");
+	File dir = new File("D:/upload/kh2b/normalquestion_image");
 	dir.mkdir();
 	
 	for(int i=0;i<list.size();i++) {
@@ -311,7 +311,7 @@ else {
 		}
 	}		
 	//변경된 파일을 다시 저장.	
-	String Path="D:/upload/normalquestion_image";
+	String Path="D:/upload/kh2b/normalquestion_image";
 	File dir = new File(Path);
 	dir.mkdir();
 
@@ -326,7 +326,7 @@ else {
 			
 			
 			if(delete!=null) {	
-				String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();		
+				String filepath = "D:/upload/kh2b/normalquestion_image/"+delete.getFile_save_name();		
 				File file = new File(filepath);
 				file.delete();
 				
@@ -358,7 +358,7 @@ else {
 		
 	if(delete!=null) {
 		
-		String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();
+		String filepath = "D:/upload/kh2b/normalquestion_image/"+delete.getFile_save_name();
 		File file = new File(filepath);
 		file.delete();
 		

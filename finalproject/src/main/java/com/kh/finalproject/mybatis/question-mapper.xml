@@ -105,12 +105,47 @@
  		)where rn between #{start} and #{finish}
 	</select>
  	<select id="questionNavRownumId" parameterType="map" resultType="uploadQuestionDto">
- 		select * from(select rownum rn, A.* from(
- 			select * from(
- 				select * from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc
- 				)T inner join users U on T.user_no = U.user_no 
- 			)A
- 		)where user_no=#{user_no} and rn between #{start} and #{finish}
+		 select * from(
+		    select rownum rn, A.* from(
+		        select 
+		            U.user_no, 
+		            T.question_no, 
+		            T.user_custom_question_no,
+		            T.question_title,
+		            T.question_content,
+		            T.question_answer,
+		            T.question_solution,
+		            T.question_premium,
+		            T.answer1,
+		            T.answer2,
+		            T.answer3,
+		            T.answer4,
+		            T.answer5,
+		            T.correct_ratio,
+		            T.read_count,
+		            T.category_name
+		        from(
+		            select
+		                q.question_no,
+		                q.user_custom_question_no,
+		                q.question_title,
+		                q.question_content,
+		                q.question_answer,
+		                q.question_solution,
+		                q.question_premium,
+		                q.answer1,
+		                q.answer2,
+		                q.answer3,
+		                q.answer4,
+		                q.answer5,
+		                q.correct_ratio,
+		                q.read_count,
+		                ucq.user_no,
+		                ucq.category_name
+		            from question q inner join user_custom_question ucq on q.user_custom_question_no=ucq.user_custom_question_no order by question_no desc
+		        )T inner join users U on T.user_no = U.user_no
+		    )A
+		) where user_no=#{user_no} and rn between #{start} and #{finish}
 	</select>
 	<select id="searchQuestion" parameterType="map" resultType="uploadQuestionDto">
  	  	select * from(
@@ -257,6 +292,20 @@
 			from test_question T inner join solution S
 			on t.no=S.question_no where t.no=#{no}
  	</select>
+ 	
+ 	
+ 	
+ 		<select id="getResultSolution" parameterType="int" resultType="normalUpdateQuestionVO">
+	     select T.question,t.dis1,t.dis2,t.dis3,t.dis4,t.dis5,S.solution_no,s.solution,r.iscorrect,r.correct
+			from test_question T inner join solution S
+			on t.no=S.question_no 
+			inner join rcorrect R
+			on t.no=r.test_no
+			where r.result_no=#{rno}
+ 	</select>
+ 	
+ 	
+ 	
  	<!-- 정답률 계산 -->
  	<!-- 문제 등록 후 최초 오답이 날 경우 분자가 0이 되어  DB에서 에러가 발생함. -->
  	<!-- 하기 case when을 이용하여 예외처리를 해줌. -->

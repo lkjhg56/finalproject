@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="error" value="${param.error}"></c:set>
 <style>
 * {
 	font-family: binggrae;
@@ -18,9 +19,15 @@ h1 {
     font-size: 62px;
     letter-spacing: -1px;
 }
+#h6{
+	font-size: 14px;
+	color: cornflowerblue;
+    text-align: center;
+    margin-bottom: -10px;
+}
 #p{
 	font-size: 20px;
-	margin-top: 10px;
+	margin-top: 20px;
     margin-bottom: 5px;
 }
 .login_box{
@@ -33,7 +40,7 @@ h1 {
     padding-right: 30px;
     margin: auto 368px;
     margin-top: 30px;
-    height: 330px;
+    height: 340px;
     overflow: hidden;
     border-left-width: 2px;
     background-color: white;
@@ -77,9 +84,12 @@ h1 {
 
 <div class="login_box">
 	<form action="login" method="post">
+	<c:if test="${error != null}">
+		<h6 id="h6">잘못된 아이디이거나 비밀번호입니다!</h6>
+	</c:if>
 		<p id="p">ID</p>
 		<input type="text" name="id" required>
-		 
+		 		
 		 <p id="p">PASSWORD</p>
 		<input type="password" name="pw" required>
 		

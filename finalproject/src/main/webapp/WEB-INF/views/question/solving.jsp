@@ -53,7 +53,15 @@ function appendResult() {
 					<input type="hidden"  name="tno" value="${tno}">
 					<input type="submit"  class="btn btn-info" value="돌아가기">
 				</form>
+				
+				<a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}">처음 페이지로</a>&nbsp;&nbsp;
+<%-- <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/question/choose">문제 목록으로</a> --%>
+				
 				</div>
+				
+				
+				
+
 	 			<div class ="aside_area">
 	 			
 	 				<div id = "member_zone" class= "member_info1">

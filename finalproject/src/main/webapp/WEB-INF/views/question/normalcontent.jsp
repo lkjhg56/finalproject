@@ -20,15 +20,12 @@ function previewImage(target){
 
 $(function () {
 	  $(".test").hide()
-	console.log("hide")
-	
 });
 
 
 function file(abc) {
-	console.log("show")
+	console.warn("show")
 	var checking = document.getElementsByName(abc);
-	console.log(checking)
 $(checking).show();
 	
 	
@@ -41,7 +38,7 @@ $(checking).show();
 
 function deleteq() {
 	//삭제 알림창
-            console.log("문제삭제");
+            console.warn("문제삭제");
       /*       e.preventDefault() */
       
      alert("문제가 삭제됩니다")
@@ -51,31 +48,92 @@ function deleteq() {
 	 
 }
 </script>
+<style>
 
+	th{
+		white-space : nowrap;
+	}
+</style>
 <div class="container">
-<div>문제 번호 : ${questionDto.no}</div>
-<div>문제 제목 : ${questionDto.question}</div>
+<h4>문제 번호 : ${questionDto.no}</h4>
 
-<c:if test="${grade=='관리자'}">
-<div>유료 여부    : ${questionDto.question_premium}</div>
-</c:if>
-<div><img id="preview" class="test" name="${questionDto.no}+pic" src="qimage?no=${questionDto.no}" width="35%" height="300" onload="file('${questionDto.no}+pic');"></div>
+<table class="table">
+<tbody>
+<tr>
+<th>문제 제목</th>
+<td> ${questionDto.question}</td>
+ 
+</tr>
 
-<div>문제 보기1 : ${questionDto.dis1}</div>
-<div>문제 보기2 : ${questionDto.dis2}</div>
-<div>문제 보기3 : ${questionDto.dis3}</div>
-<div>문제 보기4 : ${questionDto.dis4}</div>
-<div>문제 보기5 : ${questionDto.dis5}</div>
-<%-- <c:if test="${grade=='관리자'}"> --%>
-<div>문제 정답 : ${questionDto.answer}</div>
- <div>문제 해설 : ${questionDto.solution}</div>
+<tr>
+<th>이미지</th>
+<td>
 
-<div>카테고리넘버: ${questionDto.category_no}</div>
-<div>카테고리 : ${questionDto.csname}</div>
-<br><br>
+<img id="preview" class="test" name="${questionDto.no}+pic" src="qimage?no=${questionDto.no}" width="35%" height="300" onload="file('${questionDto.no}+pic');">
+</td>
+
+</tr>
+
+<tr>
+<th>문제 보기</th>
+<td>
+
+문제 보기1 : ${questionDto.dis1}<br>
+문제 보기2 : ${questionDto.dis2}<br>
+문제 보기3 : ${questionDto.dis3}<br>
+문제 보기4 : ${questionDto.dis4}<br>
+문제 보기5 : ${questionDto.dis5}
+
+</td>
+
+
+</tr>
+
+
+<tr>
+<th>문제 정답</th>
+<td>
+${questionDto.answer}
+
+</td>
+
+</tr>
+
+
+<tr>
+<th>문제 해설</th>
+<td>
+${questionDto.solution}
+</td>
+
+</tr>
+
+
+
+<tr>
+<th>카테고리넘버</th>
+<td>
+${questionDto.category_no}
+</td>
+
+</tr>
+
+
+
+<tr>
+<th>카테고리</th>
+<td>
+${questionDto.csname}
+</td>
+
+</tr>
+
+
+
+	</tbody>
+</table>
 <div>
-<%-- <c:if test="${grade=='관리자'}"> --%>
-<%-- <a href="normalupdate?no=${questionDto.no}">문제 수정</a><br><br> --%>
+
 
 <button type="button" onclick="location.href='normalupdate?no=${questionDto.no}'">문제 수정하기</button><br><br>
 

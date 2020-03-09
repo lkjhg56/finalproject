@@ -38,7 +38,7 @@
 		<filter-name>loginFilter</filter-name>
 		<url-pattern>/users/pw/*</url-pattern>
 		<url-pattern>/users/info</url-pattern>
-		<url-pattern>/users/change</url-pattern>
+		<url-pattern>/users/my_grade_point</url-pattern>
 		<url-pattern>/users/test_result</url-pattern>
 		<url-pattern>/users/test_result_search</url-pattern>
 		<url-pattern>/board/edit</url-pattern>
@@ -48,6 +48,10 @@
 		<url-pattern>/board2/insert</url-pattern>
 		<url-pattern>/board2/delete</url-pattern>
 		<url-pattern>/board2/edit2</url-pattern>
+		<url-pattern>/question/upload</url-pattern>
+		<url-pattern>/question/update</url-pattern>
+		<url-pattern>/question/solve</url-pattern>
+		<url-pattern>/question/multi</url-pattern>
 	</filter-mapping>
 	
 	<!-- 
@@ -61,6 +65,7 @@
 		<filter-name>adminFilter</filter-name>
 		<url-pattern>/admin/*</url-pattern>
 		<url-pattern>/board/delete2</url-pattern>
+		<url-pattern>/users/user_list</url-pattern>
 	</filter-mapping>
 	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
