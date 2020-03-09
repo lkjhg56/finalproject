@@ -292,6 +292,20 @@
 			from test_question T inner join solution S
 			on t.no=S.question_no where t.no=#{no}
  	</select>
+ 	
+ 	
+ 	
+ 		<select id="getResultSolution" parameterType="int" resultType="normalUpdateQuestionVO">
+	     select T.question,t.dis1,t.dis2,t.dis3,t.dis4,t.dis5,S.solution_no,s.solution,r.iscorrect,r.correct
+			from test_question T inner join solution S
+			on t.no=S.question_no 
+			inner join rcorrect R
+			on t.no=r.test_no
+			where r.result_no=#{rno}
+ 	</select>
+ 	
+ 	
+ 	
  	<!-- 정답률 계산 -->
  	<!-- 문제 등록 후 최초 오답이 날 경우 분자가 0이 되어  DB에서 에러가 발생함. -->
  	<!-- 하기 case when을 이용하여 예외처리를 해줌. -->
