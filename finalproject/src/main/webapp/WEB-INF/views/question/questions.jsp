@@ -11,8 +11,6 @@
 
   font-family: sans-serif;
 }
-
-
 .question-float::after{
 	 content:"";
     display:block;
@@ -46,19 +44,6 @@
 	   border-radius: 5%;
 	  
 }
-
-.member_info1{
-	width : 100%;
-	height: 150px;
-	
-	  padding-left: 15px;
-     padding-top: 20px;
-     padding-right : 15px;
-    
-	  border-radius: 5%;
-	   font-family: sans-serif;
-}
-
  #slider .slide .text {
             width: 100%;
             height: 100%;
@@ -69,31 +54,16 @@
               border-radius: 5%;
           
         }
-        
-        
-        .aaa{
-
+.aaa{
 	width: 207px;
-
     border: 2px solid #ddd;
-
     margin: 30px auto;
-
     height: 171px;
-
     overflow: inherit;
-
     border-left-width: 2px;
-
     background-color: white;
-
     border-radius: 5%;
-
-	}
-        
- 
-
-
+}
 .post-preview > a {
   color: #212529;
 }
