@@ -180,7 +180,7 @@ margin-top: 30px;
 	border: 0px;
 
 	
-
+    background-color: lightgrey;
 	
 
 }
@@ -210,7 +210,7 @@ margin-top: 30px;
 
 	border: 0px;
 
-
+    background-color: lightgrey;
 
 
 }
@@ -261,7 +261,7 @@ margin-top: 30px;
 
     margin: 30px auto;
 
-    height: 171px;
+    height: 164px;
 
     overflow: inherit;
 
@@ -317,6 +317,26 @@ margin-top: 30px;
 
 	}
 
+
+
+.member_info1 {
+    width: 100%;
+    height: 121px;
+    padding-left: 15px;
+    padding-top: 23px;
+    padding-right: 15px;
+    border-radius: 5%;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.col-lg-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding-bottom: 11px;
+}
+
 </style>
 
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -327,8 +347,8 @@ margin-top: 30px;
    <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-		<h6><a href = "${pageContext.request.contextPath}">home</a> > <a href = "${pageContext.request.contextPath }/question/choose">문제 종류 고르기</a>
-      				><a href = "#">문제 고르기</a>
+		<h6><a href = "${pageContext.request.contextPath}">HOME</a> > <a href = "${pageContext.request.contextPath }/question/choose">Q-Master LIST</a>
+      				><a href = "#">TEST LIST</a>
       	</h6>
       	
 			<div class = "for_aside">
@@ -350,7 +370,7 @@ margin-top: 30px;
 											<input
 											type="hidden" name="categoryname" value="${list.csname}">
 									
-										<div>${list.csname}</div>
+										<div><h5>${list.csname}</h5></div>
 										<div class= "select_area">
 												<div class = "method_area">
 													<select class="method" name="method"

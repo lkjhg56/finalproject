@@ -71,7 +71,7 @@
         }
         
         
-        .aaa{
+       .aaa{
 
 	width: 207px;
 
@@ -79,7 +79,7 @@
 
     margin: 30px auto;
 
-    height: 171px;
+    height: 164px;
 
     overflow: inherit;
 
@@ -124,17 +124,37 @@
 	
 margin-top: 30px;
 }
+
+
+
+
+.member_info1 {
+    width: 100%;
+    height: 121px;
+    padding-left: 15px;
+    padding-top: 23px;
+    padding-right: 15px;
+    border-radius: 5%;
+    font-family: sans-serif;
+    text-align: center;
+}
+.col-lg-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding-bottom: 11px;
+}
 </style>
 
    <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
       
-      <h6><a href = "${pageContext.request.contextPath}">home</a> > <a href = "${pageContext.request.contextPath }/question/choose">문제 종류 고르기</a>
+      <h6><a href = "${pageContext.request.contextPath}">HOME</a> > <a href = "${pageContext.request.contextPath }/question/choose">Q-Master LIST</a>
       </h6>
         <div class = "for_aside">
       		<div class="section_area">
-      <h1><i class="far fa-list-alt"  id="far fa-list-alt"></i>  Q	master LIST</h1>
+      <h1><i class="far fa-list-alt"  id="far fa-list-alt"></i>  Q-Master LIST</h1>
 
     
       <br>

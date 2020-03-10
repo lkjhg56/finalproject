@@ -183,6 +183,16 @@
    
    <style>
   
+  
+  .h2, h2 {
+    font-size: 1.5rem;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+  
   *{
 
   font-family: sans-serif;
@@ -228,7 +238,7 @@ main{
 }
 .plural-question{
 	 float:left;
-    width:40%;
+    width:60%;
 }
 .plural-pic{
 	 float:left;
@@ -237,7 +247,7 @@ main{
 }
 .plural-textarea{
 	float:left;
-	width: 35%;
+	width: 15%;
 }
 
 .questionin_wrap::after{
@@ -305,12 +315,6 @@ float:left;
    			<c:forEach var="qlist" items ="${clist}"> 
   <hr> 	
  				<div class = "plural-wrap">
-					<div class = "plural-textarea">
-							
-								<textarea  rows="10">
-								
-								</textarea>
-					</div>
 	   				<div class = "plural-question">
 	   	
 	
@@ -328,8 +332,9 @@ float:left;
 	   								<br>
 	   					</div>
 	   					 <div class = "plural-pic" >
-	   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}+pic"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}+pic');"  width="400" height="250" >
+	   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}+pic"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}+pic');"  width="300" height="250" >
 	   					</div> 							  
+					
       		</div>
       		
   		</c:forEach>

@@ -214,7 +214,7 @@ main{
     <tr align = "center" >
     
 	<td>제목</td>
-	<td colspan = "3"> ${csname} ${category_no}</td>
+	<td colspan = "3"> ${csname}  ${categoryname} ${category_no}</td>
 	
 	
     </tr>
