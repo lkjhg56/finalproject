@@ -178,6 +178,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="point" parameterType="users">
 		update users set point=point-500 where id=#{id}
 	</update>
+	
+	<!-- 포인트 랭킹 Top7 조회 -->
+	<select id="grade_point_rank7" resultType="users" >
+		select * from (
+	    	select rownum rn, A.* from (
+	        	select
+					rank() over (order by grade_point desc) as rank,name ,grade_point
+				from users
+	    	)A
+		) where rn between 1 and 7
+	</select>
 		
 </mapper>
 

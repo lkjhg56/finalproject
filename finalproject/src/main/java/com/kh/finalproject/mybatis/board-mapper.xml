@@ -258,6 +258,15 @@
 		select count(*) from report where report_board_no = #{board_no}
 	</select>
 	
+	<!-- 메인에서 최신글 7개 보여주기 -->
+	<select id="recent_content" resultType="boardDto">
+		select * from(
+ 			select rownum rn, A.* from(select * from board 
+ 				order by board_wdate desc
+ 			)A)
+ 		where rn between 1 and 7
+	</select>
+	
 	<!-- /////////////////////////////////////////////
 								댓글 sql구문 시작
 	 //////////////////////////////////////////////-->
