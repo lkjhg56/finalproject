@@ -148,10 +148,10 @@ delete from rcorrect where rqno=#{rqno} and test_no=#{test_no}
 	</select>
 		
 		<select id = "nList" resultType = "uploadQuestionDto">
-			select * from(select question_title from question order by question_no desc)where rownum &lt;=10
+			select * from(select question_title, question_no, read_count from question order by question_no desc)where rownum &lt;=7
 		</select>
 		
-		
+	
 		
 		<!--  유저답 리스트 -->
 		<select id = "getCorrectList" parameterType = "int" resultType = "rcorrectDto">
