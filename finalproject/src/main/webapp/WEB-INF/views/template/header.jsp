@@ -331,6 +331,18 @@ $(function() {
     background-color: white;
     border-radius: 5%;  
 }
+	.footer-side{
+		list-style:none;
+	}
+	.footer-color{
+		
+		background-color: #f3f3f3;;
+    	padding-top: 20px;
+	}
+*{
+	font-family : sans-serif;
+}
+
 </style>
 
 
@@ -445,4 +457,4 @@ $(function() {
   
   	<div class= "forfooter">
 
-<section>
+<section style="margin-bottom: 200px;">
