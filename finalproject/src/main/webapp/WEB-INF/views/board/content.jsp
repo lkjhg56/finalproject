@@ -6,9 +6,12 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <style>
 	*{
-		 font-family: 'Noto Sans';
 	     font-weight: 400;
 	      font-size: 13px;
+	}
+	
+	.container table{
+		 font-family: 'Noto Sans';
 	}
 	
 	span{

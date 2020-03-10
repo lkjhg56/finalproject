@@ -4,11 +4,13 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
 <style>
 	*{
-		 font-family: 'Noto Sans';
 	     font-weight: 400;
 	      font-size: 13px;
 	}
-	
+		
+	.container table{
+		 font-family: 'Noto Sans';
+	}
 	.row-empty {
 		height: 30px;
 	}
@@ -98,13 +100,27 @@
     margin-bottom: -35px;
 }
 
-	.btn-primary{
-		 font-family: 'Noto Sans';
-	    font-weight: 400;
-	    font-size: 12px;
-	    padding : 8px;
-	    outline:none;
-	}
+/* 	.btn-primary{ */
+/* 		 font-family: 'Noto Sans'; */
+/* 	    font-weight: 400; */
+/* 	    font-size: 12px; */
+/* 	    padding : 8px; */
+/* 	    outline:none; */
+/* 	} */
+	.btn23 {
+      	 font-family: 'Noto Sans';
+	     font-weight: 420;
+	     font-size: 13px;
+		  display: inline-block;
+		  font-weight: 400;
+		  color: #212529;
+		  text-align: center;
+		  vertical-align: middle;
+		  background-color: white;
+		  border: 1px solid black;
+		  padding: 0.375rem 0.75rem;
+		  line-height: 1.5;
+		 }
 </style>
 <script>
 function kQuery(selector){
@@ -278,12 +294,12 @@ $(function(){
 	<div class="container" style="text-align: right">
 		<!-- 관리자기능 게시글 다중삭제 -->
 		<c:if test="${grade == '관리자'}">
-			<button class="btn btn-primary" id="selectDelete">선택삭제</button>
+			<button class="btn23 category-btn" id="selectDelete">선택삭제</button>
 		</c:if>
 	
 		<!-- 글쓰기 버튼은 로그인시 표시됨 -->		
 		<c:if test="${id != null}">				
-			<button type="button" class="btn btn-primary">
+			<button type="button" class="btn23 category-btn">
 				<a href=${pageContext.request.contextPath}/board/regist><i class="fas fa-pencil-alt"></i>글쓰기</a>
 			</button>						
 		</c:if>	
