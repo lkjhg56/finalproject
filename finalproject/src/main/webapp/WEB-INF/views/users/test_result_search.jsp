@@ -92,7 +92,6 @@
 					<li><a href="${pageContext.request.contextPath}/question/normalupload">• 일반문제 업로드</a></li>
 					<li><a href="${pageContext.request.contextPath}/question/normallist">• 일반문제 List</a></li>
 					<li><a href="${pageContext.request.contextPath}/question/list">• 유저문제 List</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/main">• admin page</a></li>
 				</c:when>
 			
 				<c:otherwise> 
@@ -103,12 +102,51 @@
 			
 			<li><a href="${context}/users/test_result">• 내가 본 시험 내역</a></li>
 			<li><a href="${context}/users/my_grade_point">• 나의 포인트 내역</a></li>
-			<li><a href="${context}/users/test_point">• 포인트 줘보기 test</a></li>
 			<li><a href="${context}/users/grade_point_rank">• 등급 포인트 랭킹</a></li>
-			<li><a id="bye" href="${context}/users/bye">• 탈퇴하기</a></li>
-			<li><a href="${context}/users/logout">• 로그아웃</a></li>
+			<li><a href="${context}/users/bye" data-toggle="modal" data-target="#bye">• 탈퇴하기</a></li>
+			<li><a href="${context}/users/logout" data-toggle="modal" data-target="#logout">• 로그아웃</a></li>
 		</ul>
 	</div>
+</div>
+<!-- Bye Modal -->
+<div class="modal fade" id="bye" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">QMaster</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>정말 탈퇴 하시겠습니까?</h5>
+      </div>
+      <div class="modal-footer">
+        <a href="${context}/users/bye"><button type="button" class="btn btn-primary">네</button></a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니요</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Logout Modal -->
+<div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">QMaster</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>정말 로그아웃 하시겠습니까?</h5>
+      </div>
+      <div class="modal-footer">
+        <a href="${context}/users/logout"><button type="button" class="btn btn-primary">네</button></a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니요</button>
+      </div>
+    </div>
+  </div>
 </div>
 <div  style="text-align:center">
 
