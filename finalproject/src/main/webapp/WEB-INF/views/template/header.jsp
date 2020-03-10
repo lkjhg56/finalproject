@@ -101,11 +101,6 @@ function islogin(id, path){
 					}
 					
 				})
-				
-
-			
-			
-		
 		}
 	})
 	$.ajax({
@@ -244,7 +239,6 @@ $(function() {
 
 <style>
 
-
 .for_aside{
 	 content:"";
     display:block;
@@ -262,9 +256,6 @@ $(function() {
     min-height:600px;
 }
 
-
-
-
 .aside_link{
 	width:100%;
 	min-height:500px;
@@ -278,53 +269,79 @@ $(function() {
 	font-size:15px;
 	
 }
-/* @font-face { font-family: 'CookieRunOTF-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Bold00.woff') format('woff'); font-weight: normal; font-style: normal; } */
-
 
 .init{
 	padding-top : 7px;
 	 font-family: sans-serif;
-
 }
 
-
-
 #slider {
-            width: 90%;
-            height: 400px;
-            margin: auto;
-            position: relative;
-        }
+    width: 90%;
+    height: 400px;
+    margin: auto;
+    position: relative;
+}
 
-        #slider .slides-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
+#slider .slides-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 
-        #slider .slide {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            display: none;
-        }
+#slider .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
 
-        #slider .slide .text {
-            width: 100%;
-            height: 100%;
-            color: black;
-            text-transform: uppercase;
-            font-size: 17px;
-           
-        }
+#slider .slide .text {
+    width: 100%;
+    height: 100%;
+    color: black;
+    text-transform: uppercase;
+    font-size: 17px;
+   
+}
 
-        #slider .slide:first-child {
-            display: block;
-        }
+#slider .slide:first-child {
+    display: block;
+}
 
-
+.member_info1{
+	width : 100%;
+	height: 150px;
+	
+	  padding-left: 15px;
+     padding-top: 20px;
+     padding-right : 15px;
+    
+	  border-radius: 5%;
+	   font-family: sans-serif;
+}
+.aaa{
+	width: 207px;
+    border: 2px solid #ddd;
+    margin: 30px 0px;
+    height: 154px;
+    overflow: inherit;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;  
+}
+	.footer-side{
+		list-style:none;
+	}
+	.footer-color{
+		
+		background-color: #f3f3f3;;
+    	padding-top: 20px;
+	}
+*{
+	font-family : sans-serif;
+}
 
 </style>
 
@@ -395,18 +412,22 @@ $(function() {
 
            <li>
             <li class="nav-item logined">
-            <a class="nav-link" href="${pageContext.request.contextPath}/users/info">Memberinfo</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/info">
+            <c:choose>
+            	<c:when test="${grade=='관리자'}">
+            		Admin Page
+            	</c:when>
+            	<c:otherwise>
+            		Memberinfo	
+            	</c:otherwise>
+            </c:choose>
+            
+            </a>
           </li>
             <li>
             <li class="nav-item logined">
             <a class="nav-link" href="${pageContext.request.contextPath}/users/logout">Logout</a>
-          </li>
-          <c:if test="${grade=='관리자'}">
-	          <li class="nav-item logined">
-	            <a class="nav-link" href="${pageContext.request.contextPath}/admin/main">admin page</a>
-	          </li>
-          </c:if>
-          
+          </li>        
         </ul>
       </div>
     </div>
@@ -436,4 +457,4 @@ $(function() {
   
   	<div class= "forfooter">
 
-<section>
+<section style="margin-bottom: 200px;">
