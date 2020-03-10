@@ -4,9 +4,12 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 	*{
-		 font-family: 'Noto Sans';
 	     font-weight: 400;
 	      font-size: 13px;
+	}
+	
+	.container table{
+		 font-family: 'Noto Sans';
 	}
 	
 	.row-empty {
@@ -87,16 +90,6 @@
 		margin-bottom: -45px;
 		display: inline-block;
 	}
-	
-/* 	.container nav{ */
-/*     width: 100%; */
-/*     padding-right: 0px; */
-/*     padding-left: 0px; */
-/*     margin-right: auto; */
-/*     margin-left: auto; */
-/*     padding-top: 5px;  */
-/*     margin-bottom: -35px; */
-/* } */
 
 	.btn23 {
       	 font-family: 'Noto Sans';

@@ -4,10 +4,14 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 	*{
-		 font-family: 'Noto Sans';
 	     font-weight: 400;
 	      font-size: 13px;
 	}
+		
+	.container table{
+		 font-family: 'Noto Sans';
+	}
+	
 	.row-empty {
 		height: 30px;
 	}
@@ -81,6 +85,7 @@
 		 
 		  .menu{
 		 	margin-bottom: 8px;
+		 	font-family: 'Noto Sans';
 		 }
 		 
 		  .btn25{
@@ -200,6 +205,33 @@ $(function(){
 	});	
 });
 
+$(function(){
+	$(".exit").click(function(e){
+		//this==.exit
+		e.preventDefault();		
+		var data = $(".exit_id").val();
+		var data2 = $(".bbb").val();
+		console.log(data2);
+		
+		if(!data.length){
+			alert("강제탈퇴할 글 작성자를 선택하세요.");
+		}
+		else{
+			$.ajax({
+				 url: "${pageContext.request.contextPath}/admin/bye",
+				type:"post",
+				data:{id:data, board_reply_origin:data2},
+				success:function(resp){
+					//console.log(resp);
+					if(resp == "success"){
+						alert("강제탈퇴가 완료되었습니다.");
+						window.location.reload();
+					}
+				}
+			});
+		 }
+	});	
+});
 </script>
 <div class="row-empty"></div>
 <div class="row-empty"></div>
@@ -247,7 +279,7 @@ $(function(){
 			<c:if test="${list.report_reply_no!=0}">
 				<tr>
 					<td><input type="checkbox" class="check-item" name="board_reply_no" value="${list.report_reply_no}">
-					<input type="hidden" name="board_reply_origin" value="${list.board_reply_origin }"></td>						
+					<input class="bbb" type="hidden" name="board_reply_origin" value="${list.board_reply_origin }"></td>						
 					<td>
 						${list.report_no} 
 					</td>
@@ -272,7 +304,8 @@ $(function(){
 					<c:choose>
 				<c:when test="${list.report_count >= 3}">
 					<td>
-						<button class="btn25">강제탈퇴</button>
+						<input class="exit_id" type="hidden" name="id" value="${list.report_board_writer}" >
+						<button class="exit btn25">강제탈퇴</button>
 					</td>
 				</c:when>
 				<c:otherwise>
