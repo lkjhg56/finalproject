@@ -262,29 +262,13 @@ $(function() {
     min-height:600px;
 }
 
-.member_info{
-	 border-spacing: 15px;
-    background-color: #AAA5A4;
-    width:100%;
-    border: 1px solid black;
-   
-}
 
-.member_info1{
-	width : 100%;
-	height: 150px;
-	 background-color: #edf0ee;
-	  padding-left: 15px;
-     padding-top: 20px;
-     padding-right : 15px;
-      border: 4px solid #d4d9d6;
-	 
-}
+
 
 .aside_link{
 	width:100%;
 	min-height:500px;
-	  border: 4px solid #f2f5f3;
+	   border: 1px #FFFFFF;
 	  padding-top :10px;
 	  padding-left :10px;
 	  font-size:16px;
@@ -294,12 +278,13 @@ $(function() {
 	font-size:15px;
 	
 }
-@font-face { font-family: 'CookieRunOTF-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Bold00.woff') format('woff'); font-weight: normal; font-style: normal; }
+/* @font-face { font-family: 'CookieRunOTF-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Bold00.woff') format('woff'); font-weight: normal; font-style: normal; } */
 
 
 .init{
 	padding-top : 7px;
-	font-family:'CookieRunOTF-Bold';
+	 font-family: sans-serif;
+
 }
 
 
@@ -332,7 +317,7 @@ $(function() {
             color: black;
             text-transform: uppercase;
             font-size: 17px;
-            font-weight: bold;
+           
         }
 
         #slider .slide:first-child {

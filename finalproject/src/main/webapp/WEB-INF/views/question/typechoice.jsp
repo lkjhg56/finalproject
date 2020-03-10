@@ -122,6 +122,12 @@
 </script>
 
 <style>
+
+*{
+
+  font-family: sans-serif;
+}
+
 .select_area::after{
 	 content:"";
     display:block;
@@ -129,21 +135,187 @@
     flex-wrap:wrap-reverse;
 }
 .method_area{
+	display: block;
 	 float:left;
-    width:35%;
+    width:70%;
 
 }
 .session_area{
-	 float:left;
-    width:35%;
+	display: inline-block;
+    width:44%;
 
 }
 .btn_area{
-	 float:left;
-    width:30%;
+		display: inline;
+    width:100px;
 
 }
 
+
+
+.section_area{
+	
+margin-top: 30px;
+}
+
+#select1 {
+
+	
+  	border-bottom: 1px solid #565960 ;
+
+    padding: 5px;
+
+    padding-left: 0.5rem;
+
+    padding-right: 2rem;
+
+  	margin: 3PX;
+
+	font-size: 15px;
+
+	height: 43px;
+
+	width: 200px;
+
+	border: 0px;
+
+	
+
+	
+
+}
+
+
+
+
+.select1 {
+
+	
+
+   	border-bottom: 1px solid #565960 ;
+
+    padding: 5px;
+
+    padding-left: 0.5rem;
+
+    padding-right: 2rem;
+
+  	margin: 3PX;
+
+	font-size: 15px;
+
+	height: 43px;
+
+	width: 200px;
+
+	border: 0px;
+
+
+
+
+}
+
+
+
+.aside_link{
+	width:100%;
+	min-height:500px;
+	   border: 1px #FFFFFF;
+	  padding-top :10px;
+	    padding-bottom :10px;
+	  padding-left :10px;
+	  font-size:16px;
+	   border-radius: 5%;
+	  
+}
+
+.member_info1{
+	width : 100%;
+	height: 150px;
+	
+	  padding-left: 15px;
+     padding-top: 20px;
+     padding-right : 15px;
+    
+	  border-radius: 5%;
+	   font-family: sans-serif;
+}
+
+ #slider .slide .text {
+            width: 100%;
+            height: 100%;
+            color: black;
+            text-transform: uppercase;
+            font-size: 17px;
+             border: 1px #FFFFFF;
+              border-radius: 5%;
+          
+        }
+        
+        
+        .aaa{
+
+	width: 207px;
+
+    border: 2px solid #ddd;
+
+    margin: 30px auto;
+
+    height: 171px;
+
+    overflow: inherit;
+
+    border-left-width: 2px;
+
+    background-color: white;
+
+    border-radius: 5%;
+
+	}
+        
+ 
+
+
+.post-preview > a {
+  color: #212529;
+}
+
+.post-preview > a:focus, .post-preview > a:hover {
+  text-decoration: none;
+  color: #0085A1;
+}
+
+.post-preview > a > .post-title {
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.post-preview > a > .post-subtitle {
+  font-weight: 300;
+  margin: 0 0 10px;
+  
+}
+
+	.bbb{
+
+	width: 472px;
+
+  
+
+    margin: 25px auto;
+
+    height: 137px;
+
+    overflow: inherit;
+
+    border-left-width: 2px;
+
+    background-color: white;
+
+    border-radius: 5%;
+
+	}
 
 </style>
 
@@ -161,12 +333,15 @@
       	
 			<div class = "for_aside">
       			<div class="section_area">
+      			
+      			
       	
-					<h1>시험 목록</h1>
+					<h1><i class="far fa-list-alt"  id="far fa-list-alt"></i>  TEST LIST</h1>
 
 							<c:forEach var="list" items="${list}">
 
-								<div>
+								<div class="bbb">
+								
 									<form method="post" name="form1"  action="${pageContext.request.contextPath}/question/solving">
 									<input type="hidden" name="tno" value="${tno}">
 										<input type="hidden" name="hour" value="${list.lim_hour}"> 
@@ -179,20 +354,26 @@
 										<div class= "select_area">
 												<div class = "method_area">
 													<select class="method" name="method"
-													onchange="callCategory('${list.csname}')">
+													onchange="callCategory('${list.csname}')" id="select1">
 											
 							
 															<option>방법 선택하세요</option>
 																<option>한문제씩풀기</option>
 																<option>한번에풀기</option>
 															</select>
+															
+															
 												</div>
+												
+												
 												<div class = "session_area">
-														 <select name="session" id="${list.csname}">
+														 <select name="session" id="${list.csname}" class="select1">
 							
 															<option>회차를 선택하세요</option>
 														</select> 
 													</div>
+													
+													
 													<div class = "btn_area">
 															<input class="btn btn-secondary" type="submit" name ="${list.csname}" value="선택" onclick="resultSave('${list.csname}', '${tno}', '${id}')">
 													</div>
@@ -210,11 +391,14 @@
 
 </c:forEach>
 					</div>
+					
+					
 	 				<div class ="aside_area">
-	 			
+	 			<div class="aaa">
 	 				<div id = "member_zone" class= "member_info1">
 	 						
 	 				</div>
+	 					</div>
 	 				<div	class = "aside_link">
 	 					<div id = "slider">
 	 						<div class="slides-container">
@@ -227,13 +411,13 @@
 			 					</div>
 	 					</div>
 	 				</div>
-	 				
+	 				 <div style = "width:100%"><hr></div>
 	 			</div>
 
       </div>
     </div>
   </div>
- 
+ </div>
 
   </body>
  
