@@ -4,6 +4,14 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/style.css?version=20200122">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700|Open+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/result.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/theme-colors/blue.css?version=20200122">
+
 <script>
 function appendResult() {
 
@@ -35,13 +43,280 @@ function appendResult() {
 
 <style>
 
-.btn-primary{
-color: #646E7D;
-background-color: #646E7D;
-display: inline;
+*{
+
+  font-family: sans-serif;
 }
 
+.select_area::after{
+	 content:"";
+    display:block;
+    clear:both;
+    flex-wrap:wrap-reverse;
+}
+.method_area{
+	display: block;
+	 float:left;
+    width:70%;
+
+}
+.session_area{
+	display: inline-block;
+    width:44%;
+
+}
+.btn_area{
+		display: inline;
+    width:100px;
+
+}
+
+
+
+.section_area{
+	
+margin-top: 30px;
+}
+
+#select1 {
+
+	
+  	border-bottom: 1px solid #565960 ;
+
+    padding: 5px;
+
+    padding-left: 0.5rem;
+
+    padding-right: 2rem;
+
+  	margin: 3PX;
+
+	font-size: 15px;
+
+	height: 43px;
+
+	width: 200px;
+
+	border: 0px;
+
+	
+    background-color: lightgrey;
+	
+
+}
+
+
+
+
+.select1 {
+
+	
+
+   	border-bottom: 1px solid #565960 ;
+
+    padding: 5px;
+
+    padding-left: 0.5rem;
+
+    padding-right: 2rem;
+
+  	margin: 3PX;
+
+	font-size: 15px;
+
+	height: 43px;
+
+	width: 200px;
+
+	border: 0px;
+
+    background-color: lightgrey;
+
+
+}
+
+
+
+.aside_link{
+	width:100%;
+	min-height:500px;
+	   border: 1px #FFFFFF;
+	  padding-top :10px;
+	    padding-bottom :10px;
+	  padding-left :10px;
+	  font-size:16px;
+	   border-radius: 5%;
+	  
+}
+
+.member_info1{
+	width : 100%;
+	height: 150px;
+	
+	  padding-left: 15px;
+     padding-top: 20px;
+     padding-right : 15px;
+    
+	  border-radius: 5%;
+	   font-family: sans-serif;
+}
+
+ #slider .slide .text {
+            width: 100%;
+            height: 100%;
+            color: black;
+            text-transform: uppercase;
+            font-size: 17px;
+             border: 1px #FFFFFF;
+              border-radius: 5%;
+          
+        }
+        
+        
+        .aaa{
+
+	width: 207px;
+
+    border: 2px solid #ddd;
+
+    margin: 30px auto;
+
+    height: 164px;
+
+    overflow: inherit;
+
+    border-left-width: 2px;
+
+    background-color: white;
+
+    border-radius: 5%;
+
+	}
+        
+ 
+
+
+.post-preview > a {
+  color: #212529;
+}
+
+.post-preview > a:focus, .post-preview > a:hover {
+  text-decoration: none;
+  color: #0085A1;
+}
+
+.post-preview > a > .post-title {
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.post-preview > a > .post-subtitle {
+  font-weight: 300;
+  margin: 0 0 10px;
+  
+}
+
+	.bbb{
+
+	width: 472px;
+
+  
+
+    margin: 25px auto;
+
+    height: 137px;
+
+    overflow: inherit;
+
+    border-left-width: 2px;
+
+    background-color: white;
+
+    border-radius: 5%;
+
+	}
+
+
+
+.member_info1 {
+    width: 100%;
+    height: 121px;
+    padding-left: 15px;
+    padding-top: 23px;
+    padding-right: 15px;
+    border-radius: 5%;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.col-lg-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding-bottom: 11px;
+}
+
+.h1, h1 {
+    font-size: 3.5rem;
+}
+
+a {
+    color: 64676C;
+    transition: all 0.2s;
+}
+
+.h6, h6 {
+    font-size: 1.5rem;
+}
+
+
+.h3, h3 {
+    font-size: 2.75rem;
+}
+
+
+.h5, h5 {
+    font-size: 1.75rem;
+}
+
+
+.headline{
+	 float:left;
+    width:30%;
+    min-height:600px;
+}
+
+
+
+
+.aside_link{
+	width:100%;
+	min-height:500px;
+	   border: 1px #FFFFFF;
+	  padding-top :10px;
+	  padding-left :10px;
+	  font-size:16px;
+}
+
+.init{
+	padding-top : 7px;
+	 font-family: sans-serif;
+color: steelblue;
+    font-weight: bold;
+}
+
+#slider .slide .text {
+    width: 100%;
+    height: 100%;
+    color: black;
+    text-transform: uppercase;
+    font-size: 16px;
+    border: 1px #FFFFFF;
+    border-radius: 5%;
+}
 </style>
+
 
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  
@@ -70,16 +345,15 @@ display: inline;
 				</div>
 				
 				
-				
-
-	 			<div class ="aside_area">
-	 			
+				<div class ="headline">
+	 			<div class="aaa">
 	 				<div id = "member_zone" class= "member_info1">
-	 			
+	 						
 	 				</div>
-
+	 					</div>
+	 					
 	 				<div	class = "aside_link">
-	 						<div id = "slider">
+	 					<div id = "slider">
 	 						<div class="slides-container">
 		 							<div class = "mRank slide">
 				 					</div>
@@ -89,10 +363,12 @@ display: inline;
 				 					</div>
 			 					</div>
 	 					</div>
-	 					
 	 				</div>
-	 				
+	 				 <div style = "width:100%"><hr></div>
 	 			</div>
+				
+
+	 			
 				
 		</div>
 	</div>

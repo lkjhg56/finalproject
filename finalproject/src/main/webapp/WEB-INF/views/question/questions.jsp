@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
   
  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/style.css?version=20200122">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700|Open+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/result.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/theme-colors/blue.css?version=20200122">
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
@@ -54,11 +59,24 @@
               border-radius: 5%;
           
         }
+<<<<<<< HEAD
+        
+        
+       .aaa{
+
+=======
 .aaa{
+>>>>>>> refs/remotes/origin/master
 	width: 207px;
     border: 2px solid #ddd;
     margin: 30px auto;
+<<<<<<< HEAD
+
+    height: 164px;
+
+=======
     height: 171px;
+>>>>>>> refs/remotes/origin/master
     overflow: inherit;
     border-left-width: 2px;
     background-color: white;
@@ -94,17 +112,83 @@
 	
 margin-top: 30px;
 }
+
+
+
+
+.member_info1 {
+    width: 100%;
+    height: 121px;
+    padding-left: 15px;
+    padding-top: 23px;
+    padding-right: 15px;
+    border-radius: 5%;
+    font-family: sans-serif;
+    text-align: center;
+}
+.col-lg-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding-bottom: 11px;
+}
+
+
+.h1, h1 {
+    font-size: 3.5rem;
+}
+
+a {
+    color: 64676C;
+    transition: all 0.2s;
+}
+
+.h6, h6 {
+    font-size: 1.5rem;
+}
+
+
+.h3, h3 {
+    font-size: 2.75rem;
+}
+
+.init{
+	padding-top : 7px;
+	 font-family: sans-serif;
+color: steelblue;
+    font-weight: bold;
+}
+
+.ccc {
+  width: 219px;
+    margin: 16px auto;
+    height: 385px;
+    overflow: inherit;
+    border-left-width: 7px;
+    background-color: #eee;
+    
+}
+
+#slider .slide .text {
+    width: 100%;
+    height: 100%;
+    color: black;
+    text-transform: uppercase;
+    font-size: 16px;
+    border: 1px #FFFFFF;
+    border-radius: 5%;
+}
 </style>
 
    <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
       
-      <h6><a href = "${pageContext.request.contextPath}">home</a> > <a href = "${pageContext.request.contextPath }/question/choose">문제 종류 고르기</a>
+      <h6><a href = "${pageContext.request.contextPath}">HOME</a> > <a href = "${pageContext.request.contextPath }/question/choose">Q-Master LIST</a>
       </h6>
         <div class = "for_aside">
       		<div class="section_area">
-      <h1><i class="far fa-list-alt"  id="far fa-list-alt"></i>  Q	master LIST</h1>
+      <h1><i class="far fa-list-alt"  id="far fa-list-alt"></i>  Q-Master LIST</h1>
 
     
       <br>
@@ -130,12 +214,18 @@ margin-top: 30px;
 	 				</c:forEach>
 	 			</div>
 	 		<div class ="aside_area" >
+	 		
+	 		
+	 		
+	 		
+	 		
+	 		
 	 			<div class="aaa">
 	 				<div id = "member_zone" class= "member_info1">
 	 					
 	 				</div>
 	 				</div>
-	 						 
+	 						 <div class="ccc">
 	 				<div	class = "aside_link">
 	 					
 	 					<div id = "slider">
@@ -151,6 +241,7 @@ margin-top: 30px;
 	 					</div>
 	 					
 	 				
+	 				</div>
 	 				</div>
 	 					 <div style = "width:100%"><hr></div>
 	 			</div>
