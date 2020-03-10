@@ -410,18 +410,22 @@ $(function() {
 
            <li>
             <li class="nav-item logined">
-            <a class="nav-link" href="${pageContext.request.contextPath}/users/info">Memberinfo</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/users/info">
+            <c:choose>
+            	<c:when test="${grade=='관리자'}">
+            		Admin Page
+            	</c:when>
+            	<c:otherwise>
+            		Memberinfo	
+            	</c:otherwise>
+            </c:choose>
+            
+            </a>
           </li>
             <li>
             <li class="nav-item logined">
             <a class="nav-link" href="${pageContext.request.contextPath}/users/logout">Logout</a>
-          </li>
-          <c:if test="${grade=='관리자'}">
-	          <li class="nav-item logined">
-	            <a class="nav-link" href="${pageContext.request.contextPath}/admin/main">admin page</a>
-	          </li>
-          </c:if>
-          
+          </li>        
         </ul>
       </div>
     </div>

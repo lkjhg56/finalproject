@@ -34,7 +34,6 @@
 		<thead class="thead-light">
 			<tr>
 				<th>No.</th>
-				<th>카테고리</th>
 				<th>제목</th>
 				<th>조회수</th>
 				<th>정답비율</th>
@@ -48,7 +47,6 @@
 		<c:forEach var="question" items="${list}">
 			<tr>
 				<td>${question.question_no}</td>
-				<td>${question.category_name}</td>
 				<td><a href="solve?question_no=${question.question_no}">${question.question_title}</a></td>
 				<td>${question.read_count}</td>
 				<td>${question.correct_ratio}%</td>
