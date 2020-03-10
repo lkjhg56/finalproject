@@ -6,6 +6,14 @@
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
    <!-- 필요 정보: rno,  category no, tno-->
  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/style.css?version=20200122">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700|Open+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/result.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/theme-colors/blue.css?version=20200122">
+   
+ 
 <script>
 
 
@@ -57,6 +65,12 @@ function selectcorrect(abc) {
    
    
    <style>
+
+body {
+    color: #333;
+    font-size: 18px;
+    line-height: 1.6;
+}
 
 
 main{
@@ -186,7 +200,7 @@ main{
 
 <div class="jumbotron">
 <h2> ${csname} ${category_no}</h2>
-<h1>점수 ${score}점</h1>
+<h3>점수 ${score}점</h3>
 
 
 </div>
@@ -266,11 +280,11 @@ main{
 	 <div class = "plural-pic" ><img id="preview" src="qimage?no=${alist.no}"  class="test"  onload="selectcorrect('${alist.no}');"  width="20%" height="200"></div><br><br> 
 <%-- <input type="image" name="image" onload="selectcorrect('${alist.no}');"> --%>
 
-<div id="1" class="1">1.</div>${alist.dis1}<br>
-	<div id="2" class="2">2.</div>${alist.dis2}<br>
-	<div id="3" class="3">3.</div>${alist.dis3}<br>
-	<div id="4" class="4">4.</div>${alist.dis4}<br>
-	<div id="5" class="5">5.</div>${alist.dis5}<br><br>    
+1. ${alist.dis1}<br>
+	2. ${alist.dis2}<br>
+	3. ${alist.dis3}<br>
+	4. ${alist.dis4}<br>
+	5. ${alist.dis5}<br><br>    
 	 
 	 
 	 <div>해설</div>${alist.solution}<br><br>    
@@ -296,7 +310,7 @@ main{
 			</c:otherwise>
 		</c:choose>
 	
-	 <div>정답여부</div>${alist.iscorrect}<br><br>    
+	 정답여부  ${alist.iscorrect}<br><br>    
 	</div>  
 	
 	

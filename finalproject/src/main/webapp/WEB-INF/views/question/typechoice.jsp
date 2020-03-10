@@ -3,9 +3,17 @@
 
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/style.css?version=20200122">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700|Open+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/result.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/theme-colors/blue.css?version=20200122">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-
+ <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 	function callCategory(csname) {
 		 var selection= document.getElementsByName(csname);
@@ -83,7 +91,7 @@
 
 			
 			var win = window.open(
-					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=1500, height=1000");
+					"${pageContext.request.contextPath}/question/questcategory?"+ data, "win", "width=700, height=900");
 		});
 	});	
 
@@ -317,6 +325,15 @@ margin-top: 30px;
 
 	}
 
+.ccc {
+  width: 219px;
+    margin: 16px auto;
+    height: 385px;
+    overflow: inherit;
+    border-left-width: 7px;
+    background-color: #eee;
+    
+}
 
 
 .member_info1 {
@@ -337,9 +354,67 @@ margin-top: 30px;
     padding-bottom: 11px;
 }
 
+.h1, h1 {
+    font-size: 3.5rem;
+}
+
+a {
+    color: 64676C;
+    transition: all 0.2s;
+}
+
+.h6, h6 {
+    font-size: 1.5rem;
+}
+
+
+.h3, h3 {
+    font-size: 2.75rem;
+}
+
+
+.h5, h5 {
+    font-size: 1.75rem;
+}
+
+
+.headline{
+	 float:left;
+    width:30%;
+    min-height:600px;
+}
+
+
+
+
+.aside_link{
+	width:100%;
+	min-height:500px;
+	   border: 1px #FFFFFF;
+	  padding-top :10px;
+	  padding-left :10px;
+	  font-size:16px;
+}
+
+.init{
+	padding-top : 7px;
+	 font-family: sans-serif;
+color: steelblue;
+    font-weight: bold;
+}
+
+#slider .slide .text {
+    width: 100%;
+    height: 100%;
+    color: black;
+    text-transform: uppercase;
+    font-size: 16px;
+    border: 1px #FFFFFF;
+    border-radius: 5%;
+}
 </style>
 
- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 
 
 
@@ -356,7 +431,7 @@ margin-top: 30px;
       			
       			
       	
-					<h1><i class="far fa-list-alt"  id="far fa-list-alt"></i>  TEST LIST</h1>
+					<h1 ><i class="far fa-list-alt"  id="far fa-list-alt"></i>  TEST LIST</h1>
 
 							<c:forEach var="list" items="${list}">
 
@@ -413,12 +488,14 @@ margin-top: 30px;
 					</div>
 					
 					
-	 				<div class ="aside_area">
+	 				<div class ="headline">
 	 			<div class="aaa">
 	 				<div id = "member_zone" class= "member_info1">
 	 						
 	 				</div>
 	 					</div>
+	 					
+	 					<div class="ccc">
 	 				<div	class = "aside_link">
 	 					<div id = "slider">
 	 						<div class="slides-container">
@@ -431,8 +508,8 @@ margin-top: 30px;
 			 					</div>
 	 					</div>
 	 				</div>
-	 				 <div style = "width:100%"><hr></div>
-	 			</div>
+	 				</div>
+	 			
 
       </div>
     </div>
