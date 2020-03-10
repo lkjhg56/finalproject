@@ -14,18 +14,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="users">
 		insert into 
-		users(user_no,name,id,pw,email,grade,phone,postcode,address,detailAddress,extraAddress)
+		users(user_no,name,id,pw,email1,email2,grade,phone,postcode,address,detailAddress,extraAddress)
 		values(
-		#{user_no},#{name},#{id},#{pw},#{email},'일반회원',
+		#{user_no},#{name},#{id},#{pw},#{email1},#{email2},'일반회원',
 		#{phone},#{postcode},#{address},#{detailAddress},#{extraAddress})
 	</insert>
 	
 	<!-- 회원가입 (주소 미입력) -->
 	<insert id="join2" parameterType="users">
 		insert into 
-		users(user_no,name,id,pw,email,grade,phone)
+		users(user_no,name,id,pw,email1,email2,grade,phone)
 		values(
-		#{user_no},#{name},#{id},#{pw},#{email},'일반회원',#{phone})
+		#{user_no},#{name},#{id},#{pw},#{email1},#{email2},'일반회원',#{phone})
 	</insert>
 	
 	<!-- 프로필 사진 -->

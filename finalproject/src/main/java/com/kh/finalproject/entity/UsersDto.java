@@ -12,7 +12,7 @@ public class UsersDto {
 	private String name;
 	private String id;
 	private String pw;
-	private String email;
+	private String email1,email2;
 	private String grade;
 	private int point;
 	private int grade_point;

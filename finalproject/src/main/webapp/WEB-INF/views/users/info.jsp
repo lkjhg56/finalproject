@@ -186,7 +186,8 @@ th{
   </tr>
   <tr>
     <th>이메일</th>
-    <td>${fn:replace(users.email, ",", "") }</td>
+<%--     <td>${fn:replace(users.email, ",", "") }</td> --%>
+    <td>${users.email1}${users.email2}</td>
   </tr>
   <tr>
     <th>전화번호</th>

@@ -709,7 +709,7 @@ public class AdminController {
 					String board_writer = dto.getBoard_writer();
 			
 					UsersDto udto = usersDao.getInfo(board_writer);
-					String email = udto.getEmail();
+					String email = udto.getEmail1()+udto.getEmail2();
 					emailService.sendEmail(email);
 				}
 				return "success";
@@ -720,7 +720,7 @@ public class AdminController {
 					String board_reply_writer = dto.getBoard_reply_writer();
 			
 					UsersDto udto = usersDao.getInfo(board_reply_writer);
-					String email = udto.getEmail();
+					String email = udto.getEmail1()+udto.getEmail2();
 					emailService.sendEmail(email);
 				}
 				return "success";

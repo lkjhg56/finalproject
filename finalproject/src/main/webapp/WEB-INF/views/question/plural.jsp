@@ -183,6 +183,12 @@
    
    <style>
   
+  *{
+
+  font-family: sans-serif;
+}
+  
+  
     .timer-wrap .time{
         display: none;
     } 
@@ -250,9 +256,26 @@ float:left;
    width:92%;
 }
 
+
+
+
+.conatiner-fluid,.jumbotron{
+	
+	background-color: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+
+    padding: .5rem 1rem;
+   
+    border: 1px solid transparent;
+  border-radius: .3rem;
+  
+	}
+
+
 </style>
 
-
+<div class="container" >
 <main>
     <header>
         <div class = "conatiner-fluid">
@@ -264,7 +287,7 @@ float:left;
 
        							 <i class = "time">${hour}:${min}:0</i>
       							  <div class = "timer">
-           						 <span>0</span> : <span>0</span> : <span>0</span>
+           						 남은시간  <span>0</span> : <span>0</span> : <span>0</span>
         				</div>
   					</div>   
             </div>
@@ -280,7 +303,7 @@ float:left;
  
   		<div class = "container">
    			<c:forEach var="qlist" items ="${clist}"> 
-
+  <hr> 	
  				<div class = "plural-wrap">
 					<div class = "plural-textarea">
 							
@@ -308,6 +331,7 @@ float:left;
 	   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}+pic"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}+pic');"  width="400" height="250" >
 	   					</div> 							  
       		</div>
+      		
   		</c:forEach>
    	</div>  		
 
@@ -318,12 +342,13 @@ float:left;
    			<input type = "hidden" name = "category_no" value = "${session}">
   	 		<input type = "hidden" name = "csname" value = "${csname}">
   	 
-   	<input type = "submit" value = "제출">
+   	<input type = "submit" class="btn btn-primary btn-lg" value = "제출하기">
    </form>
  
 
 </section>
    </main>
+    </div>
 <!--     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

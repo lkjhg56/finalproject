@@ -59,35 +59,71 @@ function selectcorrect(abc) {
    <style>
 
 
-*{
-		 
-	     font-weight: 400;
-	      font-size: 13px;
-	}
+main{
+            display:flex;
+            flex-wrap: wrap;
+        }
+        header{
+            width:100%;
+        }
 
+        aside{
+            width:300px;
+        }
+        section{
+            flex-grow:1;
+            min-height: 600px;
+        }
+
+
+	*{
+            box-sizing:border-box;
+        }
+      
 
 	th{
 		white-space : nowrap;
 	}
 	
 	
-	.table{
+.table{
+
 	
-	display: inline-block;
-    width: 400px;
-    border: 1px solid #ddd;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: auto 368px;
+
+    width: 655px;
+
+    margin: 15px 10px;
+
+    margin-left: 10px;
+
     margin-top: 30px;
-    height: 330px;
+
+    height: 315px;
+
     overflow: hidden;
-    border-left-width: 2px;
-    background-color: white;
-    border-radius: 5%;
+
 	
+
+	}
+
+	.aaa{
+
+	width: 680px;
+
+    border: 2px solid #ddd;
+
+    margin: 30px auto;
+
+    height: 330px;
+
+    overflow: inherit;
+
+    border-left-width: 2px;
+
+    background-color: white;
+
+    border-radius: 5%;
+
 	}
 	
 	.jumbotron{
@@ -140,7 +176,8 @@ function selectcorrect(abc) {
 	}
 </style>
    
-   
+   <header>
+
  <div class="container" >
  
  
@@ -148,7 +185,7 @@ function selectcorrect(abc) {
 
 
 <div class="jumbotron">
-
+<h2> ${csname} ${category_no}</h2>
 <h1>점수 ${score}점</h1>
 
 
@@ -171,7 +208,7 @@ function selectcorrect(abc) {
 
 
 <!-- <hr> -->
-
+<div class="aaa">
 <table  class="table" >
   
     <tr align = "center" >
@@ -183,8 +220,8 @@ function selectcorrect(abc) {
     </tr>
     <tr>
     
-	<td>점수</td>
-	<td>${score}</td>
+	<td>백분위</td>
+	<td>${percentile}</td>
 	<td>순위</td>
     <td>${rank}</td>
     </tr>
@@ -207,7 +244,7 @@ function selectcorrect(abc) {
    
 
 </table>
-
+</div>
 <!-- <hr> -->
 
 
@@ -284,6 +321,7 @@ function selectcorrect(abc) {
 
 
 
-
 </div>
+
+</header>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
