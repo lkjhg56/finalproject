@@ -4,9 +4,12 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 	*{
-		 font-family: 'Noto Sans';
 	     font-weight: 400;
 	      font-size: 13px;
+	}
+		
+	.container table{
+		 font-family: 'Noto Sans';
 	}
 	.container .menu  a{
 		  font-size: 20px;
@@ -89,6 +92,7 @@
 		 }
 		 .menu{
 		 	margin-bottom: 8px;
+		 	font-family: 'Noto Sans';
 		 }
 </style>
 <script>
@@ -228,6 +232,33 @@ $(function(){
 		document.querySelector(".categoryblacklist").submit()		
 	});	
 });
+
+$(function(){
+	$(".exit").click(function(e){
+		//this==.exit
+		e.preventDefault();		
+		var data = $(".exit_id").val();
+		console.log(data);
+		
+		if(!data.length){
+			alert("강제탈퇴할 글 작성자를 선택하세요.");
+		}
+		else{
+			$.ajax({
+				 url: "${pageContext.request.contextPath}/admin/bye",
+				type:"post",
+				data:{id:data},
+				success:function(resp){
+					//console.log(resp);
+					if(resp == "success"){
+						alert("강제탈퇴가 완료되었습니다.");
+						window.location.reload();
+					}
+				}
+			});
+		 }
+	});	
+});
 </script>
 <div class="row-empty"></div>
 <div class="row-empty"></div>
@@ -317,7 +348,8 @@ $(function(){
 				<c:choose>
 				<c:when test="${list.report_count >= 3}">
 					<td>
-						<button class="btn25">강제탈퇴</button>
+						<input class="exit_id" type="hidden" name="id" value="${list.report_board_writer}" >
+						<button class="exit btn25">강제탈퇴</button>
 					</td>
 				</c:when>
 				<c:otherwise>

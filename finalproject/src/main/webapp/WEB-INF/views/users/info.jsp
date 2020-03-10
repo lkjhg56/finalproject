@@ -123,6 +123,8 @@ th{
 					<li><a href="${pageContext.request.contextPath}/question/normalupload">• 일반문제 업로드</a></li>
 					<li><a href="${pageContext.request.contextPath}/question/normallist">• 일반문제 List</a></li>
 					<li><a href="${pageContext.request.contextPath}/question/list">• 유저문제 List</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/blacklist">• 게시글 관리</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/replyblacklist">• 댓글 관리</a></li>
 				</c:when>
 			
 				<c:otherwise> 

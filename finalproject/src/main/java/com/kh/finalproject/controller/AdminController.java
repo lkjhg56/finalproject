@@ -727,4 +727,13 @@ public class AdminController {
 			}
 
 	}
+		
+		//관리자가 회원 강제 탈퇴
+		@PostMapping("/bye")
+		@ResponseBody
+		public String bye(@RequestParam String id, @RequestParam int board_reply_origin) {
+			sqlSession.delete("users.bye", id);
+			boardDao.replyCount(board_reply_origin);
+			return "success";
+		}
 }		
