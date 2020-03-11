@@ -4,7 +4,12 @@
    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/style.css?version=20200122">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700|Open+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/result.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20200122">
+<link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/theme-colors/blue.css?version=20200122">
    <script>
    
    
@@ -183,12 +188,24 @@
    
    <style>
   
+ 
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+  
   *{
 
   font-family: sans-serif;
 }
   
-  
+  .questionin_box {
+    float: left;
+    width: 5%;
+    margin-top: 8px;
+}
     .timer-wrap .time{
         display: none;
     } 
@@ -228,7 +245,7 @@ main{
 }
 .plural-question{
 	 float:left;
-    width:40%;
+    width:60%;
 }
 .plural-pic{
 	 float:left;
@@ -237,7 +254,7 @@ main{
 }
 .plural-textarea{
 	float:left;
-	width: 35%;
+	width: 15%;
 }
 
 .questionin_wrap::after{
@@ -245,12 +262,7 @@ main{
     display:block;
     clear:both;
 }
-.questionin_box{
-	 float:left;
-   width:8%;
-    margin-top: 10px;
-   
-}
+
 .questionin_dis{
 float:left;
    width:92%;
@@ -305,12 +317,6 @@ float:left;
    			<c:forEach var="qlist" items ="${clist}"> 
   <hr> 	
  				<div class = "plural-wrap">
-					<div class = "plural-textarea">
-							
-								<textarea  rows="10">
-								
-								</textarea>
-					</div>
 	   				<div class = "plural-question">
 	   	
 	
@@ -328,8 +334,9 @@ float:left;
 	   								<br>
 	   					</div>
 	   					 <div class = "plural-pic" >
-	   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}+pic"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}+pic');"  width="400" height="250" >
+	   									<img id="preview" class = "test ${qlist.no}"  name = "${qlist.no}+pic"  src="qimage?no=${qlist.no} " onload="file('${qlist.no}+pic');"  width="300" height="250" >
 	   					</div> 							  
+					
       		</div>
       		
   		</c:forEach>

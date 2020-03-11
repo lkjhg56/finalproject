@@ -257,7 +257,7 @@ public String category2(@RequestParam String categoryname, int tno,String sessio
 				
 				model.addAttribute("rCorrectDto", rCorrectDto);
 				
-				
+				model.addAttribute("csname", categoryname);
 				model.addAttribute("answerList", answerList);
 				model.addAttribute("score",  testDao.getScore(rno, category_no, categoryname));
 model.addAttribute("iscorrect", testDao.getisCorrect(rno));

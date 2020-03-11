@@ -396,11 +396,8 @@ $(function() {
 	</div>
 </div>	
 </div>
-	
-
     
-        
-<hr>
+<!-- <hr> -->
 
 </body>
   <!-- Footer -->

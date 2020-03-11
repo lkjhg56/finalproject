@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<c:set var="context" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="isMine" value="${id == users.id}"></c:set>
+<c:set var="isAdmin" value="${grade == '관리자'}"></c:set>
 <script>
 	$(function(){
 		//Modal trigger button 숨기기
@@ -28,13 +31,66 @@
 		var selected_val = $("#selectBox option:selected").val();	
 	});
 </script>
+<style>
+th{
+}
+#page-wrapper {
+    padding-left: 250px;
+}
+  
+#sidebar-wrapper {
+  position: absolute;
+    width: 230px;
+    height: 740px;
+    margin-left: -485px;
+    font-size: smaller;
+    font-family: sans-serif;
+    background: #343A40;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  padding: 20px;
+}
+/* 사이드바 스타일 */
+
+.sidebar-nav {
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav li {
+  text-indent: 1.5em;
+  line-height: 2.8em;
+}
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  color: #999;
+}
+
+.sidebar-nav li a:hover {
+  color: black;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-nav > .sidebar-brand {
+  font-size: 1.3em;
+  line-height: 3em;
+}
+
+</style>
 <div class="container">
-	<div><h1>유저 문제 목록</h1></div>
+<div><h1>유저 문제 목록</h1></div>
 	<table class="table table-hover">
 		<thead class="thead-light">
 			<tr>
 				<th>No.</th>
-				<th>카테고리</th>
 				<th>제목</th>
 				<th>조회수</th>
 				<th>정답비율</th>
@@ -48,7 +104,6 @@
 		<c:forEach var="question" items="${list}">
 			<tr>
 				<td>${question.question_no}</td>
-				<td>${question.category_name}</td>
 				<td><a href="solve?question_no=${question.question_no}">${question.question_title}</a></td>
 				<td>${question.read_count}</td>
 				<td>${question.correct_ratio}%</td>
