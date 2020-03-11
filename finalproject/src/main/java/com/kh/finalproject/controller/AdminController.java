@@ -398,7 +398,8 @@ public class AdminController {
 		
 //	관리자 게시글 신고 목록,검색 조회		
 	@GetMapping("/blacklist")
-	public String blacklist(Model model, HttpServletRequest request,
+	public String blacklist(Model model, 
+											HttpServletRequest request,
 											@RequestParam(required = false, defaultValue = "0") String type,
 											@RequestParam(required = false, defaultValue = "0") String keyword) {
 		//페이지 크기
@@ -433,6 +434,7 @@ public class AdminController {
 		}
 		
 		if(keyword != null) {
+			System.out.println("@@keyword2="+keyword);
 			Map<String, String> param = new HashMap<>();
 			param.put("start", String.valueOf(start));
 			param.put("finish", String.valueOf(finish));
@@ -440,16 +442,18 @@ public class AdminController {
 			param.put("keyword", keyword);
 			
 			List<BoardReportDto> dto = boardDao.reportSearch(param);
+			System.out.println("dto는?="+dto);
 			
 			for(int i = 0; i < dto.size(); i ++) {
 				int board_no = dto.get(i).getReport_board_no();
 				int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
 				dto.get(i).setReport_count(addCount);
-
+				
 				if(board_no !=0) {
 					model.addAttribute("list", dto);	
 				}			
-			}						
+			}			
+			
 			request.setAttribute("pno", pno);
 			request.setAttribute("count", count);
 			request.setAttribute("pagesize", pagesize);
@@ -457,8 +461,10 @@ public class AdminController {
 			request.setAttribute("type", type);
 			request.setAttribute("keyword", keyword);
 			
-			return "admin/blacklist";	
+			return "admin/blacklist";
 		}
+		
+			
 		else {
 			Map<String, String> param = new HashMap<>();
 			param.put("start", String.valueOf(start));
@@ -470,7 +476,7 @@ public class AdminController {
 				int board_no = dto.get(i).getReport_board_no();
 				int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
 				dto.get(i).setReport_count(addCount);
-
+				
 				if(board_no !=0) {
 					model.addAttribute("list", dto);	
 				}			
@@ -483,78 +489,83 @@ public class AdminController {
 			
 			return "admin/blacklist";
 		}
-				
+
 	}
 	
-//	관리자 게시글 신고 카테고리별 목록,검색 조회		
-	@PostMapping("/blacklist")
-	public String blacklist(@RequestParam(defaultValue = "전체") String board_category, 
-											@RequestParam(required = false, defaultValue = "0") String type,
-											@RequestParam(required = false, defaultValue = "0") String keyword,
-											Model model, 
-											HttpServletRequest request) {
+	@GetMapping("blacklist2")
+	public String blacklist2(@RequestParam(defaultValue = "전체") String board_category, 
+															@RequestParam(required = false, defaultValue = "0") String type,
+															@RequestParam(required = false, defaultValue = "0") String keyword,
+															Model model, 
+															HttpServletRequest request) {
 		//페이지 크기
-			int pagesize = 10;
-			//네비게이터 크기
-			int navsize = 10;
+		int pagesize = 10;
+		//네비게이터 크기
+		int navsize = 10;
+		
+		//페이징 추가
+		int pno;
+		try{
+			pno = Integer.parseInt(request.getParameter("pno"));
+			if(pno <= 0) throw new Exception(); //음수를 입력하면 예외를 발생시킨다
+		}
+		catch(Exception e){
+			pno = 1;
+		}
 			
-			//페이징 추가
-			int pno;
-			try{
-				pno = Integer.parseInt(request.getParameter("pno"));
-				if(pno <= 0) throw new Exception(); //음수를 입력하면 예외를 발생시킨다
-			}
-			catch(Exception e){
-				pno = 1;
-			}
-				
-			int finish = pno * pagesize;
-			int start = finish - (pagesize - 1);			
-		//**************************************************************************************
-		//			 		하단 네비게이터 계산하기
-		//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
-		//**************************************************************************************
-			int count = boardDao.boardCategoryCount(board_category); //전체글 개수를 구하는 메소드 		
-			int pagecount = (count + pagesize) / pagesize; //전체 페이지 수		
-			int startBlock = (pno -1) / navsize * navsize + 1;
-			int finishBlock = startBlock + (navsize -1);
+		int finish = pno * pagesize;
+		int start = finish - (pagesize - 1);
+	//**************************************************************************************
+	//			 		하단 네비게이터 계산하기
+	//					- 시작블록 = (현재페이지-1) / 네비게이터크기 * 네비게이터크기 +1	
+	//**************************************************************************************
+		int count = boardDao.boardReportCount(); //전체글 개수를 구하는 메소드 		
+		int pagecount = (count + pagesize) / pagesize; //전체 페이지 수
+		int startBlock = (pno -1) / navsize * navsize + 1;
+		int finishBlock = startBlock + (navsize -1);
+		
+		//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
+		if(finishBlock > pagecount){
+			finishBlock = pagecount;
+		}
+		
+		//카테고리 이동 후 검색 목록 출력
+		if(board_category != null && keyword !=null){
+			System.out.println("@@keyword3="+keyword);
+			System.out.println("@@board_category3="+board_category);
 			
-			//만약 마지막 블록이 페이지 수보다 크다면 수정 처리
-			if(finishBlock > pagecount){
-				finishBlock = pagecount;
-			}
-			
-			if(board_category != null && keyword != null){
-				Map<String, String> param = new HashMap<>();
-				param.put("start", String.valueOf(start));
-				param.put("finish", String.valueOf(finish));
-				param.put("type", type);
-				param.put("keyword", keyword);
-				param.put("board_category", board_category);
-			
-				request.setAttribute("pno", pno);
-				request.setAttribute("count", count);
-				request.setAttribute("pagesize", pagesize);
-				request.setAttribute("navsize", navsize);
-				request.setAttribute("type", type);
-				request.setAttribute("keyword", keyword);
-				request.setAttribute("board_category", board_category);
-			
-				List<BoardReportDto> dto = boardDao.reportCategorySearch(param);
+			Map<String, String> param = new HashMap<>();
+			param.put("start", String.valueOf(start));
+			param.put("finish", String.valueOf(finish));
+			param.put("type", type);
+			param.put("keyword", keyword);
+			param.put("board_category", board_category);
+		
+			request.setAttribute("pno", pno);
+			request.setAttribute("count", count);
+			request.setAttribute("pagesize", pagesize);
+			request.setAttribute("navsize", navsize);
+			request.setAttribute("type", type);
+			request.setAttribute("keyword", keyword);
+			request.setAttribute("board_category", board_category);
+		
+			List<BoardReportDto> dto = boardDao.reportCategorySearch(param);
 
-				for(int i = 0; i < dto.size(); i ++) {
-					int board_no = dto.get(i).getReport_board_no();
-					int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
-					dto.get(i).setReport_count(addCount);
-					
-					if(board_no !=0) {
-						model.addAttribute("list", dto);
-					}			
+			for(int i = 0; i < dto.size(); i ++) {
+				int board_no = dto.get(i).getReport_board_no();
+				int addCount = boardDao.reportCountAdd(dto.get(i).getBoard_no());
+				dto.get(i).setReport_count(addCount);
+				
+				if(board_no !=0) {
+					model.addAttribute("list", dto);
 				}			
+			}			
 			return "admin/blacklist";
-			}
-			
+		}
+		
+		//자유, 질문 카테고리의 경우 목록 출력
 			else {
+				System.out.println("@@board_category2="+board_category);
 				Map<String, String> param = new HashMap<>();
 				param.put("start", String.valueOf(start));
 				param.put("finish", String.valueOf(finish));
@@ -579,7 +590,10 @@ public class AdminController {
 				}			
 				return "admin/blacklist";
 			}
+			
 	}
+	
+
 	
 //////////////////////////////////////////////////////////////////////////////////////////	
 	@GetMapping("/replyblacklist")

@@ -74,7 +74,8 @@ public class BoardController {
 
 			boardfileService.registWithFile(boardDto, board_file);
 
-		return "redirect:list";			
+			int board_no = boardDto.getBoard_no();
+		return "redirect:content?board_no="+board_no;			
 	}
 	
 	
