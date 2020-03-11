@@ -91,8 +91,13 @@
 		 	 padding: 0.2rem 0.5rem;
 		 }
 		 .menu{
-		 	margin-bottom: 8px;
+		 	margin-bottom: 20px;
 		 	font-family: 'Noto Sans';
+		 }
+		 .searchdiv{
+		 	margin-left: 200%;
+		 	margin-top: -10px;
+		 	margin-bottom: -10px;
 		 }
 </style>
 <script>
@@ -217,7 +222,7 @@ $(function(){
 			window.location.href = "${pageContext.request.contextPath}/admin/blacklist";
 		}
 		else{
-		document.querySelector(".categoryblacklist").submit()			
+			window.location.href = "${pageContext.request.contextPath}/admin/blacklist2?board_category="+data;
 		}
 	});	
 });
@@ -225,11 +230,25 @@ $(function(){
 $(function(){
 	$("#search-btn").click(function(e){
 		//this==#search-btn
-		e.preventDefault();		
+		e.preventDefault();
 		var data = $(".category").val();
-		console.log(data);
+		var type = $("#selectt").val();
+		var keyword = $(".key").val();
+		console.log("data = "+data);
+		console.log("type = "+type);
+		console.log("keyword="+keyword);
 		
-		document.querySelector(".categoryblacklist").submit()		
+		if(data != "카테고리 선택" && keyword.length != null){
+			window.location.href = "${pageContext.request.contextPath}/admin/blacklist2?type="+type+
+					"&keyword=" +keyword+
+					"&board_category=" +data;
+		}	
+		else{
+			window.location.href = "${pageContext.request.contextPath}/admin/blacklist?type="+type+
+			"&keyword=" +keyword;	
+		}
+		
+		
 	});	
 });
 
@@ -268,33 +287,35 @@ $(function(){
 		<a href="${pageContext.request.contextPath}/admin/replyblacklist">댓글 관리</a>
 		<p>게시판관리 > 게시글 관리</p>
 	</div>
-	<form action="blacklist" class="category22" method="get">
-    	<input class="category23"  type="hidden" name="board_cetegory" value="${board_category}"> 
-	</form>
+<!-- 	<form action="blacklist" class="category22" method="get"> -->
+<%--     	<input class="category23"  type="hidden" name="board_cetegory" value="${board_category}">  --%>
+<!-- 	</form> -->
+<form class="blaklist" action="blacklist" method="get">   	
+<div class="container" style="text-align: left">
 	
-	<div class="container" style="text-align: left">
-	<form action="blacklist" class="categoryblacklist" method="post">
 		<select class="category"  name="board_category"> 
 			<option>카테고리 선택</option>
 			<option value="전체"<c:if test="${board_category=='전체'}">selected="selected"</c:if>>전체</option>
 			<option value="자유"<c:if test="${board_category=='자유'}">selected="selected"</c:if>>자유</option>
 			<option value="질문"<c:if test="${board_category=='질문'}">selected="selected"</c:if>>질문</option>
 		</select>		
-	</form>
-	<div style="text-align: right" class="container">
-	    	<form class="blaklist" action="blacklist" method="get">   
+
+	
+	<div style="text-align: right" class="container searchdiv">
+	    	
 		    		<select id="selectt" name="type">
 		    			<option value="board_title">제목</option>
 		    			<option value="board_writer">작성자</option>
 		    			<option value="board_content">글내용</option>
 		    		</select>    		
-	    		<input type="search" name="keyword"  required>
+	    		<input class="key" type="search" name="keyword"  required>
 				<input id="search-btn" type="submit"  value="　" >
-			</form>
 	</div>	
-		<button class="btn23 menu" id="selectDelete">선택삭제</button>
-		<button class="btn23 menu" id="email">메일 보내기</button>
-	</div>
+	
+	<button class="btn23 menu" id="selectDelete">선택삭제</button>
+	<button class="btn23 menu" id="email">메일 보내기</button>
+</div>
+</form>
 	
 	<form action="delete2" class="selectDelete">
 	<table class="table table-hover" style="text-align: center">

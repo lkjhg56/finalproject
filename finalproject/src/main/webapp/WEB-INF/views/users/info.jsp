@@ -55,6 +55,9 @@
 	
 </script>
 <style>
+.footer-color {
+    margin-top: 140px;
+}
 th{
 }
 #page-wrapper {
@@ -64,7 +67,7 @@ th{
 #sidebar-wrapper {
   position: absolute;
     width: 230px;
-    height: 740px;
+    height: 700px;
     margin-left: -485px;
     font-size: smaller;
     font-family: sans-serif;

@@ -63,10 +63,9 @@
 	$(function(){
 		$("#id_check_btn").click(function(){
 			var id = $("input[name=id]").val();
-// 			console.log(id);
-
+			
 			var regex = /^[a-z0-9]{8,20}$/;
-
+			
 			if(id == ""){
 				window.alert("아이디를 입력해주세요.");
 				$("input[name=id]").focus();
@@ -101,6 +100,7 @@
 							if(regex.test(id)){
 								window.alert("사용 가능한 아이디입니다.");
 								$("input[name=email]").focus();
+// 								$("input[name=ck]").prop("checked");
 							}
 							else{
 								 window.alert("아이디 형식을 맞춰주세요.");
@@ -113,6 +113,16 @@
 			}
 		});
 	});
+	
+// 	$(function(){
+		
+// 		$("#join").click(function(){
+// 			if(!$("input[name=ck]").prop("checked")){
+// 				window.alert("아이디 중복검사를 해주세요.");
+// 				$("input[name=id]").focus();
+// 			}
+// 		});
+// 	});	
 	
 	//기본이미지 선택
 	$(document).ready(function(){
@@ -161,7 +171,7 @@
 	//비밀번호 재확인
 	$(function(){
 		
-		$(".join").click(function(){
+		$("#join").click(function(){
 			var pw = $("input[name=pw]").val();
 			var ppww = $("input[name=ppww]").val();
 			
@@ -461,7 +471,8 @@ p{
 	
 	<p>ID*</p> 
 	<input type="text" name="id" maxlength="20" data-toggle="tooltip" data-placement="top" title="8~20자 영소문자,숫자" required>
-	<input type="button" class="btn btn-primary" id="id_check_btn" value="아이디 중복 검사">
+	<input type="button" class="btn btn-primary" id="id_check_btn" value="아이디 중복 검사" required>
+	<input type="checkbox" id="ck" name="ck" hidden="hidden">
 	
 	<p>EMAIL*</p>
 	<input type="text" name="email1" required>

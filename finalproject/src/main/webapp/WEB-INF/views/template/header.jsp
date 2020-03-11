@@ -12,6 +12,11 @@
 
 <script>
 
+function chargeWindowOpen(e){
+	e.preventDefault();
+	window.open("${pageContext.request.contextPath}/pay/list","popup","width=500,height=600,location=no,scrollbar=no");
+}
+
 function islogin(id, path){
 	
 	if(id.length<1){
@@ -38,22 +43,21 @@ function islogin(id, path){
 			
 			var htmls = "";
 			if(resp.id == null){
-				htmls += '<h6>로그인해 주세요</h6>'
+				htmls += '<h6>로그인해 주세요</h6>';
 				htmls += '<a href="'+path+'/users/login"><button type="button" class="btn btn-primary btn-block">login</button></a>'
 			}else{
 				htmls += '<h6>'+resp.id+'님    '+'<a href="'+path+'/users/logout">logout</a></h6>'
 				htmls += '<h6> 등급 : '+resp.grade+'</h6>'
 				if(premium=='무료회원'){
-				htmls += '<form action = "'+path+'/pay/premium">'
-				htmls += '<input type ="hidden" name = "point" value = "'+resp.point+'">'
-				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
-				htmls += '<input class = "btn_1 btn btn-primary" type ="submit" value = "프리미엄 전환">'
-				htmls += '</form>'
+					htmls += '<form action = "'+path+'/pay/premium">';
+					htmls += '<input type ="hidden" name = "point" value = "'+resp.point+'">';
+					htmls += '<h6>토큰 :'+resp.point+'<a class="charge_token" href ="'+path+'/pay/list" onclick="chargeWindowOpen(event);"> 충전</a></h6>';
+					htmls += '<input class = "btn_1 btn btn-primary" type ="submit" value = "프리미엄 전환">';
+					htmls += '</form>';
 				}else{
-				htmls += '<h6>토큰 :'+resp.point+'<a href ="'+path+'/pay/list"> 충전</a></h6>'
-				htmls += '<h6>'+premium+'</h6>'
+					htmls += '<h6>토큰 :'+resp.point+'<a class="charge_token" href ="'+path+'/pay/list" onclick="chargeWindowOpen(event);"> 충전</a></h6>'
+					htmls += '<h6>'+premium+'</h6>'
 				}
-				
 			}
 			
 			$("#member_zone").html(htmls);
@@ -72,10 +76,7 @@ function islogin(id, path){
 			$(resp).each(function(){
 				
 				htmls += '<div class ="init">'+rank+'.'+this.name+'</div>'
-				rank += 1;
-				
-				
-				
+				rank += 1;				
 			})
 			htmls += '</div>'
 			$(".mRank").html(htmls);
@@ -121,20 +122,9 @@ function islogin(id, path){
 			})
 			htmls += '</div>'
 		$(".mFQlist").html(htmls);
-		}
-		
-		
-	})
-
-
-
-	
+		}		
+	})	
 };
-
-
-
-
-
 
  function dxSimpleSlider(element = '#dx-slider', auto = false, pause) {
 
@@ -358,7 +348,7 @@ $(function() {
   <link href="${pageContext.request.contextPath}/res/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="${pageContext.request.contextPath}/res/static/css/clean-blog.css" rel="stylesheet">
 
@@ -457,4 +447,4 @@ $(function() {
   
   	<div class= "forfooter">
 
-<section style="margin-bottom: 200px;">
+<section style="margin-bottom: 200px;margin-top: 50px;">
