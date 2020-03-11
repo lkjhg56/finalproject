@@ -45,6 +45,12 @@ function islogin(id){
 		width : 100;
 		height: 30
 	}
+
+	h1{
+		color: white;
+	}
+	
+
 	.footer-side{
 		list-style:none;
 	}
@@ -53,6 +59,7 @@ function islogin(id){
 		background-color: #f3f3f3;;
     	padding-top: 20px;
 	}
+
 </style>
 
 </head>

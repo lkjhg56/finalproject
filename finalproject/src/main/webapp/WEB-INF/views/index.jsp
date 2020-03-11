@@ -367,7 +367,7 @@ $(function() {
 
 <div class="col-md-4 col-sm-6 md-margin-bottom-40">
 	<div class="flex-wrap blog-twitter">
-		<div class="headline"><h2><a href="${pageContext.request.contextPath}/board/list">추가된 문제</a></h2></div>
+		<div class="headline"><h2><a href="${pageContext.request.contextPath}/question/list">추가된 문제</a></h2></div>
 				
 		<c:forEach var="newQ" items="${newQ}">				
 			<div class="blog-twitter-inner" style="width: 100%">
