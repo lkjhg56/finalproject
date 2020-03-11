@@ -307,7 +307,7 @@ $(function(){
 
 
 
-$(function(){
+/* $(function(){
 	
 	$('#nextStep').click(function(){
 		if(!$("#a1").prop('checked')&&!$("#a2").prop('checked')&&!$("#a3").prop('checked')&&!$("#a4").prop('checked')&&!$("#a5").prop('checked')){
@@ -317,7 +317,7 @@ $(function(){
 
 	});
 });
-
+ */
 
    </script>
   
