@@ -59,29 +59,31 @@
               border-radius: 5%;
           
         }
-<<<<<<< HEAD
-        
-        
-       .aaa{
 
-=======
+        
+        
+      
+
+
 .aaa{
->>>>>>> refs/remotes/origin/master
+
 	width: 207px;
     border: 2px solid #ddd;
     margin: 30px auto;
-<<<<<<< HEAD
 
-    height: 164px;
 
-=======
+
+
     height: 171px;
->>>>>>> refs/remotes/origin/master
+
     overflow: inherit;
     border-left-width: 2px;
     background-color: white;
     border-radius: 5%;
 }
+
+
+
 .post-preview > a {
   color: #212529;
 }
