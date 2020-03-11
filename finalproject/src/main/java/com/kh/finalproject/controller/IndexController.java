@@ -27,13 +27,4 @@ public class IndexController {
 		
 		return "index";
 	}
-//	
-////나의 포인트 내역 조회
-// @GetMapping("users/my_grade_point")
-// public String my_grade_point7(Model model) {			
-//	model.addAttribute("my_grade_point", sqlSession.selectList("grade_point_rank"));
-//
-//	return "index";
-//	 
-// }	
 }

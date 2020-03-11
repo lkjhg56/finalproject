@@ -45,7 +45,9 @@ function islogin(id){
 		width : 100;
 		height: 30
 	}
-	
+	h1{
+		color: white;
+	}
 	
 </style>
 

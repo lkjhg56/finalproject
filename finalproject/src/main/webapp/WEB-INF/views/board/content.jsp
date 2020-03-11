@@ -317,6 +317,21 @@ $(function(){
 	});
 	
 });	
+
+$(function(){
+	$(".delete-ct").click(function(e){
+		e.preventDefault();		
+		var data = $(".delete_no").val();
+		var result = confirm("정말 삭제하시겠습니까?");
+		if(result) {
+			location.replace("delete?board_no="+data);
+		}
+		else{
+			
+		}
+	});
+	
+});
     
 </script>
  
@@ -446,9 +461,6 @@ $(function(){
 						</table>
 					</div>					
 				</c:forEach>
-<!-- 				<form action="report" class="boardReplyReport"> -->
-<%-- 					<input type="hidden" name="report_reply_no" value="${boardReplyDto.board_reply_no}">	 --%>
-<!-- 				</form>			 -->
 					
 			<!-- 	댓글 등록창 -->
 			<c:if test="${id != null}">			
@@ -498,8 +510,9 @@ $(function(){
 					
 					<c:if test="${isMine or isAdmin}">								
 					<!-- 수정/삭제 버튼은 관리자이거나 본인글에만 표시 -->
+					<input class="delete_no" type="hidden" name="board_no" value="${boardDto.board_no }">
 					<a href="edit?board_no=${boardDto.board_no}"><input class="btn23 category-btn" type="button" value="수정"></a>
-					<a href="delete?board_no=${boardDto.board_no}"><input class="btn23 category-btn"  type="button" value="삭제"></a>
+					<a href="delete?board_no=${boardDto.board_no}"><input class="btn23 category-btn delete-ct"  type="button" value="삭제"></a>
 					</c:if>
 					
 					<a href="list"><input class="btn23 category-btn" type="button" value="목록"></a>					
