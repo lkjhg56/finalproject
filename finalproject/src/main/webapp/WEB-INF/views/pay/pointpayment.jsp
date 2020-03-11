@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
+<link href="${pageContext.request.contextPath}/res/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <style>
 .row{
 	margin-top:30px;
+	font-family : sans-serif;
 }
 </style>   
 <div class="container">
@@ -26,7 +33,7 @@
 						</form>
 						<br>
 					</c:forEach>
-				<h4>충전된 토큰은 환불되지 않습니다.</h4>
+				<h5>충전된 토큰은 환불되지 않습니다.</h5>
 				</div>
 			</div>
 			<div class ="aside_area">
@@ -50,5 +57,3 @@
 		</div>
 	</div>
 </div>
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
