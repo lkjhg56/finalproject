@@ -245,7 +245,7 @@ color: steelblue;
 	 				
 	 				</div>
 	 				</div>
-	 					 <div style = "width:100%"><hr></div>
+	 					
 	 			</div>
    		</div>
       </div>
