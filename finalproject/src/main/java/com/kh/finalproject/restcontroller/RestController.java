@@ -41,9 +41,7 @@ public class RestController {
 	@PostMapping("insert")
 	public String insert(@RequestParam int test_no, int correct, int answer, int iscorrect, HttpSession session) {
 		int result_no = (int) session.getAttribute("rno");
-		log.info("checkcheck");
-		
-		log.info("testcheck ={}", test_no);
+
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
 																	.test_no(test_no)
 																	.correct(correct)
@@ -59,7 +57,7 @@ public class RestController {
 		 
 	 }
 		 
-		 sqlSession.insert("correct", rcorrectDto);
+		 sqlSession.update("correct2", rcorrectDto);
 		 
 		 int totalNum = sqlSession.selectOne("totalNum", test_no); 
 		 int correctNum = sqlSession.selectOne("correctNum", test_no);
@@ -91,7 +89,6 @@ public class RestController {
 																	.build();
 		sqlSession.delete("deleteAns", rcorrectDto);
 //		session.removeAttribute("rno");
-		log.info("확인");
 		return null;
 	}
 	
@@ -105,32 +102,19 @@ public class RestController {
 		
 		
 		int result_no = (int) session.getAttribute("rno");
-		log.info("gfgfgf={}", test_no);
-		log.info("gfgfgfffff={}", result_no);
+	
 		RcorrectDto rcorrectDto = RcorrectDto.builder()
 																	.test_no(test_no)
 																	.result_no(result_no)
 																	.build();
-		log.info("checkcorrectaaaaa");
-		
+	
 		
 			int rqno=	NormalUploadQuestionDao.rqno(rcorrectDto);
-		log.info("checkrqno={}", rqno);
 
 		int correct;
 		if(rqno!=0) {
 			
 			
-//			log.info("gfgfgfffdddff={}", rqno);
-//			RcorrectDto rcorrectDto2=RcorrectDto.builder()
-//					.test_no(test_no)
-//					.rqno(rqno)
-//					.build();
-//			
-//			/* sqlSession.delete("deleteRcorrect", rcorrectDto2); */
-//			log.info("dto={}",rcorrectDto2.getTest_no());
-//			log.info("dtorq={}",rcorrectDto2.getRqno());
-//			
 
 
 			if(sqlSession.selectOne("selectCorrect", rcorrectDto)!=null) {
@@ -142,11 +126,7 @@ public class RestController {
 
 
 			
-			log.info("corr={}",correct);
-			
-			
-//		session.removeAttribute("rno");
-			log.info("delete2확인");
+		
 			return correct;
 			
 			
@@ -171,7 +151,6 @@ public class RestController {
 	
 	@PostMapping("resultin")
 	public int resultin(@RequestParam String csname, int tno, String id, HttpSession session) {
-		log.info("checkcheck");
 		int rno = sqlSession.selectOne("resultno");
 		
 		ResultDto resultDto = ResultDto.builder()
@@ -202,16 +181,33 @@ public class RestController {
 
 	}
 	@GetMapping("queup")
-	public String queup(@RequestParam  String session_ques, HttpSession session) {
+	public String queup(@RequestParam  String session_ques, String csname, HttpSession session) {
 		
-		log.info("checkcheckasdasdasdasd");
+		log.info("checkcheckasdasdasdasd={}", csname);
 		int rno = (int) session.getAttribute("rno");
-		log.info("test={}", rno);
+		
+		
 		SetScoreVO result = SetScoreVO.builder()
 													.rno(rno)
 													.session_ques(session_ques)
+													.csname(csname)
 													.build();
-				
+		List<TestQuestionDto> TQDto = sqlSession.selectList("readyForAns", result);
+		
+		for(TestQuestionDto insertQues : TQDto) {
+		log.info("asdasd={}", insertQues.getAnswer());
+		log.info("asdasdasd={}", insertQues.getNo());
+			RcorrectDto dto = RcorrectDto.builder()
+															.result_no(rno)
+															.test_no(insertQues.getNo())
+															.correct(0)
+															.iscorrect(0)
+															.answer(insertQues.getAnswer())
+															.build();
+			sqlSession.insert("correct", dto);
+		}
+		
+		
 		sqlSession.update("quesup", result);
 		return null;
 	}
