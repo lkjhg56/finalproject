@@ -76,6 +76,80 @@ h1 {
     width: 330px;
     height: 45px;
 }
+
+@media screen and (max-width:1200px){
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 270px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
+}
+
+@media screen and (max-width: 992px) {
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 150px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
+}
+@media screen and (max-width: 768px) {
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 60px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
+}
+@media screen and (max-width: 580px) {
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 30px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
+}
 </style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div class="container">

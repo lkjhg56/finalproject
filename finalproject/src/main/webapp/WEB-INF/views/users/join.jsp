@@ -429,6 +429,80 @@ p{
     height: 40px;
     width: 150px;
 }
+
+@media screen and (max-width:1155px){
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 200px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+@media screen and (max-width:1080px){
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 160px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+@media screen and (max-width:960px){
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 110px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+@media screen and (max-width:890px){
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 90px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+
 </style>
 <div class="container">
 
