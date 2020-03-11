@@ -248,6 +248,8 @@ $(function(){
 	  
 	   var a = $(".asd").text();
 	  var checkbox2=$(".ans");
+
+	  
 		 $.ajax({
 	     	url:"${pageContext.request.contextPath}/question2/delete2",
 	    	 type:"post",
@@ -302,6 +304,19 @@ $(function(){
 	  
   
   });
+
+
+
+$(function(){
+	
+	$('#nextStep').click(function(){
+		if(!$("#a1").prop('checked')&&!$("#a2").prop('checked')&&!$("#a3").prop('checked')&&!$("#a4").prop('checked')&&!$("#a5").prop('checked')){
+	    	alert('체크하셔야합니다.');
+	    	 return false;
+		}
+
+	});
+});
 
 
    </script>
@@ -395,6 +410,12 @@ color:white;
 
 }
 
+
+
+.container{
+margin-top: 62px;
+
+}
 </style>
 
 
@@ -432,11 +453,11 @@ color:white;
 <div class = "plural-pic" ><img id="preview" src="qimage?no=${clist.no}"  class="test" name = "${clist.no}+pic"  onload="file('${clist.no}+pic'); "  width="400px" height="200"></div><br><br>
  
    	
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}1" onclick="save('${clist.no}', '1', '${clist.answer}','preview');">${clist.dis1}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}2" onclick="save('${clist.no}', '2', '${clist.answer}','preview');">${clist.dis2}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}3" onclick="save('${clist.no}', '3', '${clist.answer}','preview');">${clist.dis3}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}4" onclick="save('${clist.no}', '4', '${clist.answer}','preview');">${clist.dis4}</h4>
-   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}5" onclick="save('${clist.no}', '5', '${clist.answer}','preview');">${clist.dis5}</h4>
+   		<h4><input class = "ans"  type="checkbox"   name="${clist.no}" id="${clist.no}1"   onclick="save('${clist.no}', '1', '${clist.answer}','preview');">${clist.dis1}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}2"  onclick="save('${clist.no}', '2', '${clist.answer}','preview');">${clist.dis2}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}3"  onclick="save('${clist.no}', '3', '${clist.answer}','preview');">${clist.dis3}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}4"   onclick="save('${clist.no}', '4', '${clist.answer}','preview');">${clist.dis4}</h4>
+   		<h4><input class = "ans"  type="checkbox" name="${clist.no}" id="${clist.no}5"  onclick="save('${clist.no}', '5', '${clist.answer}','preview');">${clist.dis5}</h4>
   
 
 
@@ -461,7 +482,7 @@ color:white;
   	 </c:if>
   	 
   	 
-   	<input type = "submit" class="submitExam btn btn-primary" value = "제출">
+   	<input type = "submit" class="submitExam btn btn-primary" value = "다음" id="nextStep"    >
    	
    </form>
    

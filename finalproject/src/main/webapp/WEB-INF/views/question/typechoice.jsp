@@ -412,6 +412,12 @@ color: steelblue;
     border: 1px #FFFFFF;
     border-radius: 5%;
 }
+
+
+.headline{
+border-bottom: none;
+
+}
 </style>
 
 

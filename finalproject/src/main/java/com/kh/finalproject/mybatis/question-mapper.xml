@@ -296,7 +296,7 @@
  	
  	
  		<select id="getResultSolution" parameterType="int" resultType="normalUpdateQuestionVO">
-	     select T.question,t.dis1,t.dis2,t.dis3,t.dis4,t.dis5,S.solution_no,s.solution,r.iscorrect,r.correct
+	     select T.question,t.dis1,t.dis2,t.dis3,t.dis4,t.dis5,S.solution_no,s.solution,r.iscorrect,r.correct,t.no
 			from test_question T inner join solution S
 			on t.no=S.question_no 
 			inner join rcorrect R

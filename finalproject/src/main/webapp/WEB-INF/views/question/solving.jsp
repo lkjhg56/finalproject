@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/result.css?version=20200122">
 <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20200122">
 <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/theme-colors/blue.css?version=20200122">
-
+ <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 function appendResult() {
 
@@ -73,11 +73,17 @@ function appendResult() {
 
 
 
-.section_area{
-	
-margin-top: 30px;
+
+
+.section_area {
+    margin-top: 129px;
+    padding-left: 112px;
 }
 
+.headline{
+border-bottom: none;
+
+}
 #select1 {
 
 	
@@ -257,9 +263,7 @@ margin-top: 30px;
     padding-bottom: 11px;
 }
 
-.h1, h1 {
-    font-size: 3.5rem;
-}
+
 
 a {
     color: 64676C;
@@ -285,6 +289,7 @@ a {
 	 float:left;
     width:30%;
     min-height:600px;
+    border-bottom: none;
 }
 
 
@@ -315,10 +320,38 @@ color: steelblue;
     border: 1px #FFFFFF;
     border-radius: 5%;
 }
+
+
+.btn-info {
+    color: #fff;
+    background-color: lightgrey;
+    border-color: lightgrey;
+}
+
+.h1, h1 {
+    font-size: 10.5rem;
+    color: lightgrey;
+    margin-bottom: 18px;
+    margin-left: 35px;
+}
+
+
+.ccc {
+  width: 219px;
+    margin: 16px auto;
+    height: 385px;
+    overflow: inherit;
+    border-left-width: 7px;
+    background-color: #eee;
+    
+}
+
+
+
 </style>
 
 
- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
  
  
  
@@ -331,16 +364,18 @@ color: steelblue;
       				<div class="section_area">
     
       			<br>
-				<h1>문제푸는중</h1>
+				<h1><i class="far fa-edit"></i></h1>
 
 				<form action="${pageContext.request.contextPath}/question/questype" onsubmit="appendResult()">
 
 					<input type="hidden"  name="tno" value="${tno}">
 					<input type="submit"  class="btn btn-info" value="다시풀기">
-				<a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/question/choose">목록으로</a>&nbsp;&nbsp;
+					
+					
+					<input type="button" onclick="location.href='${pageContext.request.contextPath}/question/choose'" value="목록으로" class="btn btn-info" >
+				<%-- <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/question/choose">목록으로</a>&nbsp;&nbsp; --%>
 				</form>
-				
-<%-- <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/question/choose">문제 목록으로</a> --%>
+
 				
 				</div>
 				
@@ -351,7 +386,7 @@ color: steelblue;
 	 						
 	 				</div>
 	 					</div>
-	 					
+	 						<div class="ccc">
 	 				<div	class = "aside_link">
 	 					<div id = "slider">
 	 						<div class="slides-container">
@@ -364,7 +399,8 @@ color: steelblue;
 			 					</div>
 	 					</div>
 	 				</div>
-	 				 <div style = "width:100%"><hr></div>
+	 				</div>
+	 				 
 	 			</div>
 				
 

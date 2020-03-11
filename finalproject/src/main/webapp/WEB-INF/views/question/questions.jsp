@@ -12,6 +12,8 @@
 
 <style>
 
+
+
 *{
 
   font-family: sans-serif;
@@ -179,6 +181,10 @@ color: steelblue;
     font-size: 16px;
     border: 1px #FFFFFF;
     border-radius: 5%;
+}
+
+.forfooter {
+    min-height: 90vh;
 }
 </style>
 
