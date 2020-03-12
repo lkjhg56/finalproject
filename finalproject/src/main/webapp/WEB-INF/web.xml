@@ -1,15 +1,11 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-
 <web-app version="4.0"
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       
 	http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" >
-	
-	
-	
+
 	<!-- 
 		UTF-8 필터를 등록
 		- 내가 만든 것이 아니라 스프링에서 제공해주는 것으로 설정

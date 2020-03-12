@@ -63,7 +63,7 @@
 	$(function(){
 		$("#id_check_btn").click(function(){
 			var id = $("input[name=id]").val();
-			
+			console.log($("#ck").prop("checked"));
 			var regex = /^[a-z0-9]{8,20}$/;
 			
 			if(id == ""){
@@ -100,7 +100,9 @@
 							if(regex.test(id)){
 								window.alert("사용 가능한 아이디입니다.");
 								$("input[name=email]").focus();
-// 								$("input[name=ck]").prop("checked");
+								$("#ck").removeAttr("checked");
+
+								console.log($("#ck").prop("checked"));
 							}
 							else{
 								 window.alert("아이디 형식을 맞춰주세요.");
@@ -113,16 +115,6 @@
 			}
 		});
 	});
-	
-// 	$(function(){
-		
-// 		$("#join").click(function(){
-// 			if(!$("input[name=ck]").prop("checked")){
-// 				window.alert("아이디 중복검사를 해주세요.");
-// 				$("input[name=id]").focus();
-// 			}
-// 		});
-// 	});	
 	
 	//기본이미지 선택
 	$(document).ready(function(){
@@ -137,21 +129,6 @@
 	});
 	
 	//비밀번호 형식 검사
-// 	$(function(){
-		
-// 		$("input[name=pw]").on("input",function(){
-// 			var pw = $("input[name=pw]").val();
-// 			var regex = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,16}$/;
-			
-// 			if(regex.test(pw)){
-// 				console.log("굳굳!!!!!!!");
-// 			}
-// 			else{
-// 				console.log("노노노!!!!!!");
-// 			}
-			
-// 		});
-// 	});	
 	$(function(){
 		
 		$("#join").click(function(){
@@ -168,23 +145,48 @@
 		});
 	});	
 	
-	//비밀번호 재확인
+	//비밀번호 재확인 && 아이디 중복검사 안눌렀을때
 	$(function(){
 		
 		$("#join").click(function(){
 			var pw = $("input[name=pw]").val();
 			var ppww = $("input[name=ppww]").val();
 			
+			console.log(pw);
+			console.log(ppww);
 			
+			//비밀번호 x
 			if(pw != ppww){
-				window.alert("비밀번호가 맞지 않습니다.");
-				$("input[name=ppww]").focus().val("");
+				console.log("비번x")
+				//아이디 x
+				if($("#ck").prop("checked")){
+					console.log("비번x 아이디x")
+					window.alert("아이디 중복검사를 해주세요.");
+					$("#id_check_btn").focus();
+					return false;
+				}
+				//아이디 o
+				else if(!$("#ck").prop("checked")){
+					window.alert("비밀번호가 맞지 않습니다.");
+					$("input[name=ppww]").focus().val("");
+				}
+				
 			}
-			else{
-				$("input[name=email]").focus();
+			//비밀번호 o
+			else if(pw == ppww){
+				console.log("비번O")
+				//아이디 x
+				if($("#ck").prop("checked")){
+					console.log("비번o 아이디x")
+					window.alert("아이디 중복검사를 해주세요.");
+					$("#id_check_btn").focus();
+					return false;
+				}
+				//아이디 o
+				else if(!$("#ck").prop("checked")){
+					window.alert("회원가입을 완료하였습니다.");
+				}
 			}
-			
-			
 		});
 	});
 	
@@ -439,6 +441,151 @@ p{
     height: 40px;
     width: 150px;
 }
+@media screen and (max-width:1155px){
+	
+	.cert_box{
+		display: inline-block;
+	    width: 660px;
+	    border: 1px solid #ddd;
+	    padding-top: 25px;
+	    padding-bottom: 25px;
+	    padding-left: 20px;
+	    padding-right: 20px;
+	    margin: auto 200px;
+	    margin-top: 10px;
+	    height: 280px;
+	    overflow: hidden;
+	    border-left-width: 2px;
+	    background-color: white;
+	    border-radius: 5%;
+	}
+	
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 200px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+@media screen and (max-width:1080px){
+	
+	.cert_box{
+		display: inline-block;
+	    width: 660px;
+	    border: 1px solid #ddd;
+	    padding-top: 25px;
+	    padding-bottom: 25px;
+	    padding-left: 20px;
+	    padding-right: 20px;
+	    margin: auto 160px;
+	    margin-top: 10px;
+	    height: 280px;
+	    overflow: hidden;
+	    border-left-width: 2px;
+	    background-color: white;
+	    border-radius: 5%;
+	}
+	
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 160px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+@media screen and (max-width:960px){
+	
+	.cert_box{
+		display: inline-block;
+	    width: 660px;
+	    border: 1px solid #ddd;
+	    padding-top: 25px;
+	    padding-bottom: 25px;
+	    padding-left: 20px;
+	    padding-right: 20px;
+	    margin: auto 110px;
+	    margin-top: 10px;
+	    height: 280px;
+	    overflow: hidden;
+	    border-left-width: 2px;
+	    background-color: white;
+	    border-radius: 5%;
+	}
+
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 110px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+@media screen and (max-width:890px){
+
+	.cert_box{
+		display: inline-block;
+	    width: 660px;
+	    border: 1px solid #ddd;
+	    padding-top: 25px;
+	    padding-bottom: 25px;
+	    padding-left: 20px;
+	    padding-right: 20px;
+	    margin: auto 90px;
+	    margin-top: 10px;
+	    height: 280px;
+	    overflow: hidden;
+	    border-left-width: 2px;
+	    background-color: white;
+	    border-radius: 5%;
+	}
+	
+	.join_box{
+	display: inline-block;
+    width: 660px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
+    margin: auto 90px;
+    margin-top: 10px;
+    height: 900px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+}
+}
+
 </style>
 <div class="container">
 
@@ -472,7 +619,7 @@ p{
 	<p>ID*</p> 
 	<input type="text" name="id" maxlength="20" data-toggle="tooltip" data-placement="top" title="8~20자 영소문자,숫자" required>
 	<input type="button" class="btn btn-primary" id="id_check_btn" value="아이디 중복 검사" required>
-	<input type="checkbox" id="ck" name="ck" hidden="hidden">
+	<input type="checkbox" id="ck" name="ck" hidden="hidden" checked="checked">
 	
 	<p>EMAIL*</p>
 	<input type="text" name="email1" required>
