@@ -13,8 +13,6 @@ $(function(){
 			url:"${pageContext.request.contextPath}/pay/premium",
 			type:"post",
 			success:function(resp){
-// 				console.log(resp);
-
 				if(resp === "no"){
 					window.alert("토큰이 부족합니다.");
 					location.href = "${pageContext.request.contextPath}/pay/list";

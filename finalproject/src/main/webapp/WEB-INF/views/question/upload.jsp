@@ -119,6 +119,8 @@ th{
 <div class="container">
 <h1>문제 업로드</h1>
 <hr>
+<!-- 내정보 보기 -->
+<c:if test="${show==1}">
 <div id="page-wrapper">
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
@@ -149,6 +151,7 @@ th{
 		</ul>
 	</div>
 </div>
+</c:if>
 <!-- Bye Modal -->
 <div class="modal fade" id="bye" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -47,8 +47,8 @@ public class PayController {
 			 return "no";
 		 }
 		 else {
-		 sqlSession.update("users.premium", id);
-		 sqlSession.update("users.point", id);
+			 sqlSession.update("users.premium", id);
+			 sqlSession.update("users.point", id);
 		 return "yes";
 		 }
 	 }
