@@ -8,13 +8,16 @@
 	*{
 	     font-weight: 400;
 	}
+	p{
+		margin: 0px 0px 0px 0px;
+	}
 	
 	.container table{
 		 font-family: 'Noto Sans';
 		 font-size: 13px;
 	}
 	
-	span{
+	.ss{
 		padding-left:10px;
 		 padding-right:10px;
 	}
@@ -342,15 +345,15 @@ $(function(){
 				<tr>
 					<td>
 						<div class="flex-wrap">
-							<span class="item3">[${boardDto.board_category}]&nbsp;${boardDto.board_title }</span>
+							<span class="item3 ss">[${boardDto.board_category}]&nbsp;${boardDto.board_title }</span>
 	
-							<span class="item4" style="text-align: right">${boardDto.board_wdate.substring(0,16) }</span>
+							<span class="item4 ss" style="text-align: right">${boardDto.board_wdate.substring(0,16) }</span>
 						</div>
 					</td>
 				</tr>	
 				<tr>
 					<td>
-						<span>${boardDto.board_writer }</span>
+						<span class="ss">${boardDto.board_writer }</span>
 					</td>
 				</tr>		
 				<tr height="200">
@@ -365,8 +368,8 @@ $(function(){
 				<tr>
 					<td>
 						<div class="flex-wrap">
-							<span class="item3">댓글수 ${boardDto.board_replycount}&nbsp; | &nbsp;조회수 ${boardDto.board_readcount}</span>
-							<span class="item4" ><a href="#" id="report">신고</a></span>
+							<span class="item3 ss">댓글수 ${boardDto.board_replycount}&nbsp; | &nbsp;조회수 ${boardDto.board_readcount}</span>
+							<span class="item4 ss" ><a href="#" id="report">신고</a></span>
 						</div>
 					</td>
 				</tr>
@@ -382,9 +385,9 @@ $(function(){
 						
 									<tr class="info">
 										<td>
-											<span>${boardReplyDto.board_reply_writer}</span>
+											<span class="ss">${boardReplyDto.board_reply_writer}</span>
 
-											<span>${boardReplyDto.board_reply_wdate.substring(0,16)}</span>	
+											<span class="ss">${boardReplyDto.board_reply_wdate.substring(0,16)}</span>	
 											<c:if test="${boardReplyDto.depth < 1 && id != null}">
 												<a href="#" id="re">답글  |</a>
 											</c:if>											

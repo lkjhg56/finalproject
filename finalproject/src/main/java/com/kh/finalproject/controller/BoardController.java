@@ -89,6 +89,7 @@ public class BoardController {
 									Model model) {
 		boardDao.get(board_no);
 		model.addAttribute("boardDto", boardDao.get(board_no));		
+		model.addAttribute("boardfileDto", boardfileDao.getFileNo(board_no));
 		return "board/edit";
 		}
 		
