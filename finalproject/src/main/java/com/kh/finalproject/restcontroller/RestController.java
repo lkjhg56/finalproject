@@ -51,6 +51,7 @@ public class RestController {
 																	.build();
 	int count=	sqlSession.selectOne("rcorrectCount", rcorrectDto);
 	
+	
 	 if(count>=0) {
 		 
 		 sqlSession.delete("deleteAns", rcorrectDto); 

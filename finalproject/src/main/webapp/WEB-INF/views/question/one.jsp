@@ -229,6 +229,8 @@ $(function(){
 	 var a = $(".session_ques").text()
 	  var b = $(".csname").text()
 	 console.warn(a);
+	 
+	 
 	   $.ajax({
 		  url : "${pageContext.request.contextPath}/question2/queup",
 		  type : "get",
@@ -246,6 +248,8 @@ $(function(){
 	   
   })
  
+  
+  
   
   $(document).ready(function() { 
 	  
@@ -312,17 +316,7 @@ $(function(){
 
 
 
-/* $(function(){
-	
-	$('#nextStep').click(function(){
-		if(!$("#a1").prop('checked')&&!$("#a2").prop('checked')&&!$("#a3").prop('checked')&&!$("#a4").prop('checked')&&!$("#a5").prop('checked')){
-	    	alert('체크하셔야합니다.');
-	    	 return false;
-		}
 
-	});
-});
- */
 
    </script>
   
@@ -430,7 +424,7 @@ margin-top: 62px;
 <header>
       
             <div class = "jumbotron">
-                <h1> ${categoryname}${csname}</h1>
+                <h1 class="csname"> ${categoryname}</h1>
 
                 <h3 class = "session_ques">${session}</h3>
  						<div class="timer-wrap">
