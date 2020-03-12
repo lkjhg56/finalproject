@@ -9,6 +9,7 @@
 	
 	.container table{
 		 font-family: 'Noto Sans';
+		 font-size: 13px;
 	}
 	
 	.row-empty {

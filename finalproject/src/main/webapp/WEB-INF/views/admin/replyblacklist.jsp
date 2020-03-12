@@ -5,11 +5,11 @@
 <style>
 	*{
 	     font-weight: 400;
-	      font-size: 13px;
 	}
-		
+	
 	.container table{
 		 font-family: 'Noto Sans';
+		 font-size: 13px;
 	}
 	
 	.row-empty {
@@ -239,7 +239,7 @@ $(function(){
 	<div class="container menu ff">
 		<a href="${pageContext.request.contextPath}/admin/blacklist">게시글 관리</a> | 
 		<a href="${pageContext.request.contextPath}/admin/replyblacklist">댓글 관리</a>
-		<p>게시판관리 > 댓글 관리</p>
+		<p style="font-size: 13px;">게시판관리 > 댓글 관리</p>
 	</div>
 	
 	<div class="container" style="text-align: left">
