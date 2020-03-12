@@ -372,7 +372,7 @@ public class UploadQuestionController {
 		request.setAttribute("navsize", navSize);
 		
 
-		return "question/normallist";
+		return "redirect: ../admin/admin_normal_question";
 		
 		
 		

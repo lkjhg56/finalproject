@@ -7,11 +7,11 @@
 <mapper namespace="test">
 
 	<select id = "list" resultType = "testDto">
-		select * from test order by tno desc
+		select * from test order by tno asc
 	</select>
 
 	<select id = "categoryList" parameterType= "int" resultType = "categoryDto">
-		select * from category where test_no = #{tno} order by category_no desc
+		select * from category where test_no = #{tno} order by category_no asc
 	</select>
 	
 	<select id = "questionList" parameterType = "string" resultType = "testQuestionDto">

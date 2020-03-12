@@ -422,11 +422,14 @@ margin-top: 62px;
    <main>
    
 <header>
-      
+       <div class = "conatiner-fluid">
             <div class = "jumbotron">
+            
                 <h1 class="csname"> ${categoryname}</h1>
 
                 <h3 class = "session_ques">${session}</h3>
+                
+                
  						<div class="timer-wrap">
 
        							 <i class = "time">0:${clist.lim_min}:1</i>
@@ -435,7 +438,7 @@ margin-top: 62px;
         				</div>
   					</div>   
             </div>
-
+ </div>
     </header>
 
    

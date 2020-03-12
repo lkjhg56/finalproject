@@ -98,14 +98,16 @@ function loadEditor(){
 	<img id="preview" src="qimage?no=${questionDto.no}" width="500" height="300"><br><br>
 	<input type="file" name="file" multiple accept="image/gif,image/jpg,image/jepg,image/png" onchange="previewImage(this);"><br>
 		<button type="button" onclick="deletefile('${questionDto.no}')">파일 삭제하기</button><br><br>
-<a href="#"  onclick="deletefile('${questionDto.no}')">삭제하기</a>
+<%-- <a href="#"  onclick="deletefile('${questionDto.no}')">삭제하기</a> --%>
 문제 보기 1:	<input type="text" name="dis1" value="${questionDto.dis1}" required><br><br>
 문제 보기 2:		<input type="text" name="dis2" value="${questionDto.dis2}" required><br><br>
 문제 보기 3:		<input type="text" name="dis3" value="${questionDto.dis3}" required><br><br>
 	문제 보기 4:	<input type="text" name="dis4" value="${questionDto.dis4}" required><br><br>
 	문제 보기 5:	<input type="text" name="dis5" value="${questionDto.dis5}" required><br><br>
 	
-해설	  <input type="text" name="solution" value="${questionDto.solution}" required><br><br>  
+<%-- 해설	  <input type="text" name="solution" value="${questionDto.solution}" required rows="10" cols="50"><br><br>   --%>
+
+<textarea name="solution" placeholder="해설입력" rows="10" cols="50"  >${questionDto.solution} </textarea><br><br>
 	<c:if test="${grade=='관리자'}">
 <%-- 	<input type="text" name="ispremium" value="${questionDto.ispremium}" required><br><br> --%>
 	</c:if>
