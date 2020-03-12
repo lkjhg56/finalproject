@@ -41,6 +41,7 @@
 		<url-pattern>/users/my_grade_point</url-pattern>
 		<url-pattern>/users/test_result</url-pattern>
 		<url-pattern>/users/test_result_search</url-pattern>
+		<url-pattern>/users/change</url-pattern>
 		<url-pattern>/board/edit</url-pattern>
 		<url-pattern>/board/regist</url-pattern>
 		<url-pattern>/board/delete</url-pattern>

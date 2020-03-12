@@ -71,7 +71,7 @@ th{
 #sidebar-wrapper {
   position: absolute;
     width: 230px;
-    height: 740px;
+    height: 670px;
     margin-left: -485px;
     font-size: smaller;
     font-family: sans-serif;
@@ -130,8 +130,10 @@ th{
 				<c:when test="${isAdmin}">
 					<li><a href="${context}/users/user_list">• 회원 목록</a></li>
 					<li><a href="${pageContext.request.contextPath}/question/normalupload">• 일반문제 업로드</a></li>
-					<li><a href="${pageContext.request.contextPath}/question/normallist">• 일반문제 List</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/admin_normal_question">• 일반문제 List</a></li>
 					<li><a href="${pageContext.request.contextPath}/question/list">• 유저문제 List</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/blacklist">• 게시글 관리</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/replyblacklist">• 댓글 관리</a></li>
 				</c:when>
 			
 				<c:otherwise> 
@@ -142,8 +144,7 @@ th{
 			
 			<li><a href="${context}/users/test_result">• 내가 본 시험 내역</a></li>
 			<li><a href="${context}/users/my_grade_point">• 나의 포인트 내역</a></li>
-			<li><a href="${context}/users/test_point">• 포인트 줘보기 test</a></li>
-			<li><a href="${context}/users/grade_point_rank">• 등급 포인트 랭킹</a></li>
+			<li><a href="${context}/users/grade_point_rank">• 포인트 랭킹</a></li>
 			<li><a href="${context}/users/bye" data-toggle="modal" data-target="#bye">• 탈퇴하기</a></li>
 			<li><a href="${context}/users/logout" data-toggle="modal" data-target="#logout">• 로그아웃</a></li>
 		</ul>
