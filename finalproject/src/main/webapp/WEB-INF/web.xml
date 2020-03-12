@@ -1,10 +1,11 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0"
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       
-	http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
-	
+	http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" >
+
 	<!-- 
 		UTF-8 필터를 등록
 		- 내가 만든 것이 아니라 스프링에서 제공해주는 것으로 설정
@@ -22,6 +23,7 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -34,6 +36,7 @@
 		<filter-name>loginFilter</filter-name>
 		<filter-class>com.kh.finalproject.filter.LoginFilter</filter-class>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>loginFilter</filter-name>
 		<url-pattern>/users/pw/*</url-pattern>
@@ -41,7 +44,6 @@
 		<url-pattern>/users/my_grade_point</url-pattern>
 		<url-pattern>/users/test_result</url-pattern>
 		<url-pattern>/users/test_result_search</url-pattern>
-		<url-pattern>/users/change</url-pattern>
 		<url-pattern>/board/edit</url-pattern>
 		<url-pattern>/board/regist</url-pattern>
 		<url-pattern>/board/delete</url-pattern>
@@ -53,6 +55,7 @@
 		<url-pattern>/question/update</url-pattern>
 		<url-pattern>/question/solve</url-pattern>
 		<url-pattern>/question/multi</url-pattern>
+		<url-pattern>/question/choose</url-pattern>
 	</filter-mapping>
 	
 	<!-- 
@@ -62,12 +65,66 @@
 		<filter-name>adminFilter</filter-name>
 		<filter-class>com.kh.finalproject.filter.AdminFilter</filter-class>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>adminFilter</filter-name>
 		<url-pattern>/admin/*</url-pattern>
 		<url-pattern>/board/delete2</url-pattern>
 		<url-pattern>/users/user_list</url-pattern>
 	</filter-mapping>
+	
+
+	
+	
+	
+	<!-- 
+		프리미엄 필터
+	 -->
+	<filter>
+		<filter-name>PremiumFilter</filter-name>
+		<filter-class>com.kh.finalproject.filter.PremiumFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>PremiumFilter</filter-name>
+		<url-pattern>/question/choose</url-pattern>
+
+	</filter-mapping>
+	
+
+
+
+	<!-- 
+		에러 페이지 설정
+		-에러가 발생한 경우에 어떤 페이지를 사용자에게 보여줄지 설정할 수 있다
+		-HTTP 상태번호를 알아야함
+		-403, 404, 405, 500
+	 -->
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error/400</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>403</error-code>
+		<location>/error/403</location>
+	</error-page>	
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404</location>
+	</error-page>	
+	
+	<error-page>
+		<error-code>405</error-code>
+		<location>/error/405</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500</location>
+	</error-page>
+
 	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>

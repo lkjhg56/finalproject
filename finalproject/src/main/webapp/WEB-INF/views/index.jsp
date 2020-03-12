@@ -353,8 +353,7 @@ $(function() {
 <div class="container content">
 <div class="col-md-4 col-sm-6 md-margin-bottom-40">
 	<div class="flex-wrap blog-twitter">
-		<div class="headline"><h2><a>QMaster 랭킹</a></h2></div>
-		
+		<div class="headline"><h2><a href="${pageContext.request.contextPath}/users/grade_point_rank">QMaster 랭킹</a></h2></div>
 		<c:forEach var="grade_point_rank" items="${grade_point_rank}">		
 			<div class="blog-twitter-inner" style="width: 100%">
                <span class="memo-title">${grade_point_rank.rank}등</span>
@@ -372,10 +371,7 @@ $(function() {
 		<c:forEach var="newQ" items="${newQ}">				
 			<div class="blog-twitter-inner" style="width: 100%">
               <span class="memo-title">${newQ.question_no}번</span>
-               <a href="${pageContext.request.contextPath}/question/solve?question_no=${newQ.question_no}" class="article-subject Qtitle">${newQ.question_title }</a>
-               <span class="twitter-time">??분 전
-               <span></span><i class="far fa-eye"></i> ${newQ.read_count}
-               </span>
+               <a href="${pageContext.request.contextPath}/question/solve?question_no=${newQ.question_no}" class="article-subject Qtitle">${newQ.question_title }</a>              
             </div>	
          </c:forEach>		
 	</div>

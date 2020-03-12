@@ -32,6 +32,7 @@ import com.kh.finalproject.entity.BoardReportDto;
 import com.kh.finalproject.repository.BoardDao;
 import com.kh.finalproject.repository.BoardFileDao;
 import com.kh.finalproject.service.BoardFileService;
+import com.kh.finalproject.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +49,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardFileService boardfileService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@Autowired
 	private BoardFileDto boardfileDto;
@@ -158,7 +162,7 @@ public class BoardController {
 					//처음읽는 글이라면 == isFirst
 					if(!isMine && isFirst){		
 						getdto.setBoard_readcount(getdto.getBoard_readcount()+1); //의도적으로 화면에 표시되는 조회수를 1 증가시킨다.
-						boardDao.readCount(board_no);	//조회수 증가
+						boardService.readCount(board_no);	//조회수 증가
 					}
 
 					model.addAttribute("boardDto", boardDao.get(board_no));			
@@ -387,7 +391,7 @@ public class BoardController {
 				finishBlock = pagecount;
 			}
 
-			model.addAttribute("search", boardDao.search(param));
+			model.addAttribute("search", boardService.search(param));
 			
 			request.setAttribute("pno", pno);
 			request.setAttribute("count", count);
