@@ -271,9 +271,6 @@ main{
 <c:forEach var="alist" items="${vo}">
 
 
-
-
-
 			<div class = "plural-question" >
 	 	
 	${alist.question} <br>

@@ -51,14 +51,21 @@ public class RestController {
 																	.build();
 	int count=	sqlSession.selectOne("rcorrectCount", rcorrectDto);
 	
+
 	 if(count>=0) {
 		 
-		 sqlSession.delete("deleteAns", rcorrectDto); 
 		 
-	 }
-		 
+//		 sqlSession.delete("deleteAns", rcorrectDto); 
 		 sqlSession.update("correct2", rcorrectDto);
 		 
+	 }
+	 
+	 
+	 sqlSession.insert("correct", rcorrectDto);
+		 
+	 
+	 
+	 
 		 int totalNum = sqlSession.selectOne("totalNum", test_no); 
 		 int correctNum = sqlSession.selectOne("correctNum", test_no);
 		 int sum = correctNum*100/totalNum;
@@ -206,6 +213,7 @@ public class RestController {
 															.build();
 			sqlSession.insert("correct", dto);
 		}
+		
 		
 		
 		sqlSession.update("quesup", result);

@@ -564,7 +564,9 @@ model.addAttribute("vo", normalUpdateQuestionVO);
 		
 		List<NormalUpdateQuestionVO> normalUpdateQuestionVO =sqlSession.selectList("getResultSolution",rno);
 		
+		
 		model.addAttribute("vo", normalUpdateQuestionVO);
+		
 		model.addAttribute("csname", csname);
 		model.addAttribute("category_no", category_no);
 		model.addAttribute("rCorrectDto", rCorrectDto);
