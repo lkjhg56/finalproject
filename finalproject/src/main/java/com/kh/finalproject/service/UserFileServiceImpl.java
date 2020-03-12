@@ -91,7 +91,7 @@ public class UserFileServiceImpl implements UserFileService{
 		}
 		
 		//파일 저장(물리)			
-		File dir = new File("C:/kh/gy");
+		File dir = new File("D:/upload/kh2b/gy");
 		dir.mkdirs();
 			
 			for(int i = 0; i < list.size(); i++) {	
@@ -123,7 +123,7 @@ public class UserFileServiceImpl implements UserFileService{
 
 		//directory의 위치에 있는 저장이름으로 파일을 찾아서 불러온 뒤 반환
 		//실제 파일을 읽어들인다. (폴더, 파일명)
-		File dir = new File("C:/kh/gy");	
+		File dir = new File("D:/upload/kh2b/gy");	
 		File file = new File(dir, String.valueOf(dto.getFile_save_name()));
 		
 		byte[] data = FileUtils.readFileToByteArray(file); //파일을 바이트배열로 변환
@@ -167,7 +167,7 @@ public class UserFileServiceImpl implements UserFileService{
 			}
 		}
 		//파일 저장(물리)			
-		File dir = new File("C:/kh/gy");
+		File dir = new File("D:/upload/kh2b/gy");
 		dir.mkdirs();
 			
 			for(int i = 0; i < list.size(); i++) {	
