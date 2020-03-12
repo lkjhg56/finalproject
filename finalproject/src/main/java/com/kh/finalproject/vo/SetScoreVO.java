@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class SetScoreVO {
 	private int rno, score;
-	private String session_ques;
+	private String session_ques, csname;
 }

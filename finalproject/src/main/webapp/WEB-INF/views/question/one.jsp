@@ -222,14 +222,19 @@ function deletesession() {
 
 
 
+
+
+
 $(function(){
 	 var a = $(".session_ques").text()
+	  var b = $(".csname").text()
 	 console.warn(a);
 	   $.ajax({
 		  url : "${pageContext.request.contextPath}/question2/queup",
 		  type : "get",
 		  data : {
 			  session_ques:a,
+			  csname:b,
 		  },success: function(){
 			  console.warn("success");
 		  },erorr :  function(){
