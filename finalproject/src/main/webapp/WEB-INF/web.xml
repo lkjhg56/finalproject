@@ -52,6 +52,7 @@
 		<url-pattern>/question/update</url-pattern>
 		<url-pattern>/question/solve</url-pattern>
 		<url-pattern>/question/multi</url-pattern>
+		<url-pattern>/question/choose</url-pattern>
 	</filter-mapping>
 	
 	<!-- 
@@ -67,6 +68,23 @@
 		<url-pattern>/board/delete2</url-pattern>
 		<url-pattern>/users/user_list</url-pattern>
 	</filter-mapping>
+	
+	
+	
+	
+	<!-- 
+		프리미엄 필터
+	 -->
+	<filter>
+		<filter-name>PremiumFilter</filter-name>
+		<filter-class>com.kh.finalproject.filter.PremiumFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PremiumFilter</filter-name>
+		<url-pattern>/question/choose</url-pattern>
+
+	</filter-mapping>
+	
 	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>

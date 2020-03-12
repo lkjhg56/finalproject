@@ -104,6 +104,8 @@ public class UsersController {
 			if(correct == true) {
 				session.setAttribute("id", find.getId());
 				session.setAttribute("grade", find.getGrade());
+				session.setAttribute("isPremium", find.getIs_premium());
+		
 				
 				String id = (String) session.getAttribute("id");
 				

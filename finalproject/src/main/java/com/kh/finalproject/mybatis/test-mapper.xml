@@ -71,6 +71,12 @@ where a.rownumber=#{no}
 		update rcorrect set correct = 0, iscorrect =0, answer = #{answer} where test_no=#{test_no} and result_no = #{result_no}
 	</delete>
 
+<delete id="deleteBns" parameterType="rcorrectDto">
+
+delete from rcorrect where result_no=#{result_no} and test_no =#{test_no} and correct=0
+
+</delete>
+
 
 <!-- test_no로 rqno구하기 -->
 
@@ -85,6 +91,7 @@ select rqno from rcorrect where test_no=#{test_no} and result_no=#{result_no}
 
 select count(*) from rcorrect where test_no=#{test_no} and result_no=#{result_no}
 </select>
+
 
 
 

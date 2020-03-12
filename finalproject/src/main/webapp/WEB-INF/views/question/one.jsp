@@ -226,6 +226,7 @@ function deletesession() {
 
 
 $(function(){
+	
 	 var a = $(".session_ques").text()
 	  var b = $(".csname").text()
 	 console.warn(a);
@@ -238,9 +239,9 @@ $(function(){
 			  session_ques:a,
 			  csname:b,
 		  },success: function(){
-			  console.warn("success");
+			  console.warn("success11");
 		  },erorr :  function(){
-			  console.warn("fail");
+			  console.warn("fail11");
 			  
 		  }
 		   
@@ -425,7 +426,7 @@ margin-top: 62px;
        <div class = "conatiner-fluid">
             <div class = "jumbotron">
             
-                <h1 class="csname"> ${categoryname}</h1>
+                <h1 class="csname">${categoryname}</h1>
 
                 <h3 class = "session_ques">${session}</h3>
                 
