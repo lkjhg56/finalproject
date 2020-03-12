@@ -5,11 +5,11 @@
 <style>
 	*{
 	     font-weight: 400;
-	      font-size: 13px;
 	}
-		
+	
 	.container table{
 		 font-family: 'Noto Sans';
+		 font-size: 13px;
 	}
 	.row-empty {
 		height: 30px;
@@ -67,6 +67,7 @@
 		  border: 1px solid transparent;
 		  padding: 0.375rem 0.75rem;
 		  line-height: 1.5;
+		  font-size: 1rem;
 		  border-radius: 0.25rem;
 		 }
        

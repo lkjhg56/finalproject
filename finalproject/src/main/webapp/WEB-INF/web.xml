@@ -68,6 +68,37 @@
 		<url-pattern>/users/user_list</url-pattern>
 	</filter-mapping>
 	
+	<!-- 
+		에러 페이지 설정
+		-에러가 발생한 경우에 어떤 페이지를 사용자에게 보여줄지 설정할 수 있다
+		-HTTP 상태번호를 알아야함
+		-403, 404, 405, 500
+	 -->
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error/400</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>403</error-code>
+		<location>/error/403</location>
+	</error-page>	
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404</location>
+	</error-page>	
+	
+	<error-page>
+		<error-code>405</error-code>
+		<location>/error/405</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500</location>
+	</error-page>
+	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
