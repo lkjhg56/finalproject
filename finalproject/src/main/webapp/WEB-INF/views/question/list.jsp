@@ -126,12 +126,11 @@ th{
 		</jsp:include>
 	</div>
 	<div class="d-flex justify-content-between">
-		<div><a type="button" href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드</a></div>
+		<div><a type="button" href="${pageContext.request.contextPath}/question/upload" type="button" class="btn btn-secondary">문제 업로드 <i class="material-icons">cloud_upload</i></a></div>
 		<!-- 검색창 -->
 		<div class="d-flex justify-content-center">
 		<form action="list" method="post">		
 			<select name="option">
-				<option value="category_name">카테고리</option>
 				<option value="question_title">제목</option>
 				<option value="id">출제자</option>
 			</select>

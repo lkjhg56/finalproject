@@ -19,6 +19,7 @@ import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestQuestionDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.TestDao;
+import com.kh.finalproject.service.NormalUploadQuestionService;
 import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,8 @@ public class SolveQuestionController {
 	
 	@Autowired
 	private TestDao testDao;
+	
+
 	
 	@Autowired
 	private NormalUploadQuestionDao NormalUploadQuestionDao;
@@ -561,7 +564,9 @@ model.addAttribute("vo", normalUpdateQuestionVO);
 		
 		List<NormalUpdateQuestionVO> normalUpdateQuestionVO =sqlSession.selectList("getResultSolution",rno);
 		
+		
 		model.addAttribute("vo", normalUpdateQuestionVO);
+		
 		model.addAttribute("csname", csname);
 		model.addAttribute("category_no", category_no);
 		model.addAttribute("rCorrectDto", rCorrectDto);

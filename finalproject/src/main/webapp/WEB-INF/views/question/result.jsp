@@ -200,7 +200,7 @@ main{
 
 <div class="jumbotron">
 <h2> ${csname} ${category_no}</h2>
-<h3>점수 ${score}점</h3>
+<h1>점수 ${score}점</h1>
 
 
 </div>
@@ -235,7 +235,7 @@ main{
     <tr>
     
 	<td>백분위</td>
-	<td>${percentile}</td>
+	<td>${percentile}%</td>
 	<td>순위</td>
     <td>${rank}</td>
     </tr>
@@ -269,9 +269,6 @@ main{
 </div>
 
 <c:forEach var="alist" items="${vo}">
-
-
-
 
 
 			<div class = "plural-question" >

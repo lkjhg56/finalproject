@@ -7,11 +7,11 @@
 <mapper namespace="test">
 
 	<select id = "list" resultType = "testDto">
-		select * from test order by tno desc
+		select * from test order by tno asc
 	</select>
 
 	<select id = "categoryList" parameterType= "int" resultType = "categoryDto">
-		select * from category where test_no = #{tno} order by category_no desc
+		select * from category where test_no = #{tno} order by category_no asc
 	</select>
 	
 	<select id = "questionList" parameterType = "string" resultType = "testQuestionDto">
@@ -55,12 +55,20 @@ where a.rownumber=#{no}
 	
 	<insert id = "correct" parameterType = "rcorrectDto" >
 		insert into rcorrect(rqno, result_no, test_no, correct, iscorrect, answer) values(rcorrect_seq.nextval, #{result_no}, #{test_no}, #{correct}, #{iscorrect}, #{answer})
+		
 	</insert>
+	
+	<update id = "correct2" parameterType = "rcorrectDto">
+		update rcorrect set correct = #{correct}, iscorrect =#{iscorrect}, answer = #{answer} where test_no=#{test_no} and result_no = #{result_no}
+	</update>
+	
+	
 	
 	
 	<!-- 유저 답 수정시 기존 입력 정답 삭제 -->
 	<delete id = "deleteAns" parameterType = "rcorrectDto" >
-		delete from rcorrect where result_no=#{result_no} and test_no =#{test_no}
+		
+		update rcorrect set correct = 0, iscorrect =0, answer = #{answer} where test_no=#{test_no} and result_no = #{result_no}
 	</delete>
 
 
@@ -77,6 +85,15 @@ select rqno from rcorrect where test_no=#{test_no} and result_no=#{result_no}
 
 select count(*) from rcorrect where test_no=#{test_no} and result_no=#{result_no}
 </select>
+
+
+
+<select id="correctnumber" resultType="int" parameterType="rcorrectDto">
+
+select correct from rcorrect where test_no=#{test_no} and result_no=#{result_no}
+</select>
+
+
 
 <!-- rqno로 rcorrect 삭제 -->
 
@@ -202,6 +219,10 @@ On t.no=S.question_no where t.csname=#{csname} and t.category_no=#{category_no}
 		
 		
 		
+		
+		<select id = "readyForAns" parameterType = "scoreVO" resultType ="testQuestionDto">
+				select * from test_question where csname= #{csname} and category_no=#{session_ques} order by no asc
+		</select>
 		
 		
 	

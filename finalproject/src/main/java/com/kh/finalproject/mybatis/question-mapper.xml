@@ -33,7 +33,7 @@
  	
  	<!-- 카테고리 유무 -->
  	<select id="testE" resultType="int" parameterType="normalUpdateQuestionVO">
- 	 select tno from test where test_category=#{test_category}
+ 	 select count(*) from test where test_category=#{test_category}
  	</select>
  	
  	<!-- 문제테이블과 이미지 테이블을 합쳐서 출력 -->
@@ -296,7 +296,7 @@
  	
  	
  		<select id="getResultSolution" parameterType="int" resultType="normalUpdateQuestionVO">
-	     select T.question,t.dis1,t.dis2,t.dis3,t.dis4,t.dis5,S.solution_no,s.solution,r.iscorrect,r.correct
+	     select T.question,t.dis1,t.dis2,t.dis3,t.dis4,t.dis5,S.solution_no,s.solution,r.iscorrect,r.correct,t.no
 			from test_question T inner join solution S
 			on t.no=S.question_no 
 			inner join rcorrect R

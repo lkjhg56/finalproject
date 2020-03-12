@@ -44,13 +44,13 @@ public class KakaoPayController {
 		int orderNum = sqlSession.selectOne("orderNum");
 		
 		KakaoPayReadyVO readyVo = KakaoPayReadyVO.builder()
-																					.partner_order_id(String.valueOf(orderNum))
-																					.partner_user_id(vo.getPartner_user_id())
-																					.item_name(vo.getItem_name())
-																					.total_amount(vo.getTotal_amount())
-																					.tax_free_amount(vo.getTax_free_amount())
-																					.quantity(vo.getQuantity())
-																					.build();
+		.partner_order_id(String.valueOf(orderNum))
+		.partner_user_id(vo.getPartner_user_id())
+		.item_name(vo.getItem_name())
+		.total_amount(vo.getTotal_amount())
+		.tax_free_amount(vo.getTax_free_amount())
+		.quantity(vo.getQuantity())
+		.build();
 
 		PayReadyReturnVO result = payService.ready(readyVo);
 		session.setAttribute("tid", result.getTid());
@@ -78,15 +78,13 @@ public class KakaoPayController {
 
 		int num1 =  sqlSession.selectOne("pay.getnum");
 		KakaoPaySuccessReadyVO data = KakaoPaySuccessReadyVO.builder()
-																									.cid("TC0ONETIME")
-																									.tid(tid)
-																									.partner_order_id(vo.getPartner_order_id())
-																									.partner_user_id(vo.getPartner_user_id())
-																									.pg_token(pg_token)
-																									.build();
+			.cid("TC0ONETIME")
+			.tid(tid)
+			.partner_order_id(vo.getPartner_order_id())
+			.partner_user_id(vo.getPartner_user_id())
+			.pg_token(pg_token)
+			.build();
 		KakaoPaySuccessReturnVO result = payService.approve(data, num1);
-
-//		int newPoint = sqlSession.selectOne("pay.getPoint", id);
 		
 		String order_id = vo.getPartner_user_id();
 

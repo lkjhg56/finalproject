@@ -12,6 +12,8 @@
 
 <style>
 
+
+
 *{
 
   font-family: sans-serif;
@@ -180,6 +182,10 @@ color: steelblue;
     border: 1px #FFFFFF;
     border-radius: 5%;
 }
+
+.forfooter {
+    min-height: 90vh;
+}
 </style>
 
    <div class="container">
@@ -252,4 +258,5 @@ color: steelblue;
     </div>
 
  </body>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

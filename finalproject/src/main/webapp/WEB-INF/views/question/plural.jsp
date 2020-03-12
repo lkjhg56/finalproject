@@ -15,7 +15,9 @@
    
    
    function save(quesno, disno, answer,id){
-       var test = quesno+disno
+		console.log(answer+"답");
+	   
+	   var test = quesno+disno
 
        var checked= document.getElementById(test);
        var checkbox2= document.getElementsByName(quesno);
@@ -161,12 +163,14 @@
    $(function(){
 
 	 var a = $(".session_ques").text()
+	 var b = $(".csname").text()
 
 	   $.ajax({
 		  url : "${pageContext.request.contextPath}/question2/queup",
 		  type : "get",
 		  data : {
 			  session_ques:a,
+			  csname:b,
 		  },success: function(){
 
 		  },erorr :  function(){
@@ -179,7 +183,7 @@
    })
 
    
-   
+
    
 </script>
    
@@ -292,7 +296,7 @@ float:left;
     <header>
         <div class = "conatiner-fluid">
             <div class = "jumbotron">
-                <h1>${csname}</h1>
+                <h1 class = "csname">${csname}</h1>
 
                 <h3 class = "session_ques">${session}</h3>
  						<div class="timer-wrap">
