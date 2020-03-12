@@ -10,12 +10,13 @@
         height:250px;
     }
     
-    *{
+   *{
 	     font-weight: 400;
 	}
 	
 	.container table{
 		 font-family: 'Noto Sans';
+		 font-size: 13px;
 	}
 	
 	.row-empty {

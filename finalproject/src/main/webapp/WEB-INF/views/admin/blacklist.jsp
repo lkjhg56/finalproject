@@ -5,11 +5,11 @@
 <style>
 	*{
 	     font-weight: 400;
-	      font-size: 13px;
 	}
-		
+	
 	.container table{
 		 font-family: 'Noto Sans';
+		 font-size: 13px;
 	}
 	.container .menu  a{
 		  font-size: 20px;
@@ -285,15 +285,13 @@ $(function(){
 	<div class="container menu ff">
 		<a href="${pageContext.request.contextPath}/admin/blacklist">게시글 관리</a> | 
 		<a href="${pageContext.request.contextPath}/admin/replyblacklist">댓글 관리</a>
-		<p>게시판관리 > 게시글 관리</p>
+		<p style="font-size: 13px;">게시판관리 > 게시글 관리</p>
 	</div>
-<!-- 	<form action="blacklist" class="category22" method="get"> -->
-<%--     	<input class="category23"  type="hidden" name="board_cetegory" value="${board_category}">  --%>
-<!-- 	</form> -->
+
 <form class="blaklist" action="blacklist" method="get">   	
 <div class="container" style="text-align: left">
 	
-		<select class="category"  name="board_category"> 
+		<select class="category"  name="board_category" style="font-size: 13px;"> 
 			<option>카테고리 선택</option>
 			<option value="전체"<c:if test="${board_category=='전체'}">selected="selected"</c:if>>전체</option>
 			<option value="자유"<c:if test="${board_category=='자유'}">selected="selected"</c:if>>자유</option>

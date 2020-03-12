@@ -9,8 +9,10 @@
 	*{
 	     font-weight: 400;
 	}
+	
 	.container table{
 		 font-family: 'Noto Sans';
+		 font-size: 13px;
 	}
 	
 	.row-empty {
@@ -35,7 +37,6 @@
 		  background-color: white;
 		  border: 1px solid black;
 		  padding: 0.375rem 0.75rem;
-		  font-size: 1rem;
 		  line-height: 1.5;		  
 		 }
 		 

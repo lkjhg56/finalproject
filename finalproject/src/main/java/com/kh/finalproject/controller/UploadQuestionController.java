@@ -379,9 +379,8 @@ public class UploadQuestionController {
 		request.setAttribute("count", count);
 		request.setAttribute("pagesize", pageSize);
 		request.setAttribute("navsize", navSize);
-		
-
 		return "question/normallist";	
+
 	}
 	
 	

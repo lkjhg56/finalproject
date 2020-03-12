@@ -264,7 +264,7 @@
  			select rownum rn, A.* from(select * from board 
  				order by board_wdate desc
  			)A)
- 		where rn between 1 and 7
+ 		where rn between 1 and 6
 	</select>
 	
 	<!-- /////////////////////////////////////////////

@@ -104,6 +104,8 @@ public class UsersController {
 			if(correct == true) {
 				session.setAttribute("id", find.getId());
 				session.setAttribute("grade", find.getGrade());
+				session.setAttribute("isPremium", find.getIs_premium());
+		
 				
 				String id = (String) session.getAttribute("id");
 				
@@ -135,6 +137,7 @@ public class UsersController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("id");
 		session.removeAttribute("grade");
+		session.removeAttribute("isPremium");
 		return "redirect:/";
 	}
 	

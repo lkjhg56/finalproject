@@ -43,6 +43,8 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 				int categoryExist=NormalUploadQuestionDao.categoryExist(normalUpdateQuestionVO);
 	
 	int testExist=NormalUploadQuestionDao.testExist(normalUpdateQuestionVO);
+	
+	
 				if(categoryExist>0) {
 					
 					
@@ -72,7 +74,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 						SolutionDto solutionDto =SolutionDto.builder()
 							.solution(normalUpdateQuestionVO.getSolution())
 							.question_no(no)
-							.user_no(101)
+							.user_no(266)
 								.build();
 						
 					
@@ -114,7 +116,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 						SolutionDto solutionDto =SolutionDto.builder()
 							.solution(normalUpdateQuestionVO.getSolution())
 							.question_no(no)
-							.user_no(101)
+							.user_no(266)
 								.build();
 						
 						NormalUploadQuestionDao.upload3(categoryDto, testQuestionDto, solutionDto);
@@ -160,7 +162,7 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 						SolutionDto solutionDto =SolutionDto.builder()
 							.solution(normalUpdateQuestionVO.getSolution())
 							.question_no(no)
-							.user_no(101)
+							.user_no(266)
 								.build();
 						
 					

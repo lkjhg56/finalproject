@@ -3,6 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="error" value="${param.error}"></c:set>
+<script>
+$(function(){
+	
+	$("form[name=form1]").submit(function(e){
+
+		var data = $(this).serialize();//데이터를 전송 가능한 문자열로 변환
+		
+		var win = window.open(
+				"${pageContext.request.contextPath}/users/findid", "win", "width=700, height=900");
+	});
+});	
+</script>
 <style>
 * {
 	font-family: binggrae;
@@ -75,6 +87,78 @@ h1 {
     padding: 5px 10px;
     width: 330px;
     height: 45px;
+}
+@media screen and (max-width:1200px){
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 270px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
+}
+@media screen and (max-width: 992px) {
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 150px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
+}
+@media screen and (max-width: 768px) {
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 60px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
+}
+@media screen and (max-width: 580px) {
+	.login_box{
+	display: inline-block;
+    width: 400px;
+    border: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto 30px;
+    margin-top: 30px;
+    height: 340px;
+    overflow: hidden;
+    border-left-width: 2px;
+    background-color: white;
+    border-radius: 5%;
+	}           
 }
 </style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
