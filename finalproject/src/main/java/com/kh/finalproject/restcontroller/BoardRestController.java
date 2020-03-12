@@ -1,5 +1,6 @@
 package com.kh.finalproject.restcontroller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalproject.entity.BoardDto;
+import com.kh.finalproject.entity.BoardFileDto;
 import com.kh.finalproject.entity.BoardReplyDto;
 import com.kh.finalproject.repository.BoardDao;
+import com.kh.finalproject.repository.BoardFileDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +34,9 @@ public class BoardRestController {
 	
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private BoardFileDao boardfileDao;
 	
 	//댓글 등록
 		@PostMapping("/insert")
@@ -90,6 +96,29 @@ public class BoardRestController {
 		
 		sqlSession.delete("board.deleteReply", board_reply_no);
 		boardDao.replyCount(board_reply_origin);
+		
+		return "success";
+	}
+	
+	//이미지 삭제
+	@PostMapping("/deleteImg")
+	public String deleteImg(@RequestParam int board_no) {
+		
+			BoardDto boardDto = boardDao.get(board_no);
+		
+		//(1)기존 파일 모두 삭제하기
+			List<BoardFileDto> delete = boardfileDao.getFileNo(boardDto.getBoard_no()); //파일 정보 list형태로 가져오기
+				
+		//반복문으로 파일 삭제 실행
+		for(int i = 0; i < delete.size(); i++) {
+			//DB에 저장된 파일 정보 삭제
+			boardfileDao.deleteFile(board_no);
+			
+			//실제 파일 삭제
+			String filepath = "D:/upload/kh2b/board_files/" + delete.get(i).getBoard_file_save_name();			
+			File file = new File(filepath);
+			file.delete();				
+		}		
 		
 		return "success";
 	}

@@ -109,6 +109,28 @@
 	
 	//윈도우 로딩 시 loadEditor를 실행하도록 설정(body에 onload 한 효과)
    		window.onload = loadEditor;
+
+	$(function(){
+		$(".deleteImg").click(function(e) {
+	    	e.preventDefault();
+	    	var data = $(".BN").val();
+	    	console.log(data);
+	    	
+	    	 $.ajax({
+	         	url: "${pageContext.request.contextPath}/board2/deleteImg",
+	             type: "post",
+	             data: {board_no: data},
+	             success: function(success) {
+	           	  console.log("성공")
+	           	  alert("파일 삭제가 완료되었습니다.");
+	   	  		},
+	   	  	    error:function(){
+	   	  		  console.log("실패")	  		
+	             }
+	         	
+	         });
+		});
+	});
 </script>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -119,7 +141,7 @@
 <h3>게시글 수정</h3><span id="copyright">저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시글은 이용약관 및 관련법률에 의해 제재를 받으실 수 있습니다.</span><br><br>
 
 <form action="edit" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="board_no" value="${boardDto.board_no}">
+	<input class="BN" type="hidden" name="board_no" value="${boardDto.board_no}">
 	<input type="hidden" name="board_no" value="${boardFileDto.board_origin_content_no}">
 	<table class="table table-bordered">		
 			<!-- 번호는 숨김 처리로 전송 -->
@@ -148,6 +170,9 @@
 			<tr>
 				<th>첨부파일</th>
 				<td>
+					<c:if test="${!empty boardfileDto}">
+						<button class="deleteImg">파일삭제</button>
+					</c:if>
 					<input type="file" name="board_file"  multiple accept="image/*">
 				</td>
 			</tr>
