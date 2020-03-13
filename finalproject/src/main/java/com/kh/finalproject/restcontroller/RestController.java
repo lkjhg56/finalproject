@@ -205,7 +205,7 @@ public class RestController {
 													.build();
 		List<TestQuestionDto> TQDto = sqlSession.selectList("readyForAns", result);
 		
-		System.out.println("dd"+ TQDto);
+		
 		
 		for(TestQuestionDto insertQues : TQDto) {
 		log.info("asdasd={}", insertQues.getAnswer());
@@ -240,7 +240,7 @@ public class RestController {
 				NormalUploadQuestionDao.getFile(no);
 		
 		if(delete!=null) {
-		String filepath = "D:/upload/normalquestion_image/"+delete.getFile_save_name();
+		String filepath = "D:/upload/kh2b/normalquestion_image/"+delete.getFile_save_name();
 		File file = new File(filepath);
 		file.delete();
 		}

@@ -434,7 +434,7 @@ public class AdminController {
 		}
 		
 		if(keyword != null) {
-			System.out.println("@@keyword2="+keyword);
+			
 			Map<String, String> param = new HashMap<>();
 			param.put("start", String.valueOf(start));
 			param.put("finish", String.valueOf(finish));
@@ -442,7 +442,7 @@ public class AdminController {
 			param.put("keyword", keyword);
 			
 			List<BoardReportDto> dto = boardDao.reportSearch(param);
-			System.out.println("dto는?="+dto);
+			
 			
 			for(int i = 0; i < dto.size(); i ++) {
 				int board_no = dto.get(i).getReport_board_no();
