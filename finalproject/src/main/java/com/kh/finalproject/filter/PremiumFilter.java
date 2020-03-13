@@ -39,7 +39,7 @@ System.out.println(ispremium+"aaaa");
 		
 		else {
 			HttpServletResponse resp = (HttpServletResponse) response;
-			resp.sendRedirect(req.getContextPath()+"/users/info");
+			resp.sendRedirect(req.getContextPath()+"/question/premium");
 		}
 		
 	}
