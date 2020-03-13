@@ -449,7 +449,7 @@ margin-top: 62px;
 <section>
    	
 
-   		<h2>${clist.question}</h2>
+   		<h4>${clist.question}</h4>
   <!-- 이미지 파일 조건 -->
   	
   			

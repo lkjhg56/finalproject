@@ -46,4 +46,8 @@ public interface NormalUploadQuestionDao {
 	
 	
 	int testExist(NormalUpdateQuestionVO normalUpdateQuestionVO);
+
+	int tno(NormalUpdateQuestionVO normalUpdateQuestionVO);
+
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +27,8 @@ import com.kh.finalproject.vo.NormalUpdateQuestionVO;
 import com.kh.finalproject.vo.UpdateQuestionVO;
 @Service
 public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionService{
-
+@Autowired
+private SqlSession SqlSession;
 	
 	@Autowired
 	private NormalUploadQuestionDao  NormalUploadQuestionDao;
@@ -84,10 +86,12 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 				
 				else if(testExist>0) {
 					
+					int tno=NormalUploadQuestionDao.tno(normalUpdateQuestionVO);
+					
 					CategoryDto categoryDto =CategoryDto.builder()
 							.category_no(category_no)
 							.csname(normalUpdateQuestionVO.getCsname())
-							.test_no(testExist)
+							.test_no(tno)
 							.lim_hour(0)
 							.lim_min(10)
 							.build();
@@ -124,6 +128,13 @@ public class NormalUploadQuestionServiceImpl implements NormalUploadQuestionServ
 					
 					
 				else {
+					
+					//test_category로 검색해서 test의 count가 없으면 
+					
+					
+					
+					
+					
 					
 					TestDto testDto=TestDto.builder()
 							.tno(test_no)
