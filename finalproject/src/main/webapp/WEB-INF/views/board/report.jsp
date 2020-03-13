@@ -6,7 +6,6 @@
 		div *{
 		 font-family: 'Noto Sans';
 	     font-weight: 400;
-	      font-size: 13px;
 		}
 
          /* flex-grow : 1만큼의 영역을 가지도록 커져라 

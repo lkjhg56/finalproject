@@ -137,6 +137,7 @@ public class UsersController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("id");
 		session.removeAttribute("grade");
+		session.removeAttribute("isPremium");
 		return "redirect:/";
 	}
 	
