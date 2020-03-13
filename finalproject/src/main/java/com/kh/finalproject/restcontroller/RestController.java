@@ -205,7 +205,7 @@ public class RestController {
 													.build();
 		List<TestQuestionDto> TQDto = sqlSession.selectList("readyForAns", result);
 		
-		System.out.println("dd"+ TQDto);
+		
 		
 		for(TestQuestionDto insertQues : TQDto) {
 		log.info("asdasd={}", insertQues.getAnswer());
