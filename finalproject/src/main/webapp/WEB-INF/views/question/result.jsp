@@ -274,7 +274,7 @@ main{
 			<div class = "plural-question" >
 	 	
 	${alist.question} <br>
-	 <div class = "plural-pic" ><img id="preview" src="qimage?no=${alist.no}"  class="test"  onload="selectcorrect('${alist.no}');"  width="20%" height="200"></div><br><br> 
+	 <div class = "plural-pic" ><img id="preview" src="qimage?no=${alist.no}"  class="test"  onload="selectcorrect('${alist.no}');"  width="60%" height="200"></div><br><br> 
 <%-- <input type="image" name="image" onload="selectcorrect('${alist.no}');"> --%>
 
 1. ${alist.dis1}<br>

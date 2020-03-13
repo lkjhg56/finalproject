@@ -8,27 +8,36 @@
 <script>
 	$(function(){
 		//Modal trigger button 숨기기
-		$(".doHide").hide();
-		//pno 불러오기
-		var pno = "<c:out value='${pno}'/>";
-		//첫페이지에서만 모달창 불러오기
-// 		var triggerClick =
-		if(pno==1){
-			 $(".doHide").trigger("click");
-		}	
-// 		var triggerSearch = $(".searchKeyword").click();
-// 		if(triggerSearch){
-// 			removeEventListener(triggerClick);
+// 		$(".doHide").hide();
+		//Modal 선택전 게시글 숨기기
+// 		$(".showList").hide();
+		//숨겨진 button을 클릭하여 Modal을 페이지 로딩과 함께 불러오기
+// 		$(".doHide").trigger("click");
+		//만일 '한문제 풀기' 클릭시 게시판 출력하기
+// 		$(".oneQuestion").click(function(){
+// 			$(".showList").show();
+// 		});
+		//문제
+		//1. 2번째 페이지에서 모달창이 새로 생성됨
+// 		var pno = "<c:out value='${pno}'/>";
+// 		if(pno>1){
+// 			$(".showList").show();
+// 			$(".modal").hide();
 // 		}
+		//2. 검색버튼 누르면 모달창이 새로 생성됨.
+		
+
+		//랜덤버튼 누르면 문제 개수 고르기
 		$(".list").hide();
 		$(".multiQuestion").click(function(){
 			$(".list").show();
-			$(".oneQuestion").hide();
 		});
+		
+		
 		$(".click").click(function(){
 			$(".list").show();
 		});
-		var selected_val = $("#selectBox option:selected").val();	
+		var selected_val = $("#selectBox option:selected").val();
 	});
 </script>
 <style>
@@ -85,6 +94,37 @@ th{
 }
 
 </style>
+<!-- 모달 영역 -->
+<!-- <button type="button" class="btn doHide" data-toggle="modal" data-target="#myModal"></button> -->
+<!-- <div class="modal fade" id="myModal"> -->
+<!-- 	<div class="modal-dialog"> -->
+<!-- 		<div class="modal-content"> -->
+<!-- 모달 헤드 -->
+<!-- 			<div class="modal-header"> -->
+<!-- 				<h4 class="modal-title">문제 풀이 방법</h4> -->
+<!-- 				<button type="button" class="close" data-dismiss="modal">&times;</button> -->
+<!-- 			</div> -->
+<!-- 모달 바디 -->
+<!-- 			<div class="modal-body d-flex justify-content-between"> -->
+<!-- 				<div class="oneQuestion"><a class="btn btn-primary" data-dismiss="modal">한문제씩 풀기</a></div> -->
+<!-- 				<div><a class="btn btn-primary multiQuestion">랜덤문제 풀기</a></div> -->
+
+<!-- 			</div> -->
+<!-- 모달 풋터 -->
+<!-- 			<div class="modal-footer d-flex justify-content-between"> -->
+<!-- 				<button class="click">문제 수</button> -->
+<!-- 				<div class="list">문제 개수 : -->
+<!-- 				<select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)"> -->
+<%-- 					<c:forEach var="QuestionNumber" items="${list}" end="20" varStatus="status"> --%>
+<%-- 						<option class="optionVal" value="${pageContext.request.contextPath}/question/multi?wantQuestion=${status.count}">${status.count}</option> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</select> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<div class="showList">
 <div class="container">
 <div><h1>유저 문제 목록</h1></div>
 	<table class="table table-hover">
@@ -101,18 +141,18 @@ th{
 			</tr>
 		</thead>
 		<tbody>	
-		<c:forEach var="question" items="${list}">
-			<tr>
-				<td>${question.question_no}</td>
-				<td><a href="solve?question_no=${question.question_no}">${question.question_title}</a></td>
-				<td>${question.read_count}</td>
-				<td>${question.correct_ratio}%</td>
-				<td>${question.id}</td>
-				<c:if test="${grade=='관리자'}">
-					<td><a href="content?question_no=${question.question_no}">확인</a></td>
-				</c:if>
-			</tr>
-		</c:forEach>
+			<c:forEach var="question" items="${list}">
+				<tr>
+					<td>${question.question_no}</td>
+					<td><a href="solve?question_no=${question.question_no}">${question.question_title}</a></td>
+					<td>${question.read_count}</td>
+					<td>${question.correct_ratio}%</td>
+					<td>${question.id}</td>
+					<c:if test="${grade=='관리자'}">
+						<td><a href="content?question_no=${question.question_no}">확인</a></td>
+					</c:if>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<!-- 네비게이션 -->
@@ -150,35 +190,6 @@ th{
 		</div>
 	</div>
 </div>
-
-<!-- 모달 영역 -->
-<button type="button" class="btn doHide" data-toggle="modal" data-target="#myModal"></button>
-<div class="modal fade" id="myModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<!-- 모달 헤드 -->
-			<div class="modal-header">
-				<h4 class="modal-title">문제 풀이 방법</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-			<!-- 모달 바디 -->
-			<div class="modal-body d-flex justify-content-between">
-				<div class="oneQuestion"><a class="btn btn-primary" data-dismiss="modal">한문제씩 풀기</a></div>
-				<div><a class="btn btn-primary multiQuestion">랜덤문제 풀기</a></div>
-
-			</div>
-			<!-- 모달 풋터 -->
-			<div class="modal-footer d-flex justify-content-between">
-				<!-- <button class="click">문제 수</button> -->
-				<div class="list">문제 개수 :
-				<select name = "number" id="selectBox" onchange="if(this.value) location.href=(this.value)">
-					<c:forEach var="QuestionNumber" items="${list}" end="20" varStatus="status">
-						<option class="optionVal" value="${pageContext.request.contextPath}/question/multi?wantQuestion=${status.count}">${status.count}</option>
-					</c:forEach>
-				</select>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

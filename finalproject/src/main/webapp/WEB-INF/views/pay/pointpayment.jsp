@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
@@ -29,7 +31,8 @@
 							<input type = "hidden" name = "quantity" value = "1">
 							<input type = "hidden" name = "tax_free_amount" value = "${list.tax_free_amount}">
 							<input type = "hidden" name = "token" value = "${list.token}">
-							<input type = "submit" style="button" class="btn btn-primary" value = "${list.price} Token"> 
+							<strong><fmt:formatNumber type="number" value="${list.price}"/>원</strong><br>
+							<input type = "submit" style="button" class="btn btn-primary" value = "<fmt:formatNumber type="number" value="${list.price/10}"/> Token"> 
 						</form>
 						<br>
 					</c:forEach>

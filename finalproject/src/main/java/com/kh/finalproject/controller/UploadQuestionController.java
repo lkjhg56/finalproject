@@ -89,7 +89,18 @@ public class UploadQuestionController {
 	}
 	//문제 업로드
 	@GetMapping("/upload")
-	public String upload() {
+	public String upload(Model model, HttpServletRequest request) {
+		//이전 페이지 주소를 얻어온다.
+		//upload페이지의 side메뉴를 붙일지 말지 선별한다.
+		String beforPage = request.getHeader("referer");
+		String listPage = "http://localhost:8080/finalproject/question/list";
+		String realListPage = "http://www.sysout.co.kr/kh2b/question/list";
+		boolean removeSide = beforPage.equals(listPage)||beforPage.equals(realListPage);
+		if(removeSide) {
+			model.addAttribute("show",0);
+		}else {
+			model.addAttribute("show",1);
+		}
 		return "question/upload";
 	}
 	@PostMapping("/upload")
@@ -148,10 +159,9 @@ public class UploadQuestionController {
 	@GetMapping("/list")
 	public String list(Model model, HttpServletRequest request) {
 		//정답률 계산하여 출력해줘야함.
-//		model.addAttribute("list",uploadQuestionDao.question_user_all());
 		//네비게이터
 		//페이지 크기
-		int pageSize = 15;
+		int pageSize = 10;
 		//네비게이터 크기
 		int navSize = 10;
 		//페이지별 번호
@@ -186,7 +196,6 @@ public class UploadQuestionController {
 		param.put("start", start);
 		param.put("finish",finish);
 		model.addAttribute("list", uploadQuestionDao.mapList(param));			
-
 		request.setAttribute("pno", pageNumber);
 		request.setAttribute("count", count);
 		request.setAttribute("pagesize", pageSize);
@@ -197,7 +206,7 @@ public class UploadQuestionController {
 	public String list2(Model model, HttpServletRequest request, @ModelAttribute SearchQuestionVO searchQuestionVO) {
 		//네비게이터
 		//페이지 크기
-		int pageSize = 15;
+		int pageSize = 10;
 		//네비게이터 크기
 		int navSize = 10;
 		//페이지별 번호
@@ -249,7 +258,7 @@ public class UploadQuestionController {
 		String id = (String) session.getAttribute("id");
 		//네비게이터
 		//페이지 크기
-		int pageSize = 15;
+		int pageSize = 10;
 		//네비게이터 크기
 		int navSize = 10;
 		//페이지별 번호
@@ -370,16 +379,8 @@ public class UploadQuestionController {
 		request.setAttribute("count", count);
 		request.setAttribute("pagesize", pageSize);
 		request.setAttribute("navsize", navSize);
-		
+		return "question/normallist";	
 
-		return "redirect: ../admin/admin_normal_question";
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 	
@@ -392,13 +393,6 @@ public class UploadQuestionController {
 				.category_no(category_no)
 				.build();
 		List<TestQuestionDto> list2=sqlSession.selectList("question.getNormal3",dto);
-	
-		
-		
-		/* model.addAttribute("list",list2); */
-		
-		
-		
 
 		//네비게이터
 		//페이지 크기

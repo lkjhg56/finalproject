@@ -36,6 +36,12 @@
  	 select count(*) from test where test_category=#{test_category}
  	</select>
  	
+ 	
+ 		<select id="testtno" resultType="int" parameterType="normalUpdateQuestionVO">
+ 	 select tno from test where test_category=#{test_category}
+ 	</select>
+ 	
+ 	
  	<!-- 문제테이블과 이미지 테이블을 합쳐서 출력 -->
 	<resultMap type="uploadQuestionDto" id="imageList">
 		<result column="question_no" property="question_no"/>
@@ -302,6 +308,7 @@
 			inner join rcorrect R
 			on t.no=r.test_no
 			where r.result_no=#{rno}
+			order by no asc 
  	</select>
  	
  	
