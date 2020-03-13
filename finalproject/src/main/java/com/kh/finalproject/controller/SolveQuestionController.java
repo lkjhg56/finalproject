@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.finalproject.entity.RcorrectDto;
 import com.kh.finalproject.entity.ResultDto;
 import com.kh.finalproject.entity.TestQuestionDto;
+import com.kh.finalproject.entity.UsersDto;
 import com.kh.finalproject.repository.NormalUploadQuestionDao;
 import com.kh.finalproject.repository.TestDao;
 import com.kh.finalproject.service.NormalUploadQuestionService;
@@ -608,6 +609,16 @@ model.addAttribute("vo", normalUpdateQuestionVO);
 	public String solving(@RequestParam int tno,Model model) {
 		model.addAttribute("tno", tno);
 		return "question/solving";
+	}
+	
+	
+	@GetMapping("question/premium")
+	public String premium(HttpSession session, Model model) {
+		//회원정보 보여주기
+				String id = (String) session.getAttribute("id");
+				UsersDto dto = sqlSession.selectOne("users.info", id);
+				model.addAttribute("users", dto);
+				return "question/premium";
 	}
 	
 }
