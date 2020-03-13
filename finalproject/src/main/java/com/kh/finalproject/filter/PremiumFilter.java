@@ -28,7 +28,7 @@ public class PremiumFilter implements Filter{
 		
 	
 		
-System.out.println(ispremium+"aaaa");
+
 
 		if (ispremium.equals("1")) {
 			chain.doFilter(request, response);
