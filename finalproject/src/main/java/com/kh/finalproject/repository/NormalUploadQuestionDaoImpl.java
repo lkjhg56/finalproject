@@ -174,6 +174,8 @@ private SqlSession sqlSession;
 	public int testExist(NormalUpdateQuestionVO normalUpdateQuestionVO) {
 		return sqlSession.selectOne("question.testE",normalUpdateQuestionVO);
 	}
+	
+	
 	@Override
 	public void upload3(CategoryDto categoryDto, TestQuestionDto testQuestionDto, SolutionDto solutionDto) {
 sqlSession.insert("question.uploadcategory", categoryDto);// 카테고리 등록
@@ -182,6 +184,10 @@ sqlSession.insert("question.uploadcategory", categoryDto);// 카테고리 등록
 		sqlSession.insert("question.uploadtestquestion", testQuestionDto);//test_question 등록
 		sqlSession.insert("question.uploadsolution",solutionDto);
 		
+	}
+	@Override
+	public int tno(NormalUpdateQuestionVO normalUpdateQuestionVO) {
+		return sqlSession.selectOne("question.testtno",normalUpdateQuestionVO);
 	}
 	
 	
