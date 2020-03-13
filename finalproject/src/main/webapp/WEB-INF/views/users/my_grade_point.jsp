@@ -12,6 +12,7 @@
 </style>
 <div class="container">
 <h1 align="center">나의 포인트 내역</h1>
+<jsp:include page="/WEB-INF/views/template/sidebar.jsp"></jsp:include>
 <div  style="text-align:center">
 	<table class="table table-hover">
 		<thead align="center" class="thead-dark">

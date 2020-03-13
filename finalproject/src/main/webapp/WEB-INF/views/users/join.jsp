@@ -191,70 +191,70 @@
 	});
 	
 	//이메일 인증
-// 	$(function(){
+	$(function(){
 		
-// 	$(".validate").hide();
-// 	$(".join_box").hide();
-// 	$(".go_join").hide();
+	$(".validate").hide();
+	$(".join_box").hide();
+	$(".go_join").hide();
 	
-// 	$(".email").submit(function(e){
-// 		e.preventDefault();
+	$(".email").submit(function(e){
+		e.preventDefault();
 		
-// 		//var url = $(this).attr("action"); 
-// 		var method = $(this).attr("method");
-// 		var data = $(this).serialize();
+		//var url = $(this).attr("action"); 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
 		
-// 		var email = $("input[name=email]").val();
+		var email = $("input[name=email]").val();
 		
-// 		if(email == ""){
-// 			window.alert("이메일을 입력해주세요.");
-// 			$("input[name=email]").focus();
-// 			$(".email").find("input[type=submit]").val("인증번호 보내기");
-// 		}
+		if(email == ""){
+			window.alert("이메일을 입력해주세요.");
+			$("input[name=email]").focus();
+			$(".email").find("input[type=submit]").val("인증번호 보내기");
+		}
 		
-// 		else{
-// 			$(this).find("input[type=submit]").prop("disabled", true);
-// 			$(this).find("input[type=submit]").val("인증번호 발송중");
+		else{
+			$(this).find("input[type=submit]").prop("disabled", true);
+			$(this).find("input[type=submit]").val("인증번호 발송중");
 			
-// 			$.ajax({
-// 				url:"${pageContext.request.contextPath}/users/send",
-// 				type:"get",
-// 				data:data,
-// 				success:function(resp){
-// 					//console.log(resp);
-// 					if(resp == "success"){
-// 						$(".email").find("input[type=submit]").val("인증번호 발송완료");
-// 						$(".validate").show();
-// 					}
-// 				}
-// 			});
-// 		}
-// 	});
+			$.ajax({
+				url:"${pageContext.request.contextPath}/users/send",
+				type:"get",
+				data:data,
+				success:function(resp){
+					//console.log(resp);
+					if(resp == "success"){
+						$(".email").find("input[type=submit]").val("인증번호 발송완료");
+						$(".validate").show();
+					}
+				}
+			});
+		}
+	});
  
-// 	$(".validate").submit(function(e){
-// 		e.preventDefault();
-// 		//var url = $(this).attr("action"); 
-// 		var method = $(this).attr("method");
-// 		var data = $(this).serialize();
+	$(".validate").submit(function(e){
+		e.preventDefault();
+		//var url = $(this).attr("action"); 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
 		
-// 		$.ajax({
-// 			url:"${pageContext.request.contextPath}/users/validate",
-// 			type:"get",
-// 			data:data,
-// 			success:function(resp){
-// 				if(resp == "success"){
-// 					window.alert("인증이 완료되었습니다.");
-// 					$(".cert_box").hide();
-// 					$(".join_box").show();
-// 				}
-// 				else{
-// 					window.alert("인증 실패! 다시 시도해주세요");
-// 					window.location.reload();
-// 				}
-// 			}
-// 		});
-// 	});
-// });
+		$.ajax({
+			url:"${pageContext.request.contextPath}/users/validate",
+			type:"get",
+			data:data,
+			success:function(resp){
+				if(resp == "success"){
+					window.alert("인증이 완료되었습니다.");
+					$(".cert_box").hide();
+					$(".join_box").show();
+				}
+				else{
+					window.alert("인증 실패! 다시 시도해주세요");
+					window.location.reload();
+				}
+			}
+		});
+	});
+});
 	
 </script>
 <style>
@@ -591,23 +591,23 @@ p{
 
 <h1>Qmaster</h1>
 
-<!-- <div class="cert_box"> -->
-<!-- 	<div style="text-align:center"> -->
-<!-- 		<form class="email" method="get" > -->
-<!-- 			<h3>본인 확인을 위한 이메일 인증을 해주세요!</h3> -->
-<!-- 			<input type="text" name="email" placeholder="이메일 입력"> -->
-<!-- 			<input type="submit" class="btn btn-primary" id="but1" value="인증번호 보내기"> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
+<div class="cert_box">
+	<div style="text-align:center">
+		<form class="email" method="get" >
+			<h3>본인 확인을 위한 이메일 인증을 해주세요!</h3>
+			<input type="text" name="email" placeholder="이메일 입력">
+			<input type="submit" class="btn btn-primary" id="but1" value="인증번호 보내기">
+		</form>
+	</div>
 	
-<!-- 	<div style="text-align:center"> -->
-<!-- 		<form class="validate" action="validate" method="post"> -->
-<!-- 			<input type="text" name="cert" placeholder="인증번호 입력"> -->
-<!-- 			<input type="submit" class="btn btn-primary" id="but2" value="인증하기"> -->
-<!-- 			<div class="finish_cert"></div> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
-<!-- </div> -->
+	<div style="text-align:center">
+		<form class="validate" action="validate" method="post">
+			<input type="text" name="cert" placeholder="인증번호 입력">
+			<input type="submit" class="btn btn-primary" id="but2" value="인증하기">
+			<div class="finish_cert"></div>
+		</form>
+	</div>
+</div>
 
 <div class="join_box">
 <form class="join-form" action="join" method="post" enctype="Multipart/form-data">
