@@ -434,7 +434,6 @@ public class AdminController {
 		}
 		
 		if(keyword != null) {
-			
 			Map<String, String> param = new HashMap<>();
 			param.put("start", String.valueOf(start));
 			param.put("finish", String.valueOf(finish));
@@ -442,7 +441,6 @@ public class AdminController {
 			param.put("keyword", keyword);
 			
 			List<BoardReportDto> dto = boardDao.reportSearch(param);
-			
 			
 			for(int i = 0; i < dto.size(); i ++) {
 				int board_no = dto.get(i).getReport_board_no();
@@ -531,9 +529,6 @@ public class AdminController {
 		
 		//카테고리 이동 후 검색 목록 출력
 		if(board_category != null && keyword !=null){
-			System.out.println("@@keyword3="+keyword);
-			System.out.println("@@board_category3="+board_category);
-			
 			Map<String, String> param = new HashMap<>();
 			param.put("start", String.valueOf(start));
 			param.put("finish", String.valueOf(finish));
@@ -565,7 +560,6 @@ public class AdminController {
 		
 		//자유, 질문 카테고리의 경우 목록 출력
 			else {
-				System.out.println("@@board_category2="+board_category);
 				Map<String, String> param = new HashMap<>();
 				param.put("start", String.valueOf(start));
 				param.put("finish", String.valueOf(finish));
