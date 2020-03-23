@@ -88,9 +88,7 @@
   </tr>
   <tr>
     <th>이름</th>
-    <td>${users.n
-    
-    ame}</td>
+    <td>${users.name}</td>
   </tr>
   <tr>
     <th>아이디</th>
